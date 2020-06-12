@@ -1,4 +1,4 @@
-﻿package com.sp.member;
+﻿package com.eydiz.member;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +32,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
         
           <mvc:exclude-mapping path="/"/>
           <mvc:exclude-mapping path="/member"/>
-          <bean class="com.sp.member.LoginCheckInterceptor"/>
+          <bean class="com.eydiz.member.LoginCheckInterceptor"/>
       </mvc:interceptor>
     </mvc:interceptors>
   

@@ -1,4 +1,4 @@
-package com.sp.member;
+package com.eydiz.member;
 
 // 세션에 저장할 정보(아이디, 이름, 권한등)
 public class SessionInfo {

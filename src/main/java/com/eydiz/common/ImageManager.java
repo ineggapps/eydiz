@@ -1,4 +1,4 @@
-package com.sp.common;
+package com.eydiz.common;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.renderable.ParameterBlock;

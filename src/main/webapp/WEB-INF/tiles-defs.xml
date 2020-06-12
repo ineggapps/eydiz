@@ -5,32 +5,33 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name=".mainLayout" template="/WEB-INF/view/layout/layout3.jsp">
-	    <put-attribute name="title" value="spring" />
-	  	<put-attribute name="header" value="/WEB-INF/view/layout/header.jsp" />
-		<put-attribute name="body" value="/WEB-INF/view/main/main.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/view/layout/footer.jsp" />
+	<definition name=".mainLayout" template="/WEB-INF/view/layout/main/frame.jsp">
+	    <put-attribute name="title" value="와디즈" />
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/main/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/main/main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/main/footer.jsp" />
 	</definition>
 	
-   <!-- 3단 관리자 -->
-	<definition name=".adminLayout" template="/WEB-INF/view/admin/layout/layout3.jsp">
-	    <put-attribute name="title" value="spring" />
-	  	<put-attribute name="header" value="/WEB-INF/view/admin/layout/header.jsp" />
-		<put-attribute name="body" value="/WEB-INF/view/admin/main/main.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/view/layout/footer.jsp" />
+	<definition name=".memberLayout" template="/WEB-INF/view/layout/member/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/member/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/layout/main.jsp" />
 	</definition>
-	<definition name=".admin.*.*.*" extends=".adminLayout">
-		<put-attribute name="body" value="/WEB-INF/view/admin/{1}/{2}/{3}.jsp"/>
+	
+	<definition name=".memberLayout.*.*" extends=".memberLayout">
+		<put-attribute name="content" value="/WEB-INF/view/{1}/{2}/{3}.jsp"/>
 	</definition>
-	<definition name=".admin.*.*" extends=".adminLayout">
-		<put-attribute name="body" value="/WEB-INF/view/admin/{1}/{2}.jsp"/>
+	<definition name=".memberLayout.*" extends=".memberLayout">
+		<put-attribute name="content" value="/WEB-INF/view/{1}/{2}.jsp"/>
 	</definition>
-	<definition name=".admin.*" extends=".adminLayout">
-    	<put-attribute name="body" value="/WEB-INF/view/admin/{1}.jsp" />
+	
+	
+	
+	<definition name=".*" extends=".mainLayout">
+    	  <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />
 	</definition>
 	
 	<!-- 순서가 바뀌면 안됨(* 많은것이 위에) -->
-	<definition name=".*.*.*" extends=".mainLayout">
+	<!-- <definition name=".*.*.*" extends=".mainLayout">
 		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}/{3}.jsp"/>
 	</definition>
 	<definition name=".*.*" extends=".mainLayout">
@@ -38,6 +39,6 @@
 	</definition>
 	<definition name=".*" extends=".mainLayout">
     	  <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />
-	</definition>
+	</definition> -->
 
 </tiles-definitions>

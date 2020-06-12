@@ -1,4 +1,4 @@
-package com.sp.common;
+package com.eydiz.common;
 
 import java.io.BufferedInputStream;
 import java.io.File;
