@@ -5,40 +5,44 @@
 <%
    String cp = request.getContextPath();
 %>
-<header id="header">
-  <div class="headerInner">
-    <h1 class="logo"><a href="#">wawawa</a></h1>
-    <ul class="gnbExtended">
-      <li>
-        <a href="#" class="menu on"><span>펀딩하기</span></a>
-      </li>
-      <li>
-        <a href="#" class="menu"><span>투자하기</span></a>
-      </li>
-      <li>
-        <a href="#" class="menu"><span>스타트업 찾기</span></a>
-      </li>
-    </ul>
-  </div>
-  <div class="headerInnerMobile">
-    <div class="headerMobile">
-      <h1 class="logo"><a href="#">wawawa</a></h1>
-    </div>
-  </div>
-  <div class="headerInnerTab">
-    <ul class="gnbSub">
-      <li>
-        <a href="#" class="on"><span>펀딩 홈</span></a>
-      </li>
-      <li class="trivial">
-        <a href="#"><span>카테고리</span></a>
-      </li>
-      <li>
-        <a href="#"><span>오픈예정</span></a>
-      </li>
-      <li>
-        <a href="#"><span>글로벌</span></a>
-      </li>
-    </ul>
-  </div>
-</header>
+      <header id="header">
+        <div class="headerInner">
+          <h1 class="logo"><a href="#">eydiz</a></h1>
+          <ul class="gnbExtended">
+            <li> 
+              <a href="#" class="menu on"><span>펀딩하기</span></a>
+            </li>
+            <li>
+              <a href="#" class="menu"><span> 기부하기</span></a>
+            </li>
+          </ul>
+          <div class="headerInnerRight">
+            <ul class="gnbAuth">
+              <li><a href="<%=cp%>/member/login">로그인</a></li>
+              <li><a href="<%=cp%>/member/join">회원가입</a></li>
+              <li><a href="#" class="btnSubmit bordering btnMakeProject">프로젝트 만들기</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="headerInnerMobile">
+          <div class="headerMobile">
+            <h1 class="logo"><a href="#">eydiz</a></h1>
+          </div>
+        </div>
+        <div class="headerInnerTab">
+          <ul class="gnbSub">
+            <li>
+              <a href="#" class="on"><span>펀딩 홈</span></a>
+            </li>
+            <li class="trivial">
+              <a href="#"><span>카테고리</span></a>
+            </li>
+            <li>
+              <a href="#"><span>오픈예정</span></a>
+            </li>
+            <li>
+              <a href="#"><span>글로벌</span></a>
+            </li>
+          </ul>
+        </div>
+      </header>

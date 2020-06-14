@@ -1,3 +1,5 @@
+@charset "utf-8";
+
 .detailWrap::after,
 .brandInfoBox::after,
 .brandStatus::after {
