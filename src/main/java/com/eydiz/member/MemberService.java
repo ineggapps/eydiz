@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface MemberService {
-	public Member loginMember(String userId);
+	public Member loginMember(Member dto) throws AuthenticationException;
+	
+	public boolean isTaken(String memberId);
 	
 	public void insertMember(Member dto) throws Exception;
 	

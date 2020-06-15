@@ -60,6 +60,7 @@ h2 {
 /*after hack*/
 #header::after,
 .headerInner::after,
+.headerInnerRight::after,
 .headerInnerMobile::after,
 .headerBanner::after,
 .headerInnerTab::after,
@@ -126,7 +127,7 @@ h1 {
 }
 
 h1.logo {
-	font-weight:900;
+  font-weight: 900;
   font-size: 1.8em;
   padding: 12px 0 18px;
 }
@@ -141,9 +142,10 @@ h1.logo {
   padding: 19px 0 18px;
 }
 
-.headerInner .gnbAuth {
+.headerInnerRight {
   float: right;
-  padding: 10px 0 9px;
+  padding: 10px 0;
+  min-width: 400px;
 }
 
 .headerInner .gnbAuth a {
@@ -160,8 +162,13 @@ h1.logo {
 
 .headerInner .gnbExtended li,
 .headerInnerRight .gnbAuth li {
-  float: left;
   margin-left: 25px;
+}
+.headerInner .gnbExtended li {
+  float: left;
+}
+.headerInnerRight .gnbAuth li {
+  float: right;
 }
 
 .gnbSub {

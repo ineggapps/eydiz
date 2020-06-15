@@ -6,10 +6,21 @@
 	<!-- 아이디 기반으로 회원정보 읽기 -->
 	<select id="readMemberById"  parameterType="String" resultType="com.eydiz.member.Member">
 		SELECT 
-			memberNo, memberId, memberNickname, 
-			memberPwd, memberEmail, memberSocial
-		FROM member_detail
-		WHERE memberId=#{memberId}
+		    m.memberNo, memberId, memberNickname, 
+		    memberPwd, memberEmail, memberSocial, available
+		FROM member m
+		JOIN member_detail md ON m.memberNo = md.memberNo
+		WHERE memberId = #{memberId}
+	</select>
+	
+	<!-- 로그인 정보 확인 -->
+	<select id="confirmMember" parameterType="com.eydiz.member.Member" resultType="com.eydiz.member.Member">
+		SELECT 
+		    m.memberNo, memberId, memberNickname, 
+		    memberPwd, memberEmail, memberSocial, available
+		FROM member m
+		JOIN member_detail md ON m.memberNo = md.memberNo
+		WHERE memberId = #{memberId} AND memberPwd = #{memberPwd} AND available = 1
 	</select>
 	
 	<!-- 회원 등록하기 -->

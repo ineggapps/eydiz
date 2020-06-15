@@ -5,8 +5,3 @@
 <%
 	String cp=request.getContextPath();
 %>
-<header id="header">
-  <div class="headerInnerLogin">
-    <h1 class="logo"><a href="#">eydiz</a></h1>
-  </div>
-</header>

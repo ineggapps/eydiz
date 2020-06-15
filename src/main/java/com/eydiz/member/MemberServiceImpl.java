@@ -9,39 +9,52 @@ import org.springframework.stereotype.Service;
 import com.eydiz.common.dao.CommonDAO;
 
 @Service("member.memberService")
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService, MemberConstant{
 	@Autowired
-	private CommonDAO  dao;
-	
-	private final static String TABLE="member.";
+	private CommonDAO dao;
+
+	private final static String TABLE = "member.";
 
 	@Override
-	public Member loginMember(String userId) {
+	public Member loginMember(Member dto) throws AuthenticationException {
 		Member member = null;
 		try {
-			member = dao.selectOne(TABLE+"readMemberById");
-		} catch (Exception e) {
+			member = dao.selectOne(TABLE + "confirmMember", dto);
+			if (member == null) {
+				// 로그인 실패 시 정보가 뜨지 않음.
+				throw new AuthenticationException("아이디나 비밀번호가 틀렸습니다.");
+			}
+		} catch (AuthenticationException e) {
+			e.printStackTrace();
+			throw e;
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return member;
 	}
 
 	@Override
+	public boolean isTaken(String memberId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	public void insertMember(Member dto) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void updateMembership(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void updateMember(Member dto) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -59,7 +72,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void deleteMember(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -73,7 +86,5 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
 
 }

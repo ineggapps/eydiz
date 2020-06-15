@@ -5,6 +5,7 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
+	<!-- 메인 -->
 	<definition name=".mainLayout" template="/WEB-INF/view/layout/main/frame.jsp">
 	    <put-attribute name="title" value="와디즈" />
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/main/header.jsp" />
@@ -18,13 +19,32 @@
 	</definition>
 	
 	<definition name=".memberLayout.*.*" extends=".memberLayout">
-		<put-attribute name="content" value="/WEB-INF/view/{1}/{2}/{3}.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/view/member/{1}/{2}.jsp"/>
 	</definition>
 	<definition name=".memberLayout.*" extends=".memberLayout">
-		<put-attribute name="content" value="/WEB-INF/view/{1}/{2}.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/view/member/{1}.jsp"/>
+	</definition>
+	
+	<!-- Junik -->
+	<definition name=".mateLayout" template="/WEB-INF/view/layout/mate/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/mate/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/layout/mate/main.jsp" />
+	</definition>
+	
+	<definition name=".newsLayout" template="/WEB-INF/view/layout/news/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/news/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/layout/news/main.jsp" />
+	</definition>
+	
+	<definition name=".schoolLayout" template="/WEB-INF/view/layout/school/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/school/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/layout/school/main.jsp" />
 	</definition>
 	
 	
+	<!-- Eunmi -->
+	
+	<!-- Enjin -->	
 	
 	<definition name=".*" extends=".mainLayout">
     	  <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />

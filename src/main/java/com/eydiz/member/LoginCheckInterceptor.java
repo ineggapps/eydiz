@@ -1,5 +1,7 @@
 ﻿package com.eydiz.member;
 
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,7 +43,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
     <exclude-mapping>는  <mvc:mapping> 아래부분에 설정한다.
 */
 
-public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
+public class LoginCheckInterceptor extends HandlerInterceptorAdapter implements MemberConstant {
 	private final Logger logger = LoggerFactory.getLogger(LoginCheckInterceptor.class);	
 	/*
 	   클라이언트 요청이 컨트롤러에 도착하기 전에 호출 
@@ -54,7 +56,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		
 		try {
 			HttpSession session=req.getSession();
-			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			SessionInfo info=(SessionInfo)session.getAttribute(SESSION_MEMBER);
 			String cp=req.getContextPath();
 			String uri=req.getRequestURI();
 			String queryString=req.getQueryString();
@@ -69,10 +71,10 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 						uri=uri.substring(req.getContextPath().length());
 					if(queryString!=null)
 						uri+="?"+queryString;
-
-					session.setAttribute("preLoginURI", uri);
 					
-					resp.sendRedirect(cp+"/member/login");
+					session.setAttribute(REDIRECTION_URI, uri);
+					
+					resp.sendRedirect(cp+API_LOGIN );
 				}
 			}
 		} catch (Exception e) {

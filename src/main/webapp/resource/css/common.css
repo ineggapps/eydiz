@@ -40,7 +40,7 @@ a.btnSubmit {
 }
 
 .btnSubmit.bordering:hover {
-  color: #fff;
+  color: #fff !important;
 }
 
 .btnSubmit.inbox {

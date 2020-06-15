@@ -155,11 +155,13 @@ label.checkbox input:checked ~ .checkmark:after {
 }
 
 .inputRow span.desc {
-  display: none;
+	margin-top:10px;
+  display:none;
   color: #757575;
 }
 
-.inputRow span.desc.show {
+.inputRow span.desc.show,
+.inputRow span.desc.error{
   display: inline-block;
 }
 
@@ -224,7 +226,6 @@ label.inputEvent span.desc {
 }
 
 /*로그인*/
-
 .loginWrap,
 .registerWrap {
   min-width: 400px;
