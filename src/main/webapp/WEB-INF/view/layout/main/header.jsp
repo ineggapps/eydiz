@@ -7,7 +7,7 @@
 %>
       <header id="header">
         <div class="headerInner">
-          <h1 class="logo"><a href="#">eydiz</a></h1>
+          <h1 class="logo"><a href="<%=cp%>">eydiz</a></h1>
           <ul class="gnbExtended">
             <li> 
               <a href="#" class="menu on"><span>펀딩하기</span></a>

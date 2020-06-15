@@ -46,6 +46,7 @@ a.btnSubmit {
 .btnSubmit.inbox {
   width: auto;
   height: 38px;
+     line-height: 15px;
   position: absolute;
   top: -7px;
   right: 4px;
@@ -80,6 +81,7 @@ a.btnSubmit {
   height: 47px;
   line-height: 47px;
   transition: all linear 0.3s;
+  cursor:pointer;
 }
 
 .btnPlain.round {

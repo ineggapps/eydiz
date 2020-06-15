@@ -312,7 +312,7 @@ p.registerText {
 .registerContainer {
   position: relative;
 }
-
+/*
 .registerContainer::before {
   content: "";
   position: absolute;
@@ -327,7 +327,7 @@ p.registerText {
 .registerContainer .registerWrap {
   margin-right: 50%;
 }
-
+*/
 /*반응형*/
 @media (max-width: 1095px) {
   .headerInnerLogin {
