@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.eydiz.common.dao.CommonDAO;
 
 @Service("member.memberService")
-public class MemberServiceImpl implements MemberService, MemberConstant{
+public class MemberServiceImpl implements MemberService, MemberConstant {
 	@Autowired
 	private CommonDAO dao;
 
@@ -27,7 +27,7 @@ public class MemberServiceImpl implements MemberService, MemberConstant{
 		} catch (AuthenticationException e) {
 			e.printStackTrace();
 			throw e;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return member;
@@ -35,14 +35,26 @@ public class MemberServiceImpl implements MemberService, MemberConstant{
 
 	@Override
 	public boolean isTaken(String memberId) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isTaken = true;
+		try {
+			Member dto = (Member) dao.selectOne(TABLE + "readMemberById", memberId);
+			if (dto == null) {
+				isTaken = false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return isTaken;
 	}
 
 	@Override
 	public void insertMember(Member dto) throws Exception {
-		// TODO Auto-generated method stub
-
+		try {
+			dao.insertData(TABLE + "insertMember", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
