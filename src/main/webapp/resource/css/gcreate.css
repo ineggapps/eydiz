@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.guidecreate {
+	text-align: center;
+	width: 1200px;
+}
+
+.guidecreate ul li {
+	display: inline-block;
+	margin: 10px;
+}
