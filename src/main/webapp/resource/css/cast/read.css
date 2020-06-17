@@ -1,0 +1,130 @@
+.rcontent {
+    width: 960px;
+    margin: 0 auto;
+    padding: 50px 0;
+}
+
+.info .stroy-info {
+	position: relative;
+}
+
+.info .story-info p.board {
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #3B5998;
+}
+
+.info .story-info p.title {
+    margin-bottom: 5px;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+
+.info .story-info p.rlxk {
+    margin-bottom: 10px;
+}
+
+.info .story-info p.rlxk em {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 0;
+    font-size: 12px;
+    height: 12px;
+    line-height: 12px;
+    color: #65696B;
+}
+
+.detail-content {
+    width: 90%;
+    padding: 20px 0;
+    padding-left:42px;
+}
+
+.inner-content {
+    margin: 40px 0;
+    padding: 0 16px;
+    font-size: 17px;
+    line-height: 1.8em;
+    font-family: Roboto,"Noto Sans KR",sans-serif;
+    text-align: left;
+    word-break: break-all;
+}
+
+.inner-content p {
+    margin: 1em 0;
+    padding: 0;
+    font-size: 17px;
+    font-weight: 350;
+    color: #1D2129;
+    line-height: 36px;
+}
+
+.comment {
+    padding: 20px 10px;
+}
+
+.comment .num {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.comment .main textarea {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    font-size: 13px;
+    line-height: 18px;
+    border: 1px solid #e4e4e4;
+    background: #fff;
+    box-sizing: border-box !important;
+}
+
+.comment .main .btnbox {
+    text-align: right;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0 12px;
+    height: 33px;
+    line-height: 33px;
+    font-size: 14px;
+    background: white;
+    border: none;
+    cursor: pointer;
+    border: 1px solid #eeeeee;
+}
+
+.img {
+	width: 100%;
+}
+
+
+
+
+.likebox {
+	padding: 15px 10px;
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+    border-bottom: 1px solid #eeeeee;
+}
+
+.likebox .like {
+    display: inline-block;
+    padding: 0 15px 0 15px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 13px;
+    color: #e4e4e4;
+    border: 1px solid #e4e4e4;
+    background-color: white;
+}
+
+.likecount {
+	color: #400040;
+	font-size: 15px;
+}
+
