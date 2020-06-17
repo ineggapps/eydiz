@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService, MemberConstant {
 	public boolean isTakenEmail(String memberEmail) {
 		boolean isTaken = true;
 		try {
-			Member dto = (Member)dao.selectOne(TABLE+"readMemberByEmail");
+			Member dto = (Member)dao.selectOne(TABLE+"readMemberByEmail",memberEmail);
 			if(dto==null) {
 				isTaken = false;
 			}

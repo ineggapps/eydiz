@@ -103,13 +103,13 @@ $(function () {
       .then(function (data) {
         const result = data.taken;
         if (result == "false") {
-          printDesc($(this), "사용할 수 있는 이메일입니다.");
+          printDesc($("#memberEmail"), "사용할 수 있는 이메일입니다.");
         } else {
-          printError($(this), "이미 사용 중인 이메일입니다.");
+          printError($("#memberEmail"), "이미 사용 중인 이메일입니다.");
         }
       })
       .catch(function (e) {
-        alert("서버와의 통신 오류입니다." + e);
+        console.log("서버와의 통신 오류입니다." + e);
       });
   });
 });
