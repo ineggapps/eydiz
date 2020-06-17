@@ -18,9 +18,19 @@ public class StudioController implements StudioConstant, MemberConstant {
 	StudioService service;
 	
 	//////////////////////////////////////////////브랜드
-	@RequestMapping(value="/brand/info", method=RequestMethod.GET)
-	public String getBrandInfo() {
-		return "/studio/info_insert";//without tiles(단독 레이아웃 뷰)
+	@RequestMapping(value="/brand/info", method=RequestMethod.GET)	
+	public String getBrandInfo(HttpSession session) {
+		String viewPath = VIEW_BRAND_INFO_PRIMAL;
+		try {
+			SessionInfo info = (SessionInfo)session.getAttribute(SESSION_MEMBER);
+			int myBrandCount = service.myBrandCount(info.getMemberNo());
+			if(myBrandCount>0) {
+				viewPath = VIEW_BRAND_INFO_UPDATE;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return viewPath;//without tiles(단독 레이아웃 뷰)
 	}
 	
 	@RequestMapping(value="/brand/info", method=RequestMethod.POST)
@@ -37,12 +47,7 @@ public class StudioController implements StudioConstant, MemberConstant {
 		return "redirect:"+redirectUrl;
 	}
 	
-	
-	
-	
-	
 	//////////////////////////////////////////////프로젝트
-	
 	@RequestMapping(value="/project/list")
 	public String list() {
 		

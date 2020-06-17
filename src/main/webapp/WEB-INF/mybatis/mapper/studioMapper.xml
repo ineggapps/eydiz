@@ -7,6 +7,12 @@
 		VALUE (brand_seq.NEXTVAL, #{memberNo}, #{brandName}, #{managerName}, #{managerEmail}, #{managerPhone})
 	</insert>
 	
+	<select id="myBrandCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*),0) 
+		FROM brand
+		WHERE memberNo=#{memberNo}
+	</select>
+	
 	<select id="readBrandByMemberNo" parameterType="Integer" resultType="com.eydiz.studio.Brand">
 		SELECT brandNo, memberNo, brandName, managerName, managerEmail, managerPhone
 		FROM brand
