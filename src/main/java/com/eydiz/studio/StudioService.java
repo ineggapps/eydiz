@@ -1,5 +1,6 @@
 package com.eydiz.studio;
 
 public interface StudioService {
-	public void makeBrand(Brand dto);
+	public Brand readBrand(int memberNo);
+	public void updateBrand(Brand dto) throws Exception;
 }

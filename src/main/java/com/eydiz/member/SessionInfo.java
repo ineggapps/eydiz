@@ -9,6 +9,7 @@ public class SessionInfo {
 	private String memberEmail;
 	private int memberSocial;
 	private boolean isAvailable;
+	private boolean isAdmin;
 
 	public SessionInfo() {
 	}
@@ -19,6 +20,7 @@ public class SessionInfo {
 		this.memberNickname = dto.getMemberNickname();
 		this.memberEmail= dto.getMemberEmail();
 		this.memberSocial = dto.getMemberSocial();
+		this.isAdmin = dto.isAdmin();
 	}
 
 
@@ -79,6 +81,14 @@ public class SessionInfo {
 
 	public void setAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 }
