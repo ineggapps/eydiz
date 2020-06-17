@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: sist
-=======
-Built-By: USER
->>>>>>> 0f199aa004634eaf0e62fa92c2eeeed2c8077d5c
+Built-By: inegg
 Build-Jdk: 1.8.0_241
 Created-By: Maven Integration for Eclipse
 
