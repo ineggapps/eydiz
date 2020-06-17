@@ -29,11 +29,40 @@
 	<definition name=".mateLayout" template="/WEB-INF/view/layout/mate/frame.jsp">
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/mate/header.jsp" />
 		<put-attribute name="content" value="/WEB-INF/view/layout/mate/main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/mate/footer.jsp" />
+	</definition>
+	
+	<definition name=".mateLayout.*.*" extends=".mateLayout">
+		<put-attribute name="content" value="/WEB-INF/view/mate/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".mateLayout.*" extends=".mateLayout">
+		<put-attribute name="content" value="/WEB-INF/view/mate/{1}.jsp"/>
+	</definition>
+	
+	<definition name=".guideLayout" template="/WEB-INF/view/layout/guide/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/guide/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/layout/guide/main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/guide/footer.jsp" />
+	</definition>
+	
+	<definition name=".guideLayout.*.*" extends=".guideLayout">
+		<put-attribute name="content" value="/WEB-INF/view/guide/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".guideLayout.*" extends=".guideLayout">
+		<put-attribute name="content" value="/WEB-INF/view/guide/{1}.jsp"/>
 	</definition>
 	
 	<definition name=".newsLayout" template="/WEB-INF/view/layout/news/frame.jsp">
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/news/header.jsp" />
 		<put-attribute name="content" value="/WEB-INF/view/layout/news/main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/news/footer.jsp" />
+	</definition>
+	
+	<definition name=".newsLayout.*.*" extends=".newsLayout">
+		<put-attribute name="content" value="/WEB-INF/view/news/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".newsLayout.*" extends=".newsLayout">
+		<put-attribute name="content" value="/WEB-INF/view/news/{1}.jsp"/>
 	</definition>
 	
 	<definition name=".schoolLayout" template="/WEB-INF/view/layout/school/frame.jsp">
