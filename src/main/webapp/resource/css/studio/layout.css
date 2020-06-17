@@ -81,7 +81,7 @@ h2 {
   opacity: 0.8;
 }
 
-header {
+header#header {
   background-color: #fff;
   position: fixed;
   width: 100%;
@@ -198,7 +198,7 @@ header {
 .columnSide {
   /*모바일 웹 왼쪽 메뉴 참고!!!1*/
   position: fixed;
-  top:57px;/*헤더 고려*/
+  top: 57px; /*헤더 고려*/
   height: 100% !important; /*모바일웹.. 고정할 때*/
   overflow: auto;
   width: 240px;
@@ -399,7 +399,7 @@ a.btnHashDelete span {
   .columnSide {
     /* overflow: auto; 모바일 웹에서 세로가 넘치면 스크롤 */
     left: 0;
-    top:0 !important;
+    top: 0 !important;
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
     -webkit-transition: -webkit-transform 0.2s;
@@ -436,5 +436,45 @@ a.btnHashDelete span {
 @media (max-width: 295px) {
   #wrap {
     min-width: 295px;
+  }
+}
+
+/*메이커 만들기 레이아웃 (기본)*/
+
+header h1.logoCenter {
+  padding-top: 20px;
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+
+.centerInner .inputWrap,
+.centerInner .infoItem .inputWrap input,
+.centerInner .infoItem .inputWrap select {
+  width: calc(100% - 12px);
+}
+
+.centerInner {
+  width: calc(100% - 200px);
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+}
+
+@media (max-width: 768px) {
+  .centerInner {
+    padding: 40px;
+    width: 100%;
+  }
+
+  .submitContainer {
+    width: calc(100% - 80px);
+    height: 57px;
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 10px 40px;
   }
 }
