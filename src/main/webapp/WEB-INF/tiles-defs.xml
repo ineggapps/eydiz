@@ -74,9 +74,31 @@
 	<!-- Eunmi -->
 	
 	<!-- Enjin -->	
+	<definition name=".awardsLayout" template="/WEB-INF/view/layout/awards/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/awards/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/awards/list.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/awards/footer.jsp" />
+	</definition>
 	
-	<definition name=".*" extends=".mainLayout">
-    	  <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />
+	<definition name=".awardsLayout.*.*" extends=".awardsLayout">
+		<put-attribute name="content" value="/WEB-INF/view/awards/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".awardsLayout.*" extends=".awardsLayout">
+		<put-attribute name="content" value="/WEB-INF/view/awards/{1}.jsp"/>
+	</definition>
+	
+	
+	<definition name=".partnerLayout" template="/WEB-INF/view/layout/partner/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/partner/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/partner/list.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/partner/footer.jsp" />
+	</definition>
+	
+	<definition name=".partnerLayout.*.*" extends=".partnerLayout">
+		<put-attribute name="content" value="/WEB-INF/view/partner/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".partnerLayout.*" extends=".partnerLayout">
+		<put-attribute name="content" value="/WEB-INF/view/partner/{1}.jsp"/>
 	</definition>
 	
 	<!-- 순서가 바뀌면 안됨(* 많은것이 위에) -->
