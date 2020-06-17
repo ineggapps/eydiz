@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+.mateheader {
+	width: 100%;
+	height: 160px;
+	background-color: #01DFD7;
+}
+
+.matesub a{
+	float: left;
+	padding-top: 25px;
+	font-weight: bold;
+	font-size: 26px;
+	padding-left: 130px;
+}
+
+.matebody {
+	width: 50%;
+	margin: 0px auto;
+}
+
+.peopleimg {
+	position: relative;
+    background-image: url('../images/people.jpg');
+    background-size: cover;
+    width: 100%;
+    height: 600px;
+}
+
+.imginto h2{
+	position: absolute;
+    top: 10%;
+    right : 0;
+    transform: translate(-50%, -50%);                                                                   
+    font-size: 40px;
+    color: white;
+    z-index: 2;
+    text-align: left;
+}
+
+.imginto p {
+	width: 80%;
+	position: relative;
+    top: 10%;
+    left: 10%;
+	font-size: 20px;
+	color : white;
+	text-align: left;
+	padding-top: 10px;
+}
+
+.img-cover{
+	position: absolute;
+	right:0;
+    height: 80%;
+    width: 50%;
+    background-color: rgba(0, 0, 0, 0.7);                                                                 
+    z-index:1;
+    text-align: right;
+}
+
+.mateguide {
+	width: 100%;
+	height: 500px;
+	background-color: #F0F0F0;
+	border-radius: 5px;
+}
+
+.mateguide h2 {
+	margin-top: 10px;
+	font-weight: bold;
+	font-size: 30px;
+	padding: 20px;
+}
+
+.mateguide p {
+	font-size: 20px;
+	padding: 20px;
+}
+
+.matebtn {
+	
+}
+
+.matebtn ul li{
+	padding: 20px;
+}
+
+.mbtn{
+	width: 120px;
+	height: 50px;
+	border-radius: 40px;
+	border: 1px solid sliver;
+}

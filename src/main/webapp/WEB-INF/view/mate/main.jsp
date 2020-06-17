@@ -6,338 +6,39 @@
 %>
 
 <article class="row">
-  <div class="rowFull">
-    <h2>슬라이드</h2>
-  </div>
-</article>
-<article class="row">
-  <div class="rowInner">
-    <h2 class="hidden">전체 분류</h2>
-    <ul class="categoryContent">
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">전체보기</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"
-            ><span class="circle"></span><span class="text">테크&centerdot;가전</span></a
-          >
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"
-            ><span class="circle"></span><span class="text">패션&centerdot;잡화</span></a
-          >
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">뷰티</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">푸드</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">홈리빙</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">디자인소품</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"
-            ><span class="circle"></span><span class="text">여행&centerdot;레저</span></a
-          >
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"
-            ><span class="circle"></span
-            ><span class="text">스포츠&centerdot;모빌리티</span></a
-          >
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">반려동물</span></a>
-        </div>
-      </li>
-    </ul>
-  </div>
-</article>
-<article class="row">
-  <div class="rowInner">
-    <div class="titleBar">
-      <div class="title"><h2>전체보기</h2></div>
-      <div class="option">
-        <form name="titleBarForm">
-          <input
-            type="text"
-            name="keyword"
-            class="keyword transparent"
-            placeholder="검색"
-          />
-          <a href="#" class="searchButton"><span class="hidden">검색</span></a>
-          <select name="sort1">
-            <option value="1">전체</option>
-            <option value="2">진행 중</option>
-            <option value="3">종료된</option>
-          </select>
-          <select name="sort2">
-            <option value="1">추천순</option>
-            <option value="2">인기순</option>
-            <option value="3">모금액순</option>
-            <option value="4">마감 임박순</option>
-            <option value="5">최신순</option>
-            <option value="6">응원 참여자순</option>
-          </select>
-        </form>
-      </div>
-    </div>
-    <ul class="gridContent">
-      <li class="item">
-        <div class="itemInner">
-          <div
-            class="thumbnail"
-            style="
-              background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');
-            "
-          >
-            <span class="hidden">드럼</span>
-          </div>
-          <div class="textWrap">
-            <div class="subject">
-              <a href="#"
-                ><span
-                  >[1억 앵콜] 드럼? 게임하듯 쉽게 따라하세요, 어느덧 나도 드럼 고수!</span
-                ></a
-              >
-            </div>
-            <ul class="desc">
-              <li><span class="category">게임&centerdot;취미</span></li>
-              <li><span class="name">모플레이</span></li>
-            </ul>
-            <div class="status">
-              <div class="progress">
-                <div class="progressBar" style="width: 100%;"></div>
-              </div>
-              <ul>
-                <li>
-                  <span class="percent">330%</span>&centerdot;<span class="totalAmount"
-                    >338,050,000원</span
-                  >
-                </li>
-                <li><span class="remainDays">9일 남음</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="itemInner">
-          <div
-            class="thumbnail"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1517420879524-86d64ac2f339?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1226&q=80');
-            "
-          >
-            <span class="hidden">드럼</span>
-          </div>
-          <div class="textWrap">
-            <div class="subject">
-              <a href="#"
-                ><span
-                  >[글로벌 최초 펀딩] 스마트워치가 3만원대? 가성비 끝판왕! 헬로우
-                  솔라</span
-                ></a
-              >
-            </div>
-            <ul class="desc">
-              <li><span class="category">테크&centerdot;가전</span></li>
-              <li><span class="name">주식회사 위즈굿</span></li>
-            </ul>
-            <div class="status">
-              <div class="progress">
-                <div class="progressBar" style="width: 30%;"></div>
-              </div>
-              <ul>
-                <li>
-                  <span class="percent">30%</span>&centerdot;<span class="totalAmount"
-                    >338,050,000원</span
-                  >
-                </li>
-                <li><span class="remainDays">11일 남음</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="itemInner">
-          <div
-            class="thumbnail"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1563822249510-04678c78df85?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80');
-            "
-          >
-            <span class="hidden">드럼</span>
-          </div>
-          <div class="textWrap">
-            <div class="subject">
-              <a href="#"
-                ><span
-                  >[누적3억펀딩, 제주귤이 돌아왔다] 여름에도 만나는 상큼시원
-                  하우스감귤</span
-                ></a
-              >
-            </div>
-            <ul class="desc">
-              <li><span class="category">푸드</span></li>
-              <li><span class="name">아일랜드박스</span></li>
-            </ul>
-            <div class="status">
-              <div class="progress">
-                <div class="progressBar" style="width: 50%;"></div>
-              </div>
-              <ul>
-                <li>
-                  <span class="percent">50%</span>&centerdot;<span class="totalAmount"
-                    >338,050,000원</span
-                  >
-                </li>
-                <li><span class="remainDays">9일 남음</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="itemInner">
-          <div
-            class="thumbnail"
-            style="
-              background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');
-            "
-          >
-            <span class="hidden">드럼</span>
-          </div>
-          <div class="textWrap">
-            <div class="subject">
-              <a href="#"
-                ><span
-                  >[1억 앵콜] 드럼? 게임하듯 쉽게 따라하세요, 어느덧 나도 드럼 고수!</span
-                ></a
-              >
-            </div>
-            <ul class="desc">
-              <li><span class="category">게임&centerdot;취미</span></li>
-              <li><span class="name">모플레이</span></li>
-            </ul>
-            <div class="status">
-              <div class="progress">
-                <div class="progressBar" style="width: 100%;"></div>
-              </div>
-              <ul>
-                <li>
-                  <span class="percent">330%</span>&centerdot;<span class="totalAmount"
-                    >338,050,000원</span
-                  >
-                </li>
-                <li><span class="remainDays">9일 남음</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="itemInner">
-          <div
-            class="thumbnail"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1517420879524-86d64ac2f339?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1226&q=80');
-            "
-          >
-            <span class="hidden">드럼</span>
-          </div>
-          <div class="textWrap">
-            <div class="subject">
-              <a href="#"
-                ><span
-                  >[글로벌 최초 펀딩] 스마트워치가 3만원대? 가성비 끝판왕! 헬로우
-                  솔라</span
-                ></a
-              >
-            </div>
-            <ul class="desc">
-              <li><span class="category">테크&centerdot;가전</span></li>
-              <li><span class="name">주식회사 위즈굿</span></li>
-            </ul>
-            <div class="status">
-              <div class="progress">
-                <div class="progressBar" style="width: 30%;"></div>
-              </div>
-              <ul>
-                <li>
-                  <span class="percent">30%</span>&centerdot;<span class="totalAmount"
-                    >338,050,000원</span
-                  >
-                </li>
-                <li><span class="remainDays">11일 남음</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="itemInner">
-          <div
-            class="thumbnail"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1563822249510-04678c78df85?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80');
-            "
-          >
-            <span class="hidden">드럼</span>
-          </div>
-          <div class="textWrap">
-            <div class="subject">
-              <a href="#"
-                ><span
-                  >[누적3억펀딩, 제주귤이 돌아왔다] 여름에도 만나는 상큼시원
-                  하우스감귤</span
-                ></a
-              >
-            </div>
-            <ul class="desc">
-              <li><span class="category">푸드</span></li>
-              <li><span class="name">아일랜드박스</span></li>
-            </ul>
-            <div class="status">
-              <div class="progress">
-                <div class="progressBar" style="width: 50%;"></div>
-              </div>
-              <ul>
-                <li>
-                  <span class="percent">50%</span>&centerdot;<span class="totalAmount"
-                    >338,050,000원</span
-                  >
-                </li>
-                <li><span class="remainDays">9일 남음</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
+      	<div class="matebody">
+      		<div class="peopleimg">
+      			<div class="img-cover">
+	      			<div class="imginto">
+	      				<h2>펀딩메이트란?</h2>
+	      				<br><br><br><br><br><br><br>
+	      				<p>와디즈 펀딩 오픈에 대한 파트너를 서로 찾을 수 있게 도와 주는 서비스 입니다.</p>
+	      				<p>펀딩메이트를 통해 다양한 프로젝트를 진행 경험이 있는 파트너와 쉽고 간편하게 연결 될 수 있습니다.</p>
+	      				<button></button>
+	      			</div>
+      			</div>
+			</div>
+			<br><br><br><br><br>
+			<div class="mateguide">
+				<h2>이용방법</h2>
+				<p>1. 원하는 서비스 분야를 선택하세요.</p>
+				<p>2. 다양한 펀딩메이트의 정보를 꼼꼼히 확인하세요.</p>
+				<p>3. 펀딩메이트를 확인 후 가입하세요.</p>
+				<br><br><br>
+				<h2>유의사항</h2>
+				<p>이디즈는 메이커의 편의를 위하여 필요한 서비스를 단순 지원 합니다. 이디즈는 펀딩
+				메이트와 메이커 간 거래 관계에는 일체 관여하지 않으며, 서비스 품질 및 거래에 대한 책임은 각 펀딩 메이트에게 있습니다.</p>
+			</div>
+			<div class="matebtn">
+				<ul>
+					<li>
+						<button class="mbtn">전체</button>&nbsp;&nbsp;&nbsp;
+						<button class="mbtn">펀딩/물품</button>&nbsp;&nbsp;&nbsp;
+						<button class="mbtn">펀딩/공연</button>&nbsp;&nbsp;&nbsp;
+						<button class="mbtn">펀딩/음악</button>&nbsp;&nbsp;&nbsp;
+						<button class="mbtn">기부</button>
+					</li>
+				</ul>
+			</div>      	
+      	</div>
 </article>

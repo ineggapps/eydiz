@@ -7,7 +7,6 @@ public class MateServiceImpl implements MateService {
 
 	@Override
 	public void test() {
-		// TODO Auto-generated method stub
 		
 	}
 

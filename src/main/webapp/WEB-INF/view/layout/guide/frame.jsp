@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="<%=cp%>/resource/css/reset.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/content.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/guideinto.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/guide.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/gcreate.css" />
     <!--[if lt IE 9]>
       <script src="resource/js//html5shiv.min.js"></script>
     <![endif]-->

@@ -5,50 +5,10 @@
 <%
    String cp = request.getContextPath();
 %>
-      <header id="header">
-        <div class="headerInner">
-          <h1 class="logo"><a href="#">eydiz</a></h1>
-          <ul class="gnbExtended">
-            <li> 
-              <a href="#" class="menu on"><span>펀딩하기</span></a>
-            </li>
-            <li>
-              <a href="#" class="menu"><span> 기부하기</span></a>
-            </li>
-          </ul>
-          <div class="headerInnerRight">
-            <ul class="gnbAuth">
-              <li><a href="#" class="btnSubmit bordering btnMakeProject">프로젝트 만들기</a></li>
-          	<c:if test="${empty sessionScope.member}">
-              <li><a href="<%=cp%>/member/join">회원가입</a></li>
-              <li><a href="<%=cp%>/member/login">로그인</a></li>
-          	</c:if>
-          	<c:if test="${not empty sessionScope.member}">
-				<li><a href="<%=cp%>/member/logout">로그아웃</a><li>
-				<li><a href="#" class="profilePic">${sessionScope.member.memberNickname}님</a></li>
-          	</c:if>
-          	</ul>
-          </div>
-        </div>
-        <div class="headerInnerMobile">
-          <div class="headerMobile">
-            <h1 class="logo"><a href="#">eydiz</a></h1>
-          </div>
-        </div>
-        <div class="headerInnerTab">
-          <ul class="gnbSub">
-            <li>
-              <a href="#" class="on"><span>펀딩 홈</span></a>
-            </li>
-            <li class="trivial">
-              <a href="#"><span>카테고리</span></a>
-            </li>
-            <li>
-              <a href="#"><span>오픈예정</span></a>
-            </li>
-            <li>
-              <a href="#"><span>글로벌</span></a>
-            </li>
-          </ul>
-        </div>
+      <header class="mateheader">
+	  	<div class="headerInner">
+		        <br><br>
+		        <h1 class="matesub"><a href="#" style="color: black;">펀딩 메이트</a></h1>
+		        <h1 class="logo"><a href="#" style="color: black; margin-left: 1150px;">eydiz</a><a style="font-size: 16px; font-weight: normal;">&nbsp;&nbsp;바로가기</a></h1>
+     	</div>
       </header>
