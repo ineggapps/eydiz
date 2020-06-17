@@ -1,0 +1,124 @@
+@charset "UTF-8";
+
+ .awardsTitleImage {
+    	height : 500px;
+    	background-image: url("../../images/awards/awardBackground.png");
+		background-repeat: no-repeat;
+		background-size: cover;
+    }
+        
+    .awardsTitle {
+    	min-width : 100px;
+    	min-height : 70px;
+    	text-align: center;
+    	padding-top: 85px;
+
+    	
+    }
+    
+    .awardsTitleText {
+    	font-size: 45px;
+    	font-weight: bold;
+    	padding-bottom: 20px;
+    	color: #29baba;
+    	margin: 45px auto;
+    	text-shadow: -1px 0 #333333, 0 1px #333333, 1px 0 #333333, 0 -1px #333333;
+    }
+    
+    .awardsTitleSubText {
+    	font-size: 15px;
+    }
+    
+    .awardTitlePoint {
+    	font-weight: bold;
+    }
+    
+    .awardContentTitle {
+    	font-size: 35px;
+    	padding: 50px;
+    	font-weight: bold;
+    	color: #333333;
+    }
+    
+    .awardContentTitleSub {
+    	padding: 5px;
+    }
+    
+    
+    
+    .awardBrandCell {
+    	width: 300px;
+    	display: inline-block;
+    }
+    
+    .awardBrandImage {
+    	width: 50px;
+    	height: 50px;
+    	border-radius: 50%;
+    	margin: 0;
+    	display: inline-block;
+    	float: left;
+    }
+    
+    
+    .awardBrandName {
+    	display: inline-block;
+    	float: left;
+    	padding: 15px;
+    }
+    
+    .awardCategory {
+    	line-height : 25px;
+    	height : 60px;
+    	font-size: 20px;
+    	color: #544231;
+    }
+    
+    .aCDetail {
+    	font-size: 12px;
+    	padding-bottom: 10px;
+    }
+    
+    
+    .awardContentBody {
+    	padding: 60px auto;
+    }
+    
+    
+    .awardMakePJ {
+    	height: 160px;
+    	line-height : 40px;
+    	background-color: #ffda8f;
+    	text-align: center;
+    	padding: 80px 0;
+    }
+    
+    .pjBtn {
+    	background-color: #29baba;
+    	color: white;
+    	font-size: 15px;
+    	font-weight: 600;
+    	width: 150px;
+    	height: 40px;
+    	line-height: 40px;
+    	border: 1px solid #333333;
+    	text-align: center;
+    	margin: 20px;
+    }
+    
+    
+    
+    /* tab css */
+    
+    .awardsTabBName {
+    	text-align: center;
+    }
+    
+    .aTabBDetail {
+    	font-size: 12px;
+    }
+    
+    .aTabBDetail p {
+    	height: 90px;
+    	line-height: 20px;
+    }

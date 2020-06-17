@@ -7,6 +7,12 @@
 %>
 <footer id="footer">
   <div class="footerFull">
+  	<div class = "partnerMakePJ">
+          	<p>이디즈에서는 누구나</p>
+          	<p>성공의 주인공이 될 수 있습니다.</p>
+          	<p>지금 바로 프로젝트에 도전하세요!</p>
+          	<button class = "pjBtn" type="button" onclick="">프로젝트 오픈 신청</button>
+    </div>
     <ul class="fnb">
       <li>
         <a href="#"><span>회원가입 약관</span></a>

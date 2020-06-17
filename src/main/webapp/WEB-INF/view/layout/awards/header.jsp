@@ -32,7 +32,7 @@
         </div>
         <div class="headerInnerMobile">
           <div class="mobileNav">
-            <h2 class="title">Eydiz Partner</h2>
+            <h2 class="title">Eydiz Awards</h2>
             <button type="button" class="btnBack btnFlat btnMobileNav">
               <span class="hidden">이전</span>
             </button>
@@ -41,14 +41,46 @@
             </button>
           </div>
         </div>
-        <div class = "partnerBannerImage" >
+        <div class = "awardsTitleImage" >
         	<div class="awardsTitle">
-        		<div class = "patnerBannerTitle">이디즈 파트너</div>
-        		<div class = "TitleBannerSubText">
-        		   <p>이디즈에서는 누구나 투자받고 투자하면서 함께 성장합니다.</p><br>
-				   <p>1%의 특별한 소수가 아닌 99%의 다양한 사람들이 더불어 성장할 수 있는 곳,</p><br>
-				   <p class="patnerBannerPoint">이디즈에서 다양한 분야에서 도전하는 메이커를 찾아보세요</p><br><br>
+        		<div class = "awardsTitleText">Eydiz Maker Awards 2019</div>
+        		<div class = "awardsTitleSubText">
+        		   <p>2019 한 해 동안 이디즈를 찾아준</p><br>
+				   <p>메이커 / 서포터 / 투자자 분들 고맙습니다.</p><br>
+				   <p>도전하고 지지하는 여러분의 가치 있는 행보를 응원합니다.</p><br><br>
+				   <p class = "awardTitlePoint">여러분을 대표해서</p><br>
+				   <p class = "awardTitlePoint">메이커 100을 선정하여 이 상을 전합니다.</p><br>
 				</div>
         	</div>
         </div>
+         <nav class="row">
+            <div class="rowFull">
+              <ul class="detailNav">
+                <li class="on">
+                  <a href="#"><span>#수상메이커 100</span></a>
+                </li>
+                <li>
+                  <a href="#"><span>#Amazing Tech</span></a>
+                </li>
+                <li>
+                  <a href="#"><span>#Fashion Insight</span></a>
+                </li>
+                <li>
+                  <a href="#"><span>#Growing Togther</span><span class="badge"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span>#Life Balance</span><span class="badge"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span>#New Lifeduct</span><span class="badge"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span>#Real Happiness</span><span class="badge"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span>#Right Thing</span><span class="badge"></span></a>
+                </li>
+              </ul>
+            </div>
+          </nav>
       </header>

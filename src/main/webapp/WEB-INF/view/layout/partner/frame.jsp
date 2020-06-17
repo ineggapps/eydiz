@@ -13,9 +13,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>크라우드 펀딩</title>
-    <link rel="stylesheet" href="<%=cp%>/resource/css/reset.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/content.css" />
+    <link rel="stylesheet" href="<%=cp %>/resource/css/reset.css" />
+    <link rel="stylesheet" href="<%=cp %>/resource/css/layout.css" />
+    <link rel="stylesheet" href="<%=cp %>/resource/css/detail.css" />
+    <link rel="stylesheet" href="<%=cp %>/resource/css/content.css" />
+    <link rel="stylesheet" href="<%=cp %>/resource/css/common.css" />
+    <link rel="stylesheet" href="<%=cp %>/resource/css/partner/partner.css" />
+    <link rel="stylesheet" href="<%=cp %>/resource/css/awards/awards.css" />
     <!--[if lt IE 9]>
       <script src="resource/js//html5shiv.min.js"></script>
     <![endif]-->

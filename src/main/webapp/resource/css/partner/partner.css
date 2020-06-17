@@ -1,0 +1,250 @@
+@charset "UTF-8";
+
+
+    .partnerBannerImage {
+    	height : 500px;
+    	background-image: url("../../images/partner/team.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+   		background-position: center;
+    }
+    
+    .patnerBannerTitle {
+    	font-size: 40px;
+    	font-weight: 600;
+    	padding-bottom: 20px;
+    	color: white;
+    	margin: 40px auto;
+    }
+    
+    .TitleBannerSubText {
+    	font-size: 15px;
+    	color: white;
+    }
+    
+    .patnerBannerPoint {
+    	font-weight: bold;
+    	font-size: 20px;
+    }
+    
+    .partnerResult {
+    	padding: 50px;
+    	text-align: center;
+    }
+    
+    .prTitle {
+    	font-size: 35px;
+    	padding-bottom: 25px;
+    }
+    
+     .partnerArticleImage {
+    	height : 500px;
+		background-repeat: no-repeat;
+		background-size: cover;
+   		background-position: center;
+    }
+    
+    .pArticleName {
+        padding: 50px;
+    	text-align: left;
+    	border-bottom: 1px solid #e6eaed;
+    }
+ 
+    .paContent {
+    	padding-top: 40px;
+    	
+    }
+    
+    .pANWrap {
+    	padding-bottom: 40px;
+    }
+    
+    .pAResultBox {
+    	padding: 50px;
+    }
+    
+    
+    .pAResultTitle {
+    	font-size: 28px;
+    	color: #44484B;
+    	font-weight: bold;
+    	display : inline-block;
+    	padding-bottom: 40px;
+    }
+    
+    .pAResult1 {
+    	font-size: 17px;
+    	padding-bottom: 20px;
+		font-weight: bold;
+    }
+    
+    
+    .pAResult1 p{
+		font-size: 17px;
+		padding: 10px 0;
+    }
+    
+    .pAResult1 span:nth-child(2){
+		font-size: 50px;
+		color: #6BB7CF;
+    }
+    
+    
+   .pAPJListBox {
+   		background-color: 
+   }
+    
+	.paListTitle {
+	    font-size: 30px;
+	    color: #333333;
+	    font-weight: bold;
+	    text-align: left;
+    }	
+    	
+    
+    	color: #333333;
+    	font-weight: bold;
+    }
+    
+    
+    .prContent {
+    	padding-top: 15px;
+    }
+    
+    .pResultWrap {
+    	padding-bottom: 60px;
+    }
+    
+    
+    .partnerResultCell {
+    	width: 340px;
+    	float:left;
+    	margin-right: 130px;
+    }
+    
+    
+    .partnerResultIcon {
+    	width: 80px; 
+    	height: 80px;
+    	margin: 0;
+    	display: inline-block;
+    	float: left;
+    	background-size: cover;
+    }
+    
+    
+    .partnerResultText {
+    	display: inline-block;
+    	float: left;
+    	padding-left: 35px;
+    }
+    
+    .partnerResultText p {
+    	padding-bottom: 10px;
+    }
+   
+    
+    .partnerResultTextPoint {
+    	color: #6bb7cf;
+    	font-size: 30px;
+    }
+    
+    
+    .partnerStandard {
+    	width: 450px;
+    }
+    
+    .partnerStandard p {
+    	color: #707070;
+    	font-size: 14px;
+    }
+    
+    
+    
+    .partnerBox {
+    	width : 340px;
+    	cursor: pointer;
+    }
+    
+    .partnerListContentBody {
+		background-color : #f2f7fa;
+    	padding-top: 60px;
+    }
+    
+    
+    .partnerListTitle {
+    	font-size: 35px;
+    	text-align: center;
+    	color: #333333;
+    	font-weight: bold;
+    }
+    
+	.partnerListContent {
+		margin: 0px;
+		padding-top: 50px;
+	}    
+    
+    .partnerSearchBox {
+    	text-align: right;
+    	clear: both;
+    	margin: 20px auto;
+    }
+    
+    .partnerSearchBtn {
+    	width: 30px;
+    	height: 30px;
+    	background-image: url("../images/iconmonstr-search-thin-48.png");
+    	background-size: cover;
+    	background-repeat : no-repeat;
+		vertical-align: sub;
+		border : 1px solid #efefef;
+		border-radius: 5px;
+		
+    }
+    
+    .partnerSearchBtn:active { 
+    	box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2); 
+    }
+
+
+    .partnerSearch {
+    	width: 325px;
+	    height: 30px;
+	    margin-right: 8px;
+	    border-radius: 10px;
+	    border: 1px solid #dbdbdb;
+    }
+    
+    .partnerBDetail {
+    	padding-left:  10px;
+    	padding-bottom: 18px;
+    }
+    
+     .partnerBDetail span {
+    	line-height: 20px;
+    	color: #707070;
+    	font-size: 13px;
+    } 
+    
+    .partnerBData{
+ 		color: black !important;
+    }
+    
+    
+    .partnerBBoard {
+    	background: white;
+    }
+    
+    
+    .partnerMakePJ {
+    	height: 160px;
+	    line-height: 40px;
+	    text-align: center;
+	    color: white;
+	    font-weight: bold;
+	    font-size: 18px;
+	    padding: 80px 0;
+	    background-image: url(../../images/partner/partnerImage.jpg);
+	    background-position: bottom;
+    }
+    
