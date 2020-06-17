@@ -94,6 +94,9 @@ public class MemberServiceImpl implements MemberService, MemberConstant {
 			int memberNo = dao.selectOne(TABLE+"getNewMemberNo");
 			System.out.println(memberNo + "번호...");
 			dto.setMemberNo(memberNo);
+			//아이디 이메일 모두 소문자로 통일
+			dto.setMemberId(dto.getMemberId().toLowerCase());
+			dto.setMemberEmail(dto.getMemberEmail().toLowerCase());
 			dao.insertData(TABLE + "insertMember", dto);
 		}catch(JoinException e) {
 			e.printStackTrace();

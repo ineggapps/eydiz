@@ -57,7 +57,8 @@ function ajaxJSON(url, method, data, $inputBoxSelector) {
 // 아이디
 $(function () {
   $("#memberId").on("focus blur", function (e) {
-    const id = $(this).val().trim();
+    const id = $(this).val().trim().toLowerCase();
+    $(this).val(id);
     const url = cp + "/member/join/checkId";
     if (!id) {
       return;
@@ -88,7 +89,8 @@ $(function () {
 // 이메일
 $(function () {
   $("#memberEmail").on("focus blur", function (e) {
-    const email = $(this).val().trim();
+    const email = $(this).val().trim().toLowerCase();
+    $(this).val(email);
     const url = cp + "/member/join/checkEmail";
     if (!email) {
       return;
