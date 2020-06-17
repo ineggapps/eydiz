@@ -155,6 +155,7 @@ label.checkbox input:checked ~ .checkmark:after {
 }
 
 .inputRow span.desc {
+	clear:both;
 	margin-top:10px;
   display:none;
   color: #757575;
@@ -162,7 +163,11 @@ label.checkbox input:checked ~ .checkmark:after {
 
 .inputRow span.desc.show,
 .inputRow span.desc.error{
-  display: inline-block;
+  display: block;
+}
+
+.inputRow span.desc.error{
+	color:#f77;
 }
 
 .inputBox {
@@ -191,7 +196,26 @@ label.checkbox input:checked ~ .checkmark:after {
 
 .inputBox.error ~ span.desc {
   color: #ff6666;
-  display: inline-block;
+  display: block;
+}
+
+.inputBox.valid ~ span.desc{
+	display:block;
+}
+
+.loadingBar{
+	display:none;
+	position: absolute;
+    top: -2px;
+    right: 9px;
+	width:30px;
+	height:30px;
+	background:url("../images/member/loading_circle.gif") no-repeat;
+	background-size:100%;
+}
+
+.loadingBar.show{	
+	display:block;
 }
 
 span.text {

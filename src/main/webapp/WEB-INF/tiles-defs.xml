@@ -29,11 +29,40 @@
 	<definition name=".mateLayout" template="/WEB-INF/view/layout/mate/frame.jsp">
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/mate/header.jsp" />
 		<put-attribute name="content" value="/WEB-INF/view/layout/mate/main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/mate/footer.jsp" />
+	</definition>
+	
+	<definition name=".mateLayout.*.*" extends=".mateLayout">
+		<put-attribute name="content" value="/WEB-INF/view/mate/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".mateLayout.*" extends=".mateLayout">
+		<put-attribute name="content" value="/WEB-INF/view/mate/{1}.jsp"/>
+	</definition>
+	
+	<definition name=".guideLayout" template="/WEB-INF/view/layout/guide/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/guide/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/layout/guide/main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/guide/footer.jsp" />
+	</definition>
+	
+	<definition name=".guideLayout.*.*" extends=".guideLayout">
+		<put-attribute name="content" value="/WEB-INF/view/guide/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".guideLayout.*" extends=".guideLayout">
+		<put-attribute name="content" value="/WEB-INF/view/guide/{1}.jsp"/>
 	</definition>
 	
 	<definition name=".newsLayout" template="/WEB-INF/view/layout/news/frame.jsp">
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/news/header.jsp" />
 		<put-attribute name="content" value="/WEB-INF/view/layout/news/main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/news/footer.jsp" />
+	</definition>
+	
+	<definition name=".newsLayout.*.*" extends=".newsLayout">
+		<put-attribute name="content" value="/WEB-INF/view/news/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".newsLayout.*" extends=".newsLayout">
+		<put-attribute name="content" value="/WEB-INF/view/news/{1}.jsp"/>
 	</definition>
 	
 	<definition name=".schoolLayout" template="/WEB-INF/view/layout/school/frame.jsp">
@@ -41,8 +70,32 @@
 		<put-attribute name="content" value="/WEB-INF/view/layout/school/main.jsp" />
 	</definition>
 	
-	
 	<!-- Eunmi -->
+	<definition name=".storyLayout" template="/WEB-INF/view/layout/story/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/story/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/story/story.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/story/footer.jsp" />
+	</definition>
+
+	<definition name=".storyLayout.*.*" extends=".storyLayout">
+		<put-attribute name="content" value="/WEB-INF/view/story/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".storyLayout.*" extends=".storyLayout">
+		<put-attribute name="content" value="/WEB-INF/view/story/{1}.jsp"/>
+	</definition>
+	
+	<definition name=".castLayout" template="/WEB-INF/view/layout/cast/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/cast/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/cast/next.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/cast/footer.jsp" />
+	</definition>
+	
+	<definition name=".castLayout.*.*" extends=".castLayout">
+		<put-attribute name="content" value="/WEB-INF/view/cast/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".castLayout.*" extends=".castLayout">
+		<put-attribute name="content" value="/WEB-INF/view/cast/{1}.jsp"/>
+	</definition>
 	
 	<!-- Enjin -->	
 	<definition name=".awardsLayout" template="/WEB-INF/view/layout/awards/frame.jsp">
@@ -57,7 +110,6 @@
 	<definition name=".awardsLayout.*" extends=".awardsLayout">
 		<put-attribute name="content" value="/WEB-INF/view/awards/{1}.jsp"/>
 	</definition>
-	
 	
 	<definition name=".partnerLayout" template="/WEB-INF/view/layout/partner/frame.jsp">
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/partner/header.jsp" />

@@ -1,5 +1,8 @@
 package com.eydiz.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller("member.memberController")
@@ -59,9 +63,50 @@ public class MemberController implements MemberConstant {
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String joinEmailSubmit(Member dto) {
-		return "redirect:"+API_MAIN;
+	public String joinEmailSubmit(@RequestParam(defaultValue="2") int step, Member dto) {
+		System.out.println("회원가입 시도");
+		String redirectUrl = API_MAIN; //가입 시 완료페이지가 기본
+		try {
+			service.insertMember(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			redirectUrl = step==2? API_JOIN_DETAIL : API_JOIN_INTRO;
+		}
+		return "redirect:"+redirectUrl;
 	}
 	
+	@RequestMapping(value="/join/checkId")
+	@ResponseBody
+	public Map<String, String>isTakenId(String memberId) {
+		boolean isTaken = true;
+		Map<String, String> map = new HashMap<>();
+		try {
+			isTaken = service.isTakenId(memberId);
+			map.put(JSON_IS_TAKEN, String.valueOf(isTaken));
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return map;
+	}
+	
+	@RequestMapping(value="/join/checkEmail")
+	@ResponseBody
+	public Map<String, String> isTakenEmail(String memberEmail){
+		boolean isTaken = true;
+		Map<String, String> map = new HashMap<>();
+		try {
+			isTaken = service.isTakenEmail(memberEmail);
+			map.put(JSON_IS_TAKEN, String.valueOf(isTaken));
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return map;
+	}
 
 }

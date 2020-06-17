@@ -9,7 +9,7 @@
   <div class="registerWrap">
     <h2 class="small">회원가입</h2>
     <div class="loginForm">
-      <form name="loginForm" method="post">
+      <form name="loginForm" method="post" action="<%=cp %>/member/join">
         <div class="inputRow">
           <label class="checkbox">
             <input type="checkbox" name="chkAgreement" />
@@ -21,10 +21,11 @@
             <input
               type="text"
               name="memberId"
+              id="memberId"
               placeholder="아이디"
               class="inputBox"
             />
-            <button type="button" class="btnSubmit inbox disabled">중복확인</button>
+            <span class="loadingBar">&nbsp;</span>
             <span class="desc">아이디가 올바르지 않습니다.</span>
           </label>
         </div>
@@ -33,6 +34,7 @@
             <input
               type="password"
               name="memberPwd"
+              id="memberPwd"
               placeholder="비밀번호(영문, 숫자, 특수문자 포함 8자 이상)"
               class="inputBox"
             />
@@ -47,6 +49,7 @@
             <input
               type="password"
               name="memberPwdConfirm"
+              id="memberPwdConfirm"
               placeholder="비밀번호 확인"
               class="inputBox"
             />
@@ -58,16 +61,17 @@
             <input
               type="text"
               name="memberEmail"
+              id="memberEmail"
               placeholder="이메일"
               class="inputBox"
             />
-            <button type="button" class="btnSubmit inbox disabled">중복확인</button>
+            <span class="loadingBar">&nbsp;</span>
             <span class="desc">이메일 주소가 올바르지 않습니다.</span>
           </label>
         </div>
         <div class="inputRow">
           <label>
-            <input type="text" name="userName" placeholder="닉네임" class="inputBox" />
+            <input type="text" name="memberNickname" id="memberNickname" placeholder="닉네임" class="inputBox" />
             <span class="desc">닉네임을 올바르게 입력해 주세요.</span>
           </label>
         </div>
@@ -96,4 +100,5 @@
       </form>
     </div>
   </div>
+  <script src="<%=cp %>/resource/js/member/join_detail.js"></script>
 </article>
