@@ -29,7 +29,7 @@ function ajaxJSON(url, method, data, $inputBoxSelector) {
   return new Promise(function (resolve, reject) {
     try {
       $loadingBar = $inputBoxSelector.closest("label").find(".loadingBar");
-      $loadingBar.toggleClass("show");
+      $loadingBar.addClass("show");
       $.ajax({
         url: url,
         type: method,
@@ -43,18 +43,18 @@ function ajaxJSON(url, method, data, $inputBoxSelector) {
           }
         },
         error: function (e) {
-          $loadingBar.toggleClass("show");
+          $loadingBar.removeClass("show");
           reject(e.responseText);
         },
       });
     } catch (error) {
-      $loadingBar.toggleClass("show");
+      $loadingBar.removeClass("show");
       reject(error);
     }
   });
 }
 
-//아이디
+// 아이디
 $(function () {
   $("#memberId").on("focus blur", function (e) {
     const id = $(this).val().trim();
@@ -85,7 +85,7 @@ $(function () {
   });
 });
 
-//이메일
+// 이메일
 $(function () {
   $("#memberEmail").on("focus blur", function (e) {
     const email = $(this).val().trim();
@@ -95,6 +95,7 @@ $(function () {
     }
     if (!isValidEmail(email)) {
       printError($("#memberEmail"), "이메일 주소를 올바르게 입력해 주세요.");
+      return;
     } else {
       hide($("#memberEmail"));
     }
@@ -111,5 +112,81 @@ $(function () {
       .catch(function (e) {
         console.log("서버와의 통신 오류입니다." + e);
       });
+  });
+});
+
+// 비밀번호 ,비밀번호 확 인
+
+$(function () {
+  $("#memberPwd").on("change keyup blur", function (e) {
+    const pwd = $(this).val();
+    if (!pwd) {
+      return;
+    }
+
+    if (pwd.length < 10) {
+      printError($(this), "비밀번호를 10자 이상 입력하세요.");
+    } else {
+      printDesc($(this), "이 비밀번호는 사용이 가능합니다.");
+    }
+  });
+
+  $("#memberPwdConfirm").on("change keyup blur", function (e) {
+    const pwd = $("#memberPwd").val();
+    const pwdConfirm = $(this).val();
+    if (!pwdConfirm) {
+      return;
+    }
+
+    if (pwdConfirm != pwd) {
+      printError($(this), "비밀번호가 일치하지 않습니다.");
+    } else {
+      printDesc($(this), "비밀번호가 일치합니다.");
+    }
+  });
+});
+
+//닉네임
+$(function () {
+  $("#memberNickname").on("change focus keyup blur", function (e) {
+    $(this).val($(this).val().trim());
+    const nickname = $(this).val().trim();
+    if (!nickname) {
+      printError($(this), "닉네임이 입력되지 않았습니다.");
+    } else {
+      printDesc($(this), nickname + "로 사용하시겠습니까?");
+    }
+  });
+});
+
+$(function () {
+  $(".inputBox").on("blur", function (e) {
+    validateForm();
+  });
+});
+
+//유효성 검사
+function validateForm() {
+  const inputBoxies = $("#wrap").find(".inputBox");
+  $("#btnSubmit").attr("disabled", "disabled").addClass("disabled");
+  $.each(inputBoxies, function (idx, item) {
+    if ($(item).val().trim().length == 0) {
+      return false;
+    }
+    if ($(item).hasClass("error")) {
+      return false;
+    }
+  });
+  $("#btnSubmit").removeAttr("disabled").removeClass("disabled");
+  return true;
+}
+
+//제출
+$(function () {
+  $("#btnSubmit").click(function () {
+    if ($(this).hasClass("disabled")) {
+      return;
+    }
+    $(this).closest("form").submit();
   });
 });

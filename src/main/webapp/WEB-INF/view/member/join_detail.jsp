@@ -9,7 +9,7 @@
   <div class="registerWrap">
     <h2 class="small">회원가입</h2>
     <div class="loginForm">
-      <form name="loginForm" method="post">
+      <form name="loginForm" method="post" action="<%=cp %>/member/join">
         <div class="inputRow">
           <label class="checkbox">
             <input type="checkbox" name="chkAgreement" />

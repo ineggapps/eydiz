@@ -49,16 +49,13 @@
         </div>
         <div class="orRow"><span>또는</span></div>
         <div class="socialLogin">
-          <div class="inputRow">
-            <button type="button" class="btnSubmit facebook">페이스북으로 로그인</button>
-          </div>
           <ul class="inputRow flex">
             <li><button type="button">카카오</button></li>
             <li><button type="button">구글</button></li>
           </ul>
           <div class="inputRow">
             <p class="text">
-              <span>아직 계정이 없나요? </span><a href="#" class="register">회원가입</a>
+              <span>아직 계정이 없나요? </span><a href="<%=cp %>/member/join" class="register">회원가입</a>
             </p>
           </div>
         </div>

@@ -91,6 +91,9 @@ public class MemberServiceImpl implements MemberService, MemberConstant {
 	public void insertMember(Member dto) throws JoinException,Exception {//회원가입
 		try {
 			isValidateNewMember(dto);
+			int memberNo = dao.selectOne(TABLE+"getNewMemberNo");
+			System.out.println(memberNo + "번호...");
+			dto.setMemberNo(memberNo);
 			dao.insertData(TABLE + "insertMember", dto);
 		}catch(JoinException e) {
 			e.printStackTrace();

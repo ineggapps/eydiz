@@ -34,11 +34,22 @@
 	</select>
 	
 	<!-- 회원 등록하기 -->
-	<insert id="insertMember" parameterType="com.eydiz.member.Member">
-		INSERT ALL 
-		INTO member(memberNo, available) VALUES(member_seq.NEXTVAL, 1)
-		INTO member(memberNo, memberId, memberNickname, memberPwd, memberEmail, memberSocial)
-		VALUES (#{memberNo}, #{memberId}, #{memberNickname}, #{memberPwd}, #{memberEmail}, #{memberSocial})
-	</insert>
+	<select id="getNewMemberNo" resultType="Integer">
+		SELECT member_seq.NEXTVAL FROM dual
+	</select>
 	
+	<update id="insertMember" parameterType="com.eydiz.member.Member">
+		INSERT ALL 
+		INTO member(memberNo, available) VALUES(#{memberNo}, 1)
+		INTO member_detail(memberNo, memberId, memberNickname, memberPwd, memberEmail, memberSocial)
+		VALUES (#{memberNo}, #{memberId}, #{memberNickname}, #{memberPwd}, #{memberEmail}, #{memberSocial})
+		SELECT * FROM dual
+	</update>
+	
+	<!-- 
+	마이바티스 이용시 insert into select를 하면
+	"; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: ORA-00933: SQL 명령어가 올바르게 종료되지 않았습니다" 00933에러를 보게된다. 
+	insert를 update로 바꿔 주면 된다. 
+	https://jojonari.tistory.com/m/entry/%EB%A7%88%EC%9D%B4%EB%B0%94%ED%8B%B0%EC%8A%A4-%EC%9D%B4%EC%9A%A9%EC%8B%9C-insert-into-select
+	 -->
 </mapper>

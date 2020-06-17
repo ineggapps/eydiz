@@ -64,7 +64,7 @@ public class MemberController implements MemberConstant {
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String joinEmailSubmit(@RequestParam(defaultValue="2") int step, Member dto) {
-		//email로 가입 시 id, nickname, pwd, email만
+		System.out.println("회원가입 시도");
 		String redirectUrl = API_MAIN; //가입 시 완료페이지가 기본
 		try {
 			service.insertMember(dto);
