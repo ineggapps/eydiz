@@ -63,14 +63,16 @@ public class MemberController implements MemberConstant {
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String joinEmailSubmit(Member dto) {
+	public String joinEmailSubmit(@RequestParam(defaultValue="2") int step, Member dto) {
 		//email로 가입 시 id, nickname, pwd, email만
+		String redirectUrl = API_MAIN; //가입 시 완료페이지가 기본
 		try {
-			
+			service.insertMember(dto);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			redirectUrl = step==2? API_JOIN_DETAIL : API_JOIN_INTRO;
 		}
-		return "redirect:"+API_MAIN;
+		return "redirect:"+redirectUrl;
 	}
 	
 	@RequestMapping(value="/join/checkId")
@@ -79,7 +81,24 @@ public class MemberController implements MemberConstant {
 		boolean isTaken = true;
 		Map<String, String> map = new HashMap<>();
 		try {
-			isTaken = service.isTaken(memberId);
+			isTaken = service.isTakenId(memberId);
+			map.put(JSON_IS_TAKEN, String.valueOf(isTaken));
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return map;
+	}
+	
+	@RequestMapping(value="/join/checkEmail")
+	@ResponseBody
+	public Map<String, String> isTakenEmail(String memberEmail){
+		boolean isTaken = true;
+		Map<String, String> map = new HashMap<>();
+		try {
+			isTaken = service.isTakenEmail(memberEmail);
 			map.put(JSON_IS_TAKEN, String.valueOf(isTaken));
 			map.put(JSON_RESULT, JSON_RESULT_OK);
 		} catch (Exception e) {
