@@ -198,6 +198,7 @@ header {
 .columnSide {
   /*모바일 웹 왼쪽 메뉴 참고!!!1*/
   position: fixed;
+  top:57px;/*헤더 고려*/
   height: 100% !important; /*모바일웹.. 고정할 때*/
   overflow: auto;
   width: 240px;
@@ -398,6 +399,7 @@ a.btnHashDelete span {
   .columnSide {
     /* overflow: auto; 모바일 웹에서 세로가 넘치면 스크롤 */
     left: 0;
+    top:0 !important;
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
     -webkit-transition: -webkit-transform 0.2s;
