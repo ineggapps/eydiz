@@ -35,6 +35,18 @@
 		<put-attribute name="content" value="/WEB-INF/view/studio/{1}.jsp"/>
 	</definition>
 	
+	<definition name=".studioOverviewLayout" template="/WEB-INF/view/layout/studio_overview/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/studio_overview/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/studio_overview/list.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/studio_overview/footer.jsp" />
+	</definition>
+	<definition name=".studioOverviewLayout.*.*" extends=".studioOverviewLayout">
+		<put-attribute name="content" value="/WEB-INF/view/studio_overview/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".studioOverviewLayout.*" extends=".studioOverviewLayout">
+		<put-attribute name="content" value="/WEB-INF/view/studio_overview/{1}.jsp"/>
+	</definition>
+	
 	<!-- Junik -->
 	<definition name=".mateLayout" template="/WEB-INF/view/layout/mate/frame.jsp">
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/mate/header.jsp" />

@@ -2,6 +2,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="studio">
+	<!-- 브랜드 -->
 	<insert id="makeBrand">
 		INSERT INTO brand(brandNo, memberNo, brandName, managerName, managerEmail, managerPhone)
 		VALUE (brand_seq.NEXTVAL, #{memberNo}, #{brandName}, #{managerName}, #{managerEmail}, #{managerPhone})
@@ -28,4 +29,43 @@
 		UPDATE brand SET brandName=#{brandName}, managerName=#{managerName}, managerEmail=#{managerEmail}, managerPhone=#{managerPhone}
 		WHERE memberNo=#{memberNo}
 	</update>
+	
+	<!-- 프로젝트 -->
+	<!-- 프로젝트 카테고리
+		카테고리는 대분류, 중분류밖에 없을 것임.
+		대분류=> 펀딩 vs 기부
+		중분류 => 펀딩의 테크가전, 펀딩의 출판, ..., 후원의 기부/후원
+	 -->
+	<select id="readAllProjectCategories" resultType="com.eydiz.studio.ProjectCategory">
+		SELECT categoryNo, categoryName
+		FROM project_category
+		WHERE parentCategoryNo is not null
+		START WITH parentCategoryNo is not null
+		CONNECT BY PRIOR categoryno=parentCategoryNo
+		ORDER BY categoryNo ASC
+	</select>
+	
+	<!-- 새로운 프로젝트 번호 얻어오기 -->
+	<select id="getNewProjectNo" resultType="Integer">
+		SELECT project_seq.NEXTVAL FROM dual
+	</select>
+	
+	<!-- 프로젝트 등록하기 -->
+	<insert id="insertProject" parameterType="com.eydiz.studio.Project">
+		INSERT INTO project(
+			projectNo, brandNo, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectCreatedDate, projectUpdatedDate, projectStartDate, projectEndDate, statusNo
+		)
+		VALUES(
+			#{projectNo}, #{brandNo}, #{categoryNo}, #{projectName}, #{projectStatusMemo}, #{projectImageUrl}, #{projectGoalAmount},
+			SYSDATE, SYSDATE, #{projectStartDate}, #{projectEndDate}, #{statusNo}
+		)
+	</insert>
+	
+	<insert id="insertProjectHashtag" >
+		INSERT INTO project_hashtag(tagNo, projectNo, keyword)
+		VALUES(project_hashtag_seq.NEXTVAL, #{projectNo}, #{keyword})
+	</insert>
+	
+	
 </mapper>

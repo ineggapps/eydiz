@@ -13,11 +13,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>크라우드 펀딩</title>
     <link rel="stylesheet" href="<%=cp%>/resource/css/reset.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/jquery/css/jquery-ui.min.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/layout.css" />
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js/html5shiv.min.js"></script>
     <![endif]-->
     <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
+    <script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
   </head>
   <body>
     <div id="wrap">
@@ -26,7 +28,7 @@
         <div class="headerInner">
           <h3 class="btnMenu" id="btnGnbMenu"><span class="hidden">메뉴</span></h3>
           <h1 class="logo"><a href="#">Brand studio</a></h1>
-          <div class="projectTitle"><h2>브랜드명</h2></div>
+          <div class="projectTitle"><h2>${sessionScope.brand.brandName}</h2></div>
           <ul class="rightGnb">
             <li class="menuExit">
               <a href="#" class="none"><span>나가기</span></a>

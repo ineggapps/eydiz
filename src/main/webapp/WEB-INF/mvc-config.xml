@@ -74,11 +74,19 @@
             <bean class="com.eydiz.member.LoginCheckInterceptor"/>
         </mvc:interceptor>
         
+        <!-- 브랜드가 없으면 만드는 단독 페이지로 이동 -->
         <mvc:interceptor>
         	<mvc:mapping path="/studio/project/**"/>
         	
         	<!-- 제외: 없음... -->
         	<bean class="com.eydiz.studio.StudioInterceptor"/>
+        </mvc:interceptor>
+        
+        <!-- 브랜드 세션에 정보 입력하는 인터셉터 -->
+        <mvc:interceptor>
+        	<mvc:mapping path="/studio/**"/>
+        	<!-- 제외: 없음.. -->
+        	<bean class="com.eydiz.studio.StudioBrandInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>	 
  

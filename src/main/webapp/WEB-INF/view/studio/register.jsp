@@ -8,8 +8,8 @@
 <article class="row">
   <h2>기본 정보</h2>
   <p class="description">프로젝트를 소개할 기본 정보를 입력하세요.</p>
-
   <div class="infoItemWrap">
+	<form action="<%=cp%>/studio/project/register" method="post" enctype="multipart/form-data">
     <div class="infoItem required">
       <div class="infoTitle"><span>프로젝트 제목</span></div>
       <p class="desc">프로젝트 제목을 입력하세요</p>
@@ -20,9 +20,18 @@
 
     <div class="infoItem">
       <div class="infoTitle"><span>프로젝트 진행상황</span></div>
-      <p class="desc">프로젝트 진행상황에 대해 짤막하게 메모를 입력하세요.</p>
+      <p class="desc">심사관이 평가할 수 있도록 프로젝트 진행상황에 대해 짤막하게 메모를 입력하세요.</p>
       <div class="inputWrap">
         <input type="text" id="projectStatusMemo" name="projectStatusMemo" />
+      </div>
+    </div>
+    
+    
+    <div class="infoItem">
+      <div class="infoTitle"><span>목표 금액</span></div>
+      <p class="desc">50만 원에서 1억 원까지 설정할 수 있습니다.</p>
+      <div class="inputWrap">
+        <input type="text" id="projectGoalAmount" name="projectGoalAmount" />
       </div>
     </div>
 
@@ -47,7 +56,9 @@
       <div class="inputWrap">
         <select name="categoryNo">
           <option>::선택::</option>
-          <option value="1">테크·가전</option>
+          <c:forEach var="item" items="${category}">
+          <option value="${item.categoryNo}">${item.categoryName}</option>
+          </c:forEach>
         </select>
       </div>
     </div>
@@ -89,6 +100,13 @@
         </li>
       </ul>
     </div>
+  </form>
   </div>
   <a href="#" class="btnSubmit" id="btnSave">저장하기</a>
+  <script type="text/javascript">
+  $( function() {
+	    $( "#projectStartDate" ).datepicker({"dateFormat":"yymmdd"});
+	    $( "#projectEndDate" ).datepicker({"dateFormat":"yymmdd"});
+  } );
+  </script>
 </article>

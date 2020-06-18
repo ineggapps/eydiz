@@ -1,5 +1,7 @@
 package com.eydiz.studio;
 
+import java.util.List;
+
 public class Project {
 	private int projectNo;
 	private int brandNo;
@@ -16,6 +18,7 @@ public class Project {
 	private String projectSummary;
 	private String projectStory;
 	private String categoryName;
+	private List<ProjectHashTag> hashTag;
 
 	public int getProjectNo() {
 		return projectNo;
@@ -135,6 +138,14 @@ public class Project {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+	public List<ProjectHashTag> getHashTag() {
+		return hashTag;
+	}
+
+	public void setHashTag(List<ProjectHashTag> hashTag) {
+		this.hashTag = hashTag;
 	}
 
 }

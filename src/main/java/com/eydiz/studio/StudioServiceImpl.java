@@ -1,5 +1,10 @@
 package com.eydiz.studio;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +13,8 @@ import com.eydiz.common.dao.CommonDAO;
 @Service("studio.studioService")
 public class StudioServiceImpl implements StudioService, StudioConstant {
 
+	private Logger logger = LoggerFactory.getLogger(StudioService.class);
+	
 	@Autowired
 	CommonDAO dao;
 
@@ -31,6 +38,19 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			e.printStackTrace();
 		}
 		return count;
+	}
+	
+	@Override
+	public List<ProjectCategory> listCategory() {
+		List<ProjectCategory> category = null;
+		try {
+			category = dao.selectList(MAPPER_NAMESPACE+"readAllProjectCategories");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			category = new ArrayList<>();
+			category.add(new ProjectCategory(0,"카테고리 불러오기 실패"));
+		}
+		return category;
 	}
 
 	@Override

@@ -1,0 +1,194 @@
+@charset "UTF-8";
+
+.columnContent {
+	width: 100%;
+	padding: 40px 66px 40px 306px;
+	flex: 1 1;
+}
+
+.contentWrapper h2 {
+	font-size: 2rem;
+	font-weight: 700;
+	margin: 10px 0;
+}
+
+.infoItemWrap {
+	margin: 40px 0 10px;
+}
+
+.infoItem {
+	margin: 20px 0 40px;
+}
+
+.infoItem.required .infoTitle span::after {
+	color: #f77;
+	content: "*";
+	margin-left: 5px;
+}
+
+.infoItem .infoTitle {
+	font-weight: 500;
+	font-size: 1.2rem;
+	margin: 20px 0;
+}
+
+.infoItem p.desc {
+	font-size: 0.85rem;
+	color: #757575;
+	margin: 3px 0;
+	line-height: 1.6rem;
+}
+
+.infoItem .inputWrap input {
+	color: #757575;
+	border: 1.5px solid #d9d9d9;
+	width: 60%;
+	height: 48px;
+	box-sizing: border-box;
+	transition: border ease-in-out 0.3s;
+	padding: 10px;
+}
+
+.infoItem .inputWrap select {
+	color: #757575;
+	width: 60%;
+	border: 1.5px solid #d9d9d9;
+	padding: 10px;
+}
+
+.infoItem .inputWrap input:hover {
+	border-color: #757575;
+}
+
+.infoItem .inputWrap input:focus {
+	border-color: #00c4c4;
+}
+
+.hashItems {
+	width: 60%;
+}
+
+.hashItems li.template {
+	display: none;
+}
+
+.hashItems li {
+	float: left;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+.hashItems li {
+	font-size: 0.9rem;
+	color: #6d6d6d;
+	display: block;
+	padding: 10px 15px;
+	background-color: #e6eaed;
+	border-radius: 48px;
+}
+
+.inputWrap .imageBox {
+	display: none;
+	width: 320px;
+	border: 1px solid #d9d9d9;
+	min-height: 172px;
+}
+
+.iconCamera {
+	background-image: url("../../images/studio/icon-camera.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	display: inline-block;
+}
+
+.btnDarkContrast span {
+	width: 22px;
+	height: 22px;
+	margin: 12px 5px;
+}
+
+.btnDarkContrast {
+	display: block;
+	border: 0 none;
+	border-radius: 5px;
+	color: #fff;
+	padding: 5px 35px 5px 30px;
+	background-color: #90949c;
+	transition: background-color linear 0.2s;
+}
+
+.btnDarkContrast:hover {
+	background-color: #60656a;
+}
+
+a.btnHashDelete {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	background-image: url("../../images/studio/close.png");
+	background-repeat: no-repeat;
+	background-size: 100%;
+	margin-left: 8px;
+}
+
+a.btnHashDelete span {
+	display: none;
+}
+
+#btnSave {
+	width: 30%;
+}
+
+.width60per{
+	width:60%;
+}
+
+@media ( max-width : 768px) {
+	.projectTitle, .menuExit, .menuTemporary {
+		display: none !important;
+	}
+	.infoItem .inputWrap input, .infoItem .inputWrap select, .hashItems {
+		width: 100%;
+	}
+}
+
+/*브랜드 만들기 레이아웃 (기본)*/
+header h1.logoCenter {
+	padding-top: 20px;
+	font-size: 2rem;
+	font-weight: 900;
+	text-align: center;
+}
+
+.centerInner .inputWrap, .centerInner .infoItem .inputWrap input,
+	.centerInner .infoItem .inputWrap select {
+	width: calc(100% - 12px);
+}
+
+.centerInner {
+	width: calc(100% - 200px);
+	max-width: 800px;
+	margin: 0 auto;
+	padding-bottom: 80px;
+}
+
+@media ( max-width : 768px) {
+	.centerInner {
+		padding: 40px;
+		width: 100%;
+	}
+	.submitContainer {
+		width: 100%;
+		height: 77px;
+		background-color: #fff;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		box-sizing:border-box;
+		padding: 10px 40px;
+	}
+	
+	.footerWarning{
+  	padding-bottom:100px;
+  }
+}

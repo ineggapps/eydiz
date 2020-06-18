@@ -6,8 +6,8 @@
 	String cp=request.getContextPath();
 %>
 <div class="titleInbox">
-  <p class="projectName">브랜드명의<br />멋진 프로젝트</p>
-  <p class="info">프로젝트 번호: 00000</p>
+  <p class="projectName">${sessionScope.brand.brandName}의<br />관리 페이지</p>
+  <p class="info">브랜드 번호: <fmt:formatNumber pattern="00000" value="${sessionScope.brand.brandNo}"/> </p>
 </div>
 <div class="menuList">
   <ul class="subMenuItems">
@@ -18,7 +18,7 @@
           <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
         </div>
         <ul class="subMenu">
-          <li class="subMenuItem"><a href="#">브랜드 정보 수정</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/studio/brand/info">브랜드 관리</a></li>
         </ul>
       </div>
     </li>
