@@ -71,7 +71,6 @@ public class StudioController implements StudioConstant, MemberConstant {
 			e.printStackTrace();
 			redirectUrl = API_BRAND_INFO;
 		}
-		addModelURIAttribute(model, req);
 		return "redirect:" + redirectUrl;
 	}
 
