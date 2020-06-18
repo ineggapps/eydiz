@@ -84,13 +84,13 @@ h2 {
   background-repeat: no-repeat;
 }
 .btnBack {
-  background-image: url("../images/back-64.png");
+  background-image: url("../images/common/back-64.png");
   position: absolute;
   top: 13px;
   left: 10px;
 }
 .btnHome {
-  background-image: url("../images/house-64.png");
+  background-image: url("../images/common/house-64.png");
   position: absolute;
   top: 13px;
   right: 10px;
