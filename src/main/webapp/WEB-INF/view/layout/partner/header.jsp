@@ -41,14 +41,4 @@
             </button>
           </div>
         </div>
-        <div class = "partnerBannerImage" >
-        	<div class="awardsTitle">
-        		<div class = "patnerBannerTitle">이디즈 파트너</div>
-        		<div class = "TitleBannerSubText">
-        		   <p>이디즈에서는 누구나 투자받고 투자하면서 함께 성장합니다.</p><br>
-				   <p>1%의 특별한 소수가 아닌 99%의 다양한 사람들이 더불어 성장할 수 있는 곳,</p><br>
-				   <p class="patnerBannerPoint">이디즈에서 다양한 분야에서 도전하는 메이커를 찾아보세요</p><br><br>
-				</div>
-        	</div>
-        </div>
       </header>

@@ -23,6 +23,9 @@
       <script src="resource/js//html5shiv.min.js"></script>
     <![endif]-->
     <script src="resource/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript">
+    	
+    </script>
   </head>
   <body>
     <div id="wrap">

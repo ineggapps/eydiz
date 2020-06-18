@@ -5,6 +5,7 @@
 <%
    String cp = request.getContextPath();
 %>
+
       <header id="header">
         <div class="headerInner">
           <h1 class="logo"><a href="#">eydiz</a></h1>

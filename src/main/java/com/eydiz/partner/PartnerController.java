@@ -13,4 +13,9 @@ public class PartnerController {
 		return ".partnerLayout.list";
 	}
 	
+	@RequestMapping(value="article", method=RequestMethod.GET)
+	public String article() {
+		return ".partnerLayout.article";
+	}
+	
 }
