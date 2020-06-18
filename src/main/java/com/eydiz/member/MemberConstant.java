@@ -17,7 +17,6 @@ public interface MemberConstant extends Constant {
 	// 세션 정보
 	public final static String SESSION_MEMBER = "member";
 
-
 	// JSON 결괏값
 	public final static String JSON_IS_TAKEN = "taken";
 

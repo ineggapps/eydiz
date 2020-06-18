@@ -17,12 +17,22 @@
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/member/header.jsp" />
 		<put-attribute name="content" value="/WEB-INF/view/layout/main.jsp" />
 	</definition>
-	
 	<definition name=".memberLayout.*.*" extends=".memberLayout">
 		<put-attribute name="content" value="/WEB-INF/view/member/{1}/{2}.jsp"/>
 	</definition>
 	<definition name=".memberLayout.*" extends=".memberLayout">
 		<put-attribute name="content" value="/WEB-INF/view/member/{1}.jsp"/>
+	</definition>
+	
+	<definition name=".studioLayout" template="/WEB-INF/view/layout/studio/frame.jsp">
+	  	<put-attribute name="side" value="/WEB-INF/view/layout/studio/side.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/studio/main.jsp" />
+	</definition>
+	<definition name=".studioLayout.*.*" extends=".studioLayout">
+		<put-attribute name="content" value="/WEB-INF/view/studio/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".studioLayout.*" extends=".studioLayout">
+		<put-attribute name="content" value="/WEB-INF/view/studio/{1}.jsp"/>
 	</definition>
 	
 	<!-- Junik -->

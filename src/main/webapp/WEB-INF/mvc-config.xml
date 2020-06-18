@@ -73,6 +73,13 @@
             <mvc:exclude-mapping path="/member/join/**"/>
             <bean class="com.eydiz.member.LoginCheckInterceptor"/>
         </mvc:interceptor>
+        
+        <mvc:interceptor>
+        	<mvc:mapping path="/studio/project/**"/>
+        	
+        	<!-- 제외: 없음... -->
+        	<bean class="com.eydiz.studio.StudioInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>	 
  
     <!-- 예외처리 -->

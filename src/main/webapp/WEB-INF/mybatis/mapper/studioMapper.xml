@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="studio">
+	<insert id="makeBrand">
+		INSERT INTO brand(brandNo, memberNo, brandName, managerName, managerEmail, managerPhone)
+		VALUE (brand_seq.NEXTVAL, #{memberNo}, #{brandName}, #{managerName}, #{managerEmail}, #{managerPhone})
+	</insert>
+	
+	<select id="myBrandCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*),0) 
+		FROM brand
+		WHERE memberNo=#{memberNo}
+	</select>
+	
+	<select id="readBrandByMemberNo" parameterType="Integer" resultType="com.eydiz.studio.Brand">
+		SELECT brandNo, memberNo, brandName, managerName, managerEmail, managerPhone
+		FROM brand
+		WHERE  memberNo=#{memberNo}
+	</select>
+	
+	<insert id="insertBrand" parameterType="com.eydiz.studio.Brand">
+		INSERT INTO brand(brandNo, memberNo, brandName, managerName, managerEmail, managerPhone)
+		VALUES(brand_seq.NEXTVAL, #{memberNo}, #{brandName}, #{managerName}, #{managerEmail}, #{managerPhone})
+	</insert>
+	
+	<update id="updateBrand" parameterType="com.eydiz.studio.Brand">
+		UPDATE brand SET brandName=#{brandName}, managerName=#{managerName}, managerEmail=#{managerEmail}, managerPhone=#{managerPhone}
+		WHERE memberNo=#{memberNo}
+	</update>
+</mapper>

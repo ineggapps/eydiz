@@ -7,6 +7,7 @@ public class Member {
 	private String memberPwd;
 	private String memberEmail;
 	private int memberSocial;
+	private boolean isAdmin;
 
 	public int getMemberNo() {
 		return memberNo;
@@ -55,5 +56,15 @@ public class Member {
 	public void setMemberSocial(int memberSocial) {
 		this.memberSocial = memberSocial;
 	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	
+	
 
 }

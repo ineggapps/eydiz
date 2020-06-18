@@ -31,6 +31,12 @@ a.btnSubmit {
   background-color: #00c4c4;
   transition: background-color linear 0.2s;
   border-radius: 5px;
+  cursor:pointer;
+  border:none;
+}
+
+.btnSubmit:focus{
+	outline:none;	
 }
 
 .btnSubmit.bordering {

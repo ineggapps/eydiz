@@ -15,7 +15,10 @@
     <title>크라우드 펀딩</title>
     <link rel="stylesheet" href="<%=cp%>/resource/css/reset.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/content.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/cast/next.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/cast/news.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/cast/write.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/cast/read.css" />
     <!--[if lt IE 9]>
       <script src="resource/js//html5shiv.min.js"></script>
     <![endif]-->
