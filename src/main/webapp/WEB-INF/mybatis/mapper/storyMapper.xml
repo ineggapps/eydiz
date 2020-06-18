@@ -2,7 +2,21 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="story">
-	<insert id="insertStory">
-	INSERT INTO story_board(storyNum, memberId, storyCnum, storyTitle, storyContent, storyCreated)
+	<insert id="insertStory" parameterType="com.eydiz.story.Story">
+		INSERT INTO story_board(storyNum, memberId, storyCnum, storyTitle, storyContent, storyCreated, storyThumbnail)
+		VALUES(story_board_seq.NEXTVAL, #{memberId}, story_category_seq.NEXTVAL, #{storyTitle}, #{storyContent}, SYSDATE, #{storyThumbnail})
 	</insert>
+	
+	<select id="dataCount" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM story_board
+	</select>
+	
+	<select id="listStory" resultType="com.eydiz.story.Story" parameterType="map">
+		SELECT storyNum, s.memberId, storyCnum, storyTitle, storyContent, storyCreated, storyThumbnail
+		FROM story_board s JOIN member_detail m ON s.memberId = m.memberId
+		ORDER BY storyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	
 </mapper>

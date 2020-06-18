@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/content.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/story/story.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/common.css" />
 
     
     <!--[if lt IE 9]>
