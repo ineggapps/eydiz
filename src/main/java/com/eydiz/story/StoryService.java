@@ -6,8 +6,7 @@ import java.util.Map;
 public interface StoryService {
 	public void insertStroy(Story dto) throws Exception;
 	public List<Story> listStory(Map<String, Object> map);
-	public int dataCount(Map<String, Object> map);
-	public Story readStory(int num);
+	public int dataCount();
 	public void updateStory(Story dto) throws Exception;
 	public void deleteStory(int num, String memberId) throws Exception;
 	
