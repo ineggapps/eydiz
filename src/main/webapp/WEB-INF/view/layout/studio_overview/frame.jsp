@@ -20,6 +20,21 @@
       <script src="<%=cp%>/resource/js//html5shiv.min.js"></script>
     <![endif]-->
     <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
+    <script>
+    	//sticky 구현
+    	$(function(){
+    		const $nav = $("div.nav");
+	    	var navOffset = $nav.offset();
+    		$( window ).scroll( function() {
+    			if ( $( document ).scrollTop() > navOffset.top) {
+    					$nav.addClass( 'sticky' );
+    			    }
+    			    else {
+    			    	$nav.removeClass( 'sticky' );
+    			    }			
+    		});
+    	});
+    </script>
   </head>
   <body>
     <div id="wrap">

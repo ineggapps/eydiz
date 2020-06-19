@@ -167,6 +167,9 @@ header h1.logoCenter {
 }
 
 @media (max-width: 768px) {
+  .mobileNav {
+    position: fixed;
+  }
   .projectTitle,
   .menuExit,
   .menuTemporary {

@@ -10,12 +10,12 @@ header {
   clear: both;
 }
 
-.bgWhite{
-	background-color:#fff;
+.bgWhite {
+  background-color: #fff;
 }
 
-.contentWrapper{
-	background-color:#f5f7fa;
+.contentWrapper {
+  background-color: #f5f7fa;
 }
 
 .projectTitle {
@@ -106,7 +106,7 @@ ul.detailNav a span.badge {
 }
 
 .contentInner {
-  box-sizing:border-box;
+  box-sizing: border-box;
   width: 960px;
   margin: 0 auto;
   padding: 20px 0;
@@ -122,6 +122,7 @@ ul.detailNav a span.badge {
   .contentInner {
     width: 100%;
   }
+
   .contentInner {
     padding-left: 40px;
     padding-right: 40px;
@@ -147,5 +148,4 @@ ul.detailNav a span.badge {
   ul.detailNav li:not(:last-child) {
     margin-right: 15px;
   }
- 
 }
