@@ -57,11 +57,11 @@
                 <li ${uri=='/project/list'?"class=\"on\"":""}>
                   <a href="<%=cp%>/studio/project/list"><span>프로젝트 전체</span></a>
                 </li>
-                <li ${uri=='/project/list?category=1'?"class=\"on\"":""}>
-                  <a href="<%=cp%>/studio/project/list?category=1"><span>펀딩</span></a>
+                <li ${categoryName=='funding'?"class=\"on\"":""}>
+                  <a href="<%=cp%>/studio/project/list/funding"><span>펀딩</span></a>
                 </li>
-                <li ${uri=='/project/list?category=2'?"class=\"on\"":""}>
-                  <a href="<%=cp%>/studio/project/list?category=2"><span>후원</span></a>
+                <li ${categoryName=='donate'?"class=\"on\"":""}>
+                  <a href="<%=cp%>/studio/project/list/donate"><span>후원</span></a>
                 </li>
               </ul>
             </div>
