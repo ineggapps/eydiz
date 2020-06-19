@@ -9,12 +9,13 @@
   <h2>기본 정보</h2>
   <p class="description">프로젝트를 소개할 기본 정보를 입력하세요.</p>
   <div class="infoItemWrap">
-	<form action="<%=cp%>/studio/project/register" method="post" enctype="multipart/form-data">
+	<form name="projectForm" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="projectNo" value="${project.projectNo}"/>
     <div class="infoItem required">
-      <div class="infoTitle"><span>프로젝트 제목</span></div>
-      <p class="desc">프로젝트 제목을 입력하세요</p>
+      <div class="infoTitle"><span>프로젝트 이름</span></div>
+      <p class="desc">프로젝트 이름을 입력하세요</p>
       <div class="inputWrap">
-        <input type="text" id="projectName" name="projectName" />
+        <input type="text" id="projectName" name="projectName" value="${project.projectName}" />
       </div>
     </div>
 
@@ -22,7 +23,7 @@
       <div class="infoTitle"><span>프로젝트 진행상황</span></div>
       <p class="desc">심사관이 평가할 수 있도록 프로젝트 진행상황에 대해 짤막하게 메모를 입력하세요.</p>
       <div class="inputWrap">
-        <input type="text" id="projectStatusMemo" name="projectStatusMemo" />
+        <input type="text" id="projectStatusMemo" name="projectStatusMemo" value="${project.projectStatusMemo}" />
       </div>
     </div>
     
@@ -31,14 +32,14 @@
       <div class="infoTitle"><span>목표 금액</span></div>
       <p class="desc">50만 원에서 1억 원까지 설정할 수 있습니다.</p>
       <div class="inputWrap">
-        <input type="text" id="projectGoalAmount" name="projectGoalAmount" />
+        <input type="text" id="projectGoalAmount" name="projectGoalAmount" value="${project.projectGoalAmount}"/>
       </div>
     </div>
 
     <div class="infoItem required">
       <div class="infoTitle"><span>대표 이미지</span></div>
       <div class="inputWrap">
-        <input type="file" name="projectImage" id="projectImage" class="hide" />
+        <input type="file" name="uploadImage" id="uploadImage" class="hide" />
         <div class="imageBox"></div>
         <button type="button" id="btnProjectImage" class="btnDarkContrast">
           <span class="iconCamera">&nbsp;</span>등록하기
@@ -57,7 +58,7 @@
         <select name="categoryNo">
           <option>::선택::</option>
           <c:forEach var="item" items="${category}">
-          <option value="${item.categoryNo}">${item.categoryName}</option>
+          <option value="${item.categoryNo}" ${item.categoryNo==project.categoryNo?"selected=\"selected\"":""}>${item.categoryName}</option>
           </c:forEach>
         </select>
       </div>
@@ -67,7 +68,7 @@
       <div class="infoTitle"><span>프로젝트 시작일</span></div>
       <p class="desc">리워드를 개시하기 위해 프로젝트 시작일을 선택하세요.</p>
       <div class="inputWrap">
-        <input type="text" id="projectStartDate" name="projectStartDate" />
+        <input type="text" id="projectStartDate" name="projectStartDate" value="${project.projectStartDate}" />
       </div>
     </div>
 
@@ -75,7 +76,7 @@
       <div class="infoTitle"><span>프로젝트 종료일</span></div>
       <p class="desc">리워드를 마감하기 위한 프로젝트 종료일을 선택하세요.</p>
       <div class="inputWrap">
-        <input type="text" id="projectEndDate" name="projectEndDate" />
+        <input type="text" id="projectEndDate" name="projectEndDate" value="${project.projectEndDate}"/>
       </div>
     </div>
 
@@ -103,10 +104,5 @@
   </form>
   </div>
   <a href="#" class="btnSubmit" id="btnSave">저장하기</a>
-  <script type="text/javascript">
-  $( function() {
-	    $( "#projectStartDate" ).datepicker({"dateFormat":"yymmdd"});
-	    $( "#projectEndDate" ).datepicker({"dateFormat":"yymmdd"});
-  } );
-  </script>
+  <script type="text/javascript" src="<%=cp%>/resource/js/studio/project_register.js"></script>
 </article>

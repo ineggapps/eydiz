@@ -1,16 +1,15 @@
 package com.eydiz.studio;
 
-public class ProjectHashTag {
-	private int tagNo;
+public class ProjectHashtag {
 	private int projectNo;
 	private String keyword;
 
-	public int getTagNo() {
-		return tagNo;
+	public ProjectHashtag() {
 	}
 
-	public void setTagNo(int tagNo) {
-		this.tagNo = tagNo;
+	public ProjectHashtag(int projectNo, String keyword) {
+		this.projectNo = projectNo;
+		this.keyword = keyword;
 	}
 
 	public int getProjectNo() {

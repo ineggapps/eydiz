@@ -1,5 +1,7 @@
 package com.eydiz.member;
 
+import java.io.File;
+
 import com.eydiz.common.Constant;
 
 public interface MemberConstant extends Constant {
@@ -14,6 +16,9 @@ public interface MemberConstant extends Constant {
 	public final static String API_JOIN_INTRO = "/member/join";
 	public final static String API_JOIN_DETAIL = "/member/join?" + PARAM_STEP + "=2";
 
+	//location
+	public final static String FOLDER_UPLOADS_ROOT = "uploads";
+	
 	// 세션 정보
 	public final static String SESSION_MEMBER = "member";
 

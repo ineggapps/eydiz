@@ -2,6 +2,8 @@ package com.eydiz.studio;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Project {
 	private int projectNo;
 	private int brandNo;
@@ -18,7 +20,8 @@ public class Project {
 	private String projectSummary;
 	private String projectStory;
 	private String categoryName;
-	private List<ProjectHashTag> hashTag;
+	private List<ProjectHashtag> hashTag;
+	private MultipartFile uploadImage;
 
 	public int getProjectNo() {
 		return projectNo;
@@ -140,12 +143,33 @@ public class Project {
 		this.categoryName = categoryName;
 	}
 
-	public List<ProjectHashTag> getHashTag() {
+	public List<ProjectHashtag> getHashTag() {
 		return hashTag;
 	}
 
-	public void setHashTag(List<ProjectHashTag> hashTag) {
+	public void setHashTag(List<ProjectHashtag> hashTag) {
 		this.hashTag = hashTag;
 	}
+
+	public MultipartFile getUploadImage() {
+		return uploadImage;
+	}
+
+	public void setUploadImage(MultipartFile uploadImage) {
+		this.uploadImage = uploadImage;
+	}
+
+	@Override
+	public String toString() {
+		return "Project [projectNo=" + projectNo + ", brandNo=" + brandNo + ", categoryNo=" + categoryNo
+				+ ", projectName=" + projectName + ", projectStatusMemo=" + projectStatusMemo + ", projectImagesUrl="
+				+ projectImagesUrl + ", projectGoalAmount=" + projectGoalAmount + ", projectCreatedDate="
+				+ projectCreatedDate + ", projectUpdatedDate=" + projectUpdatedDate + ", projectStartDate="
+				+ projectStartDate + ", projectEndDate=" + projectEndDate + ", stateNo=" + stateNo + ", projectSummary="
+				+ projectSummary + ", projectStory=" + projectStory + ", categoryName=" + categoryName + ", hashTag="
+				+ hashTag + ", uploadImage=" + uploadImage + "]";
+	}
+	
+	
 
 }

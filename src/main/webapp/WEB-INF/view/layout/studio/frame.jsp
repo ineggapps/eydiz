@@ -18,8 +18,12 @@
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js/html5shiv.min.js"></script>
     <![endif]-->
+    <script>
+    	const cp = "<%=cp%>";
+    </script>
     <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
     <script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
   </head>
   <body>
     <div id="wrap">

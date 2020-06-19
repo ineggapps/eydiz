@@ -341,6 +341,11 @@ header#header {
   border-radius: 48px;
 }
 
+.hashItems span.text::before{
+	content:"#";
+}
+
+
 .inputWrap .imageBox {
   display: none;
   width: 320px;

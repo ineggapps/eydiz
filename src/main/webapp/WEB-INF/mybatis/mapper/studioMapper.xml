@@ -51,7 +51,12 @@
 	</select>
 	
 	<!-- 프로젝트 등록하기 -->
-	<insert id="insertProject" parameterType="com.eydiz.studio.Project">
+	<insert id="insertEmptyProject" parameterType="com.eydiz.studio.Project">
+		INSERT INTO PROJECT(projectNo, brandNo) VALUES (#{projectNo}, #{brandNo})
+	</insert>
+	
+	<!-- 한 번에 등록하는 프로젝트 코드 -->
+	<!-- <insert id="insertProject" parameterType="com.eydiz.studio.Project">
 		INSERT INTO project(
 			projectNo, brandNo, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
 			projectCreatedDate, projectUpdatedDate, projectStartDate, projectEndDate, statusNo
@@ -60,12 +65,37 @@
 			#{projectNo}, #{brandNo}, #{categoryNo}, #{projectName}, #{projectStatusMemo}, #{projectImageUrl}, #{projectGoalAmount},
 			SYSDATE, SYSDATE, #{projectStartDate}, #{projectEndDate}, #{statusNo}
 		)
-	</insert>
+	</insert> -->
+	
+	<!-- 프로젝트 정보 불러오기 -->
+	<select id="readProject" parameterType="Integer" resultType="com.eydiz.studio.Project">
+		SELECT 
+			projectNo, brandNo, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectCreatedDate, projectUpdatedDate, projectStartDate, projectEndDate, 
+			statusNo, projectSummary, projectStory
+		FROM project
+		WHERE projectNo = #{projectNo}
+	</select>
 	
 	<insert id="insertProjectHashtag" >
 		INSERT INTO project_hashtag(tagNo, projectNo, keyword)
 		VALUES(project_hashtag_seq.NEXTVAL, #{projectNo}, #{keyword})
 	</insert>
 	
+	<!-- 해시태그 등록/삭제 --> 
+	<select id="readHashtag" parameterType="Integer" resultType="com.eydiz.studio.ProjectHashtag">
+		SELECT projectNo, keyword
+		FROM project_hashtag
+		WHERE projectNo = #{projectNo}
+	</select>
 	
+	<insert id="insertHashtag" parameterType="com.eydiz.studio.ProjectHashtag">
+		INSERT INTO project_hashtag(projectNo, keyword)
+		VALUES(#{projectNo}, #{keyword})
+	</insert>
+	
+	<delete id="deleteHashTag" parameterType="com.eydiz.studio.ProjectHashtag">
+		DELETE FROM project_hashtag
+		WHERE projectNo=#{projectNo} AND keyword=#{keyword}
+	</delete>
 </mapper>

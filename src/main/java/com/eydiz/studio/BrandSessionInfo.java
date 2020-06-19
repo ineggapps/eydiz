@@ -4,6 +4,11 @@ public class BrandSessionInfo {
 	private int brandNo;
 	private String brandName;
 
+	public BrandSessionInfo(int brandNo, String brandName) {
+		this.brandNo = brandNo;
+		this.brandName = brandName;
+	}
+
 	public int getBrandNo() {
 		return brandNo;
 	}
@@ -21,11 +26,6 @@ public class BrandSessionInfo {
 	}
 
 	public BrandSessionInfo() {
-	}
-
-	public BrandSessionInfo(int brandNo, String brandName) {
-		this.brandNo = brandNo;
-		this.brandName = brandName;
 	}
 
 }

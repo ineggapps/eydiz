@@ -29,7 +29,8 @@ public class StudioBrandInterceptor extends HandlerInterceptorAdapter implements
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 			if (bInfo == null || bInfo.getBrandName() == null || bInfo.getBrandName().length() == 0) {
 				Brand brand = service.readBrand(info.getMemberNo());
-				session.setAttribute(SESSION_BRAND, brand);
+				bInfo = new BrandSessionInfo(brand.getBrandNo(), brand.getBrandName());
+				session.setAttribute(SESSION_BRAND, bInfo);
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage());
