@@ -230,14 +230,16 @@ h1.logo {
   letter-spacing: -0.04rem;
 }
 
-div.nav{
-	position:sticky;
-	top:0;
-}
-
 .rowFull {
   width: 100%;
   clear: both;
+}
+
+div.nav.sticky{
+  	position:fixed;
+  	top:0;
+ 	z-index:9998;
+ 	letter-spacing:-0.04rem;	
 }
 
 .titleBar {
@@ -362,6 +364,7 @@ ul.fnb li:not(:last-child) {
     display: block;
   }
 }
+
 @media (max-width: 1097px) {
   /*상단 헤더*/
   .headerBannerInner {
@@ -375,7 +378,6 @@ ul.fnb li:not(:last-child) {
 	left:0;
   }
   div.nav.sticky{
-  	position:fixed;
   	top:48px;
   }
   .headerInner,
@@ -427,7 +429,7 @@ ul.fnb li:not(:last-child) {
     display: none;
   }
     .contentWrapper{
-  	padding-top:48px;
+  	padding-top:46px;
   }
   
 }

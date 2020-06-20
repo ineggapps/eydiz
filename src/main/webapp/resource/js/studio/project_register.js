@@ -54,33 +54,6 @@ function ajaxJSONFile(url, method, data) {
 }
 
 ///////////////////////////////////
-
-//모바일 앱 버튼 클릭
-$(function () {
-  $("#btnGnbMenu").click(function () {
-    $(".columnSide").addClass("show");
-    $(".overlay").addClass("show");
-  });
-
-  $(".overlay").click(function () {
-    $(".columnSide").removeClass("show");
-    $(".overlay").removeClass("show");
-  });
-});
-
-//확장버튼 클릭
-$(function () {
-  $("a.arrow").click(function () {
-    const className = "extended";
-    $li = $(this).closest("li");
-    if ($li.hasClass(className)) {
-      $li.removeClass(className);
-    } else {
-      $li.addClass(className);
-    }
-  });
-});
-
 //datepicker 사용
 
 $(function () {

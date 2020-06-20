@@ -25,17 +25,24 @@
     	//sticky 구현
     	$(function(){
     		const $nav = $("div.nav");
-	    	var navOffset = $nav.offset();
-    		$( window ).scroll( function() {
-    			if ( $( document ).scrollTop() > navOffset.top) {
-    					$nav.addClass( 'sticky' );
-    			    }
-    			    else {
-    			    	$nav.removeClass( 'sticky' );
-    			    }			
-    		});
-    	});
-    </script>
+    		const $clone = $nav.clone(true).attr("id","cloneNav");
+    		const $mobileNav = $(".mobileNav");
+    		$( window ).on("scroll resize", function() {
+    		const offset = $mobileNav.css("display")=="block"?$mobileNav.height():0;
+       		const navTop = $nav.offset().top;
+    			if ( $(window).scrollTop() > navTop - offset) {
+    				if($("header").find("#cloneNav").length==0){    					
+			    		$clone.appendTo("header");
+    				}
+    					$clone.addClass( 'sticky' );
+    			}
+    			else {
+    				$clone.remove();
+    			   	$clone.removeClass( 'sticky' );
+    			}			
+      	});
+    });
+        </script>
   </head>
   <body>
     <div id="wrap">
