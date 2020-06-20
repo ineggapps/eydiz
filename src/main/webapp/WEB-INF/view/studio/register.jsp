@@ -9,7 +9,7 @@
   <h2>기본 정보</h2>
   <p class="description">프로젝트를 소개할 기본 정보를 입력하세요.</p>
   <div class="infoItemWrap">
-	<form name="projectForm" method="post" enctype="multipart/form-data">
+	<form name="projectForm" action="." method="post" enctype="multipart/form-data">
 	<input type="hidden" name="projectNo" value="${project.projectNo}"/>
     <div class="infoItem required">
       <div class="infoTitle"><span>프로젝트 이름</span></div>
@@ -40,16 +40,20 @@
       <div class="infoTitle"><span>대표 이미지</span></div>
       <div class="inputWrap">
         <input type="file" name="uploadImage" id="uploadImage" class="hide" />
-        <div class="imageBox"></div>
+        <div class="imageBox" ${not empty project.projectImageUrl?"data-show=\"true\"":"data-show=\"false\""} style="background-image:url(${project.projectImageUrl})">
+        	<button type="button" id="btnDeleteImage" id="btnDeleteImage"><span class="hidden">지우기</span></button>
+        </div>
+        <div class="uploadBox">        
         <button type="button" id="btnProjectImage" class="btnDarkContrast">
           <span class="iconCamera">&nbsp;</span>등록하기
         </button>
+	     <p class="desc">
+	        3MB 이하의 JPEG, PNG 파일 <br />
+	        사이즈 : 1200X675 픽셀 이상<br />
+	        텍스트 및 로고 삽입 금지<br />
+	     </p>
+        </div>
       </div>
-      <p class="desc">
-        3MB 이하의 JPEG, PNG 파일 <br />
-        사이즈 : 1200X675 픽셀 이상<br />
-        텍스트 및 로고 삽입 금지<br />
-      </p>
     </div>
 
     <div class="infoItem required">
@@ -103,6 +107,6 @@
     </div>
   </form>
   </div>
-  <a href="#" class="btnSubmit" id="btnSave">저장하기</a>
+  <button type="submit" class="btnSubmit" id="btnSave">저장하기</button>
   <script type="text/javascript" src="<%=cp%>/resource/js/studio/project_register.js"></script>
 </article>

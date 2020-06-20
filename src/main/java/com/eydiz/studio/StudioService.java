@@ -12,9 +12,10 @@ public interface StudioService {
 
 	//프로젝트
 	public int insertEmptyProject(Project project) throws Exception;
-	public Project readProject(int projectNo);
+	public Project readProject(int projectNo, int brandNo);
 	public List<ProjectCategory> listCategory(); 
-	public String uploadProjectImage(MultipartFile uploadImage, String realPath) throws Exception;
+	public String uploadProjectImage(Project project, MultipartFile uploadImage, String realPath, String uriPath) throws Exception;
+	public void deleteProjectImage(Project project, String realPath) throws Exception;
 	
 	//프로젝트 해시태그 조회/등록/삭제
 	public List<ProjectHashtag> readHashtag(int projectNo);

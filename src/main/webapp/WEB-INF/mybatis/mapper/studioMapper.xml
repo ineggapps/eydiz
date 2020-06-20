@@ -51,9 +51,12 @@
 	</select>
 	
 	<!-- 프로젝트 등록하기 -->
-	<insert id="insertEmptyProject" parameterType="com.eydiz.studio.Project">
-		INSERT INTO PROJECT(projectNo, brandNo) VALUES (#{projectNo}, #{brandNo})
-	</insert>
+	<update id="insertEmptyProject" parameterType="com.eydiz.studio.Project">
+		INSERT ALL
+		INTO project(projectNo, brandNo) VALUES (#{projectNo}, #{brandNo})
+		INTO project_status_list(projectNo, statusNo, statusMemo) VALUES(#{projectNo}, 0, #{statusMemo, jdbcType=VARCHAR})
+		SELECT * FROM dual
+	</update>
 	
 	<!-- 한 번에 등록하는 프로젝트 코드 -->
 	<!-- <insert id="insertProject" parameterType="com.eydiz.studio.Project">
@@ -68,7 +71,7 @@
 	</insert> -->
 	
 	<!-- 프로젝트 정보 불러오기 -->
-	<select id="readProject" parameterType="Integer" resultType="com.eydiz.studio.Project">
+	<select id="readProject" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT 
 			projectNo, p.brandNo, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
 			projectCreatedDate, projectUpdatedDate, projectStartDate, projectEndDate, 
@@ -82,6 +85,18 @@
 		INSERT INTO project_hashtag(tagNo, projectNo, keyword)
 		VALUES(project_hashtag_seq.NEXTVAL, #{projectNo}, #{keyword})
 	</insert>
+	
+	<!-- 이미지 정보 수정하기 -->
+	<update id="updateProjectImage" parameterType="com.eydiz.studio.Project">
+		UPDATE project SET projectImageUrl = #{projectImageUrl} 
+		WHERE projectNo = #{projectNo} AND brandNo = #{brandNo}
+	</update>
+	
+	<!-- 이미지 정보 삭제하기 -->
+	<update id="updateNullProjectImage" parameterType ="com.eydiz.studio.Project">
+		UPDATE project SET projectImageUrl = null
+		WHERE projectNo = #{projectNo} AND brandNo = #{brandNo}
+	</update>
 	
 	<!-- 해시태그 등록/삭제 --> 
 	<select id="readHashtag" parameterType="Integer" resultType="com.eydiz.studio.ProjectHashtag">

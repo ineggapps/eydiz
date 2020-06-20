@@ -89,14 +89,14 @@ CREATE SEQUENCE project_category_seq
    NOCYCLE
    NOCACHE;
 
-CREATE TABLE project_status_info(
+CREATE TABLE project_status(
     statusNo NUMBER NOT NULL,
     statusName VARCHAR2(100) NOT NULL,
-    CONSTRAINT PK_PROJECT_STATUS_INFO PRIMARY KEY(statusNo)
+    CONSTRAINT PK_PROJECT_STATUS PRIMARY KEY(statusNo)
 );
 
 
-CREATE SEQUENCE project_status_info_seq
+CREATE SEQUENCE project_status_seq
    INCREMENT BY 1
    START WITH 1
    NOMAXVALUE
@@ -144,7 +144,8 @@ CREATE TABLE project_detail( -- 프로젝트 상세 (심사를 위한 테이블)
 CREATE TABLE project_status_list( -- 식별 테이블
     projectNo NUMBER NOT NULL, -- 프로젝트 번호
     statusNo NUMBER NOT NULL, -- 프로젝트 진행상태번호
-    memo VARCHAR2(4000), -- 프로젝트 메모
+    statusMemo VARCHAR2(4000), -- 프로젝트 메모
+    createdDate DATE default SYSDATE, -- 상태 생성 시각...
     CONSTRAINT FK_PROJECT_STATUS_LIST_PROJECT_NO FOREIGN KEY(projectNo) REFERENCES project(projectNo),
     CONSTRAINT FK_PROJECT_STATUS_LIST_STATUS_NO FOREIGN KEY(statusNo) REFERENCES project_status_info(statusNo)
 );
@@ -732,6 +733,15 @@ INSERT INTO project_category(categoryNo, parentCategoryNo, categoryName) VALUES(
 INSERT INTO project_category(categoryNo, parentCategoryNo, categoryName) VALUES(project_category_seq.NEXTVAL, 1, '교육·키즈');
 INSERT INTO project_category(categoryNo, parentCategoryNo, categoryName) VALUES(project_category_seq.NEXTVAL, 1, '게임·취미');
 INSERT INTO project_category(categoryNo, parentCategoryNo, categoryName) VALUES(project_category_seq.NEXTVAL, 1, '출판');
+COMMIT;
+
+INSERT INTO project_status(statusNo, statusName) VALUES(0, '작성 중');
+INSERT INTO project_status(statusNo, statusName) VALUES(1, '심사 중');
+INSERT INTO project_status(statusNo, statusName) VALUES(2, '반려');
+INSERT INTO project_status(statusNo, statusName) VALUES(3, '신고 접수');
+INSERT INTO project_status(statusNo, statusName) VALUES(4, '신고 반영');
+INSERT INTO project_status(statusNo, statusName) VALUES(5, '활성');--승인되어 진행 중인 프로젝트
+INSERT INTO project_status(statusNo, statusName) VALUES(6, '종료');--프로젝트 기간이 모두 끝남
 COMMIT;
 
 --샘플 데이터 준익

@@ -31,6 +31,8 @@ public interface StudioConstant extends Constant {
 	public final static String ATTRIBUTE_CATEGORY = "category";
 	public final static String ATTRIBUTE_BRAND = "brand";
 	public final static String ATTRIBUTE_URI = "uri";
+	public final static String ATTRIBUTE_PROJECTNO = "projectNo";
+	public final static String ATTRIBUTE_BRANDNO = "brandNo";
 
 	// JSON
 	public final static String JSON_IMAGE_URL = "url";
@@ -38,4 +40,6 @@ public interface StudioConstant extends Constant {
 	public final static String JSON_HASHTAG_PROJECTNO = "projectNo";
 	public final static String JSON_HASHTAG_KEYWORD = "keyword";
 
+	//기본 값
+	public final static String STATUS_MEMO_0 = "작성 시작";
 }

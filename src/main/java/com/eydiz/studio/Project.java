@@ -9,14 +9,15 @@ public class Project {
 	private int brandNo;
 	private int categoryNo;
 	private String projectName;
-	private String projectStatusMemo;
-	private String projectImagesUrl;
+	private String projectStatusMemo;// 브랜드용 project 테이블의 메모
+	private String projectImageUrl;
 	private int projectGoalAmount;
 	private String projectCreatedDate;
 	private String projectUpdatedDate;
 	private String projectStartDate;
 	private String projectEndDate;
 	private int stateNo;
+	private String statusMemo;// 사이트 관리자용 project_status_list에 들어갈 프로젝트 상태 메모(작성 중, 프로젝트 활성화 등...)
 	private String projectSummary;
 	private String projectStory;
 	private String categoryName;
@@ -63,12 +64,12 @@ public class Project {
 		this.projectStatusMemo = projectStatusMemo;
 	}
 
-	public String getProjectImagesUrl() {
-		return projectImagesUrl;
+	public String getProjectImageUrl() {
+		return projectImageUrl;
 	}
 
-	public void setProjectImagesUrl(String projectImagesUrl) {
-		this.projectImagesUrl = projectImagesUrl;
+	public void setProjectImageUrl(String projectImageUrl) {
+		this.projectImageUrl = projectImageUrl;
 	}
 
 	public int getProjectGoalAmount() {
@@ -119,6 +120,14 @@ public class Project {
 		this.stateNo = stateNo;
 	}
 
+	public String getStatusMemo() {
+		return statusMemo;
+	}
+
+	public void setStatusMemo(String statusMemo) {
+		this.statusMemo = statusMemo;
+	}
+
 	public String getProjectSummary() {
 		return projectSummary;
 	}
@@ -162,14 +171,12 @@ public class Project {
 	@Override
 	public String toString() {
 		return "Project [projectNo=" + projectNo + ", brandNo=" + brandNo + ", categoryNo=" + categoryNo
-				+ ", projectName=" + projectName + ", projectStatusMemo=" + projectStatusMemo + ", projectImagesUrl="
-				+ projectImagesUrl + ", projectGoalAmount=" + projectGoalAmount + ", projectCreatedDate="
+				+ ", projectName=" + projectName + ", projectStatusMemo=" + projectStatusMemo + ", projectImageUrl="
+				+ projectImageUrl + ", projectGoalAmount=" + projectGoalAmount + ", projectCreatedDate="
 				+ projectCreatedDate + ", projectUpdatedDate=" + projectUpdatedDate + ", projectStartDate="
-				+ projectStartDate + ", projectEndDate=" + projectEndDate + ", stateNo=" + stateNo + ", projectSummary="
-				+ projectSummary + ", projectStory=" + projectStory + ", categoryName=" + categoryName + ", hashTag="
-				+ hashTag + ", uploadImage=" + uploadImage + "]";
+				+ projectStartDate + ", projectEndDate=" + projectEndDate + ", stateNo=" + stateNo + ", statusMemo="
+				+ statusMemo + ", projectSummary=" + projectSummary + ", projectStory=" + projectStory
+				+ ", categoryName=" + categoryName + ", hashTag=" + hashTag + ", uploadImage=" + uploadImage + "]";
 	}
-	
-	
 
 }

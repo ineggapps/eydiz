@@ -102,9 +102,10 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 				return "redirect:" + API_PROJECT_REGISTER + "/" + projectNo;
 			}
 			////////////// 프로젝트 정보 불러오기
-			Project project = service.readProject(projectNo);
-			if(project==null) {
-				//자신의 브랜드의 프로젝트가 아니면 null을 반환함
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			Project project = service.readProject(projectNo, bInfo.getBrandNo());
+			if (project == null) {
+				// 자신의 브랜드의 프로젝트가 아니면 null을 반환함
 				return "redirect:" + API_PROJECT_LIST;
 			}
 			List<ProjectCategory> category = service.listCategory();
@@ -119,7 +120,7 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 		return VIEW_PROJECT_REGISTER;
 	}
 
-	@RequestMapping(value = "/project/register/{projectNo}", method = RequestMethod.POST)
+	@RequestMapping(value = "/project/{projectNo}/register", method = RequestMethod.POST)
 	public String updateProject(@PathVariable Integer projectNo, Project project) {
 		try {
 			if (projectNo == null) {
@@ -131,14 +132,25 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 		return "redirect:" + API_PROJECT_LIST;
 	}
 
-	@RequestMapping(value = "/project/register/upload/image", method = RequestMethod.POST)
+	private String getRealPath(HttpSession session) {
+		// "/"문자열 다음부터 추출해야...
+		String cpRealPath = session.getServletContext().getRealPath("/");
+		String upload = File.separator + FOLDER_UPLOADS_ROOT + File.separator + FOLDER_UPLOADS_PROJECT;
+		return cpRealPath + upload;
+	}
+
+	// 이미지 업로드
+	@RequestMapping(value = "/project/{projectNo}/register/upload/image", method = RequestMethod.POST)
 	@ResponseBody
-	public String uploadImage(ProjectImage uploadImage, HttpSession session) {
+	public String uploadImage(@PathVariable Integer projectNo, ProjectImage uploadImage, HttpSession session) {
 		JSONObject json = new JSONObject();
 		try {
-			StringBuilder realPath = new StringBuilder(session.getServletContext().getRealPath("/"));
-			realPath.append(FOLDER_UPLOADS_ROOT + File.separator + FOLDER_UPLOADS_PROJECT);
-			String saveFilename = service.uploadProjectImage(uploadImage.getUploadImage(), realPath.toString());
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			Project project = service.readProject(projectNo, bInfo.getBrandNo());
+			String realPath = getRealPath(session);
+			String cp = session.getServletContext().getContextPath();
+			String uriPath = cp + "/" + FOLDER_UPLOADS_ROOT + "/" + FOLDER_UPLOADS_PROJECT;
+			String saveFilename = service.uploadProjectImage(project, uploadImage.getUploadImage(), realPath, uriPath);
 			if (saveFilename != null) {
 				json.put(JSON_RESULT, JSON_RESULT_OK);
 				json.put(JSON_IMAGE_URL, saveFilename);
@@ -151,6 +163,24 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 			json.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
 		}
 		return json.toString();
+	}
+
+	// 이미지 삭제
+	@RequestMapping(value = "/project/{projectNo}/register/delete/image", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> deleteImage(@PathVariable Integer projectNo, HttpSession session) {
+		Map<String, String> map = new HashMap<>();
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			Project project = service.readProject(projectNo, bInfo.getBrandNo());
+			service.deleteProjectImage(project, getRealPath(session));
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+			e.printStackTrace();
+		}
+		return map;
 	}
 
 	/// 해시태그
@@ -174,7 +204,7 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 		return result;
 	}
 
-	@RequestMapping(value = "/project/{projectNo}/hashtag/view", method=RequestMethod.GET)
+	@RequestMapping(value = "/project/{projectNo}/hashtag/view", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> readHashtag(@PathVariable Integer projectNo) {
 		Map<String, Object> result = new HashMap<>();
@@ -189,10 +219,10 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 		}
 		return result;
 	}
-	
-	@RequestMapping(value="/project/{projectNo}/hashtag/delete/{keyword}", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/project/{projectNo}/hashtag/delete/{keyword}", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> deleteHashtag(@PathVariable Integer projectNo, @PathVariable String keyword){
+	public Map<String, Object> deleteHashtag(@PathVariable Integer projectNo, @PathVariable String keyword) {
 		Map<String, Object> result = new HashMap<>();
 		try {
 			ProjectHashtag tag = new ProjectHashtag(projectNo, keyword);

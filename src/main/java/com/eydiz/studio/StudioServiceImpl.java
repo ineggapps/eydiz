@@ -1,7 +1,9 @@
 package com.eydiz.studio;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,10 +85,13 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	}
 
 	@Override
-	public Project readProject(int projectNo) {
+	public Project readProject(int projectNo, int brandNo) {
 		Project project = null;
 		try {
-			project = dao.selectOne(MAPPER_NAMESPACE + "readProject", projectNo);
+			Map<String, Integer> map = new HashMap<>();
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			map.put(ATTRIBUTE_BRANDNO, brandNo);
+			project = dao.selectOne(MAPPER_NAMESPACE + "readProject", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -107,17 +112,41 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	}
 
 	@Override
-	public String uploadProjectImage(MultipartFile uploadImage, String realPath) throws Exception {
-		String saveFilename = null;
+	public String uploadProjectImage(Project project, MultipartFile uploadImage, String realPath, String uriPath)
+			throws Exception {
+		String newFilename = null;
+		String uri = null;
 		try {
-			if (uploadImage.isEmpty() == false) {
-				saveFilename = fileManager.doFileUpload(uploadImage, realPath);
+			newFilename = fileManager.doFileUpload(uploadImage, realPath);
+			uri = uriPath + "/" + newFilename;
+			// 기존에 저장되어 있는 이미지가 있는지 확인하기
+			String savedProjectImageUrl = project.getProjectImageUrl();
+			if (savedProjectImageUrl != null && savedProjectImageUrl.length() > 0) {
+				String filename = savedProjectImageUrl.substring(savedProjectImageUrl.lastIndexOf("/"));
+				fileManager.doFileDelete(filename, realPath);
+			}
+			project.setProjectImageUrl(uri);
+			dao.selectOne(MAPPER_NAMESPACE + "updateProjectImage", project);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
+		return uri;
+	}
+
+	@Override
+	public void deleteProjectImage(Project project, String realPath) throws Exception {
+		try {
+			if (project.getProjectImageUrl() != null && project.getProjectImageUrl().length() > 0) {
+				// 저장된 것이 유효하다면 이미지 삭제하기
+				String filename = project.getProjectImageUrl().substring(project.getProjectImageUrl().lastIndexOf("/"));
+				fileManager.doFileDelete(filename, realPath);
+				dao.updateData(MAPPER_NAMESPACE + "updateNullProjectImage", project);
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			throw e;
 		}
-		return saveFilename;
 	}
 
 	/// 해시태그
