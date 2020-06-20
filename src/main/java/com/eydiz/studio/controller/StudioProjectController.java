@@ -1,4 +1,4 @@
-package com.eydiz.studio;
+package com.eydiz.studio.controller;
 
 import java.io.File;
 import java.util.HashMap;
@@ -22,12 +22,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eydiz.common.Constant;
 import com.eydiz.member.MemberConstant;
 import com.eydiz.member.SessionInfo;
+import com.eydiz.studio.Brand;
+import com.eydiz.studio.BrandSessionInfo;
+import com.eydiz.studio.Project;
+import com.eydiz.studio.ProjectCategory;
+import com.eydiz.studio.ProjectHashtag;
+import com.eydiz.studio.ProjectImage;
+import com.eydiz.studio.StudioConstant;
+import com.eydiz.studio.StudioService;
 
-@Controller("studio.studioController")
-@RequestMapping("/studio/*")
-public class StudioController implements Constant, StudioConstant, MemberConstant {
+@Controller("studio.controller.studioProjectController")
+@RequestMapping("/studio/project/*")
+public class StudioProjectController implements Constant, StudioConstant, MemberConstant {
 
-	private Logger logger = LoggerFactory.getLogger(StudioController.class);
+	private Logger logger = LoggerFactory.getLogger(StudioProjectController.class);
 
 	@Autowired
 	StudioService service;
@@ -43,53 +51,17 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 		}
 		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
 	}
-
-	////////////////////////////////////////////// 브랜드
-	@RequestMapping(value = "/brand/info", method = RequestMethod.GET)
-	public String getBrandInfo(Model model, HttpServletRequest req, HttpSession session) {
-		String viewPath = VIEW_BRAND_INFO_PRIMAL;
-		try {
-			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
-//			int myBrandCount = service.myBrandCount(info.getMemberNo());
-//			if(myBrandCount>0) {
-//				viewPath = VIEW_BRAND_INFO_UPDATE;
-//			}
-			// brand가 회원당 1개일 때 기준으로...
-			Brand dto = service.readBrand(info.getMemberNo());
-			if (dto != null && dto.getBrandNo() > 0) {
-				viewPath = VIEW_BRAND_INFO_UPDATE;
-				model.addAttribute(ATTRIBUTE_BRAND, dto);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		addModelURIAttribute(model, req);
-		return viewPath;// without tiles(단독 레이아웃 뷰)
-	}
-
-	@RequestMapping(value = "/brand/info", method = RequestMethod.POST)
-	public String postBrandInfo(Brand dto, Model model, HttpServletRequest req, HttpSession session) {
-		String redirectUrl = API_PROJECT_LIST;
-		try {
-			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
-			dto.setMemberNo(info.getMemberNo());
-			service.updateBrand(dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-			redirectUrl = API_BRAND_INFO;
-		}
-		return "redirect:" + redirectUrl;
-	}
+	
 
 	////////////////////////////////////////////// 프로젝트
-	@RequestMapping(value = { "/project/list/{categoryName}", "/project/list" })
+	@RequestMapping(value = { "/list/{categoryName}", "/list" })
 	public String list(@PathVariable(required = false) String categoryName, Model model, HttpServletRequest req) {
 		addModelURIAttribute(model, req);
 		model.addAttribute(ATTRIBUTE_CATEGORY, categoryName);
 		return VIEW_PROJECT_LIST;
 	}
 
-	@RequestMapping(value = { "/project/register", "/project/register/{projectNo}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/register", "/register/{projectNo}" }, method = RequestMethod.GET)
 	public String registerForm(@PathVariable(required = false) Integer projectNo, Model model, HttpServletRequest req,
 			HttpSession session) {
 		try {
@@ -120,7 +92,7 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 		return VIEW_PROJECT_REGISTER;
 	}
 
-	@RequestMapping(value = "/project/{projectNo}/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/{projectNo}/register", method = RequestMethod.POST)
 	public String updateProject(@PathVariable Integer projectNo, Project project) {
 		try {
 			if (projectNo == null) {
@@ -140,7 +112,7 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 	}
 
 	// 이미지 업로드
-	@RequestMapping(value = "/project/{projectNo}/register/upload/image", method = RequestMethod.POST)
+	@RequestMapping(value = "/{projectNo}/register/upload/image", method = RequestMethod.POST)
 	@ResponseBody
 	public String uploadImage(@PathVariable Integer projectNo, ProjectImage uploadImage, HttpSession session) {
 		JSONObject json = new JSONObject();
@@ -166,7 +138,7 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 	}
 
 	// 이미지 삭제
-	@RequestMapping(value = "/project/{projectNo}/register/delete/image", method = RequestMethod.POST)
+	@RequestMapping(value = "/{projectNo}/register/delete/image", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> deleteImage(@PathVariable Integer projectNo, HttpSession session) {
 		Map<String, String> map = new HashMap<>();
@@ -184,7 +156,7 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 	}
 
 	/// 해시태그
-	@RequestMapping(value = "/project/{projectNo}/hashtag/insert/{keyword}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{projectNo}/hashtag/insert/{keyword}", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> insertHashtag(@PathVariable Integer projectNo, @PathVariable String keyword) {
 		Map<String, Object> result = new HashMap<>();
@@ -204,7 +176,7 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 		return result;
 	}
 
-	@RequestMapping(value = "/project/{projectNo}/hashtag/view", method = RequestMethod.GET)
+	@RequestMapping(value = "/{projectNo}/hashtag/view", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> readHashtag(@PathVariable Integer projectNo) {
 		Map<String, Object> result = new HashMap<>();
@@ -220,7 +192,7 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 		return result;
 	}
 
-	@RequestMapping(value = "/project/{projectNo}/hashtag/delete/{keyword}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{projectNo}/hashtag/delete/{keyword}", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> deleteHashtag(@PathVariable Integer projectNo, @PathVariable String keyword) {
 		Map<String, Object> result = new HashMap<>();
