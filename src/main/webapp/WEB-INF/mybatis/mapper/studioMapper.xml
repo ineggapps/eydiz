@@ -70,6 +70,34 @@
 		)
 	</insert> -->
 	
+	<!-- 프로젝트 모든 컬럼 -->
+	<sql id="select-project-columns">
+		
+	</sql>
+	
+	<!-- 조인 조건 사용 시 주의 -->
+	<sql id="where-projectNo">
+		WHERE projectNo = #{projectNo} AND brandNo = #{brandNo}
+	</sql>
+		
+	<!-- 자신의 브랜드 프로젝트 모두 불러오기 -->	
+	<select id="listProject" parameterType="map" resultType="com.eydiz.studio.Project">
+		SELECT 
+			projectNo, brandNo, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectCreatedDate, projectUpdatedDate, 
+			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
+			statusNo, projectSummary, projectStory
+		FROM project p
+		WHERE brandNo = #{brandNo}
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="listProjectCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM project
+		WHERE brandNo = #{brandNo}
+	</select>
+	
 	<!-- 프로젝트 정보 불러오기 -->
 	<select id="readProject" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT 
@@ -83,10 +111,6 @@
 	</select>
 
 	<!-- 프로젝트 기본정보 등록하기 -->
-	<sql id="where-projectNo">
-		WHERE projectNo = #{projectNo} AND brandNo = #{brandNo}
-	</sql>
-	
 	<update id="updateProjectBasic">
 		UPDATE project SET projectName=#{projectName}, categoryNo=#{categoryNo}, projectStatusMemo=#{projectStatusMemo}, 
 		projectGoalAmount=#{projectGoalAmount}, projectUpdatedDate=SYSDATE, projectStartDate=#{projectStartDate}, projectEndDate=#{projectEndDate}
@@ -110,11 +134,12 @@
 		SELECT projectNo, keyword
 		FROM project_hashtag
 		WHERE projectNo = #{projectNo}
+		ORDER BY tagNo
 	</select>
 	
 	<insert id="insertHashtag" parameterType="com.eydiz.studio.ProjectHashtag">
-		INSERT INTO project_hashtag(projectNo, keyword)
-		VALUES(#{projectNo}, #{keyword})
+		INSERT INTO project_hashtag(tagNo, projectNo, keyword)
+		VALUES(project_hashtag_seq.NEXTVAL, #{projectNo}, #{keyword})
 	</insert>
 	
 	<delete id="deleteHashTag" parameterType="com.eydiz.studio.ProjectHashtag">

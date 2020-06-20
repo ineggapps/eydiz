@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eydiz.common.Constant;
+import com.eydiz.common.Pager;
 import com.eydiz.member.MemberConstant;
-import com.eydiz.member.SessionInfo;
-import com.eydiz.studio.Brand;
 import com.eydiz.studio.BrandSessionInfo;
 import com.eydiz.studio.Project;
 import com.eydiz.studio.ProjectCategory;
@@ -36,9 +35,13 @@ import com.eydiz.studio.StudioService;
 public class StudioProjectController implements Constant, StudioConstant, MemberConstant {
 
 	private Logger logger = LoggerFactory.getLogger(StudioProjectController.class);
+	private final static int ROWS = 10;
 
 	@Autowired
 	StudioService service;
+	
+	@Autowired
+	Pager pager;
 
 	private String getRealURI(String requestURI, String contextPath) {
 		return requestURI.substring(contextPath.length() + REQUEST_MAPPING.length());
@@ -60,10 +63,29 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 	}
 
 	////////////////////////////////////////////// 프로젝트
-	@RequestMapping(value = { "/list/{categoryName}", "/list" })
-	public String list(@PathVariable(required = false) String categoryName, Model model, HttpServletRequest req) {
+	@RequestMapping(value = { "/list/{categoryName}", "/list/{categoryName}/page/{page}", "/list", "/list/page/{page}" })
+	public String list(@PathVariable(required = false) String categoryName, @PathVariable(required=false) Integer page, Model model, HttpServletRequest req, HttpSession session) {
 		addModelURIAttribute(model, req);
+		int currentPage = 1;
+		if(page!=null) {
+			currentPage = page;
+		}
+		BrandSessionInfo bInfo = (BrandSessionInfo)session.getAttribute(SESSION_BRAND);
+		int brandNo = bInfo.getBrandNo();
+		//페이징 정보 계산과 해당하는 페이지의 프로젝트 불러오기
+		int listProjectCount = service.listProjectCount(brandNo);
+		int pageCount = pager.pageCount(ROWS, listProjectCount);
+		int offset = pager.getOffset(currentPage,ROWS);
+		Map<String, Object> map = new HashMap<>();
+		map.put(ATTRIBUTE_ROWS, ROWS);
+		map.put(ATTRIBUTE_OFFSET, offset);
+		map.put(ATTRIBUTE_BRANDNO, brandNo);
+		List<Project> listProject = service.listProject(map);
+		//페이징 정보 입력
+		model.addAttribute(ATTRIBUTE_CURRENT_PAGE, currentPage);
+		model.addAttribute(ATTRIBUTE_PAGE_COUNT, pageCount);
 		model.addAttribute(ATTRIBUTE_CATEGORY, categoryName);
+		model.addAttribute(ATTRIBUTE_PROJECT, listProject);
 		return VIEW_PROJECT_LIST;
 	}
 

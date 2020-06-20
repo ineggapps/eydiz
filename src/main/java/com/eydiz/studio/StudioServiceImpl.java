@@ -83,6 +83,33 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		}
 		return projectNo;
 	}
+	
+	
+
+	@Override
+	public List<Project> listProject(Map<String, Object> map) {
+		List<Project> list = null;
+		try {
+			list = dao.selectList(MAPPER_NAMESPACE+"listProject", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	@Override
+	public int listProjectCount(int brandNo) {
+		Map<String, Object> map = new HashMap<>();
+		int count = 0;
+		try {
+			map.put(ATTRIBUTE_BRANDNO, brandNo);
+			count = dao.selectOne(MAPPER_NAMESPACE+"listProjectCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
 
 	@Override
 	public Project readProject(int projectNo, int brandNo) {

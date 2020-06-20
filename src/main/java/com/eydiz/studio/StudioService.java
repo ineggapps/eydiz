@@ -1,6 +1,7 @@
 package com.eydiz.studio;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +13,8 @@ public interface StudioService {
 
 	//프로젝트
 	public int insertEmptyProject(Project project) throws Exception;
+	public List<Project> listProject(Map<String, Object> map);
+	public int listProjectCount(int brandNo);
 	public Project readProject(int projectNo, int brandNo);
 	public List<ProjectCategory> listCategory(); 
 	public String uploadProjectImage(Project project, MultipartFile uploadImage, String realPath, String uriPath) throws Exception;

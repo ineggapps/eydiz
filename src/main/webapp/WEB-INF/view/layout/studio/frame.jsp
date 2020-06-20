@@ -36,9 +36,9 @@
           <div class="projectTitle"><h2>${sessionScope.brand.brandName}</h2></div>
           <ul class="rightGnb">
             <li class="menuExit">
-              <a href="#" class="none"><span>나가기</span></a>
+              <a href="<%=cp %>/studio/project/list" class="none"><span>나가기</span></a>
             </li>
-            <li class="menuTemporary">
+            <li class="menuTemporary hide">
               <a href="#"><span>임시저장</span></a>
             </li>
             <!-- <li class="menuPreview">

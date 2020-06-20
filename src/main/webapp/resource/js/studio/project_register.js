@@ -148,6 +148,14 @@ $(function () {
   });
 });
 
+//키워드 띄어쓰기 방지
+$(function () {
+  const $keyword = $("#keyword");
+  $keyword.on("keyup blur", function () {
+    $keyword.val($keyword.val().replace(/\s/gi, ""));
+  });
+});
+
 //키워드 불러오기
 $(function () {
   const projectNo = $("input[name=projectNo").val();

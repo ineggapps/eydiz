@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/overview.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/brand_info.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/project_list.css" />
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js//html5shiv.min.js"></script>
     <![endif]-->

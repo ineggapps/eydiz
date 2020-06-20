@@ -7,4 +7,7 @@
 %>
 <div>
 아직 안 만들었어 ⚡
+	<c:forEach var="item" items="${project}">
+		${item.projectName}, 
+	</c:forEach>
 </div>

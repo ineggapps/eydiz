@@ -33,7 +33,11 @@ public interface StudioConstant extends Constant {
 	public final static String ATTRIBUTE_URI = "uri";
 	public final static String ATTRIBUTE_PROJECTNO = "projectNo";
 	public final static String ATTRIBUTE_BRANDNO = "brandNo";
-
+	public final static String ATTRIBUTE_OFFSET = "offset";
+	public final static String ATTRIBUTE_ROWS = "rows";
+	public final static String ATTRIBUTE_CURRENT_PAGE = "currentPage";
+	public final static String ATTRIBUTE_PAGE_COUNT = "pageCount";
+	
 	// JSON
 	public final static String JSON_IMAGE_URL = "url";
 	public final static String JSON_HASHTAG = "hashtag";
