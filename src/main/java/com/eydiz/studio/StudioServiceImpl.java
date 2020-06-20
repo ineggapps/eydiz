@@ -112,6 +112,16 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	}
 
 	@Override
+	public void updateProjectBasic(Project project) throws Exception {
+		try {
+			dao.updateData(MAPPER_NAMESPACE+"updateProjectBasic",project);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
+	}
+
+	@Override
 	public String uploadProjectImage(Project project, MultipartFile uploadImage, String realPath, String uriPath)
 			throws Exception {
 		String newFilename = null;

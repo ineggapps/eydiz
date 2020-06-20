@@ -15,7 +15,9 @@ public interface StudioService {
 	public Project readProject(int projectNo, int brandNo);
 	public List<ProjectCategory> listCategory(); 
 	public String uploadProjectImage(Project project, MultipartFile uploadImage, String realPath, String uriPath) throws Exception;
+	public void updateProjectBasic(Project project) throws Exception;
 	public void deleteProjectImage(Project project, String realPath) throws Exception;
+	
 	
 	//프로젝트 해시태그 조회/등록/삭제
 	public List<ProjectHashtag> readHashtag(int projectNo);

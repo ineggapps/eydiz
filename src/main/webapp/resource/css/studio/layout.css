@@ -1,6 +1,7 @@
 @charset "utf-8";
 
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap");
+
 @import url("../common.css");
 
 body,
@@ -31,8 +32,8 @@ a {
   text-indent: -1000em;
 }
 
-.show{
-	display: block !important;
+.show {
+  display: block !important;
 }
 
 .hide {
@@ -80,19 +81,21 @@ h2 {
   opacity: 0;
   transition: opacity linear 0.2s;
 }
+
 .overlay.show {
   display: block;
   opacity: 0.8;
 }
 
 header#header {
-  z-index:9998;
+  z-index: 9998;
   background-color: #fff;
   position: fixed;
   width: 100%;
   height: 57px;
   line-height: 57px;
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
 .headerInner {
@@ -236,6 +239,7 @@ header#header {
 .menuName {
   padding: 18px 24px;
 }
+
 .menuName a.arrow {
   float: right;
   display: block;
@@ -243,20 +247,40 @@ header#header {
   height: 20px;
   background-image: url("../../images/studio/arrow-green.png");
   background-size: 100%;
+  transition: transform linear 0.2s;
+}
+
+.menuList li.extended a.arrow {
+  transform: rotate(-180deg);
 }
 
 .menuItem ul {
   background-color: #f8f8f9;
 }
+
 .menuItem .subMenuItem a {
   font-size: 0.9rem;
   padding: 16px 0;
   text-indent: 48px;
 }
 
+.menuList li.extended .menuItem .subMenu {
+  display: block;
+}
+
+.menuItem .subMenu {
+  display: none;
+}
+
+.menuList li.extended .subMenu {
+  display: block;
+}
+
+/*서브메뉴 확장/축소*/
 .subMenuItem a {
   display: block;
   width: 100%;
+  color: #222222;
 }
 
 .columnContent {
@@ -313,6 +337,7 @@ header#header {
   width: 60%;
   border: 1.5px solid #d9d9d9;
   padding: 10px;
+  background-color: #fff;
 }
 
 .infoItem .inputWrap input:hover {
@@ -346,37 +371,35 @@ header#header {
   border-radius: 48px;
 }
 
-.hashItems span.text::before{
-	content:"#";
+.hashItems span.text::before {
+  content: "#";
 }
 
-
 .inputWrap .imageBox {
-	position:relative;
+  position: relative;
   display: none;
   width: 320px;
   border: 1px solid #d9d9d9;
-  width:60%;
+  width: 60%;
   min-height: 220px;
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-position:50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
 }
 
-.inputWrap .imageBox #btnDeleteImage{
-	border:0;
-	background:transparent url('../../images/studio/delete.png') no-repeat;
-	background-size:100%;
-	position:absolute;
-	width:20px;
-	height:20px;
-	left:102%;
-	top:0;
+.inputWrap .imageBox #btnDeleteImage {
+  border: 0;
+  background: transparent url("../../images/studio/delete.png") no-repeat;
+  background-size: 100%;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 102%;
+  top: 0;
 }
 
-
-.inputWrap .imageBox.show ~ .uploadBox{
-	display:none;
+.inputWrap .imageBox.show ~ .uploadBox {
+  display: none;
 }
 
 .iconCamera {
@@ -446,17 +469,16 @@ a.btnHashDelete span {
     display: none !important; /*화면을 찌그러뜨렸다가 다시 폈을 때 숨겨야 함*/
   }
 }
+
 @media (max-width: 768px) {
   .projectTitle,
   .menuExit,
   .menuTemporary {
     display: none !important;
   }
-
   .headerInner h3.btnMenu {
     display: inline-block;
   }
-
   .columnSide {
     /* overflow: auto; 모바일 웹에서 세로가 넘치면 스크롤 */
     left: 0;
@@ -470,16 +492,13 @@ a.btnHashDelete span {
     height: auto;
     max-height: 100%;
   }
-
   .columnContent {
     padding-left: 66px;
   }
-
   .menuList {
     height: 100%; /*세로도 100%로 지정해 주어야 스크롤이 생긴다.*/
     overflow: auto !important; /*모바일 웹에서 세로 중 메뉴리스트가 넘치면 이것만 스크롤하도록 설정*/
   }
-
   .columnSide.show {
     transform: translate(0, 0);
   }
@@ -492,7 +511,6 @@ a.btnHashDelete span {
 }
 
 /*브랜드 만들기 레이아웃 (기본)*/
-
 header h1.logoCenter {
   padding-top: 20px;
   font-size: 2rem;
@@ -518,7 +536,6 @@ header h1.logoCenter {
     padding: 40px;
     width: 100%;
   }
-
   .submitContainer {
     width: calc(100% - 80px);
     height: 57px;

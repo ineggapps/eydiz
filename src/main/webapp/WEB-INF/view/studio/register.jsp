@@ -9,7 +9,7 @@
   <h2>기본 정보</h2>
   <p class="description">프로젝트를 소개할 기본 정보를 입력하세요.</p>
   <div class="infoItemWrap">
-	<form name="projectForm" action="." method="post" enctype="multipart/form-data">
+	<form name="projectForm" action="<%=cp %>/studio/project/${project.projectNo}/register" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="projectNo" value="${project.projectNo}"/>
     <div class="infoItem required">
       <div class="infoTitle"><span>프로젝트 이름</span></div>
@@ -105,8 +105,8 @@
         </li>
       </ul>
     </div>
+	  <button type="button" class="btnSubmit" id="btnSave">저장하기</button>
   </form>
   </div>
-  <button type="submit" class="btnSubmit" id="btnSave">저장하기</button>
   <script type="text/javascript" src="<%=cp%>/resource/js/studio/project_register.js"></script>
 </article>

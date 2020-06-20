@@ -9,7 +9,7 @@ public interface StudioConstant extends Constant {
 	// API
 	public final static String REQUEST_MAPPING = "/studio";
 	public final static String API_PROJECT_LIST = "/studio/project/list";
-	public final static String API_PROJECT_REGISTER = "/studio/project/register";
+	public final static String API_PROJECT_REGISTER = "/studio/project/%d/register";
 	public final static String API_BRAND_INFO = "/studio/brand/info";
 
 	public final static String SESSION_BRAND = "brand";

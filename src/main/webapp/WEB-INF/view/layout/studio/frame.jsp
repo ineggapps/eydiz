@@ -24,6 +24,7 @@
     <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
     <script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
+    <script type="text/javascript" src="<%=cp %>/resource/js/lib/bluebird.js"></script>
   </head>
   <body>
     <div id="wrap">

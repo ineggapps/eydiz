@@ -68,6 +68,19 @@ $(function () {
   });
 });
 
+//확장버튼 클릭
+$(function () {
+  $("a.arrow").click(function () {
+    const className = "extended";
+    $li = $(this).closest("li");
+    if ($li.hasClass(className)) {
+      $li.removeClass(className);
+    } else {
+      $li.addClass(className);
+    }
+  });
+});
+
 //datepicker 사용
 
 $(function () {
@@ -219,3 +232,17 @@ function refreshHashTitle(length) {
   const text = length + "/10개의 해시 태그";
   $("#hashTitle").text(text);
 }
+
+//저장하기 버튼
+$(function () {
+  $("#btnSave").click(function () {
+    const f = $(this).closest("form");
+    const categoryNo = $(this).closest("form").find("select[name=categoryNo]").val();
+    if (categoryNo <= 0) {
+      alert("카테고리를 선택하세요");
+      return false;
+    }
+
+    f.submit();
+  });
+});

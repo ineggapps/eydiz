@@ -74,28 +74,35 @@
 	<select id="readProject" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT 
 			projectNo, p.brandNo, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
-			projectCreatedDate, projectUpdatedDate, projectStartDate, projectEndDate, 
+			projectCreatedDate, projectUpdatedDate, 
+			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
 			statusNo, projectSummary, projectStory
 		FROM project p 
 		JOIN brand b ON b.brandNo = p.brandNo
 		WHERE projectNo = #{projectNo} AND p.brandNo = #{brandNo}
 	</select>
+
+	<!-- 프로젝트 기본정보 등록하기 -->
+	<sql id="where-projectNo">
+		WHERE projectNo = #{projectNo} AND brandNo = #{brandNo}
+	</sql>
 	
-	<insert id="insertProjectHashtag" >
-		INSERT INTO project_hashtag(tagNo, projectNo, keyword)
-		VALUES(project_hashtag_seq.NEXTVAL, #{projectNo}, #{keyword})
-	</insert>
-	
+	<update id="updateProjectBasic">
+		UPDATE project SET projectName=#{projectName}, categoryNo=#{categoryNo}, projectStatusMemo=#{projectStatusMemo}, 
+		projectGoalAmount=#{projectGoalAmount}, projectUpdatedDate=SYSDATE, projectStartDate=#{projectStartDate}, projectEndDate=#{projectEndDate}
+		<include refid="where-projectNo" />
+	</update>
+
 	<!-- 이미지 정보 수정하기 -->
 	<update id="updateProjectImage" parameterType="com.eydiz.studio.Project">
 		UPDATE project SET projectImageUrl = #{projectImageUrl} 
-		WHERE projectNo = #{projectNo} AND brandNo = #{brandNo}
+		<include refid="where-projectNo" />
 	</update>
 	
 	<!-- 이미지 정보 삭제하기 -->
 	<update id="updateNullProjectImage" parameterType ="com.eydiz.studio.Project">
 		UPDATE project SET projectImageUrl = null
-		WHERE projectNo = #{projectNo} AND brandNo = #{brandNo}
+		<include refid="where-projectNo" />
 	</update>
 	
 	<!-- 해시태그 등록/삭제 --> 

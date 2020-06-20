@@ -51,7 +51,13 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		}
 		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
 	}
-	
+
+	private String getRealPath(HttpSession session) {
+		// "/"문자열 다음부터 추출해야...
+		String cpRealPath = session.getServletContext().getRealPath("/");
+		String upload = File.separator + FOLDER_UPLOADS_ROOT + File.separator + FOLDER_UPLOADS_PROJECT;
+		return cpRealPath + upload;
+	}
 
 	////////////////////////////////////////////// 프로젝트
 	@RequestMapping(value = { "/list/{categoryName}", "/list" })
@@ -61,7 +67,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		return VIEW_PROJECT_LIST;
 	}
 
-	@RequestMapping(value = { "/register", "/register/{projectNo}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/register", "/{projectNo}/register" }, method = RequestMethod.GET)
 	public String registerForm(@PathVariable(required = false) Integer projectNo, Model model, HttpServletRequest req,
 			HttpSession session) {
 		try {
@@ -71,7 +77,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 				Project project = new Project();
 				project.setBrandNo(info.getBrandNo());
 				projectNo = service.insertEmptyProject(project);
-				return "redirect:" + API_PROJECT_REGISTER + "/" + projectNo;
+				return "redirect:" + String.format(API_PROJECT_REGISTER, projectNo);
 			}
 			////////////// 프로젝트 정보 불러오기
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
@@ -93,22 +99,19 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 	}
 
 	@RequestMapping(value = "/{projectNo}/register", method = RequestMethod.POST)
-	public String updateProject(@PathVariable Integer projectNo, Project project) {
+	public String updateProject(@PathVariable Integer projectNo, Project project, HttpSession session) {
 		try {
 			if (projectNo == null) {
 				throw new Exception("프로젝트 번호가 전달되지 않아 프로젝트를 저장할 수 없음");
 			}
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			project.setProjectNo(projectNo);
+			project.setBrandNo(bInfo.getBrandNo());
+			service.updateProjectBasic(project);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 		return "redirect:" + API_PROJECT_LIST;
-	}
-
-	private String getRealPath(HttpSession session) {
-		// "/"문자열 다음부터 추출해야...
-		String cpRealPath = session.getServletContext().getRealPath("/");
-		String upload = File.separator + FOLDER_UPLOADS_ROOT + File.separator + FOLDER_UPLOADS_PROJECT;
-		return cpRealPath + upload;
 	}
 
 	// 이미지 업로드
