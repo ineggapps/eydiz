@@ -70,11 +70,12 @@
 	<!-- 프로젝트 정보 불러오기 -->
 	<select id="readProject" parameterType="Integer" resultType="com.eydiz.studio.Project">
 		SELECT 
-			projectNo, brandNo, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectNo, p.brandNo, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
 			projectCreatedDate, projectUpdatedDate, projectStartDate, projectEndDate, 
 			statusNo, projectSummary, projectStory
-		FROM project
-		WHERE projectNo = #{projectNo}
+		FROM project p 
+		JOIN brand b ON b.brandNo = p.brandNo
+		WHERE projectNo = #{projectNo} AND p.brandNo = #{brandNo}
 	</select>
 	
 	<insert id="insertProjectHashtag" >

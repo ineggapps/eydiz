@@ -85,7 +85,6 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 	@RequestMapping(value = { "/project/list/{categoryName}", "/project/list" })
 	public String list(@PathVariable(required = false) String categoryName, Model model, HttpServletRequest req) {
 		addModelURIAttribute(model, req);
-		logger.error(categoryName);
 		model.addAttribute(ATTRIBUTE_CATEGORY, categoryName);
 		return VIEW_PROJECT_LIST;
 	}
@@ -104,6 +103,10 @@ public class StudioController implements Constant, StudioConstant, MemberConstan
 			}
 			////////////// 프로젝트 정보 불러오기
 			Project project = service.readProject(projectNo);
+			if(project==null) {
+				//자신의 브랜드의 프로젝트가 아니면 null을 반환함
+				return "redirect:" + API_PROJECT_LIST;
+			}
 			List<ProjectCategory> category = service.listCategory();
 			model.addAttribute(ATTRIBUTE_CATEGORY, category);
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
