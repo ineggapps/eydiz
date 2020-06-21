@@ -24,6 +24,7 @@ public interface StudioConstant extends Constant {
 
 	public final static String VIEW_PROJECT_LIST = ".studioOverviewLayout.list";
 	public final static String VIEW_PROJECT_REGISTER = ".studioLayout.register";
+	public final static String VIEW_PROJECT_REWARD = ".studioLayout.reward";
 	public final static String VIEW_PROJECT_MAIN = VIEW_PROJECT_LIST;
 
 	// ATTRIBUTE

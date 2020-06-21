@@ -47,12 +47,13 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		return requestURI.substring(contextPath.length() + REQUEST_MAPPING.length());
 	}
 
-	private void addModelURIAttribute(Model model, HttpServletRequest req) {
+	private void addModelURIAttribute(Model model, HttpServletRequest req, Integer projectNo) {
 		StringBuilder uri = new StringBuilder(req.getRequestURI());
 		if (req.getQueryString() != null && req.getQueryString().length() > 0) {
 			uri.append("?" + req.getQueryString());
 		}
 		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
+		model.addAttribute(ATTRIBUTE_PROJECTNO, projectNo);
 	}
 
 	private String getRealPath(HttpSession session) {
@@ -65,7 +66,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 	////////////////////////////////////////////// 프로젝트
 	@RequestMapping(value = { "/list/{categoryName}", "/list/{categoryName}/page/{page}", "/list", "/list/page/{page}" })
 	public String list(@PathVariable(required = false) String categoryName, @PathVariable(required=false) Integer page, Model model, HttpServletRequest req, HttpSession session) {
-		addModelURIAttribute(model, req);
+		addModelURIAttribute(model, req, null);
 		int currentPage = 1;
 		if(page!=null) {
 			currentPage = page;
@@ -116,7 +117,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
-		addModelURIAttribute(model, req);
+		addModelURIAttribute(model, req, projectNo);
 		return VIEW_PROJECT_REGISTER;
 	}
 
@@ -232,5 +233,12 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			result.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
 		}
 		return result;
+	}
+	
+	///리워드 설계
+	@RequestMapping(value="/{projectNo}/reward")
+	public String register(@PathVariable Integer projectNo, Model model, HttpServletRequest req, HttpSession session){
+		addModelURIAttribute(model, req, projectNo);
+		return VIEW_PROJECT_REWARD;
 	}
 }

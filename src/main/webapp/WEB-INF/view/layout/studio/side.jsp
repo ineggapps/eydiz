@@ -29,9 +29,9 @@
           <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
         </div>
         <ul class="subMenu">
-          <li class="subMenuItem"><a href="#" class="on">기본 정보</a></li>
-          <li class="subMenuItem"><a href="#">리워드 설계</a></li>
-          <li class="subMenuItem"><a href="#">스토리 작성</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/studio/project/${projectNo}/register" class="on">기본 정보</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/studio/project/${projectNo}/reward">리워드 설계</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/studio/project/${projectNo}/story">스토리 작성</a></li>
         </ul>
       </div>
     </li>
