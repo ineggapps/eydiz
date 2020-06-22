@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="<%=cp%>/resource/css/reset.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/jquery/css/jquery-ui.min.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/layout.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/reward.css" />
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js/html5shiv.min.js"></script>
     <![endif]-->

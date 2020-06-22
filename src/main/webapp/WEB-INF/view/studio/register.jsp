@@ -41,11 +41,11 @@
       <div class="inputWrap">
         <input type="file" name="uploadImage" id="uploadImage" class="hide" />
         <div class="imageBox" ${not empty project.projectImageUrl?"data-show=\"true\"":"data-show=\"false\""} style="background-image:url(${project.projectImageUrl})">
-        	<button type="button" id="btnDeleteImage" id="btnDeleteImage"><span class="hidden">지우기</span></button>
+        	<button type="button" id="btnDeleteImage" ><span class="hidden">지우기</span></button>
         </div>
         <div class="uploadBox">        
         <button type="button" id="btnProjectImage" class="btnDarkContrast">
-          <span class="iconCamera">&nbsp;</span>등록하기
+          <span class="icon iconCamera">&nbsp;</span>등록하기
         </button>
 	     <p class="desc">
 	        3MB 이하의 JPEG, PNG 파일 <br />

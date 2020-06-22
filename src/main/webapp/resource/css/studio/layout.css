@@ -440,11 +440,18 @@ p.description{
   display: none;
 }
 
-.iconCamera {
-  background-image: url("../../images/studio/icon-camera.png");
+span.icon{
   background-size: 100%;
   background-repeat: no-repeat;
   display: inline-block;
+}
+
+.iconCamera {
+  background-image: url("../../images/studio/icon-camera.png");
+}
+
+.iconPlus{
+	background-image:url("../../images/studio/plus.png");
 }
 
 .btnDarkContrast span {

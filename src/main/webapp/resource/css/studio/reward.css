@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+.rewardContentCard dl::after{
+	content:"";
+	display:block;
+	clear:both;
+}
+
+.rewardContentCard{
+	box-sizing:border-box;
+	padding:20px;
+	width:60%;
+	border:1px solid #e6eaed;
+}
+
+.rewardContentCard h4{
+	font-size:1.05rem;
+	font-weight:700;
+	margin:10px 0;
+}
+
+.rewardContentCard dl > * {
+	font-size:0.95rem;
+	color:#90949c;
+	float:left;
+	margin-top:10px;
+}
+
+.rewardContentCard dl dt{
+	font-weight:700;
+	clear:both;
+	margin-right:20px;
+}

@@ -3,8 +3,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="story">
 	<insert id="insertStory" parameterType="com.eydiz.story.Story">
-		INSERT INTO story_board(storyNum, memberId, storyCnum, storyTitle, storyContent, storyCreated, storyThumbnail)
-		VALUES(story_board_seq.NEXTVAL, #{memberId}, story_category_seq.NEXTVAL, #{storyTitle}, #{storyContent}, SYSDATE, #{storyThumbnail})
+		INSERT INTO story_board(storyNum, memberId, storyCnum, storyContent, storyCreated)
+		VALUES(story_board_seq.NEXTVAL, #{memberId}, #{storyCnum}, #{storyContent}, SYSDATE)
 	</insert>
 	
 	<select id="dataCount" resultType="Integer">
@@ -12,11 +12,28 @@
 	</select>
 	
 	<select id="listStory" resultType="com.eydiz.story.Story" parameterType="map">
-		SELECT storyNum, s.memberId, storyCnum, storyTitle, storyContent, storyCreated, storyThumbnail
+		SELECT s.storyNum, s.memberId, c.storyCnum, stroyCname, storyContent, storyCreated, NVL(storyLikeCount, 0) storyLikeCount
 		FROM story_board s JOIN member_detail m ON s.memberId = m.memberId
+		JOIN story_category c ON s.storyCnum = c.storyCnum
+		LEFT OUTER JOIN (
+			SELECT storyNum, COUNT(*) storyLikeCount FROM story_like
+			GROUP BY storyNum
+		) sc ON s.storyNum = sc.storyNum 
+		WHERE c.storyCnum = #{storyCnum}
 		ORDER BY storyNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
+	<insert id="insertStoryLike" parameterType="map">
+		INSERT INTO story_like(storyNum, memberId) VALUES(#{storyNum}, #{memberId})
+	</insert>
+	
+	<select id="storyLikeCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM story_like WHERE storyNum=#{storyNum}
+	</select>
+	
+	<delete id="deleteStory" parameterType="Integer">
+		DELETE FROM story_board WHERE storyNum = #{storyNum}
+	</delete>
 	
 </mapper>

@@ -1,23 +1,16 @@
 package com.eydiz.story;
 
 public class Story {
-	private int stroyNum;
+	private int storyNum;
 	private int listNum;
 	private String memberId;
 	private int storyCnum;
-	private int stroyCname;
-	private String storyTitle;
-	private String content;
+	private String stroyCname;
+	private String storyContent;
 	private String storyCreated;
-	private String storyThumbnail;
 	private String storyLikeCount;
 	
-	public int getStroyNum() {
-		return stroyNum;
-	}
-	public void setStroyNum(int stroyNum) {
-		this.stroyNum = stroyNum;
-	}
+	
 	public String getMemberId() {
 		return memberId;
 	}
@@ -30,40 +23,24 @@ public class Story {
 	public void setStoryCnum(int storyCnum) {
 		this.storyCnum = storyCnum;
 	}
-	public String getStoryTitle() {
-		return storyTitle;
-	}
-	public void setStoryTitle(String storyTitle) {
-		this.storyTitle = storyTitle;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
+
 	public String getStoryCreated() {
 		return storyCreated;
 	}
 	public void setStoryCreated(String storyCreated) {
 		this.storyCreated = storyCreated;
 	}
-	public String getStoryThumbnail() {
-		return storyThumbnail;
-	}
-	public void setStoryThumbnail(String storyThumbnail) {
-		this.storyThumbnail = storyThumbnail;
-	}
+
 	public String getStoryLikeCount() {
 		return storyLikeCount;
 	}
 	public void setStoryLikeCount(String storyLikeCount) {
 		this.storyLikeCount = storyLikeCount;
 	}
-	public int getStroyCname() {
+	public String getStroyCname() {
 		return stroyCname;
 	}
-	public void setStroyCname(int stroyCname) {
+	public void setStroyCname(String stroyCname) {
 		this.stroyCname = stroyCname;
 	}
 	public int getListNum() {
@@ -71,6 +48,18 @@ public class Story {
 	}
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
+	}
+	public String getStoryContent() {
+		return storyContent;
+	}
+	public void setStoryContent(String storyContent) {
+		this.storyContent = storyContent;
+	}
+	public int getStoryNum() {
+		return storyNum;
+	}
+	public void setStoryNum(int storyNum) {
+		this.storyNum = storyNum;
 	}
 	
 }

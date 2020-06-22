@@ -6,106 +6,29 @@
 	String cp=request.getContextPath();
 %>
 <article class="row">
-  <h2>기본 정보</h2>
-  <p class="description">프로젝트를 소개할 기본 정보를 입력하세요.</p>
+  <h2>리워드 설계</h2>
+  <p class="description">서포터에게 제공할 리워드 내용을 입력하세요. 서포터가 쉽게 펀딩할 수 있는 저렴한 리워드부터 서포터의 보다 빠른 펀딩을 유도할 수 있는 얼리버드 리워드까지 다양한 리워드를 구성하면 좋습니다.</p>
   <div class="infoItemWrap">
 	<form name="projectForm" action="<%=cp %>/studio/project/${project.projectNo}/register" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="projectNo" value="${project.projectNo}"/>
-    <div class="infoItem required">
-      <div class="infoTitle"><span>프로젝트 이름</span></div>
-      <p class="desc">프로젝트 이름을 입력하세요</p>
-      <div class="inputWrap">
-        <input type="text" id="projectName" name="projectName" value="${project.projectName}" />
-      </div>
+    <div class="rewardContentCard">
+    	<h4>리워드 설계 조건</h4>
+    	<dl>
+    		<dt>정렬 순서</dt>
+    		<dd>금액이 낮은 순으로 자동정렬됩니다.</dd>
+    		<dt>제한 수량</dt>
+    		<dd>리워드의 총 수량으로 제공할 수 있는 총량입니다. 해당 수량이 모두 펀딩되면 더는 펀딩에 응할 수 없습니다.</dd>
+    		<dt>발송 시작일</dt>
+    		<dd>프로젝트 종료일 이후부터 3개월 이내로 설계 가능합니다.</dd>
+    	</dl>
     </div>
-
     <div class="infoItem">
-      <div class="infoTitle"><span>프로젝트 진행상황</span></div>
-      <p class="desc">심사관이 평가할 수 있도록 프로젝트 진행상황에 대해 짤막하게 메모를 입력하세요.</p>
-      <div class="inputWrap">
-        <input type="text" id="projectStatusMemo" name="projectStatusMemo" value="${project.projectStatusMemo}" />
-      </div>
-    </div>
+    <button type="button" id="btnAddReward" class="btnDarkContrast">
+		<span class="icon iconPlus">&nbsp;</span>추가하기
+	</button>
     
-    
-    <div class="infoItem">
-      <div class="infoTitle"><span>목표 금액</span></div>
-      <p class="desc">50만 원에서 1억 원까지 설정할 수 있습니다.</p>
-      <div class="inputWrap">
-        <input type="text" id="projectGoalAmount" name="projectGoalAmount" value="${project.projectGoalAmount}"/>
-      </div>
     </div>
-
-    <div class="infoItem required">
-      <div class="infoTitle"><span>대표 이미지</span></div>
-      <div class="inputWrap">
-        <input type="file" name="uploadImage" id="uploadImage" class="hide" />
-        <div class="imageBox" ${not empty project.projectImageUrl?"data-show=\"true\"":"data-show=\"false\""} style="background-image:url(${project.projectImageUrl})">
-        	<button type="button" id="btnDeleteImage" id="btnDeleteImage"><span class="hidden">지우기</span></button>
-        </div>
-        <div class="uploadBox">        
-        <button type="button" id="btnProjectImage" class="btnDarkContrast">
-          <span class="iconCamera">&nbsp;</span>등록하기
-        </button>
-	     <p class="desc">
-	        3MB 이하의 JPEG, PNG 파일 <br />
-	        사이즈 : 1200X675 픽셀 이상<br />
-	        텍스트 및 로고 삽입 금지<br />
-	     </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="infoItem required">
-      <div class="infoTitle"><span>카테고리</span></div>
-      <div class="inputWrap">
-        <select name="categoryNo">
-          <option>::선택::</option>
-          <c:forEach var="item" items="${category}">
-          <option value="${item.categoryNo}" ${item.categoryNo==project.categoryNo?"selected=\"selected\"":""}>${item.categoryName}</option>
-          </c:forEach>
-        </select>
-      </div>
-    </div>
-
-    <div class="infoItem required">
-      <div class="infoTitle"><span>프로젝트 시작일</span></div>
-      <p class="desc">리워드를 개시하기 위해 프로젝트 시작일을 선택하세요.</p>
-      <div class="inputWrap">
-        <input type="text" id="projectStartDate" name="projectStartDate" value="${project.projectStartDate}" />
-      </div>
-    </div>
-
-    <div class="infoItem required">
-      <div class="infoTitle"><span>프로젝트 종료일</span></div>
-      <p class="desc">리워드를 마감하기 위한 프로젝트 종료일을 선택하세요.</p>
-      <div class="inputWrap">
-        <input type="text" id="projectEndDate" name="projectEndDate" value="${project.projectEndDate}"/>
-      </div>
-    </div>
-
-    <div class="infoItem required">
-      <div class="infoTitle"><span>검색용 태그</span></div>
-      <p class="desc">엔터를 누르면 태그가 등록됩니다. (최대 10개까지 입력 가능)</p>
-      <div class="inputWrap">
-        <input type="text" id="keyword" name="keyword" />
-      </div>
-    </div>
-
-    <div class="infoItem" id="tags">
-      <div class="infoTitle primary small strong" id="hashTitle">
-        0/10개의 해시 태그
-      </div>
-      <ul class="hashItems">
-        <li class="template">
-          <span class="text">#안녕</span
-          ><a href="#" class="btnHashDelete"
-            ><span class="hidden">해시태그 삭제</span></a
-          >
-        </li>
-      </ul>
-    </div>
-	  <button type="button" class="btnSubmit" id="btnSave">저장하기</button>
+	<button type="button" class="btnSubmit" id="btnSave">저장하기</button>
   </form>
   </div>
   <script type="text/javascript" src="<%=cp%>/resource/js/studio/project_register.js"></script>
