@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+.mateForm::after{
+	clear:both;
+	content:"";
+	display:block;
+}
+
 .mateheader {
 	width: 100%;
 	height: 160px;
@@ -78,12 +84,12 @@
 	padding: 20px;
 }
 
-.matebtn {
-	
+.matebtn ul{
+	padding-left: 60px;
 }
 
 .matebtn ul li{
-	padding: 20px;
+	padding: 60px;
 }
 
 .mbtn{
@@ -91,4 +97,43 @@
 	height: 50px;
 	border-radius: 40px;
 	border: 1px solid sliver;
+	margin: 0px auto;
+	background-color: white;
+	margin-right: 25px;
 }
+
+.matecontent {
+	width: 300px;
+	height: 400px;
+	background-color: #f9f9f9;
+	float: left;
+	margin: 30px 10px 30px 10px;
+}
+
+.mcontents {
+	padding : 20px;
+	padding-top: 50px;
+	height: 50px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.mcontentc {
+	margin : 20px;
+	height : 100px;
+}
+
+.mcontent {
+	padding: 20px;
+	color: #01DFD7;
+	text-align: right;
+	border-bottom: 1px solid black;
+}
+
+.mcount {
+	padding: 20px;
+	margin-top: 20px;
+	text-align: right;
+}
+
+

@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+.mateTitle {
+	width: 60%;
+	margin: 0px auto;
+}
+
+.matename h2{
+	padding: 40px;
+	font-size: 40px;
+}
+
+.matename p {
+	padding-left: 100px;
+	padding-top: 100px;
+	font-size: 30px;
+}
+
+.mnamec p {
+	font-size: 24px;
+	padding-left: 280px;
+	padding-top: 10px;
+}
+
+.matelistcontent p {
+	padding-left: 100px;
+	padding-top: 100px;
+	font-size: 24px;
+}

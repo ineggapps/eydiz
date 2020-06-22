@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+.aForm {
+	width: 70%;
+	margin: 0 auto;
+}
+
+.atitle {
+	padding: 10px;
+}
+
+.atitle h2 {
+	font-size: 30px;
+}
+
+.apeople {
+	padding: 10px;
+}
+
+.apeople h4 {
+	font-size: 20px;
+}
+
+.acontent {
+	padding: 10px;
+}
