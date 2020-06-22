@@ -1,11 +1,7 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page trimDirectiveWhitespaces="true" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-<%
-	String cp=request.getContextPath();
-%>
+<%@ page contentType="text/html; charset=UTF-8"%> <%@ page trimDirectiveWhitespaces="true" %> <%@
+taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <%@ taglib prefix="fmt"
+uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="tiles"
+uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(); %>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -20,7 +16,7 @@
       <script src="<%=cp%>/resource/js/html5shiv.min.js"></script>
     <![endif]-->
     <script>
-    	const cp = "<%=cp%>";
+      const cp = "<%=cp%>";
     </script>
     <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
     <script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
@@ -51,37 +47,97 @@
       <main id="content">
         <div class="contentWrapper">
           <div class="columnSide">
-            <tiles:insertAttribute name="side"/>
+            <tiles:insertAttribute name="side" />
           </div>
           <div class="columnContent">
-            <tiles:insertAttribute name="content"/>
+            <tiles:insertAttribute name="content" />
           </div>
         </div>
       </main>
       <script src="<%=cp %>/resource/js/studio/brand_studio.js"></script>
-	    <!-- reward modal -->
-   	<div class="rewardOverlay">
-	    <div class="rewardModalWrapper">
-	    	<div class="rewardModal">
-			  	<h2 class="title">리워드 추가<a href="#" class="btnRewardClose"><span class="hidden">닫기</span></a></h2>
-			  	<div class="infoItem required">
-			      <div class="infoTitle"><span>프로젝트 이름</span></div>
-			      <p class="desc">프로젝트 이름을 입력하세요</p>
-			      <div class="inputWrap">
-			        <input type="text" id="projectName" name="projectName" value="${project.projectName}" />
-			      </div>
-			    </div>
-			</div>
-	    </div>	 
-	    <div class="headerInnerMobile">
-		    <div class="mobileNav">
-		      <h2 class="title">리워드 추가</h2>
-		      <a href="#" class="btnClose btnFlat btnMobileNav">
-		        <span class="hidden">이전</span>
-		      </a>
-		    </div>
-		  </div>   	
-   	</div>
+      <!-- reward modal -->
+      <div class="rewardOverlay">
+        <div class="rewardModalWrapper">
+          <div class="rewardModal">
+            <h2 class="title">
+              리워드 추가<a href="#" class="btnRewardClose"><span class="hidden">닫기</span></a>
+            </h2>
+            <div class="infoItem required">
+              <div class="inputWrap">
+                <label for="amount">금액</label>
+                <div class="inputBox">
+                  <input type="text" id="amount" name="amount" placeholder="금액" />원
+                </div>
+              </div>
+            </div>
+            <div class="infoItem required">
+              <div class="inputWrap">
+                <label for="rewardTitle">리워드명</label>
+                <div class="inputBox">
+                  <input
+                    type="text"
+                    id="rewardTitle"
+                    name="rewardTitle"
+                    placeholder="타이틀 입력 ex) [이디즈 푸드]기본 리워드"
+                  />
+                </div>
+              </div>
+            </div>
+	          <div class="infoItem required">
+	            <div class="inputWrap">
+	              <label for="rewardContent">상세 설명</label>
+	              <div class="inputBox">
+	                <textarea id="rewardContent" name="rewardContent"></textarea>
+	              </div>
+	            </div>
+	          </div>
+	          <div class="infoItem required">
+	            <div class="inputWrap">
+	              <label for="rewardContent">옵션 조건</label>
+	              <div class="inputBox">
+	                <select name="rewardOption">
+	                	<option value="0">옵션 없음</option>
+	                	<option value="1">직접 입력 옵션</option>
+	                </select>
+	              </div>
+	            </div>
+	          </div>
+	          <div class="infoItem required">
+	            <div class="inputWrap">
+	              <label for="rewardContent">배송 조건</label>
+	              <div class="inputBox">
+	              	<input type="radio" name="isShipping" value="1"> 배송이 필요한 리워드입니다.
+	              	<input type="radio" name="isShipping" value="0"> 배송 조건이 필요없습니다.
+	              </div>
+	            </div>
+	          </div>
+			<div class="infoItem required">
+              <div class="inputWrap">
+                <label for="limitQuantity">제한수량</label>
+                <div class="inputBox">
+                  <input type="text" id="limitQuantity" name="limitQuantity" placeholder="제한수량 입력" />개
+                </div>
+              </div>
+            </div>
+			<div class="infoItem required">
+              <div class="inputWrap">
+                <label for="startShippingDate">발송시작일</label>
+                <div class="inputBox">
+                  <input type="text" id="startShippingDate" name="startShippingDate" placeholder="YYYYMMDD" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="headerInnerMobile">
+          <div class="mobileNav">
+            <h2 class="title">리워드 추가</h2>
+            <a href="#" class="btnClose btnRewardClose btnFlat btnMobileNav">
+              <span class="hidden">닫기</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
