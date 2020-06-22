@@ -29,9 +29,9 @@ public class StoryController {
 	
 	@RequestMapping(value="story")
 	public String list(
-			@RequestParam(value="pageNo", defaultValue="1") int current_page, Model model, HttpServletRequest req) throws Exception {
-		String cp = req.getContextPath();
-		
+			@RequestParam(value="pageNo", defaultValue="1") int current_page, 
+			@RequestParam(defaultValue="1") int storyCnum,
+			Model model, HttpServletRequest req) throws Exception {		
 		int rows=3;
 		int dataCount = service.dataCount();
 		int total_page = myUtil.pageCount(rows, dataCount);
@@ -47,46 +47,84 @@ public class StoryController {
 		
 		map.put("offset", offset);
 		map.put("rows", rows);
+		map.put("storyCnum", storyCnum);
 		
 		int listNum = 0;
 		int num = 0;
 		
 		List<Story> list = service.listStory(map);
 		for(Story dto : list) {
-			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+			dto.setStoryContent(dto.getStoryContent().replaceAll("\n", "<br>"));
 			
 			listNum = dataCount - (offset + num);
 			dto.setListNum(listNum);
 			num++;
 		}
 		
-		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+		String cp=req.getContextPath();
+		String listUrl = cp+"/story/story?storyCnum="+storyCnum;
+		
+		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("pageNo", current_page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
+		model.addAttribute("storyCnum", storyCnum);
 		
 		return ".storyLayout.story";
 	}
 	
 	@RequestMapping(value="insert", method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> insertSubmit(Story dto, HttpSession session) throws Exception {
+	public String insertSubmit(Story dto, HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		
-		Map<String, Object> model = new HashMap<>();
 		
 		try {
 			dto.setMemberId(info.getMemberId());
-			service.insertStroy(dto);
-			model.put("state", "true");
+			service.insertStory(dto);
+
 		} catch (Exception e) {
-			model.put("state", "false");
 		}
+		
+		return "redirect:/story/story?storyCnum="+dto.getStoryCnum();
+	}
+	
+	@RequestMapping(value="insertStoryLike", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertStoryLike(
+			@RequestParam int storyNum, HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		int storyLikeCount=0;
+		String state="true";
+		
+		Map<String, Object> paramMap=new HashMap<>();
+		paramMap.put("storyNum", storyNum);
+		paramMap.put("memberId", info.getMemberId());
+		
+		try {
+			service.insertStoryLike(paramMap);
+		} catch (Exception e) {
+			state="false";
+		}
+		
+		storyLikeCount = service.storyLikeCount(storyNum);
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		model.put("storyLikeCount", storyLikeCount);
 		
 		return model;
 	}
 	
+	@RequestMapping(value="delete")
+	public String deleteStory(
+			Story dto, @RequestParam int storyNum, HttpSession session
+			) throws Exception {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		service.deleteStory(storyNum, info.getMemberId());
+		
+		return "redirect:/story/story?storyCnum="+dto.getStoryCnum();
+	}
 }

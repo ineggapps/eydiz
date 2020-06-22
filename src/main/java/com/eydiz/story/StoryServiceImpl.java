@@ -14,7 +14,7 @@ public class StoryServiceImpl implements StoryService {
 	private CommonDAO dao;
 
 	@Override
-	public void insertStroy(Story dto) throws Exception {
+	public void insertStory(Story dto) throws Exception {
 		try {
 			dao.insertData("story.insertStory", dto);
 		} catch (Exception e) {
@@ -49,30 +49,43 @@ public class StoryServiceImpl implements StoryService {
 		
 		return result;
 	}
+	
 
 	@Override
-	public void updateStory(Story dto) throws Exception {
-		
-		
-	}
-
-	@Override
-	public void deleteStory(int num, String memberId) throws Exception {
-		
+	public void deleteStory(int storyNum, String memberId) throws Exception {
+		try {
+			dao.deleteData("story.deleteStory", storyNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 
 	@Override
 	public void insertStoryLike(Map<String, Object> map) throws Exception {
-		
+		try {
+			dao.insertData("story.insertStoryLike", map);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
-	public int StroyLikeCount(int num) {
+	public int storyLikeCount(int storyNum) {
+		int result = 0;
 		
-		return 0;
+		try {
+			result = dao.selectOne("story.storyLikeCount", storyNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 }
