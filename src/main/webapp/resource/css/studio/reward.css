@@ -1,126 +1,196 @@
 @charset "UTF-8";
 
 .rewardOverlay {
-	display:none;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0,0,0,0.2);
-	z-index: 9999;
-	overflow-y:auto;
+  /* display:none; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  overflow-y: auto;
 }
 
-.rewardOverlay.show{
-	display:block;
+.rewardOverlay.show {
+  display: block;
 }
 
 .rewardModalWrapper {
-	z-index: 9999;
-	text-align:center;
-	height:100vh;
-	pointer-events: all;
+  z-index: 9999;
+  text-align: center;
+  height: 100vh;
+  pointer-events: all;
 }
 
 .rewardModal {
-	height: auto;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, .4);
-	background-color: #fff;
-	padding: 80px 100px;
-	box-sizing: border-box;
-	z-index: 10000;
-	display:inline-block;
-	text-align:left;
+  height: auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  background-color: #fff;
+  padding: 80px 100px;
+  box-sizing: border-box;
+  z-index: 10000;
+  display: inline-block;
+  text-align: left;
 }
 
-.rewardModal a.btnRewardClose{
-	float:right;
-	position:relative;
-	top:-30px;
+.rewardModal a.btnRewardClose {
+  float: right;
+  position: relative;
+  top: -30px;
 }
 
 .rewardContentCard dl::after,
-.rewardModal h2{
-	content: "";
-	display: block;
-	clear: both;
+.rewardModal h2 {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.rewardModal h2.title {
+  margin-bottom: 40px;
 }
 
 .rewardContentCard {
-	box-sizing: border-box;
-	padding: 20px;
-	width: 60%;
-	border: 1px solid #e6eaed;
-	width: 60%;
+  box-sizing: border-box;
+  padding: 20px;
+  width: 60%;
+  border: 1px solid #e6eaed;
+  width: 60%;
 }
 
 .rewardContentCard h4 {
-	font-size: 1.05rem;
-	font-weight: 700;
-	margin: 10px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 10px 0;
 }
 
-.rewardContentCard dl>* {
-	font-size: 0.95rem;
-	color: #90949c;
-	float: left;
-	margin-top: 10px;
-	color: #90949c;
+.rewardContentCard dl > * {
+  font-size: 0.95rem;
+  color: #90949c;
+  float: left;
+  margin-top: 10px;
+  color: #90949c;
 }
 
 .rewardContentCard dl dt {
-	font-weight: 700;
-	clear: both;
-	margin-right: 10px;
-	width: 20%;
+  font-weight: 700;
+  clear: both;
+  margin-right: 10px;
+  width: 20%;
 }
 
 .rewardContentCard dl dd {
-	width: 77%;
+  width: 77%;
+}
+
+.rewardModal .infoItem label,
+.rewardModal .infoItem .inputBox {
+  display: inline-block;
+}
+
+.rewardModal .infoItem .inputBox.clear {
+  display: block;
+  clear: both;
+}
+
+.rewardModal .infoItem label {
+  width: 100%;
+  max-width: 138px;
+  font-weight: 500;
+  font-size: 1.15rem;
 }
 
 .rewardModal .infoItem input,
-.rewardModal .infoItem textarea{
-	width:100%;
+.rewardModal .infoItem textarea {
+  width: auto;
 }
 
-@media ( min-width :768px) {
-	.rewardOverlay .headerInnerMobile{
-		display:none;
-	}
-	.rewardModal {
-		margin-top:5%;
-		min-width: 660px;
-		max-width: 920px;
-		z-index: 10000;
-	}
+.rewardModal .infoItem textarea {
+  width: auto;
+  height: 50px;
+  border: 1px solid #e6eaed;
+  resize: none;
 }
 
-@media ( max-width :768px) {
-	.rewardModal h2.title{
-		display: none;
-	}
-	.rewardOverlay .headerInnerMobile{
-		display:block;
-		position: fixed;
-	    top: 0;
-	    left: 0;
-	    z-index: 10000;
-	    box-shadow: 0 1px 0 0 rgba(0,0,0,.08);
-	}
-	.rewardContentCard {
-		width: 100%;
-	}
-	.rewardModal {
-		margin-top:0;
-		width: 100%;
-		overflow-y:auto;
-	}
+.rewardModal .radiomark {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  position: relative;
+  border: 1px solid #00b2b2;
+  cursor:pointer;
 }
 
-@media ( max-width :648px) {
-	.rewardContentCard dl dt, .rewardContentCard dl dd {
-		width: 100%;
-	}
+.rewardModal .inputBox.custom input[type=radio]{
+	position:absolute;
+	left:-10px;
+	top:-10px;
+	display:none;
+}
+
+.rewardModal .radiomark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  border-radius: 100%;
+  position: absolute;
+  top:5px;
+  left:5px;
+}
+
+.rewardModal input:checked ~ .radiomark:after {
+  display: block;
+  background-color: #00b2b2;
+  border-radius: 100%;
+  position: absolute;
+}
+
+@media (min-width: 768px) {
+  .rewardOverlay .headerInnerMobile {
+    display: none;
+  }
+  .rewardModal {
+    margin-top: 5%;
+    min-width: 660px;
+    max-width: 920px;
+    z-index: 10000;
+  }
+}
+
+@media (max-width: 768px) {
+  .rewardModal h2.title {
+    display: none;
+  }
+  .rewardOverlay .headerInnerMobile {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.08);
+  }
+  .rewardContentCard {
+    width: 100%;
+  }
+  .rewardModal {
+    margin-top: 0;
+    width: 100%;
+    overflow-y: auto;
+  }
+  .rewardModal .infoItem label {
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 648px) {
+  .rewardContentCard dl dt,
+  .rewardContentCard dl dd {
+    width: 100%;
+  }
 }

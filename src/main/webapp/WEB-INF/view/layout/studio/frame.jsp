@@ -104,10 +104,20 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
 	          </div>
 	          <div class="infoItem required">
 	            <div class="inputWrap">
-	              <label for="rewardContent">배송 조건</label>
-	              <div class="inputBox">
-	              	<input type="radio" name="isShipping" value="1"> 배송이 필요한 리워드입니다.
-	              	<input type="radio" name="isShipping" value="0"> 배송 조건이 필요없습니다.
+	              <label>배송 조건</label>
+	              <div class="inputBox clear custom">
+	              	<label>
+	              		<input type="radio" name="isShipping" value="1">
+	              		<span class="radiomark"></span>
+	              		배송이 필요한 리워드입니다.	              	
+	              	</label>
+	              </div>
+	              <div class="inputBox clear custom">
+	              	<label>
+	              		<input type="radio" name="isShipping" value="0"> 
+	              		<span class="radiomark"></span>
+	              		배송이 필요없는 리워드입니다.              	
+	              	</label>
 	              </div>
 	            </div>
 	          </div>
