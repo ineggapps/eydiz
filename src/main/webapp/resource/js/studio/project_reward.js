@@ -11,3 +11,18 @@ $(function(){
 	});
 	
 });
+
+
+//옵션 있는 경우
+$(function(){
+	const $rewardOptionExist = $("#rewardOptionExist");
+	const $rewardOption = $("#rewardOption").closest(".inputWrap");
+	$rewardOptionExist.on("change click blur", function(){
+		const val = $(this).val();
+		if(val==1){
+			$rewardOption.removeClass("hide");
+		}else{
+			$rewardOption.addClass("hide");
+		}
+	});
+});

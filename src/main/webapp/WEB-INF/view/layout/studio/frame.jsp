@@ -99,13 +99,18 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
 	          </div>
 	          <div class="infoItem required">
 	            <div class="inputWrap">
-	              <label for="rewardContent">옵션 조건</label>
+	              <label for="rewardOption">옵션 조건</label>
 	              <div class="inputBox">
-	                <select name="rewardOption">
+	                <select id="rewardOptionExist" name="rewardOptionExist">
 	                	<option value="0">옵션 없음</option>
 	                	<option value="1">직접 입력 옵션</option>
 	                </select>
 	              </div>
+	            </div>
+	            <div class="inputWrap hide">
+	            	<div class="infoItem">
+		                <textarea id="rewardOption" name="rewardOption" maxlength="400"></textarea>
+	            	</div>
 	            </div>
 	          </div>
 	          <div class="infoItem required">

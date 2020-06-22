@@ -530,7 +530,6 @@ a.btnRewardClose {
   display: inline-block;
   background-image: url("../../images/studio/close.png");
   background-repeat: no-repeat;
-  background-size: 100%;
   background-size: 30%;
   background-position: 50% 50%;
 }

@@ -15,8 +15,8 @@
 }
 
 .rewardOverlay {
-  display:none;
-  position: fixed;
+/*   display:none;
+ */  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -48,6 +48,13 @@
   text-align: left;
 }
 
+.headerInnerMobile a.btnRewardClose{
+	top:10px;
+  	width:30px;
+  	height:30px;
+  	background-size:50%;
+  }
+  
 .rewardModal a.btnRewardClose {
   float: right;
   position: relative;
@@ -129,6 +136,16 @@
   line-height:24px;
 }
 
+.rewardModal .inputWrap.hide{
+	display:none;
+}
+
+.rewardModal .inputWrap .infoItem textarea#rewardOption{
+	width:94%;
+	margin:20px 0;
+	line-height:24px;
+}
+
 .rewardModal .inputBox.custom{
 	margin:12px 0;
 }
@@ -203,6 +220,7 @@ span.exp{
   .rewardOverlay .headerInnerMobile {
     display: none;
   }
+  
   .rewardModal {
     margin-top: 5%;
     min-width: 660px;
