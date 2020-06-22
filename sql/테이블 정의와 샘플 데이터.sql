@@ -537,7 +537,6 @@ CREATE TABLE cast_board(
     castTitle VARCHAR2(500) NOT NULL,
     castContent VARCHAR2(3000) NOT NULL,
     castCreated DATE DEFAULT SYSDATE,
-    castThumbnail VARCHAR2(500),
     CONSTRAINT fk_cast_board_memberNo FOREIGN KEY(memberNo) REFERENCES member(memberNo),
     CONSTRAINT fk_cast_board_castCnum FOREIGN KEY(castCnum) REFERENCES cast_category(castCnum)
 );
@@ -616,32 +615,23 @@ CREATE TABLE notice (
 
 CREATE TABLE funding_mate (
     fmNo NUMBER PRIMARY KEY,
-    memberId VARCHAR2(50) NOT NULL,
+    memberNo NUMBER NOT NULL,
+    fmcaNo NUMBER NOT NULL,
     fmSubject VARCHAR2(50) not null,
     fmContent CLOB not null,
     fmCount NUMBER(10),
-    fmCreated DATE DEFAULT SYSDATE,
     fmFilename VARCHAR2(100),
-    fmSaveFilename VARCHAR2(100),
     fmNumber NUMBER(4),
     fmAllNumber NUMBER(4),
-    FOREIGN KEY (memberId) REFERENCES member_detail (memberId)
+    FOREIGN key (memberNo) REFERENCES member_detail (memberNo),
+    FOREIGN key (fmcaNo) REFERENCES funding_mate_catagory (fmcaNo)
 );
 
-CREATE TABLE funding_mate_like(
-    fmNo NUMBER NOT NULL,
-    memberId VARCHAR2(50) NOT NULL,
-    PRIMARY KEY(fmNo, memberId),
-    FOREIGN KEY (fmNo) REFERENCES funding_mate(fmNo),
-    FOREIGN KEY (memberId) REFERENCES member_detail(memberId)
+CREATE TABLE funding_mate_catagory (
+    fmcaNo NUMBER PRIMARY key,
+    fmcaName VARCHAR2(10) NOT NULL
 );
 
-CREATE SEQUENCE funding_mate_like_seq
-    INCREMENT BY 1
-    START WITH 1
-    NOMAXVALUE
-    NOCYCLE
-    NOCACHE;
 
 CREATE SEQUENCE funding_mate_seq
     INCREMENT BY 1
