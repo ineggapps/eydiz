@@ -15,8 +15,8 @@
 }
 
 .rewardOverlay {
-/*   display:none;
- */  position: fixed;
+	display:none;
+ position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -216,13 +216,29 @@ span.exp{
   position: absolute;
 }
 
+.no-margin-bottom{
+	margin-bottom:10px !important;
+}
+
+.margin-height{
+	padding:20px 0 0;
+}
+
+.margin-bottom-some{
+	margin-bottom:25px !important;
+}
+
+.indent{
+	text-indent:20px;
+}
+
 @media (min-width: 768px) {
   .rewardOverlay .headerInnerMobile {
     display: none;
   }
   
   .rewardModal {
-    margin-top: 5%;
+    margin-top:5%;
     min-width: 660px;
     max-width: 920px;
     z-index: 10000;
@@ -260,6 +276,9 @@ span.exp{
   }
   .rewardModal .infoItem label {
     display: block;
+  }
+  .indent input{
+  	margin-left:20px;
   }
 }
 
