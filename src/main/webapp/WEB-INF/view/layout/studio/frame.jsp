@@ -59,6 +59,29 @@
         </div>
       </main>
       <script src="<%=cp %>/resource/js/studio/brand_studio.js"></script>
+	    <!-- reward modal -->
+   	<div class="rewardOverlay">
+	    <div class="rewardModalWrapper">
+	    	<div class="rewardModal">
+			  	<h2 class="title">리워드 추가<a href="#" class="btnRewardClose"><span class="hidden">닫기</span></a></h2>
+			  	<div class="infoItem required">
+			      <div class="infoTitle"><span>프로젝트 이름</span></div>
+			      <p class="desc">프로젝트 이름을 입력하세요</p>
+			      <div class="inputWrap">
+			        <input type="text" id="projectName" name="projectName" value="${project.projectName}" />
+			      </div>
+			    </div>
+			</div>
+	    </div>	 
+	    <div class="headerInnerMobile">
+		    <div class="mobileNav">
+		      <h2 class="title">리워드 추가</h2>
+		      <a href="#" class="btnClose btnFlat btnMobileNav">
+		        <span class="hidden">이전</span>
+		      </a>
+		    </div>
+		  </div>   	
+   	</div>
     </div>
   </body>
 </html>
