@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="studio">
+	<!-- 브랜드 -->
+	<insert id="makeBrand">
+		INSERT INTO brand(brandNo, memberNo, brandName, managerName, managerEmail, managerPhone)
+		VALUE (brand_seq.NEXTVAL, #{memberNo}, #{brandName}, #{managerName}, #{managerEmail}, #{managerPhone})
+	</insert>
+	
+	<select id="myBrandCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*),0) 
+		FROM brand
+		WHERE memberNo=#{memberNo}
+	</select>
+	
+	<select id="readBrandByMemberNo" parameterType="Integer" resultType="com.eydiz.studio.Brand">
+		SELECT brandNo, memberNo, brandName, managerName, managerEmail, managerPhone
+		FROM brand
+		WHERE  memberNo=#{memberNo}
+	</select>
+	
+	<insert id="insertBrand" parameterType="com.eydiz.studio.Brand">
+		INSERT INTO brand(brandNo, memberNo, brandName, managerName, managerEmail, managerPhone)
+		VALUES(brand_seq.NEXTVAL, #{memberNo}, #{brandName}, #{managerName}, #{managerEmail}, #{managerPhone})
+	</insert>
+	
+	<update id="updateBrand" parameterType="com.eydiz.studio.Brand">
+		UPDATE brand SET brandName=#{brandName}, managerName=#{managerName}, managerEmail=#{managerEmail}, managerPhone=#{managerPhone}
+		WHERE memberNo=#{memberNo}
+	</update>
+	
+	<!-- 프로젝트 -->
+	<!-- 프로젝트 카테고리
+		카테고리는 대분류, 중분류밖에 없을 것임.
+		대분류=> 펀딩 vs 기부
+		중분류 => 펀딩의 테크가전, 펀딩의 출판, ..., 후원의 기부/후원
+	 -->
+	<select id="readAllProjectCategories" resultType="com.eydiz.studio.ProjectCategory">
+		SELECT categoryNo, categoryName
+		FROM project_category
+		WHERE parentCategoryNo is not null
+		START WITH parentCategoryNo is not null
+		CONNECT BY PRIOR categoryno=parentCategoryNo
+		ORDER BY categoryNo ASC
+	</select>
+	
+	<!-- 새로운 프로젝트 번호 얻어오기 -->
+	<select id="getNewProjectNo" resultType="Integer">
+		SELECT project_seq.NEXTVAL FROM dual
+	</select>
+	
+	<!-- 프로젝트 등록하기 -->
+	<update id="insertEmptyProject" parameterType="com.eydiz.studio.Project">
+		INSERT ALL
+		INTO project(projectNo, brandNo) VALUES (#{projectNo}, #{brandNo})
+		INTO project_status_list(projectNo, statusNo, statusMemo) VALUES(#{projectNo}, 0, #{statusMemo, jdbcType=VARCHAR})
+		SELECT * FROM dual
+	</update>
+	
+	<!-- 한 번에 등록하는 프로젝트 코드 -->
+	<!-- <insert id="insertProject" parameterType="com.eydiz.studio.Project">
+		INSERT INTO project(
+			projectNo, brandNo, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectCreatedDate, projectUpdatedDate, projectStartDate, projectEndDate, statusNo
+		)
+		VALUES(
+			#{projectNo}, #{brandNo}, #{categoryNo}, #{projectName}, #{projectStatusMemo}, #{projectImageUrl}, #{projectGoalAmount},
+			SYSDATE, SYSDATE, #{projectStartDate}, #{projectEndDate}, #{statusNo}
+		)
+	</insert> -->
+	
+	<!-- 프로젝트 모든 컬럼 -->
+	<sql id="select-project-columns">
+		
+	</sql>
+	
+	<!-- 조인 조건 사용 시 주의 -->
+	<sql id="where-projectNo">
+		WHERE projectNo = #{projectNo} AND brandNo = #{brandNo}
+	</sql>
+		
+	<!-- 자신의 브랜드 프로젝트 모두 불러오기 -->	
+	<select id="listProject" parameterType="map" resultType="com.eydiz.studio.Project">
+		SELECT 
+			projectNo, brandNo, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectCreatedDate, projectUpdatedDate, 
+			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
+			statusNo, projectSummary, projectStory
+		FROM project p
+		WHERE brandNo = #{brandNo}
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="listProjectCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM project
+		WHERE brandNo = #{brandNo}
+	</select>
+	
+	<!-- 프로젝트 정보 불러오기 -->
+	<select id="readProject" parameterType="map" resultType="com.eydiz.studio.Project">
+		SELECT 
+			projectNo, p.brandNo, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectCreatedDate, projectUpdatedDate, 
+			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
+			statusNo, projectSummary, projectStory
+		FROM project p 
+		JOIN brand b ON b.brandNo = p.brandNo
+		WHERE projectNo = #{projectNo} AND p.brandNo = #{brandNo}
+	</select>
+
+	<!-- 프로젝트 기본정보 등록하기 -->
+	<update id="updateProjectBasic">
+		UPDATE project SET projectName=#{projectName}, categoryNo=#{categoryNo}, projectStatusMemo=#{projectStatusMemo}, 
+		projectGoalAmount=#{projectGoalAmount}, projectUpdatedDate=SYSDATE, projectStartDate=#{projectStartDate}, projectEndDate=#{projectEndDate}
+		<include refid="where-projectNo" />
+	</update>
+
+	<!-- 이미지 정보 수정하기 -->
+	<update id="updateProjectImage" parameterType="com.eydiz.studio.Project">
+		UPDATE project SET projectImageUrl = #{projectImageUrl} 
+		<include refid="where-projectNo" />
+	</update>
+	
+	<!-- 이미지 정보 삭제하기 -->
+	<update id="updateNullProjectImage" parameterType ="com.eydiz.studio.Project">
+		UPDATE project SET projectImageUrl = null
+		<include refid="where-projectNo" />
+	</update>
+	
+	<!-- 해시태그 등록/삭제 --> 
+	<select id="readHashtag" parameterType="Integer" resultType="com.eydiz.studio.ProjectHashtag">
+		SELECT projectNo, keyword
+		FROM project_hashtag
+		WHERE projectNo = #{projectNo}
+		ORDER BY tagNo
+	</select>
+	
+	<insert id="insertHashtag" parameterType="com.eydiz.studio.ProjectHashtag">
+		INSERT INTO project_hashtag(tagNo, projectNo, keyword)
+		VALUES(project_hashtag_seq.NEXTVAL, #{projectNo}, #{keyword})
+	</insert>
+	
+	<delete id="deleteHashTag" parameterType="com.eydiz.studio.ProjectHashtag">
+		DELETE FROM project_hashtag
+		WHERE projectNo=#{projectNo} AND keyword=#{keyword}
+	</delete>
+</mapper>

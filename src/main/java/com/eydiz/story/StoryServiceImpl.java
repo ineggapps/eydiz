@@ -29,7 +29,7 @@ public class StoryServiceImpl implements StoryService {
 		List<Story> list = null;
 		
 		try {
-			dao.selectList("story.listStory", map);
+			list=dao.selectList("story.listStory", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,15 +38,16 @@ public class StoryServiceImpl implements StoryService {
 	}
 
 	@Override
-	public int dataCount(Map<String, Object> map) {
+	public int dataCount() {
+		int result = 0;
 		
-		return 0;
-	}
-
-	@Override
-	public Story readStory(int num) {
+		try {
+			result=dao.selectOne("story.dataCount");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		return null;
+		return result;
 	}
 
 	@Override

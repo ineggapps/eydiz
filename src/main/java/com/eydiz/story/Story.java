@@ -2,6 +2,7 @@ package com.eydiz.story;
 
 public class Story {
 	private int stroyNum;
+	private int listNum;
 	private String memberId;
 	private int storyCnum;
 	private int stroyCname;
@@ -64,6 +65,12 @@ public class Story {
 	}
 	public void setStroyCname(int stroyCname) {
 		this.stroyCname = stroyCname;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
 	
 }

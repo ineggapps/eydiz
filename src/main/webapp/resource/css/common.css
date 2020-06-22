@@ -31,6 +31,12 @@ a.btnSubmit {
   background-color: #00c4c4;
   transition: background-color linear 0.2s;
   border-radius: 5px;
+  cursor:pointer;
+  border:none;
+}
+
+.btnSubmit:focus{
+	outline:none;	
 }
 
 .btnSubmit.bordering {
@@ -106,4 +112,32 @@ a.btnSubmit {
 .btnPlain.gray:hover {
   background-color: #60656a;
   border-color: #60656a;
+}
+
+.loadingSubtitle::before{
+    display: inline-block;
+    width: 100%;
+    line-height: 1;
+    color: transparent;
+    content: "loading";
+    -webkit-animation: commons_skeleton__2nBNJ 3s cubic-bezier(.25,.2,.65,.69) infinite;
+    -moz-animation: commons_skeleton__2nBNJ 3s cubic-bezier(.25,.2,.65,.69) infinite;
+    animation: commons_skeleton__2nBNJ 3s cubic-bezier(.25,.2,.65,.69) infinite;
+    background: linear-gradient(270deg,#dadce0,#e6eaed,#dadce0);
+    background-size: 300%;
+    overflow: hidden;
+}
+
+.loadingSubtitle::after{
+	display: inline-block;
+    width: 100%;
+    line-height: 1;
+    color: transparent;
+    content: "loading";
+    -webkit-animation: commons_skeleton__2nBNJ 3s cubic-bezier(.25,.2,.65,.69) infinite;
+    -moz-animation: commons_skeleton__2nBNJ 3s cubic-bezier(.25,.2,.65,.69) infinite;
+    animation: commons_skeleton__2nBNJ 3s cubic-bezier(.25,.2,.65,.69) infinite;
+    background: linear-gradient(270deg,#dadce0,#e6eaed,#dadce0);
+    background-size: 300%;
+    overflow: hidden;
 }

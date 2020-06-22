@@ -1,0 +1,13 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+	String cp=request.getContextPath();
+%>
+<div>
+아직 안 만들었어 ⚡
+	<c:forEach var="item" items="${project}">
+		${item.projectName}, 
+	</c:forEach>
+</div>

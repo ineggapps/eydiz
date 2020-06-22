@@ -7,9 +7,14 @@
 	<select id="readMemberById"  parameterType="String" resultType="com.eydiz.member.Member">
 		SELECT 
 		    m.memberNo, memberId, memberNickname, 
-		    memberPwd, memberEmail, memberSocial, available
+		    memberPwd, memberEmail, memberSocial, available, NVL(ma.isAdmin,0) isAdmin 
 		FROM member m
 		JOIN member_detail md ON m.memberNo = md.memberNo
+        LEFT OUTER JOIN (
+            SELECT memberNo, count(*) isAdmin 
+            FROM member_admin
+            GROUP BY memberNo
+        ) ma ON m.memberNo = ma.memberNo
 		WHERE memberId = #{memberId}
 	</select>
 	
