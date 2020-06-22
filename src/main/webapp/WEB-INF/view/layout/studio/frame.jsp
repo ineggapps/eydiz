@@ -22,6 +22,11 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
     <script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
     <script type="text/javascript" src="<%=cp %>/resource/js/lib/bluebird.js"></script>
+    <script type="text/javascript">
+	    $(function () {
+	  	  $("#startShippingDate").datepicker({ dateFormat: "yymmdd" });
+	  	});
+    </script>
   </head>
   <body>
     <div id="wrap">
@@ -66,7 +71,8 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
               <div class="inputWrap">
                 <label for="amount">금액</label>
                 <div class="inputBox">
-                  <input type="text" id="amount" name="amount" placeholder="금액" />원
+                  <input type="text" id="amount" name="amount" placeholder="금액" /> 원
+                  <p class="desc">금액을 1,000원 이상 입력해야 합니다.</p>
                 </div>
               </div>
             </div>
@@ -87,7 +93,7 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
 	            <div class="inputWrap">
 	              <label for="rewardContent">상세 설명</label>
 	              <div class="inputBox">
-	                <textarea id="rewardContent" name="rewardContent"></textarea>
+	                <textarea id="rewardContent" name="rewardContent" maxlength="400"></textarea>
 	              </div>
 	            </div>
 	          </div>
@@ -109,14 +115,14 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
 	              	<label>
 	              		<input type="radio" name="isShipping" value="1">
 	              		<span class="radiomark"></span>
-	              		배송이 필요한 리워드입니다.	              	
+	              		<span class="exp">배송이 필요한 리워드입니다.</span>	              	
 	              	</label>
 	              </div>
 	              <div class="inputBox clear custom">
 	              	<label>
 	              		<input type="radio" name="isShipping" value="0"> 
 	              		<span class="radiomark"></span>
-	              		배송이 필요없는 리워드입니다.              	
+	              		<span class="exp">배송이 필요없는 리워드입니다.</span>              	
 	              	</label>
 	              </div>
 	            </div>
@@ -125,7 +131,7 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
               <div class="inputWrap">
                 <label for="limitQuantity">제한수량</label>
                 <div class="inputBox">
-                  <input type="text" id="limitQuantity" name="limitQuantity" placeholder="제한수량 입력" />개
+                  <input type="text" id="limitQuantity" name="limitQuantity" placeholder="제한수량 입력" /> 개
                 </div>
               </div>
             </div>
@@ -136,6 +142,10 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
                   <input type="text" id="startShippingDate" name="startShippingDate" placeholder="YYYYMMDD" />
                 </div>
               </div>
+            </div>
+            <div class="infoItem rewardController">
+            	<button class="btnSubmit">등록</button>
+            	<button class="btnPlain btnRewardClose">취소</button>
             </div>
           </div>
         </div>
