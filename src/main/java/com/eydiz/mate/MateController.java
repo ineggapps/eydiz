@@ -11,10 +11,15 @@ public class MateController {
 	@Autowired
 	MateService service;
 	
-	
 	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public String main() {
 		service.test();
 		return ".mateLayout.main";
+	}
+	
+	@RequestMapping(value="/content", method=RequestMethod.GET)
+	public String list() {
+		service.test();
+		return ".mateLayout.content";
 	}
 }

@@ -23,9 +23,8 @@ public class NewsServiceImpl implements NewsService{
 			String saveFilename = fileManager.doFileUpload(dto.getUpload(), pathname);
 			if(saveFilename!=null) {
 				dto.setImageFilename(saveFilename);
-				
-				dao.insertData("news.insertNews", dto);
 			}
+			dao.insertData("news.insertNews", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -58,11 +57,11 @@ public class NewsServiceImpl implements NewsService{
 	}
 
 	@Override
-	public News readNews(int nNum) {
+	public News readNews(int noticeNo) {
 		News dto = null;
 		
 		try {
-			dto = dao.selectOne("news.readNews", nNum);
+			dto = dao.selectOne("news.readNews", noticeNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,17 +114,17 @@ public class NewsServiceImpl implements NewsService{
 	}
 
 	@Override
-	public void deleteNews(int nNum, String pathname, String mNum) throws Exception {
+	public void deleteNews(int noticeNo, String pathname, int memberNo) throws Exception {
 		try {
-			News dto = readNews(nNum);
-			if(dto == null || (mNum.equals("1")))
+			News dto = readNews(noticeNo);
+			if(dto == null || (memberNo==1))
 				return;
 			
 			if(dto.getImageFilename()!=null) {
 				fileManager.doFileDelete(dto.getImageFilename(), pathname);
 			}
 			
-			dao.deleteData("news.deleteNews", nNum);
+			dao.deleteData("news.deleteNews", noticeNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

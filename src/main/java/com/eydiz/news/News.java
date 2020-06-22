@@ -3,15 +3,30 @@ package com.eydiz.news;
 import org.springframework.web.multipart.MultipartFile;
 
 public class News {
-	private int nNum;
-	private int mNum;
-	private int ncaNum;
+	private int noticeNo;
+	private int memberNo;
+	private String memberNickname;
+	private int nocaNo;
 	private int listNum;
-	private String nsubject;
-	private String ncontent;
-	private String ncreated;
+	private String noticeSubject;
+	private String noticeContent;
+	private String noticeCreated;
 	private String imageFilename;
+	private MultipartFile upload;
+	private String nocaName;
 	
+	public String getMemberNickname() {
+		return memberNickname;
+	}
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
+	}
+	public String getNocaName() {
+		return nocaName;
+	}
+	public void setNocaName(String nocaName) {
+		this.nocaName = nocaName;
+	}
 	public int getListNum() {
 		return listNum;
 	}
@@ -24,13 +39,23 @@ public class News {
 	public void setImageFilename(String imageFilename) {
 		this.imageFilename = imageFilename;
 	}
-	private MultipartFile upload;
-	
-	public int getmNum() {
-		return mNum;
+	public int getNoticeNo() {
+		return noticeNo;
 	}
-	public void setmNum(int mNum) {
-		this.mNum = mNum;
+	public void setNoticeNo(int noticeNo) {
+		this.noticeNo = noticeNo;
+	}
+	public int getMemberNo() {
+		return memberNo;
+	}
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
+	}
+	public int getNocaNo() {
+		return nocaNo;
+	}
+	public void setNocaNo(int nocaNo) {
+		this.nocaNo = nocaNo;
 	}
 	public MultipartFile getUpload() {
 		return upload;
@@ -38,35 +63,23 @@ public class News {
 	public void setUpload(MultipartFile upload) {
 		this.upload = upload;
 	}
-	public int getnNum() {
-		return nNum;
+	public String getNoticeSubject() {
+		return noticeSubject;
 	}
-	public void setnNum(int nNum) {
-		this.nNum = nNum;
+	public void setNoticeSubject(String noticeSubject) {
+		this.noticeSubject = noticeSubject;
 	}
-	public int getNcaNum() {
-		return ncaNum;
+	public String getNoticeContent() {
+		return noticeContent;
 	}
-	public void setNcaNum(int ncaNum) {
-		this.ncaNum = ncaNum;
+	public void setNoticeContent(String noticeContent) {
+		this.noticeContent = noticeContent;
 	}
-	public String getNsubject() {
-		return nsubject;
+	public String getNoticeCreated() {
+		return noticeCreated;
 	}
-	public void setNsubject(String nsubject) {
-		this.nsubject = nsubject;
-	}
-	public String getNcontent() {
-		return ncontent;
-	}
-	public void setNcontent(String ncontent) {
-		this.ncontent = ncontent;
-	}
-	public String getNcreated() {
-		return ncreated;
-	}
-	public void setNcreated(String ncreated) {
-		this.ncreated = ncreated;
+	public void setNoticeCreated(String noticeCreated) {
+		this.noticeCreated = noticeCreated;
 	}
 	
 }

@@ -14,7 +14,6 @@
 	      				<br><br><br><br><br><br><br>
 	      				<p>와디즈 펀딩 오픈에 대한 파트너를 서로 찾을 수 있게 도와 주는 서비스 입니다.</p>
 	      				<p>펀딩메이트를 통해 다양한 프로젝트를 진행 경험이 있는 파트너와 쉽고 간편하게 연결 될 수 있습니다.</p>
-	      				<button></button>
 	      			</div>
       			</div>
 			</div>
@@ -39,6 +38,18 @@
 						<button class="mbtn">기부</button>
 					</li>
 				</ul>
-			</div>      	
+			</div>
+			<c:forEach var="dto" items="${list}">
+			<div class="mateForm">
+				<div class="matecontent">
+					<ul>
+						<li class="mcontents">비쥬얼메이커</li>
+						<li class="mcontentc">기획부터 마케팅 까지 분야별 전문가들이 모여 기업에 딱 맞는 컨텐츠를 연구하고</li>
+						<li class="mcontent"><a href="#"> 더 보기 > </a></li>
+						<li class="mcount">(1/30)명</li>
+					</ul>
+				</div>
+			</div> 
+			</c:forEach>      	
       	</div>
 </article>
