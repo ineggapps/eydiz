@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class Project {
 	private int projectNo;
 	private int brandNo;
+	private String brandName;
 	private int categoryNo;
 	private String projectName;
 	private String projectStatusMemo;// 브랜드용 project 테이블의 메모
@@ -16,7 +17,7 @@ public class Project {
 	private String projectUpdatedDate;
 	private String projectStartDate;
 	private String projectEndDate;
-	private int stateNo;
+	private int statusNo;
 	private String statusMemo;// 사이트 관리자용 project_status_list에 들어갈 프로젝트 상태 메모(작성 중, 프로젝트 활성화 등...)
 	private String projectSummary;
 	private String projectStory;
@@ -38,6 +39,14 @@ public class Project {
 
 	public void setBrandNo(int brandNo) {
 		this.brandNo = brandNo;
+	}
+
+	public String getBrandName() {
+		return brandName;
+	}
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
 	}
 
 	public int getCategoryNo() {
@@ -112,12 +121,12 @@ public class Project {
 		this.projectEndDate = projectEndDate;
 	}
 
-	public int getStateNo() {
-		return stateNo;
+	public int getStatusNo() {
+		return statusNo;
 	}
 
-	public void setStateNo(int stateNo) {
-		this.stateNo = stateNo;
+	public void setStatusNo(int statusNo) {
+		this.statusNo = statusNo;
 	}
 
 	public String getStatusMemo() {
@@ -170,13 +179,15 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return "Project [projectNo=" + projectNo + ", brandNo=" + brandNo + ", categoryNo=" + categoryNo
-				+ ", projectName=" + projectName + ", projectStatusMemo=" + projectStatusMemo + ", projectImageUrl="
-				+ projectImageUrl + ", projectGoalAmount=" + projectGoalAmount + ", projectCreatedDate="
-				+ projectCreatedDate + ", projectUpdatedDate=" + projectUpdatedDate + ", projectStartDate="
-				+ projectStartDate + ", projectEndDate=" + projectEndDate + ", stateNo=" + stateNo + ", statusMemo="
-				+ statusMemo + ", projectSummary=" + projectSummary + ", projectStory=" + projectStory
-				+ ", categoryName=" + categoryName + ", hashTag=" + hashTag + ", uploadImage=" + uploadImage + "]";
+		return "Project [projectNo=" + projectNo + ", brandNo=" + brandNo + ", brandName=" + brandName + ", categoryNo="
+				+ categoryNo + ", projectName=" + projectName + ", projectStatusMemo=" + projectStatusMemo
+				+ ", projectImageUrl=" + projectImageUrl + ", projectGoalAmount=" + projectGoalAmount
+				+ ", projectCreatedDate=" + projectCreatedDate + ", projectUpdatedDate=" + projectUpdatedDate
+				+ ", projectStartDate=" + projectStartDate + ", projectEndDate=" + projectEndDate + ", statusNo="
+				+ statusNo + ", statusMemo=" + statusMemo + ", projectSummary=" + projectSummary + ", projectStory="
+				+ projectStory + ", categoryName=" + categoryName + ", hashTag=" + hashTag + ", uploadImage="
+				+ uploadImage + "]";
 	}
+
 
 }

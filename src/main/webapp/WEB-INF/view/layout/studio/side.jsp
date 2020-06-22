@@ -6,8 +6,12 @@
 	String cp=request.getContextPath();
 %>
 <div class="titleInbox">
-  <p class="projectName">${sessionScope.brand.brandName}의<br />관리 페이지</p>
-  <p class="info">브랜드 번호: <fmt:formatNumber pattern="00000" value="${sessionScope.brand.brandNo}"/> </p>
+  <div class="titleInboxGradient"></div>
+  <div class="titleInboxBackground" style="background-image:url(${project.projectImageUrl})"></div>
+  <div class="titleInboxContent">
+	  <p class="projectName">${sessionScope.brand.brandName}의<br />관리 페이지</p>
+	  <p class="info">프로젝트 번호: <fmt:formatNumber pattern="00000" value="${projectNo}"/></p>
+  </div>
 </div>
 <div class="menuList">
   <ul class="subMenuItems">

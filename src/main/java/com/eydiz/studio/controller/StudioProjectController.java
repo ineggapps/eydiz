@@ -89,7 +89,8 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		model.addAttribute(ATTRIBUTE_PROJECT, listProject);
 		return VIEW_PROJECT_LIST;
 	}
-
+	
+	//프로젝트 조회/편집
 	@RequestMapping(value = { "/register", "/{projectNo}/register" }, method = RequestMethod.GET)
 	public String registerForm(@PathVariable(required = false) Integer projectNo, Model model, HttpServletRequest req,
 			HttpSession session) {
@@ -105,6 +106,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			////////////// 프로젝트 정보 불러오기
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 			Project project = service.readProject(projectNo, bInfo.getBrandNo());
+			System.out.println(project+ "★★★★★★★★★★★★★★★★★");
 			if (project == null) {
 				// 자신의 브랜드의 프로젝트가 아니면 null을 반환함
 				return "redirect:" + API_PROJECT_LIST;
@@ -112,7 +114,6 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			List<ProjectCategory> category = service.listCategory();
 			model.addAttribute(ATTRIBUTE_CATEGORY, category);
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
-
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			e.printStackTrace();
@@ -121,6 +122,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		return VIEW_PROJECT_REGISTER;
 	}
 
+	//프로젝트 저장하기
 	@RequestMapping(value = "/{projectNo}/register", method = RequestMethod.POST)
 	public String updateProject(@PathVariable Integer projectNo, Project project, HttpSession session) {
 		try {

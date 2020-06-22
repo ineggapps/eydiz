@@ -22,7 +22,7 @@ $(function () {
 
 //확장버튼 클릭
 $(function () {
-  $("a.arrow").click(function () {
+  $(".menuName").click(function () {
     const className = "extended";
     $li = $(this).closest("li");
     if ($li.hasClass(className)) {

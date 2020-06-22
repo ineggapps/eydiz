@@ -70,11 +70,6 @@
 		)
 	</insert> -->
 	
-	<!-- 프로젝트 모든 컬럼 -->
-	<sql id="select-project-columns">
-		
-	</sql>
-	
 	<!-- 조인 조건 사용 시 주의 -->
 	<sql id="where-projectNo">
 		WHERE projectNo = #{projectNo} AND brandNo = #{brandNo}
@@ -83,12 +78,13 @@
 	<!-- 자신의 브랜드 프로젝트 모두 불러오기 -->	
 	<select id="listProject" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT 
-			projectNo, brandNo, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectNo, p.brandNo, brandName, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
 			projectCreatedDate, projectUpdatedDate, 
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
 			statusNo, projectSummary, projectStory
 		FROM project p
-		WHERE brandNo = #{brandNo}
+		JOIN brand b ON p.brandNo = b.brandNo
+		WHERE b.brandNo = #{brandNo}
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
