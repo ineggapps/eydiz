@@ -244,5 +244,20 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		}
 		return rewards;
 	}
+
+	@Override
+	public void deleteReward(int rewardNo, int projectNo, int brandNo) throws Exception {
+		try {
+			Map<String, Integer> map = new HashMap<>();
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			map.put(ATTRIBUTE_BRANDNO, brandNo);
+			map.put(ATTRIBUTE_REWARDNO, rewardNo);
+			dao.deleteData(MAPPER_NAMESPACE+"deleteReward", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
 	
 }

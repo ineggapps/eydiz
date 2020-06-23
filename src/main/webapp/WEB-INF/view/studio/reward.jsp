@@ -43,13 +43,13 @@
 					<p class="content dbColumnContent">리워드 내용</p>
 					<dl>
 						<dt>배송비</dt>
-						<dd class="dbColumnShippingAmount">5,000원</dd>
+						<dd class="dbColumnShipAmount">5,000원</dd>
 						<dt>리워드 발송 시작일</dt>
 						<dd class="dbColumnShippingStartDate">2020년 10월 20일(예정)</dd>
 					</dl>
 					<div class="snippetController">
-						<button type="button" class="btnSnippet">삭제</button>
-						<button type="button" class="btnSnippet">편집</button>
+						<button type="button" class="btnSnippet btnSnippetDelete">삭제</button>
+						<button type="button" class="btnSnippet btnSnippetEdit">편집</button>
 					</div>
 				</div>
 			</div>

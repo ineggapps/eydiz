@@ -286,4 +286,20 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		}
 		return result;
 	}
+	
+	//리워드 삭제
+	@RequestMapping(value="/{projectNo}/reward/{rewardNo}/delete", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteReward(@PathVariable Integer projectNo, @PathVariable Integer rewardNo, HttpSession session){
+		Map<String, Object> result = new HashMap<>();
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			service.deleteReward(rewardNo, projectNo, bInfo.getBrandNo());
+			result.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			result.put(JSON_RESULT, JSON_RESULT_ERROR);
+			result.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		} 
+		return result;
+	}
 }

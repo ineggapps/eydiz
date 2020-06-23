@@ -152,15 +152,25 @@
 			rewardNo, projectNo, amount, rewardTitle, rewardContent, rewardOption, 
 			isShipping, shipAmount, startShippingDate, limitQuantity, remainQuantity)
 		VALUES (
-			reward_seq.NEXTVAL, #{projectNo}, #{amount}, #{rewardTitle}, #{rewardContent}, #{rewardOption}, 
-			#{isShipping}, #{shipAmount}, #{startShippingDate}, #{limitQuantity}, #{limitQuantity})
+			reward_seq.NEXTVAL, #{projectNo}, #{amount}, #{rewardTitle}, #{rewardContent}, #{rewardOption, jdbcType=VARCHAR}, 
+			#{isShipping}, #{shipAmount, jdbcType=INTEGER}, #{startShippingDate, jdbcType=VARCHAR}, #{limitQuantity}, #{limitQuantity})
 	</insert>
 	
 	<select id="selectReward" parameterType="map" resultType="com.eydiz.studio.Reward">
 		SELECT rewardNo, r.projectNo, amount, rewardTitle, rewardContent, rewardOption, 
-			isShipping, shipAmount, TO_CHAR(startShippingDate, 'YYYY-MM-DD'), limitQuantity, remainQuantity
+			isShipping, shipAmount, TO_CHAR(startShippingDate, 'YYYY-MM-DD') startShippingDate, limitQuantity, remainQuantity
 		FROM reward r
 		JOIN project p ON r.projectNo = p.projectNo
 		WHERE r.projectNo = #{projectNo} AND brandNo=#{brandNo}
+		ORDER BY amount DESC
 	</select>
+	
+	<delete id="deleteReward" parameterType="map">
+		DELETE FROM reward
+		WHERE 
+				rewardNo = #{rewardNo}
+			AND 
+				projectNo = 
+					(SELECT projectNo FROM project WHERE projectNo=#{projectNo} AND brandNo=#{brandNo})
+	</delete>
 </mapper>

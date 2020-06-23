@@ -31,4 +31,5 @@ public interface StudioService {
 	//리워드
 	public void insertReward(Reward reward) throws Exception;
 	public List<Reward> selectReward(int projectNo, int brandNo);
+	public void deleteReward(int rewardNo, int projectNo, int brandNo) throws Exception;
 }

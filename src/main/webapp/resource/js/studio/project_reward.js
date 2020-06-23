@@ -59,7 +59,8 @@ $(function () {
 
 //리워드 등록하기
 function checkRewardForm() {
-  alert("통과");
+  //유효성 검사
+
   return true;
 }
 
@@ -71,19 +72,34 @@ $(function () {
     //리워드 등록 ajax
     const projectNo = $("input[name=projectNo]").val();
     const url = cp + "/studio/project/" + projectNo + "/reward/add";
+    const $shipAmount = $("input[name=shipAmount]");
+    if ($shipAmount.val() == "") {
+      $shipAmount.val("0");
+    }
     const q = $("form[name=rewardForm]").serialize();
     console.log(projectNo, url, q);
-    ajaxJSON(url, "post", q);
+    ajaxJSON(url, "post", q)
+      .then(function (data) {
+        if (data.result == "ok") {
+          loadReward(projectNo);
+        }
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
   });
 });
 
 //리워드 정보 불러오기
-function loadReward(projectNo, brandNo) {
+function loadReward(projectNo) {
+  const $rewardOverlay = $(".rewardOverlay");
   const url = cp + "/studio/project/" + projectNo + "/reward/list";
   ajaxJSON(url, "get", {})
     .then(function (data) {
       if (data.result == "ok") {
         renderReward(data.rewards);
+        $rewardOverlay.removeClass("show");
+        document.rewardForm.reset();
       }
     })
     .catch(function (e) {
@@ -94,26 +110,93 @@ function loadReward(projectNo, brandNo) {
 function renderReward(rewards) {
   const rewardNo = "data-reward-no";
   const $list = $(".rewardSnippetList");
+  $list.empty();
   $.each(rewards, function (idx, item) {
     const $o = $(".rewardSnippet.dummy").clone(true);
     $o.removeClass("dummy");
+    //기타 정보 입력
     $o.attr(rewardNo, item.rewardNo);
+    $o.attr("data-amount", item.amount);
+    $o.attr("data-limit-quantity", item.limitQuantity);
+    $o.attr("data-is-shipping", item.isShipping);
+    $o.attr("data-reward-option", item.rewardOption);
+    ////
     $o.find(".dbColumnAmount").text(item.amount.format() + "원");
     $o.find(".dbColumnLimitQuantity").text("제한 수량 " + item.limitQuantity.format() + "개");
     $o.find(".dbColumnTitle").text(item.rewardTitle);
     $o.find(".dbColumnContent").text(item.rewardContent);
     if (item.isShipping == 0) {
-      $o.find(".dbColumnShippingAmount").text("해당 없음");
+      $o.find(".dbColumnShipAmount").text("해당 없음");
     } else {
-      $o.find(".dbColumnAmount").text(item.shipAmount.format() + "원");
+      $o.find(".dbColumnShipAmount").text(item.shipAmount.format() + "원");
+    }
+    if (item.startShippingDate) {
+      $o.find(".dbColumnShippingStartDate").text(item.startShippingDate);
+    } else {
+      $o.find(".dbColumnShippingStartDate").text("해당 없음");
     }
     $o.appendTo($list);
     $(".rewardSnippetList > div").wrap("<li></li>");
   });
 }
 
+//초기 리워드 목록 호출하기
 $(function () {
   const projectNo = $("input[name=projectNo]").val();
-  const brandNo = $("input[name=brandNo]").val();
-  loadReward(projectNo, brandNo);
+  loadReward(projectNo);
+});
+
+//리워드 삭제하기
+$(function () {
+  $("body").on("click", ".btnSnippetDelete", function (e) {
+    if (!confirm("정말 삭제하시겠습니까?")) {
+      return false;
+    }
+    const rewardNo = $(this).closest(".rewardSnippet").attr("data-reward-no");
+    const projectNo = $("input[name=projectNo]").val();
+    const url = cp + "/studio/project/" + projectNo + "/reward/" + rewardNo + "/delete";
+    ajaxJSON(url, "post", {})
+      .then(function (data) {
+        if (data.result == "ok") {
+          loadReward(projectNo);
+        }
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
+  });
+});
+
+//리워드 편집하기
+$(function () {
+  $("body").on("click", ".btnSnippetEdit", function () {
+    const $rewardOverlay = $(".rewardOverlay");
+    const $item = $(this).closest(".rewardSnippet");
+
+    //수정버튼을 바꿔치기...
+    //금액, 리워드명, 상세설명, 옵션 조건, 배송조건(배송필요/불필요), 배송비, 제한수량, 발송시작일
+
+    console.log(
+      $item.attr("data-amount"),
+      $item.find(".dbColumnTitle").text(),
+      $item.find(".dbColumnContent").text(),
+      $item.attr("data-reward-option"),
+      $item.attr("data-limit-quantity"),
+      $item.find(".dbColumnShippingStartDate").text()
+    );
+    $("input[name=amount]").val($item.attr("data-amount"));
+    $("input[name=rewardTitle]").val($item.find(".dbColumnTitle").text());
+    $("#rewardContent").text($item.find(".dbColumnContent").text());
+    if ($item.attr("data-reward-option").length == 0) {
+      $("#rewardOptionExist option:eq(0)").prop("selected", "selected");
+    } else {
+      $("#rewardOptionExist option:eq(1)").prop("selected", "selected");
+      $("#rewardOption").closest(".inputWrap").addClass("show");
+      $("#rewardOption").text($item.attr("data-reward-option"));
+    }
+    $("input[name=limitQuantity]").val($item.attr("data-limit-quantity"));
+    $("input[name=startShippingDate]").val($item.find(".dbColumnShippingStartDate").text());
+
+    $rewardOverlay.addClass("show");
+  });
 });

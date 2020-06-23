@@ -34,6 +34,7 @@ public interface StudioConstant extends Constant {
 	public final static String ATTRIBUTE_URI = "uri";
 	public final static String ATTRIBUTE_PROJECTNO = "projectNo";
 	public final static String ATTRIBUTE_BRANDNO = "brandNo";
+	public final static String ATTRIBUTE_REWARDNO = "rewardNo";
 	public final static String ATTRIBUTE_OFFSET = "offset";
 	public final static String ATTRIBUTE_ROWS = "rows";
 	public final static String ATTRIBUTE_CURRENT_PAGE = "currentPage";
