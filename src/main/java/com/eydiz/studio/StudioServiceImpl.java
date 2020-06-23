@@ -205,6 +205,7 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			dao.insertData(MAPPER_NAMESPACE + "insertHashtag", hashtag);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -214,8 +215,11 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			dao.deleteData(MAPPER_NAMESPACE + "deleteHashTag", hashtag);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
+	
+	//리워드
 
 	@Override
 	public void insertReward(Reward reward) throws Exception {
@@ -223,9 +227,22 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			dao.insertData(MAPPER_NAMESPACE+"insertReward", reward);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
-	
+	@Override
+	public List<Reward> selectReward(int projectNo, int brandNo) {
+		List<Reward> rewards = null;
+		try {
+			Map<String, Integer> map = new HashMap<>();
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			map.put(ATTRIBUTE_BRANDNO, brandNo);
+			rewards =  dao.selectList(MAPPER_NAMESPACE+"selectReward", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rewards;
+	}
 	
 }

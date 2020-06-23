@@ -11,6 +11,7 @@
   <div class="infoItemWrap">
 	<form name="projectForm" action="<%=cp %>/studio/project/${projectNo}/register" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="projectNo" value="${projectNo}"/>
+	<input type="hidden" name="brandNo" value="${sessionScope.brand.brandNo}"/>
     <div class="rewardContentCard">
     	<h4>리워드 설계 조건</h4>
     	<dl>
@@ -23,10 +24,36 @@
     	</dl>
     </div>
     <div class="infoItem">
-    <button type="button" id="btnAddReward" class="btnDarkContrast">
-		<span class="icon iconPlus">&nbsp;</span>추가하기
-	</button>
-    
+	    <button type="button" id="btnAddReward" class="btnDarkContrast">
+			<span class="icon iconPlus">&nbsp;</span>추가하기
+		</button>
+    </div>
+    <div class="infoItem">
+    	<ul class="rewardSnippetList">
+    		
+    	</ul>
+		<div class="rewardSnippet dummy">
+			<div class="rewardSnippetInner">
+				<div class="snippetTitle">
+					<h5 class="dbColumnAmount">50,000원</h5>
+					<span class="highlight dbColumnLimitQuantity">제한 수량 50개</span>
+				</div>
+				<div class="snippetContent">
+					<h6 class="dbColumnTitle">리워드 제목</h6>
+					<p class="content dbColumnContent">리워드 내용</p>
+					<dl>
+						<dt>배송비</dt>
+						<dd class="dbColumnShippingAmount">5,000원</dd>
+						<dt>리워드 발송 시작일</dt>
+						<dd class="dbColumnShippingStartDate">2020년 10월 20일(예정)</dd>
+					</dl>
+					<div class="snippetController">
+						<button type="button" class="btnSnippet">삭제</button>
+						<button type="button" class="btnSnippet">편집</button>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
 	<button type="button" class="btnSubmit" id="btnSave">저장하기</button>
   </form>

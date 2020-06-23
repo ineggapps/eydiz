@@ -242,6 +242,8 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 	@RequestMapping(value="/{projectNo}/reward")
 	public String rewardForm(@PathVariable Integer projectNo, Model model, HttpServletRequest req, HttpSession session){
 		addModelURIAttribute(model, req, projectNo);
+		BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+		model.addAttribute(ATTRIBUTE_BRANDNO, bInfo.getBrandNo());
 		return VIEW_PROJECT_REWARD;
 	}
 	
@@ -258,6 +260,25 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			System.out.println(reward.toString());
 			service.insertReward(reward);
 			result.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put(JSON_RESULT, JSON_RESULT_ERROR);
+			result.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return result;
+	}
+	
+	//리워드 조회
+	@RequestMapping(value="/{projectNo}/reward/list" , method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> rewardList(@PathVariable Integer projectNo, HttpSession session){
+		Map<String, Object> result = new HashMap<>();
+		List<Reward> rewards = null;
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			rewards = service.selectReward(projectNo, bInfo.getBrandNo());
+			result.put(JSON_RESULT, JSON_RESULT_OK);
+			result.put(JSON_REWARD_LIST, rewards);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put(JSON_RESULT, JSON_RESULT_ERROR);

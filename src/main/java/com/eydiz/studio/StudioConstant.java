@@ -44,6 +44,7 @@ public interface StudioConstant extends Constant {
 	public final static String JSON_HASHTAG = "hashtag";
 	public final static String JSON_HASHTAG_PROJECTNO = "projectNo";
 	public final static String JSON_HASHTAG_KEYWORD = "keyword";
+	public final static String JSON_REWARD_LIST = "rewards";
 
 	//기본 값
 	public final static String STATUS_MEMO_0 = "작성 시작";

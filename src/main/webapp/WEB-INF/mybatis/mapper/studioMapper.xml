@@ -144,6 +144,9 @@
 		WHERE projectNo=#{projectNo} AND keyword=#{keyword}
 	</delete>
 	
+	
+	<!-- 리워드 -->
+	
 	<insert id="insertReward" parameterType="com.eydiz.studio.Reward">
 		INSERT INTO reward(
 			rewardNo, projectNo, amount, rewardTitle, rewardContent, rewardOption, 
@@ -152,4 +155,12 @@
 			reward_seq.NEXTVAL, #{projectNo}, #{amount}, #{rewardTitle}, #{rewardContent}, #{rewardOption}, 
 			#{isShipping}, #{shipAmount}, #{startShippingDate}, #{limitQuantity}, #{limitQuantity})
 	</insert>
+	
+	<select id="selectReward" parameterType="map" resultType="com.eydiz.studio.Reward">
+		SELECT rewardNo, r.projectNo, amount, rewardTitle, rewardContent, rewardOption, 
+			isShipping, shipAmount, TO_CHAR(startShippingDate, 'YYYY-MM-DD'), limitQuantity, remainQuantity
+		FROM reward r
+		JOIN project p ON r.projectNo = p.projectNo
+		WHERE r.projectNo = #{projectNo} AND brandNo=#{brandNo}
+	</select>
 </mapper>
