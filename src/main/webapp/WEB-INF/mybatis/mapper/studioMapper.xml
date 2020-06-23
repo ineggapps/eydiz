@@ -165,6 +165,14 @@
 		ORDER BY amount DESC
 	</select>
 	
+	<update id="updateReward" parameterType="com.eydiz.studio.Reward">
+		UPDATE reward SET 
+				projectNo=#{projectNo}, amount=#{amount}, rewardTitle=#{rewardTitle}, rewardContent=#{rewardContent}, 
+				rewardOption=#{rewardOption}, isShipping=#{isShipping}, shipAmount=#{shipAmount, jdbcType=VARCHAR}, 
+				startShippingDate=#{startShippingDate}, limitQuantity=#{limitQuantity}
+		WHERE projectNo = (SELECT projectNo FROM project WHERE projectNo = #{projectNo} AND brandNo = #{brandNo})
+	</update>
+	
 	<delete id="deleteReward" parameterType="map">
 		DELETE FROM reward
 		WHERE 

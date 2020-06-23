@@ -155,7 +155,7 @@ CREATE TABLE project_hashtag(
     tagNo NUMBER NOT NULL, -- 해시태그 번호
     projectNo NUMBER NOT NULL, -- 프로젝트 번호 
     keyword VARCHAR2(100) NOT NULL, -- 키워드
-    CONSTRAINT PK_PROJECT_HASHTAG_TAGNO PRIMARY KEY(tagNo),
+    CONSTRAINT PK_PROJECT_HASHTAG_TAGNO PRIMARY KEY(projectNo, keyword), --중복 방지.. tagNo는 시간순서로 등록한 것 정렬 역할
     CONSTRAINT FK_PROJECT_HASHTAG_PROJECTNO FOREIGN KEY(projectNo) REFERENCES project(projectNo)
 );
 

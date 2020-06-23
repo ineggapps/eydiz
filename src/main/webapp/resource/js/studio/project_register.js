@@ -98,16 +98,23 @@ $(function () {
       //엔터 입력되면
       const projectNo = $("input[name=projectNo]").val();
       const keyword = $(this).val();
-      addItem(keyword);
       //서버 요청
       const url =
         cp + "/studio/project/" + projectNo + "/hashtag/insert/" + encodeURIComponent(keyword);
       ajaxJSON(url, "post", { projectNo: projectNo, keyword: keyword })
         .then(function (data) {
-          console.log(data);
+          if (data.result == "ok") {
+            addItem(keyword);
+            $("#keyword").removeClass("error");
+          }
         })
         .catch(function (e) {
           console.log(e);
+          $("#keyword").addClass("error");
+          const dup = e.message.indexOf("무결성");
+          if (dup > 0) {
+            $("#keyword ~ p.msg").text(keyword + "는 이미 등록된 태그입니다.");
+          }
         });
       $(this).val("");
       $(this).focus();

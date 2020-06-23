@@ -55,7 +55,7 @@
 			</div>
 		</div>
     </div>
-	<button type="button" class="btnSubmit" id="btnSave">저장하기</button>
+	<%--button type="button" class="btnSubmit" id="btnSave">등록</button--%>
   </form>
   </div>
   <script type="text/javascript" src="<%=cp%>/resource/js/studio/project_reward.js"></script>

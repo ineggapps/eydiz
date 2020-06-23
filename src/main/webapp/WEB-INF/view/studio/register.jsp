@@ -89,6 +89,7 @@
       <p class="desc">엔터를 누르면 태그가 등록됩니다. (최대 10개까지 입력 가능)</p>
       <div class="inputWrap">
         <input type="text" id="keyword" name="keyword" />
+        <p class="desc msg">태그가 입력되지 않았습니다.</p>
       </div>
     </div>
 

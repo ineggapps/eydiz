@@ -57,6 +57,53 @@ $(function () {
   });
 });
 
+//배송 옵션
+$(function () {
+  $("input[name=isShipping]").on("checked", function (e) {
+    const val = $(this).val();
+    if (val == 1) {
+      $(".shippingOptionWrap").addClass("show");
+    } else {
+      $(".shippingOptionWrap").removeClass("show");
+    }
+  });
+});
+
+// function preventOtherKeys(keyEvent) {
+//   const k = keyEvent.key;
+//   console.log(/[0-9]/gi.test(k));
+//   if (!/[0-9]/gi.test(k)) {
+//     console.log("입력 방지");
+//     keyEvent.preventDefault();
+//   }
+// }
+
+//금액 입력하는 부분 숫자 아니면 방지
+$(function () {
+  $("#amount").keyup(function (e) {
+    $(this).val(
+      $(this)
+        .val()
+        .replace(/[^0-9]/g, "")
+    );
+  });
+
+  $("#shipAmount").keyup(function (e) {
+    $(this).val(
+      $(this)
+        .val()
+        .replace(/[^0-9]/g, "")
+    );
+  });
+  $("#limitQuantity").keyup(function (e) {
+    $(this).val(
+      $(this)
+        .val()
+        .replace(/[^0-9]/g, "")
+    );
+  });
+});
+
 //리워드 등록하기
 function checkRewardForm() {
   //유효성 검사
@@ -71,7 +118,14 @@ $(function () {
     }
     //리워드 등록 ajax
     const projectNo = $("input[name=projectNo]").val();
-    const url = cp + "/studio/project/" + projectNo + "/reward/add";
+    const mode = $(".rewardModal").attr("data-mode");
+    var url = cp + "/studio/project/" + projectNo + "/reward";
+    if (mode == "edit") {
+      const rewardNo = $(".rewardModal").attr("data-reward-no");
+      url += "/" + rewardNo + "/update";
+    } else {
+      url += "/add";
+    }
     const $shipAmount = $("input[name=shipAmount]");
     if ($shipAmount.val() == "") {
       $shipAmount.val("0");
@@ -100,6 +154,9 @@ function loadReward(projectNo) {
         renderReward(data.rewards);
         $rewardOverlay.removeClass("show");
         document.rewardForm.reset();
+        $(".rewardModal").removeAttr("data-mode");
+        $(".rewardModal").removeAttr("data-reward-no");
+        $(".rewardModal .btnSubmit").text("등록");
       }
     })
     .catch(function (e) {
@@ -172,8 +229,10 @@ $(function () {
   $("body").on("click", ".btnSnippetEdit", function () {
     const $rewardOverlay = $(".rewardOverlay");
     const $item = $(this).closest(".rewardSnippet");
-
     //수정버튼을 바꿔치기...
+    $(".rewardModal").attr("data-mode", "edit");
+    $(".rewardModal").attr("data-reward-no", $item.attr("data-reward-no"));
+    $(".rewardModal .btnSubmit").text("수정");
     //금액, 리워드명, 상세설명, 옵션 조건, 배송조건(배송필요/불필요), 배송비, 제한수량, 발송시작일
 
     console.log(
@@ -187,12 +246,18 @@ $(function () {
     $("input[name=amount]").val($item.attr("data-amount"));
     $("input[name=rewardTitle]").val($item.find(".dbColumnTitle").text());
     $("#rewardContent").text($item.find(".dbColumnContent").text());
-    if ($item.attr("data-reward-option").length == 0) {
+    if ($item.attr("data-reward-option") == undefined) {
       $("#rewardOptionExist option:eq(0)").prop("selected", "selected");
     } else {
       $("#rewardOptionExist option:eq(1)").prop("selected", "selected");
       $("#rewardOption").closest(".inputWrap").addClass("show");
       $("#rewardOption").text($item.attr("data-reward-option"));
+    }
+
+    if ($item.attr("data-is-shipping") == 1) {
+      $("input[name=isShipping]").eq(0).prop("checked", "checked");
+    } else {
+      $("input[name=isShipping]").eq(1).prop("checked", "checked");
     }
     $("input[name=limitQuantity]").val($item.attr("data-limit-quantity"));
     $("input[name=startShippingDate]").val($item.find(".dbColumnShippingStartDate").text());

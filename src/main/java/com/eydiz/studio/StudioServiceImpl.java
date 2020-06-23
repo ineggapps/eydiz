@@ -83,28 +83,25 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		}
 		return projectNo;
 	}
-	
-	
 
 	@Override
 	public List<Project> listProject(Map<String, Object> map) {
 		List<Project> list = null;
 		try {
-			list = dao.selectList(MAPPER_NAMESPACE+"listProject", map);
+			list = dao.selectList(MAPPER_NAMESPACE + "listProject", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
-	
-	
+
 	@Override
 	public int listProjectCount(int brandNo) {
 		Map<String, Object> map = new HashMap<>();
 		int count = 0;
 		try {
 			map.put(ATTRIBUTE_BRANDNO, brandNo);
-			count = dao.selectOne(MAPPER_NAMESPACE+"listProjectCount", map);
+			count = dao.selectOne(MAPPER_NAMESPACE + "listProjectCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -141,7 +138,7 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	@Override
 	public void updateProjectBasic(Project project) throws Exception {
 		try {
-			dao.updateData(MAPPER_NAMESPACE+"updateProjectBasic",project);
+			dao.updateData(MAPPER_NAMESPACE + "updateProjectBasic", project);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			throw e;
@@ -218,13 +215,13 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			throw e;
 		}
 	}
-	
-	//리워드
+
+	// 리워드
 
 	@Override
 	public void insertReward(Reward reward) throws Exception {
 		try {
-			dao.insertData(MAPPER_NAMESPACE+"insertReward", reward);
+			dao.insertData(MAPPER_NAMESPACE + "insertReward", reward);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -238,11 +235,21 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			Map<String, Integer> map = new HashMap<>();
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			map.put(ATTRIBUTE_BRANDNO, brandNo);
-			rewards =  dao.selectList(MAPPER_NAMESPACE+"selectReward", map);
+			rewards = dao.selectList(MAPPER_NAMESPACE + "selectReward", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return rewards;
+	}
+
+	@Override
+	public void updateReward(Reward reward) throws Exception {
+		try {
+			dao.updateData(MAPPER_NAMESPACE + "updateReward", reward);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
@@ -252,12 +259,11 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			map.put(ATTRIBUTE_BRANDNO, brandNo);
 			map.put(ATTRIBUTE_REWARDNO, rewardNo);
-			dao.deleteData(MAPPER_NAMESPACE+"deleteReward", map);
+			dao.deleteData(MAPPER_NAMESPACE + "deleteReward", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
-	
-	
+
 }

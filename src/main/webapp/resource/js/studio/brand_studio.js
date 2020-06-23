@@ -9,7 +9,7 @@ function ajaxJSON(url, method, data) {
           if (data.result == "ok") {
             resolve(data);
           } else {
-            reject("유효하지 않은 요청... 파라미터를 확인하세요");
+            reject(data);
           }
         },
         error: function (e) {
@@ -37,7 +37,7 @@ function ajaxJSONFile(url, method, data) {
           if (data.result == "ok") {
             resolve(data);
           } else {
-            reject("유효하지 않은 요청... 파라미터를 확인하세요");
+            reject(data);
           }
         },
         beforeSend: function (jqXHR) {

@@ -421,6 +421,20 @@ p.description{
   padding: 10px;
 }
 
+.infoItem .inputWrap input.error {
+    border-color: #ff6666 !important;
+    background-color: #fff9f9;
+}
+
+.inputWrap input ~ p.desc{
+	color:#f77;
+	visibility:hidden;
+}
+
+.inputWrap .error ~ p.desc{
+	visibility:visible;
+}
+
 .infoItem .inputWrap select {
   color: #757575;
   width: 60%;

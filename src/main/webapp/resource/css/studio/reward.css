@@ -6,7 +6,7 @@
 
 .inputBox input[type=text].error,
 .inputBox textarea.error {
-    border-color: #ff6666;
+    border-color: #ff6666 !important;
     background-color: #fff9f9;
 }
 
@@ -321,6 +321,10 @@ span.exp{
 
 .btnSnippet:first-child{
 	margin-left:10px;
+}
+
+.shippingOptionWrap {
+	display:none;
 }
 
 
