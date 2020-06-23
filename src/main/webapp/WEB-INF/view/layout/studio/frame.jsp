@@ -118,13 +118,13 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
 	              <label class="no-margin-bottom">배송 조건</label>
 	              <div class="inputBox clear custom">
 	              	<label>
-	              		<input type="radio" name="isShipping" value="1">
+	              		<input type="radio" name="isShipping" value="1" checked="checked">
 	              		<span class="radiomark"></span>
 	              		<span class="exp">배송이 필요한 리워드입니다.</span>	              	
 	              	</label>
 	              </div>
-	              <div class="inputWrap margin-height indent">
-	              	<label class="margin-bottom-some">배송비</label>
+	              <div class="inputWrap margin-height indent shippingOptionWrap">
+	              	<label class="margin-bottom-some narrow-width">배송비</label>
 	              	<input
 	                    type="text"
 	                    id="shipAmount"
