@@ -273,7 +273,7 @@ CREATE TABLE reward(
     amount NUMBER NOT NULL, -- 구매금액
     rewardTitle VARCHAR2(255) NOT NULL,
     rewardContent VARCHAR2(4000) NOT NULL,
-    rewardOption VARCHAR2(255) NOT NULL,
+    rewardOption VARCHAR2(255),
     isShipping NUMBER(1) NOT NULL, -- 배송지 필요여부 (0: 배송지 필요없음, 1: 배송지 필요)
     shipAmount NUMBER,
     startShippingDate DATE,
