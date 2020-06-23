@@ -27,6 +27,7 @@ import com.eydiz.studio.Project;
 import com.eydiz.studio.ProjectCategory;
 import com.eydiz.studio.ProjectHashtag;
 import com.eydiz.studio.ProjectImage;
+import com.eydiz.studio.Reward;
 import com.eydiz.studio.StudioConstant;
 import com.eydiz.studio.StudioService;
 
@@ -239,8 +240,29 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 	
 	///리워드 설계
 	@RequestMapping(value="/{projectNo}/reward")
-	public String register(@PathVariable Integer projectNo, Model model, HttpServletRequest req, HttpSession session){
+	public String rewardForm(@PathVariable Integer projectNo, Model model, HttpServletRequest req, HttpSession session){
 		addModelURIAttribute(model, req, projectNo);
 		return VIEW_PROJECT_REWARD;
+	}
+	
+	//리워드 설계
+	@RequestMapping(value="/{projectNo}/reward/add", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> rewardPost(@PathVariable Integer projectNo, Reward reward){
+		Map<String, Object> result = new HashMap<>();
+		try {
+			if(projectNo==null) {
+				throw new Exception("projectNo is null");
+			}
+			reward.setProjectNo(projectNo);
+			System.out.println(reward.toString());
+			service.insertReward(reward);
+			result.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put(JSON_RESULT, JSON_RESULT_ERROR);
+			result.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return result;
 	}
 }

@@ -536,6 +536,7 @@ a.btnRewardClose {
 
 a.btnHashDelete{
   margin-left: 8px;
+  background-size: 100%;
   width: 8px;
   height: 8px;
 }

@@ -9,8 +9,8 @@
   <h2>리워드 설계</h2>
   <p class="description">서포터에게 제공할 리워드 내용을 입력하세요. 서포터가 쉽게 펀딩할 수 있는 저렴한 리워드부터 서포터의 보다 빠른 펀딩을 유도할 수 있는 얼리버드 리워드까지 다양한 리워드를 구성하면 좋습니다.</p>
   <div class="infoItemWrap">
-	<form name="projectForm" action="<%=cp %>/studio/project/${project.projectNo}/register" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="projectNo" value="${project.projectNo}"/>
+	<form name="projectForm" action="<%=cp %>/studio/project/${projectNo}/register" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="projectNo" value="${projectNo}"/>
     <div class="rewardContentCard">
     	<h4>리워드 설계 조건</h4>
     	<dl>

@@ -217,4 +217,15 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		}
 	}
 
+	@Override
+	public void insertReward(Reward reward) throws Exception {
+		try {
+			dao.insertData(MAPPER_NAMESPACE+"insertReward", reward);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	
 }

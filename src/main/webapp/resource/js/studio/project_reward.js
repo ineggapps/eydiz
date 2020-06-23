@@ -34,3 +34,23 @@ $(function () {
     }
   });
 });
+
+//리워드 등록하기
+function checkRewardForm() {
+  alert("통과");
+  return true;
+}
+
+$(function () {
+  $(".rewardModal .btnSubmit").click(function () {
+    if (!checkRewardForm()) {
+      return false;
+    }
+    //리워드 등록 ajax
+    const projectNo = $("input[name=projectNo]").val();
+    const url = cp + "/studio/project/" + projectNo + "/reward/add";
+    const q = $("form[name=rewardForm]").serialize();
+    console.log(projectNo, url, q);
+    ajaxJSON(url, "post", q);
+  });
+});

@@ -22,6 +22,7 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
     <script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
     <script type="text/javascript" src="<%=cp %>/resource/js/lib/bluebird.js"></script>
+    <script src="<%=cp %>/resource/js/studio/brand_studio.js"></script>
     <script type="text/javascript">
 	    $(function () {
 	  	  $("#startShippingDate").datepicker({ dateFormat: "yymmdd" });
@@ -59,10 +60,10 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
           </div>
         </div>
       </main>
-      <script src="<%=cp %>/resource/js/studio/brand_studio.js"></script>
       <!-- reward modal -->
       <div class="rewardOverlay">
         <div class="rewardModalWrapper">
+        <form action="." method="post" name="rewardForm">
           <div class="rewardModal">
             <h2 class="title">
               리워드 추가<a href="#" class="btnRewardClose"><span class="hidden">닫기</span></a>
@@ -157,10 +158,11 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
               </div>
             </div>
             <div class="infoItem rewardController">
-            	<button class="btnSubmit">등록</button>
-            	<button class="btnPlain btnRewardClose">취소</button>
+            	<button class="btnSubmit" type="button">등록</button>
+            	<button class="btnPlain btnRewardClose" type="button">취소</button>
             </div>
           </div>
+        </form>
         </div>
         <div class="headerInnerMobile">
           <div class="mobileNav">

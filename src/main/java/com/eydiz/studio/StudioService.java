@@ -26,4 +26,8 @@ public interface StudioService {
 	public List<ProjectHashtag> readHashtag(int projectNo);
 	public void insertHashtag(ProjectHashtag hashtag) throws Exception;
 	public void deleteHashtag(ProjectHashtag hashtag) throws Exception;
+	
+	
+	//리워드
+	public void insertReward(Reward reward) throws Exception;
 }
