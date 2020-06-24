@@ -109,7 +109,6 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			////////////// 프로젝트 정보 불러오기
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 			Project project = service.readProject(projectNo, bInfo.getBrandNo());
-			System.out.println(project + "★★★★★★★★★★★★★★★★★");
 			if (project == null) {
 				// 자신의 브랜드의 프로젝트가 아니면 null을 반환함
 				return "redirect:" + API_PROJECT_LIST;
@@ -246,7 +245,9 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			HttpSession session) {
 		addModelURIAttribute(model, req, projectNo);
 		BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+		Project project = service.readProject(projectNo, bInfo.getBrandNo());
 		model.addAttribute(ATTRIBUTE_BRANDNO, bInfo.getBrandNo());
+		model.addAttribute(ATTRIBUTE_PROJECT, project);
 		return VIEW_PROJECT_REWARD;
 	}
 
