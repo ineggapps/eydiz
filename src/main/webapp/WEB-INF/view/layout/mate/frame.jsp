@@ -18,10 +18,11 @@
     <link rel="stylesheet" href="<%=cp%>/resource/css/content.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/eydizmate/eydizmate.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/eydizmate/matearticle.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/eydizmate/bcreate.css" />
     <!--[if lt IE 9]>
       <script src="resource/js//html5shiv.min.js"></script>
     <![endif]-->
-    <script src="resource/js/jquery-3.5.1.min.js"></script>
+    <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
   </head>
   <body>
     <div id="wrap">

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mate">
+
+	<insert id="insertMate" parameterType="com.eydiz.mate.Mate">
+		INSERT INTO funding_mate(fmNo, memberNo, fmcaNo, fmSubject, fmContent, fmFilename, fmNumber, fmAllNumber)
+		VALUES (funding_mate_seq.NEXTVAL, #{memberNo}, #{fmcaNo}, #{fmSubject}, #{fmContent}, #{fmFilename, jdbcType=VARCHAR}, 1, #{fmAllNumber})
+	</insert>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM funding_mate f
+		JOIN funding_mate_catagory fc ON fc.fmcaNo = f.fmcaNo		
+		<where>
+			<if test="fmcaNo != 1">
+				AND ( f.fmcaNo = #{fmcaNo} )
+			</if>
+		</where>
+	</select>
+	
+	<select id="listMate" parameterType="map" resultType="com.eydiz.mate.Mate">
+		SELECT f.fmNo, m.memberNo, memberNickname, f.fmcaNo, fmSubject, fmContent, fmFilename, fmNumber, fmAllNumber, fmcaName
+		FROM funding_mate f
+		JOIN member_detail m ON m.memberNo = f.memberNo
+		JOIN funding_mate_catagory fc ON fc.fmcaNo = f.fmcaNo
+		<where>
+			<if test="fmcaNo != 1">
+				AND ( f.fmcaNo = #{fmcaNo} )
+			</if>
+		</where>
+		ORDER BY fmNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY		
+	</select>
+	
+	<select id="readMate" parameterType="Integer" resultType="com.eydiz.mate.Mate">
+		SELECT f.fmNo, m.memberNo, memberNickname, f.fmcaNo, fmSubject, fmContent, fmFilename, fmNumber, fmAllNumber, fmcaName,
+		       NVL(mateProjectCount, 0) mateProjectCount
+		FROM funding_mate f
+		JOIN member_detail m ON m.memberNo = f.memberNo
+		JOIN funding_mate_catagory fc ON fc.fmcaNo = f.fmcaNo
+		LEFT OUTER JOIN (
+			SELECT fmNo, COUNT(*) mateProjectCount FROM funding_mate_project
+			GROUP BY fmNo
+		) fmp ON f.fmNo = fmp.fmNo
+		WHERE f.fmNo = #{fmNo}
+	</select>
+	
+	<update id="updateMate" parameterType="com.eydiz.mate.Mate">
+		UPDATE funding_mate SET fmSubject=#{fmSubject}, fmcaNo=#{fmcaNo}, fmFilename=#{fmFilename, jdbcType=VARCHAR}, fmContent=#{fmContent}, fmAllNumber=#{fmAllNumber}
+		WHERE fmNo=#{fmNo}
+	</update>
+	
+	<delete id="deleteMate" parameterType="Integer">
+		DELETE FROM funding_mate WHERE fmNo=#{fmNo}
+	</delete>
+	
+	<insert id="insertMateProject" parameterType="map">
+		INSERT INTO funding_mate_project(fmNo, memberNo) VALUES(#{fmNo}, #{memberNo})
+	</insert>
+	
+	<select id="mateProjectCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM funding_mate_project WHERE fmNo=#{fmNo}
+	</select>
+
+</mapper>
