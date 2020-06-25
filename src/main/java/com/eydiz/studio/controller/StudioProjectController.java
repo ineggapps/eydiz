@@ -95,8 +95,14 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 
 	// 프로젝트 대시보드
 	@RequestMapping(value = "/{projectNo}/dashboard", method = RequestMethod.GET)
-	public String dashboard(@PathVariable Integer projectNo, Model model) {
-
+	public String dashboard(@PathVariable Integer projectNo, Model model, HttpSession session) {
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			Project project = service.readProject(projectNo, bInfo.getBrandNo());
+			model.addAttribute(ATTRIBUTE_PROJECT, project);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return VIEW_PROJECT_DASHBOARD;
 	}
 

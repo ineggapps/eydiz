@@ -282,8 +282,9 @@ header#header {
 }
 
 .titleInbox p.projectName {
-  font-size: 1.1rem;
-  margin-top: 20px;
+  font-size: 0.95rem;
+  margin: 10px 0;
+  text-overflow: ellipsis;
 }
 
 .titleInbox p.info {
