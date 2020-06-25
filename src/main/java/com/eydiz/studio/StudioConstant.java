@@ -10,6 +10,7 @@ public interface StudioConstant extends Constant {
 	public final static String REQUEST_MAPPING = "/studio";
 	public final static String API_PROJECT_LIST = "/studio/project/list";
 	public final static String API_PROJECT_REGISTER = "/studio/project/%d/register";
+	public final static String API_PROJECT_STORY = "/studio/project/%d/story";
 	public final static String API_BRAND_INFO = "/studio/brand/info";
 
 	public final static String SESSION_BRAND = "brand";
@@ -25,6 +26,7 @@ public interface StudioConstant extends Constant {
 	public final static String VIEW_PROJECT_LIST = ".studioOverviewLayout.list";
 	public final static String VIEW_PROJECT_REGISTER = ".studioLayout.register";
 	public final static String VIEW_PROJECT_REWARD = ".studioLayout.reward";
+	public final static String VIEW_PROJECT_STORY = ".studioLayout.story";
 	public final static String VIEW_PROJECT_MAIN = VIEW_PROJECT_LIST;
 
 	// ATTRIBUTE

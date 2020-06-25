@@ -18,6 +18,7 @@
   width: 100%;
   border: 1px solid #dadce0;
   border-radius: 1px;
+  position:relative;
 }
 
 .projectList .projectItem .projectThumbnail {
@@ -133,6 +134,19 @@ i.projectStatus.expire {
   text-align: center;
   font-weight: 400;
 }
+
+.btnDeleteProject {
+  border: 0;
+  background: transparent url("../../images/studio/delete.png") no-repeat;
+  background-size: 100%;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 5px;
+  top: 5px;
+  z-index:980;
+}
+
 
 @media (min-width: 960px) {
   .projectList {

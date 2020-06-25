@@ -20,7 +20,11 @@
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js//html5shiv.min.js"></script>
     <![endif]-->
+    <script>
+    const cp = "<%=cp%>";
+    </script>
     <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
+	<script src="<%=cp %>/resource/js/studio/brand_studio.js"></script>
     <script>
     	//sticky 구현
     	$(function(){

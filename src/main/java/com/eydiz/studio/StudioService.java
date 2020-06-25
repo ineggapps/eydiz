@@ -20,7 +20,7 @@ public interface StudioService {
 	public String uploadProjectImage(Project project, MultipartFile uploadImage, String realPath, String uriPath) throws Exception;
 	public void updateProjectBasic(Project project) throws Exception;
 	public void deleteProjectImage(Project project, String realPath) throws Exception;
-	
+	public void deleteProject(int projectNo, int brandNo) throws Exception;
 	
 	//프로젝트 해시태그 조회/등록/삭제
 	public List<ProjectHashtag> readHashtag(int projectNo);
@@ -33,4 +33,7 @@ public interface StudioService {
 	public List<Reward> selectReward(int projectNo, int brandNo);
 	public void updateReward(Reward reward) throws Exception;
 	public void deleteReward(int rewardNo, int projectNo, int brandNo) throws Exception;
+	
+	//스토리
+	public void updateStory(Project project) throws Exception;
 }

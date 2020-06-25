@@ -53,7 +53,7 @@
 	<!-- 프로젝트 등록하기 -->
 	<update id="insertEmptyProject" parameterType="com.eydiz.studio.Project">
 		INSERT ALL
-		INTO project(projectNo, brandNo) VALUES (#{projectNo}, #{brandNo})
+		INTO project(projectNo, brandNo, statusNo) VALUES (#{projectNo}, #{brandNo}, 0)
 		INTO project_status_list(projectNo, statusNo, statusMemo) VALUES(#{projectNo}, 0, #{statusMemo, jdbcType=VARCHAR})
 		SELECT * FROM dual
 	</update>
@@ -180,5 +180,28 @@
 			AND 
 				projectNo = 
 					(SELECT projectNo FROM project WHERE projectNo=#{projectNo} AND brandNo=#{brandNo})
+	</delete>
+	
+	<!-- 스토리 -->
+	<update id="updateStory" parameterType="com.eydiz.studio.Project">
+		UPDATE project SET projectSummary=#{projectSummary}, projectStory=#{projectStory}
+		WHERE projectNo=#{projectNo} AND brandNo=#{brandNo}
+	</update>
+	
+	<!-- 프로젝트 삭제를 위한 작업 -->
+	<sql id="where-project-brand-no">
+		projectNo=#{projectNo} AND brandNo=#{brandNo}
+	</sql>
+	<delete id="deleteProject" parameterType="map">
+		DELETE FROM project WHERE <include refid="where-project-brand-no"/> AND (statusNo=0 OR statusNo IS NULL)
+	</delete>
+	<delete id="deleteProjectList" parameterType="map">
+		DELETE FROM project_status_list WHERE projectNo = (SELECT projectNo FROM project WHERE <include refid="where-project-brand-no"/>)
+	</delete>
+	<delete id="deleteHashtags" parameterType="map">
+		DELETE FROM project_hashtag WHERE projectNo = (SELECT projectNo FROM project WHERE <include refid="where-project-brand-no"/>)
+	</delete>
+	<delete id="deleteRewards" parameterType="map">
+		DELETE FROM reward WHERE projectNo = (SELECT projectNo FROM project WHERE <include refid="where-project-brand-no"/>)
 	</delete>
 </mapper>

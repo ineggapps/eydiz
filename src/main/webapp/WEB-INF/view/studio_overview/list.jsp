@@ -7,8 +7,9 @@
 %>
 <ul class="projectList">
 	<c:forEach var="item" items="${project}">
-		<li>
+		<li data-project-no="${item.projectNo}">
 			<div class="projectItem">
+				<button type="button" class="btnDeleteProject"><span class="hidden">지우기</span></button>
 				<div class="projectThumbnail">
 					<div class="projectOverlay">
 						<span class="whiteSubtitle">대표이미지 등록 필요</span>

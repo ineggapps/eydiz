@@ -56,7 +56,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
 		model.addAttribute(ATTRIBUTE_PROJECTNO, projectNo);
 	}
-
+	
 	private String getRealPath(HttpSession session) {
 		// "/"문자열 다음부터 추출해야...
 		String cpRealPath = session.getServletContext().getRealPath("/");
@@ -325,5 +325,52 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			result.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
 		}
 		return result;
+	}
+	
+	//스토리
+	// 프로젝트 조회/편집
+	@RequestMapping(value = {"/{projectNo}/story" }, method = RequestMethod.GET)
+	public String storyForm(@PathVariable(required = false) Integer projectNo, Model model, HttpServletRequest req,
+			HttpSession session) {
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			Project project = service.readProject(projectNo, bInfo.getBrandNo());
+			model.addAttribute(ATTRIBUTE_PROJECT, project);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+		addModelURIAttribute(model, req, projectNo);
+		return VIEW_PROJECT_STORY;
+	}
+	
+	//스토리 변경
+	@RequestMapping(value= {"/{projectNo}/story"}, method=RequestMethod.POST)
+	public String storySubmit(@PathVariable(required=false) Integer projectNo, Project project, Model model, HttpSession session) {
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			project.setProjectNo(projectNo);
+			project.setBrandNo(bInfo.getBrandNo());
+			service.updateStory(project);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:" + String.format(API_PROJECT_STORY, projectNo);
+	}
+	
+	//프로젝트 삭제
+	@RequestMapping(value="/{projectNo}/delete", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteProject(@PathVariable(required=false) Integer projectNo, HttpSession session){
+		Map<String, Object> map = new HashMap<>();
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			service.deleteProject(projectNo, bInfo.getBrandNo());
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return map;
 	}
 }

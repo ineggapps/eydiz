@@ -87,3 +87,25 @@ $(function () {
     }
   });
 });
+
+//삭제 버튼 클릭
+$(function () {
+  $(".btnDeleteProject").click(function () {
+    if (!confirm("정말 프로젝트를 삭제하시겠습니까?")) {
+      return false;
+    }
+    const $item = $(this);
+    const projectNo = $(this).closest("li").attr("data-project-no");
+    const url = cp + "/studio/project/" + projectNo + "/delete";
+    ajaxJSON(url, "post", {})
+      .then(function (data) {
+        if (data.result == "ok") {
+          alert("삭제되었습니다.");
+          $item.closest("li").remove();
+        }
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
+  });
+});

@@ -183,6 +183,22 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		}
 	}
 
+	@Override
+	public void deleteProject(int projectNo, int brandNo) throws Exception {
+		try {
+			Map<String, Integer> map = new HashMap<>();
+			map.put(ATTRIBUTE_BRANDNO, brandNo);
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			dao.deleteData(MAPPER_NAMESPACE + "deleteHashtags", map);
+			dao.deleteData(MAPPER_NAMESPACE + "deleteRewards", map);
+			dao.deleteData(MAPPER_NAMESPACE + "deleteProjectList", map);
+			dao.deleteData(MAPPER_NAMESPACE + "deleteProject", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
 	/// 해시태그
 
 	@Override
@@ -260,6 +276,17 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			map.put(ATTRIBUTE_BRANDNO, brandNo);
 			map.put(ATTRIBUTE_REWARDNO, rewardNo);
 			dao.deleteData(MAPPER_NAMESPACE + "deleteReward", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void updateStory(Project project) throws Exception {
+		// 스토리 고치기
+		try {
+			dao.updateData(MAPPER_NAMESPACE + "updateStory", project);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
