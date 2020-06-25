@@ -14,3 +14,5 @@ jdbc.password=비밀번호
 ```
 
 ## 미리보기
+
+![미리보기 이미지](https://raw.githubusercontent.com/ineggapps/eydiz/master/docs/animation-brand.gif)
