@@ -12,3 +12,5 @@ jdbc.url=jdbc:log4jdbc:oracle:thin:@아이피:1521:xe
 jdbc.username=계정명
 jdbc.password=비밀번호
 ```
+
+## 미리보기
