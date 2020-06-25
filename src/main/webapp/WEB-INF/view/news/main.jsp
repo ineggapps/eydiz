@@ -149,14 +149,14 @@ function sendOk(mode, page) {
 		f.noticeSubject.focus();
 		return;
 	}
-	
+/*	
 	var str = f.noticeContent.value;
 	if(!str) {
 		alert("내용을 입력 하세요...");
 		f.noticeContent.focus();
 		return;
 	}
-		
+*/		
     var url="<%=cp%>/news/"+mode;
     var query = new FormData(f); // IE는 10이상에서만 가능
     

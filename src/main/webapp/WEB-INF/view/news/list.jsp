@@ -15,8 +15,8 @@
 					<li>${dto.memberNickname}&nbsp;${dto.noticeCreated}</li>
 				</ul>
 			</div>
-			<div style="float: left; width: 210px;">
-				<img alt="" src="<%=cp%>/uploads/news/${dto.imageFilename}" width="200" height="100">
+			<div style="float: left; width: 210px; padding-bottom: 30px;">
+				<img alt="" src="<%=cp%>/uploads/news/${dto.imageFilename}" width="180" height="90">
 			</div>
   		</div>
   	</div>

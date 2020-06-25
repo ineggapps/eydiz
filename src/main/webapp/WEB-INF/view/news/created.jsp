@@ -5,6 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
+
 <article class="row">
 	<form name="newsForm" method="post" enctype="multipart/form-data">
 		<div class="bcreate">
@@ -16,7 +17,7 @@
 							<option value="6" ${dto.nocaNo=="6" ? "selected='selected'":"" }>이벤트</option>
 							<option value="7" ${dto.nocaNo=="7" ? "selected='selected'":"" }>보도자료</option>
 						</select>
-			<p style="height: 170px;"> 내용 : &nbsp;&nbsp;&nbsp;<textarea name="noticeContent" class="cinput" style="height: 170px;">${dto.noticeContent}</textarea> </p>
+			<p style="height: 200px;"> 내용 : &nbsp;&nbsp;&nbsp;<textarea name="noticeContent" id="content" class="cinput" style="height: 170px; width: 700px;">${dto.noticeContent}</textarea> </p>
 			<p> 파일 : &nbsp;&nbsp;&nbsp;<input class="cinput" type="file" name="upload"> </p>		        
 	    </div>	
 	    <div class="cbutton" style="text-align: center;">
@@ -30,4 +31,5 @@
 	    	</c:if>
 	    </div>
     </form>
+
 </article>

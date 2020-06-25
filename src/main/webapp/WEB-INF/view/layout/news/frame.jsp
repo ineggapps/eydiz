@@ -28,7 +28,7 @@
     <div id="wrap">
       <tiles:insertAttribute name="headerBanner" ignore="true"/>
       <tiles:insertAttribute name="header"/>
-      <main id="content">
+      <main id="mainContent">
         <div class="contentWrapper">
           <tiles:insertAttribute name="content" />
         </div>
