@@ -27,6 +27,7 @@ import com.eydiz.studio.Project;
 import com.eydiz.studio.ProjectCategory;
 import com.eydiz.studio.ProjectHashtag;
 import com.eydiz.studio.ProjectImage;
+import com.eydiz.studio.Reward;
 import com.eydiz.studio.StudioConstant;
 import com.eydiz.studio.StudioService;
 
@@ -39,7 +40,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 
 	@Autowired
 	StudioService service;
-	
+
 	@Autowired
 	Pager pager;
 
@@ -55,7 +56,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
 		model.addAttribute(ATTRIBUTE_PROJECTNO, projectNo);
 	}
-
+	
 	private String getRealPath(HttpSession session) {
 		// "/"문자열 다음부터 추출해야...
 		String cpRealPath = session.getServletContext().getRealPath("/");
@@ -64,33 +65,35 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 	}
 
 	////////////////////////////////////////////// 프로젝트
-	@RequestMapping(value = { "/list/{categoryName}", "/list/{categoryName}/page/{page}", "/list", "/list/page/{page}" })
-	public String list(@PathVariable(required = false) String categoryName, @PathVariable(required=false) Integer page, Model model, HttpServletRequest req, HttpSession session) {
+	@RequestMapping(value = { "/list/{categoryName}", "/list/{categoryName}/page/{page}", "/list",
+			"/list/page/{page}" })
+	public String list(@PathVariable(required = false) String categoryName,
+			@PathVariable(required = false) Integer page, Model model, HttpServletRequest req, HttpSession session) {
 		addModelURIAttribute(model, req, null);
 		int currentPage = 1;
-		if(page!=null) {
+		if (page != null) {
 			currentPage = page;
 		}
-		BrandSessionInfo bInfo = (BrandSessionInfo)session.getAttribute(SESSION_BRAND);
+		BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 		int brandNo = bInfo.getBrandNo();
-		//페이징 정보 계산과 해당하는 페이지의 프로젝트 불러오기
+		// 페이징 정보 계산과 해당하는 페이지의 프로젝트 불러오기
 		int listProjectCount = service.listProjectCount(brandNo);
 		int pageCount = pager.pageCount(ROWS, listProjectCount);
-		int offset = pager.getOffset(currentPage,ROWS);
+		int offset = pager.getOffset(currentPage, ROWS);
 		Map<String, Object> map = new HashMap<>();
 		map.put(ATTRIBUTE_ROWS, ROWS);
 		map.put(ATTRIBUTE_OFFSET, offset);
 		map.put(ATTRIBUTE_BRANDNO, brandNo);
 		List<Project> listProject = service.listProject(map);
-		//페이징 정보 입력
+		// 페이징 정보 입력
 		model.addAttribute(ATTRIBUTE_CURRENT_PAGE, currentPage);
 		model.addAttribute(ATTRIBUTE_PAGE_COUNT, pageCount);
 		model.addAttribute(ATTRIBUTE_CATEGORY, categoryName);
 		model.addAttribute(ATTRIBUTE_PROJECT, listProject);
 		return VIEW_PROJECT_LIST;
 	}
-	
-	//프로젝트 조회/편집
+
+	// 프로젝트 조회/편집
 	@RequestMapping(value = { "/register", "/{projectNo}/register" }, method = RequestMethod.GET)
 	public String registerForm(@PathVariable(required = false) Integer projectNo, Model model, HttpServletRequest req,
 			HttpSession session) {
@@ -106,7 +109,6 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			////////////// 프로젝트 정보 불러오기
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 			Project project = service.readProject(projectNo, bInfo.getBrandNo());
-			System.out.println(project+ "★★★★★★★★★★★★★★★★★");
 			if (project == null) {
 				// 자신의 브랜드의 프로젝트가 아니면 null을 반환함
 				return "redirect:" + API_PROJECT_LIST;
@@ -122,7 +124,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		return VIEW_PROJECT_REGISTER;
 	}
 
-	//프로젝트 저장하기
+	// 프로젝트 저장하기
 	@RequestMapping(value = "/{projectNo}/register", method = RequestMethod.POST)
 	public String updateProject(@PathVariable Integer projectNo, Project project, HttpSession session) {
 		try {
@@ -236,11 +238,139 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		}
 		return result;
 	}
-	
-	///리워드 설계
-	@RequestMapping(value="/{projectNo}/reward")
-	public String register(@PathVariable Integer projectNo, Model model, HttpServletRequest req, HttpSession session){
+
+	/// 리워드 설계
+	@RequestMapping(value = "/{projectNo}/reward")
+	public String rewardForm(@PathVariable Integer projectNo, Model model, HttpServletRequest req,
+			HttpSession session) {
 		addModelURIAttribute(model, req, projectNo);
+		BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+		Project project = service.readProject(projectNo, bInfo.getBrandNo());
+		model.addAttribute(ATTRIBUTE_BRANDNO, bInfo.getBrandNo());
+		model.addAttribute(ATTRIBUTE_PROJECT, project);
 		return VIEW_PROJECT_REWARD;
+	}
+
+	// 리워드 설계
+	@RequestMapping(value = "/{projectNo}/reward/add", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> rewardPost(@PathVariable Integer projectNo, Reward reward) {
+		Map<String, Object> result = new HashMap<>();
+		try {
+			if (projectNo == null) {
+				throw new Exception("projectNo is null");
+			}
+			reward.setProjectNo(projectNo);
+			System.out.println(reward.toString());
+			service.insertReward(reward);
+			result.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put(JSON_RESULT, JSON_RESULT_ERROR);
+			result.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return result;
+	}
+
+	// 리워드 조회
+	@RequestMapping(value = "/{projectNo}/reward/list", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> rewardList(@PathVariable Integer projectNo, HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
+		List<Reward> rewards = null;
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			rewards = service.selectReward(projectNo, bInfo.getBrandNo());
+			result.put(JSON_RESULT, JSON_RESULT_OK);
+			result.put(JSON_REWARD_LIST, rewards);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put(JSON_RESULT, JSON_RESULT_ERROR);
+			result.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return result;
+	}
+
+	// 리워드 수정
+	@RequestMapping(value = "/{projectNo}/reward/{rewardNo}/update", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateReward(@PathVariable Integer projectNo, @PathVariable Integer rewardNo,
+			Reward reward, HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			reward.setProjectNo(projectNo);
+			reward.setBrandNo(bInfo.getBrandNo());
+			service.updateReward(reward);
+			result.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			result.put(JSON_RESULT, JSON_RESULT_ERROR);
+			result.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return result;
+	}
+
+	// 리워드 삭제
+	@RequestMapping(value = "/{projectNo}/reward/{rewardNo}/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteReward(@PathVariable Integer projectNo, @PathVariable Integer rewardNo,
+			HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			service.deleteReward(rewardNo, projectNo, bInfo.getBrandNo());
+			result.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			result.put(JSON_RESULT, JSON_RESULT_ERROR);
+			result.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return result;
+	}
+	
+	//스토리
+	// 프로젝트 조회/편집
+	@RequestMapping(value = {"/{projectNo}/story" }, method = RequestMethod.GET)
+	public String storyForm(@PathVariable(required = false) Integer projectNo, Model model, HttpServletRequest req,
+			HttpSession session) {
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			Project project = service.readProject(projectNo, bInfo.getBrandNo());
+			model.addAttribute(ATTRIBUTE_PROJECT, project);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+		addModelURIAttribute(model, req, projectNo);
+		return VIEW_PROJECT_STORY;
+	}
+	
+	//스토리 변경
+	@RequestMapping(value= {"/{projectNo}/story"}, method=RequestMethod.POST)
+	public String storySubmit(@PathVariable(required=false) Integer projectNo, Project project, Model model, HttpSession session) {
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			project.setProjectNo(projectNo);
+			project.setBrandNo(bInfo.getBrandNo());
+			service.updateStory(project);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:" + String.format(API_PROJECT_STORY, projectNo);
+	}
+	
+	//프로젝트 삭제
+	@RequestMapping(value="/{projectNo}/delete", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteProject(@PathVariable(required=false) Integer projectNo, HttpSession session){
+		Map<String, Object> map = new HashMap<>();
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			service.deleteProject(projectNo, bInfo.getBrandNo());
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return map;
 	}
 }

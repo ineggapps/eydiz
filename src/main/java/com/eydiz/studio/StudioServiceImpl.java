@@ -83,28 +83,25 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		}
 		return projectNo;
 	}
-	
-	
 
 	@Override
 	public List<Project> listProject(Map<String, Object> map) {
 		List<Project> list = null;
 		try {
-			list = dao.selectList(MAPPER_NAMESPACE+"listProject", map);
+			list = dao.selectList(MAPPER_NAMESPACE + "listProject", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
-	
-	
+
 	@Override
 	public int listProjectCount(int brandNo) {
 		Map<String, Object> map = new HashMap<>();
 		int count = 0;
 		try {
 			map.put(ATTRIBUTE_BRANDNO, brandNo);
-			count = dao.selectOne(MAPPER_NAMESPACE+"listProjectCount", map);
+			count = dao.selectOne(MAPPER_NAMESPACE + "listProjectCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -141,7 +138,7 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	@Override
 	public void updateProjectBasic(Project project) throws Exception {
 		try {
-			dao.updateData(MAPPER_NAMESPACE+"updateProjectBasic",project);
+			dao.updateData(MAPPER_NAMESPACE + "updateProjectBasic", project);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			throw e;
@@ -186,6 +183,22 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		}
 	}
 
+	@Override
+	public void deleteProject(int projectNo, int brandNo) throws Exception {
+		try {
+			Map<String, Integer> map = new HashMap<>();
+			map.put(ATTRIBUTE_BRANDNO, brandNo);
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			dao.deleteData(MAPPER_NAMESPACE + "deleteHashtags", map);
+			dao.deleteData(MAPPER_NAMESPACE + "deleteRewards", map);
+			dao.deleteData(MAPPER_NAMESPACE + "deleteProjectList", map);
+			dao.deleteData(MAPPER_NAMESPACE + "deleteProject", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
 	/// 해시태그
 
 	@Override
@@ -205,6 +218,7 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			dao.insertData(MAPPER_NAMESPACE + "insertHashtag", hashtag);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -214,6 +228,68 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			dao.deleteData(MAPPER_NAMESPACE + "deleteHashTag", hashtag);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	// 리워드
+
+	@Override
+	public void insertReward(Reward reward) throws Exception {
+		try {
+			dao.insertData(MAPPER_NAMESPACE + "insertReward", reward);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public List<Reward> selectReward(int projectNo, int brandNo) {
+		List<Reward> rewards = null;
+		try {
+			Map<String, Integer> map = new HashMap<>();
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			map.put(ATTRIBUTE_BRANDNO, brandNo);
+			rewards = dao.selectList(MAPPER_NAMESPACE + "selectReward", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rewards;
+	}
+
+	@Override
+	public void updateReward(Reward reward) throws Exception {
+		try {
+			dao.updateData(MAPPER_NAMESPACE + "updateReward", reward);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void deleteReward(int rewardNo, int projectNo, int brandNo) throws Exception {
+		try {
+			Map<String, Integer> map = new HashMap<>();
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			map.put(ATTRIBUTE_BRANDNO, brandNo);
+			map.put(ATTRIBUTE_REWARDNO, rewardNo);
+			dao.deleteData(MAPPER_NAMESPACE + "deleteReward", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void updateStory(Project project) throws Exception {
+		// 스토리 고치기
+		try {
+			dao.updateData(MAPPER_NAMESPACE + "updateStory", project);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
 		}
 	}
 

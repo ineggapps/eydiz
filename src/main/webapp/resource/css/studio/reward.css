@@ -1,33 +1,404 @@
 @charset "UTF-8";
 
-.rewardContentCard dl::after{
-	content:"";
-	display:block;
-	clear:both;
+.inputBox p.desc{
+	visibility:hidden;
 }
 
-.rewardContentCard{
-	box-sizing:border-box;
-	padding:20px;
-	width:60%;
-	border:1px solid #e6eaed;
+.inputBox input[type=text].error,
+.inputBox textarea.error {
+    border-color: #ff6666 !important;
+    background-color: #fff9f9;
 }
 
-.rewardContentCard h4{
-	font-size:1.05rem;
-	font-weight:700;
-	margin:10px 0;
+.inputBox .error ~ p.desc{
+	visibility:visible;
+}
+
+.rewardOverlay {
+	display:none;
+ position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  overflow-y: auto;
+}
+
+.rewardOverlay.show {
+  display: block;
+}
+
+.rewardModalWrapper {
+  z-index: 9999;
+  text-align: center;
+  pointer-events: all;
+}
+
+.rewardModal {
+  height: auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  background-color: #fff;
+  padding: 80px 100px;
+  box-sizing: border-box;
+  z-index: 10000;
+  display: inline-block;
+  text-align: left;
+}
+
+.headerInnerMobile a.btnRewardClose{
+	top:10px;
+  	width:30px;
+  	height:30px;
+  	background-size:50%;
+  }
+  
+.rewardModal a.btnRewardClose {
+  float: right;
+  position: relative;
+  top: -30px;
+}
+
+/*hack...*/
+.rewardContentCard dl::after,
+.rewardModal h2::after,
+.snippetTitle::after,
+.rewardSnippet dl::after,
+.snippetController::after{
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.rewardModal h2.title {
+  margin-bottom: 40px;
+}
+
+.rewardContentCard {
+  box-sizing: border-box;
+  padding: 20px;
+  width: 60%;
+  border: 1px solid #e6eaed;
+  width: 60%;
+}
+
+.rewardContentCard h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 10px 0;
 }
 
 .rewardContentCard dl > * {
-	font-size:0.95rem;
-	color:#90949c;
+  font-size: 0.95rem;
+  color: #90949c;
+  float: left;
+  margin-top: 10px;
+  color: #90949c;
+}
+
+.rewardContentCard dl dt {
+  font-weight: 700;
+  clear: both;
+  margin-right: 10px;
+  width: 20%;
+}
+
+.rewardContentCard dl dd {
+  width: 77%;
+}
+
+.rewardModal .infoItem label,
+.rewardModal .infoItem .inputBox {
+  display: inline-block;
+}
+
+.rewardModal .infoItem .inputBox.clear {
+  display: block;
+  clear: both;
+}
+
+.rewardModal .infoItem label {
+  width: 100%;
+  max-width: 138px;
+  font-weight: 500;
+  font-size: 1.15rem;
+}
+
+.rewardModal .infoItem input,
+.rewardModal .infoItem textarea,
+.rewardModal .infoItem select{
+  width: 290px;
+}
+
+.rewardModal .infoItem textarea{
+	box-sizing:border-box;
+  height: 120px;
+  border: 1px solid #e6eaed;
+  resize: none;
+  line-height:24px;
+}
+
+.rewardModal .inputWrap.hide{
+	display:none;
+}
+
+.rewardModal .inputWrap .infoItem textarea#rewardOption{
+	width:94%;
+	margin:20px 0;
+	line-height:24px;
+}
+
+.rewardModal .inputBox.custom{
+	margin:12px 0;
+}
+
+.rewardModal .infoItem label {
+    margin-bottom: 35px;
+    vertical-align:top;
+    position:relative;
+    top:15px;
+}
+
+.rewardModal .inputBox.custom label{
+	display:inline;
+}
+
+.rewardController button{
+	display:inline-block;
+	padding:5px 30px;
+	width:auto;
+	line-height:unset;
+	border-radius:5px;
+	float:right;
+}
+
+.rewardController button:first-child{
+	margin-left:10px;
+}
+
+span.exp{
+	margin-left:10px;
+}
+
+.rewardModal .radiomark {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  position: relative;
+  border: 1px solid #00b2b2;
+  cursor:pointer;
+  top:5px;
+}
+
+.rewardModal .inputBox.custom input[type=radio]{
+	position:absolute;
+	left:-10px;
+	top:-10px;
+	display:none;
+}
+
+.rewardModal .radiomark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  border-radius: 100%;
+  position: absolute;
+  top:5px;
+  left:5px;
+}
+
+.rewardModal input:checked ~ .radiomark:after {
+  display: block;
+  background-color: #00b2b2;
+  border-radius: 100%;
+  position: absolute;
+}
+
+.no-margin-bottom{
+	margin-bottom:10px !important;
+}
+
+.margin-height{
+	padding:20px 0 0;
+}
+
+.margin-bottom-some{
+	margin-bottom:25px !important;
+}
+
+.indent{
+	text-indent:20px;
+}
+
+.narrow-width{
+	width:80px;
+}
+
+#shipAmount{
+	width:200px !important;
+}
+
+/*rewardSnippet*/
+.rewardSnippet.dummy{
+	display:none;
+}
+.rewardSnippet{
+	margin: 32px 0;
+    border: 1px solid #dadce0;
+	box-shadow: 0 20px 16px -10px rgba(0,0,0,.15);
+	padding:24px 36px;
+	color:#7C8288;
+}
+
+.rewardSnippet .snippetTitle{
+	border-bottom:1px solid #dadce0;
+	padding:10px 0;
+	margin-bottom:10px;
+}
+
+.rewardSnippet .snippetTitle h5{
+	color:#000;
 	float:left;
+	font-size:1.2rem;
+	font-weight:600;
+}
+
+.rewardSnippet .snippetTitle span{
+	float:right;
+	background-color: rgba(0,178,143,.2);
+    padding: 8px;
+    color: #00b2b2;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.rewardSnippet p.content,
+.rewardSnippet dl{
+	font-size:0.95rem;
+}
+
+.rewardSnippet p.content{
+	margin-top:20px;
+	line-height:24px;
+}
+
+.rewardSnippet dt,
+.rewardSnippet dd{
 	margin-top:10px;
 }
 
-.rewardContentCard dl dt{
-	font-weight:700;
+.rewardSnippet dt{
 	clear:both;
-	margin-right:20px;
+	color:#000;
+	float:left;
+}
+
+.rewardSnippet dd{
+	float:right;
+}
+
+.rewardSnippet  .snippetController{
+	margin-top:20px;
+}
+
+.rewardSnippet .snippetController > *{
+	float:right;
+}
+
+.btnSnippet{
+	background-color:#fff;
+	border:1px solid #dadce0;
+	border-radius: 20px;
+	padding:5px 15px;
+	font-size:0.95rem;
+	color:rgba(0,0,0,0.84);
+}
+
+.btnSnippet:first-child{
+	margin-left:10px;
+}
+
+.shippingOptionWrap {
+	display:none;
+}
+
+
+/*반응형*/
+
+@media (min-width: 768px) {
+  .rewardOverlay .headerInnerMobile {
+    display: none;
+  }
+  
+  .rewardModal {
+    margin:5%;
+    min-width: 660px;
+    max-width: 920px;
+    z-index: 10000;
+  }
+  
+  .rewardSnippetList li{
+  	display:inline-block;
+  	margin:0 10px;
+  	vertical-align: top;
+  }
+  
+  .rewardSnippet{
+  	width:340px;
+  }
+}
+
+@media (max-width: 768px) {
+  .rewardModal h2.title {
+    display: none;
+  }
+  .rewardOverlay .headerInnerMobile {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.08);
+  }
+  .rewardContentCard {
+    width: 100%;
+  }
+  .rewardModal {
+    margin-top: 0;
+    width: 100%;
+    overflow-y: auto;
+    padding: 80px 40px;
+  }
+  .rewardModal .infoItem .inputBox{
+  	width:100%;
+  }
+  .rewardModal .infoItem .inputBox input,
+  .rewardModal .infoItem .inputBox textarea,
+  .rewardModal .infoItem custom,
+  .rewardModal .infoItem select {
+  	width:90%;
+  }
+  .rewardModal .infoItem label {
+    display: block;
+  }
+  .indent input{
+  	margin-left:20px;
+  }
+  
+  .rewardSnippet{
+  box-sizing:border-box;
+  	width:100%;
+  }
+}
+
+@media (max-width: 648px) {
+  .rewardContentCard dl dt,
+  .rewardContentCard dl dd {
+    width: 100%;
+  }
 }

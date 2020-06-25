@@ -53,7 +53,7 @@
 	<!-- 프로젝트 등록하기 -->
 	<update id="insertEmptyProject" parameterType="com.eydiz.studio.Project">
 		INSERT ALL
-		INTO project(projectNo, brandNo) VALUES (#{projectNo}, #{brandNo})
+		INTO project(projectNo, brandNo, statusNo) VALUES (#{projectNo}, #{brandNo}, 0)
 		INTO project_status_list(projectNo, statusNo, statusMemo) VALUES(#{projectNo}, 0, #{statusMemo, jdbcType=VARCHAR})
 		SELECT * FROM dual
 	</update>
@@ -85,6 +85,7 @@
 		FROM project p
 		JOIN brand b ON p.brandNo = b.brandNo
 		WHERE b.brandNo = #{brandNo}
+		ORDER BY projectNo DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
@@ -141,5 +142,66 @@
 	<delete id="deleteHashTag" parameterType="com.eydiz.studio.ProjectHashtag">
 		DELETE FROM project_hashtag
 		WHERE projectNo=#{projectNo} AND keyword=#{keyword}
+	</delete>
+	
+	
+	<!-- 리워드 -->
+	
+	<insert id="insertReward" parameterType="com.eydiz.studio.Reward">
+		INSERT INTO reward(
+			rewardNo, projectNo, amount, rewardTitle, rewardContent, rewardOption, 
+			isShipping, shipAmount, startShippingDate, limitQuantity, remainQuantity)
+		VALUES (
+			reward_seq.NEXTVAL, #{projectNo}, #{amount}, #{rewardTitle}, #{rewardContent}, #{rewardOption, jdbcType=VARCHAR}, 
+			#{isShipping}, #{shipAmount, jdbcType=INTEGER}, #{startShippingDate, jdbcType=VARCHAR}, #{limitQuantity}, #{limitQuantity})
+	</insert>
+	
+	<select id="selectReward" parameterType="map" resultType="com.eydiz.studio.Reward">
+		SELECT rewardNo, r.projectNo, amount, rewardTitle, rewardContent, rewardOption, 
+			isShipping, shipAmount, TO_CHAR(startShippingDate, 'YYYY-MM-DD') startShippingDate, limitQuantity, remainQuantity
+		FROM reward r
+		JOIN project p ON r.projectNo = p.projectNo
+		WHERE r.projectNo = #{projectNo} AND brandNo=#{brandNo}
+		ORDER BY amount DESC
+	</select>
+	
+	<update id="updateReward" parameterType="com.eydiz.studio.Reward">
+		UPDATE reward SET 
+				projectNo=#{projectNo}, amount=#{amount}, rewardTitle=#{rewardTitle}, rewardContent=#{rewardContent}, 
+				rewardOption=#{rewardOption}, isShipping=#{isShipping}, shipAmount=#{shipAmount, jdbcType=VARCHAR}, 
+				startShippingDate=#{startShippingDate}, limitQuantity=#{limitQuantity}
+		WHERE projectNo = (SELECT projectNo FROM project WHERE projectNo = #{projectNo} AND brandNo = #{brandNo})
+	</update>
+	
+	<delete id="deleteReward" parameterType="map">
+		DELETE FROM reward
+		WHERE 
+				rewardNo = #{rewardNo}
+			AND 
+				projectNo = 
+					(SELECT projectNo FROM project WHERE projectNo=#{projectNo} AND brandNo=#{brandNo})
+	</delete>
+	
+	<!-- 스토리 -->
+	<update id="updateStory" parameterType="com.eydiz.studio.Project">
+		UPDATE project SET projectSummary=#{projectSummary}, projectStory=#{projectStory}
+		WHERE projectNo=#{projectNo} AND brandNo=#{brandNo}
+	</update>
+	
+	<!-- 프로젝트 삭제를 위한 작업 -->
+	<sql id="where-project-brand-no">
+		projectNo=#{projectNo} AND brandNo=#{brandNo}
+	</sql>
+	<delete id="deleteProject" parameterType="map">
+		DELETE FROM project WHERE <include refid="where-project-brand-no"/> AND (statusNo=0 OR statusNo IS NULL)
+	</delete>
+	<delete id="deleteProjectList" parameterType="map">
+		DELETE FROM project_status_list WHERE projectNo = (SELECT projectNo FROM project WHERE <include refid="where-project-brand-no"/>)
+	</delete>
+	<delete id="deleteHashtags" parameterType="map">
+		DELETE FROM project_hashtag WHERE projectNo = (SELECT projectNo FROM project WHERE <include refid="where-project-brand-no"/>)
+	</delete>
+	<delete id="deleteRewards" parameterType="map">
+		DELETE FROM reward WHERE projectNo = (SELECT projectNo FROM project WHERE <include refid="where-project-brand-no"/>)
 	</delete>
 </mapper>

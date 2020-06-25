@@ -1,58 +1,3 @@
-function ajaxJSON(url, method, data) {
-  return new Promise(function (resolve, reject) {
-    try {
-      $.ajax({
-        url: url,
-        type: method,
-        data: data,
-        success: function (data) {
-          if (data.result == "ok") {
-            resolve(data);
-          } else {
-            reject("유효하지 않은 요청... 파라미터를 확인하세요");
-          }
-        },
-        error: function (e) {
-          reject(e.responseText);
-        },
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
-
-function ajaxJSONFile(url, method, data) {
-  return new Promise(function (resolve, reject) {
-    try {
-      $.ajax({
-        url: url,
-        type: method,
-        enctype: "multipart/form-data",
-        processData: false,
-        contentType: false,
-        data: data,
-        dataType: "json",
-        success: function (data) {
-          if (data.result == "ok") {
-            resolve(data);
-          } else {
-            reject("유효하지 않은 요청... 파라미터를 확인하세요");
-          }
-        },
-        beforeSend: function (jqXHR) {
-          jqXHR.setRequestHeader("AJAX", "true");
-        },
-        error: function (e) {
-          reject(e.responseText);
-        },
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
-
 ///////////////////////////////////
 //datepicker 사용
 
@@ -153,16 +98,23 @@ $(function () {
       //엔터 입력되면
       const projectNo = $("input[name=projectNo]").val();
       const keyword = $(this).val();
-      addItem(keyword);
       //서버 요청
       const url =
         cp + "/studio/project/" + projectNo + "/hashtag/insert/" + encodeURIComponent(keyword);
       ajaxJSON(url, "post", { projectNo: projectNo, keyword: keyword })
         .then(function (data) {
-          console.log(data);
+          if (data.result == "ok") {
+            addItem(keyword);
+            $("#keyword").removeClass("error");
+          }
         })
         .catch(function (e) {
           console.log(e);
+          $("#keyword").addClass("error");
+          const dup = e.message.indexOf("무결성");
+          if (dup > 0) {
+            $("#keyword ~ p.msg").text(keyword + "는 이미 등록된 태그입니다.");
+          }
         });
       $(this).val("");
       $(this).focus();

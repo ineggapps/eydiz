@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.eydiz.member.MemberConstant;
 import com.eydiz.member.SessionInfo;
 import com.eydiz.studio.Brand;
+import com.eydiz.studio.BrandSessionInfo;
 import com.eydiz.studio.StudioConstant;
 import com.eydiz.studio.StudioService;
 
@@ -67,6 +68,8 @@ public class StudioBrandController implements StudioConstant, MemberConstant {
 			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
 			dto.setMemberNo(info.getMemberNo());
 			service.updateBrand(dto);
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			bInfo.setBrandName(dto.getBrandName());
 		} catch (Exception e) {
 			e.printStackTrace();
 			redirectUrl = API_BRAND_INFO;

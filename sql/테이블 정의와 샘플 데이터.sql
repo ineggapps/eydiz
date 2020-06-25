@@ -155,7 +155,7 @@ CREATE TABLE project_hashtag(
     tagNo NUMBER NOT NULL, -- 해시태그 번호
     projectNo NUMBER NOT NULL, -- 프로젝트 번호 
     keyword VARCHAR2(100) NOT NULL, -- 키워드
-    CONSTRAINT PK_PROJECT_HASHTAG_TAGNO PRIMARY KEY(tagNo),
+    CONSTRAINT PK_PROJECT_HASHTAG_TAGNO PRIMARY KEY(projectNo, keyword), --중복 방지.. tagNo는 시간순서로 등록한 것 정렬 역할
     CONSTRAINT FK_PROJECT_HASHTAG_PROJECTNO FOREIGN KEY(projectNo) REFERENCES project(projectNo)
 );
 
@@ -273,7 +273,7 @@ CREATE TABLE reward(
     amount NUMBER NOT NULL, -- 구매금액
     rewardTitle VARCHAR2(255) NOT NULL,
     rewardContent VARCHAR2(4000) NOT NULL,
-    rewardOption VARCHAR2(255) NOT NULL,
+    rewardOption VARCHAR2(255),
     isShipping NUMBER(1) NOT NULL, -- 배송지 필요여부 (0: 배송지 필요없음, 1: 배송지 필요)
     shipAmount NUMBER,
     startShippingDate DATE,
@@ -537,7 +537,6 @@ CREATE TABLE cast_board(
     castTitle VARCHAR2(500) NOT NULL,
     castContent VARCHAR2(3000) NOT NULL,
     castCreated DATE DEFAULT SYSDATE,
-    castThumbnail VARCHAR2(500),
     CONSTRAINT fk_cast_board_memberNo FOREIGN KEY(memberNo) REFERENCES member(memberNo),
     CONSTRAINT fk_cast_board_castCnum FOREIGN KEY(castCnum) REFERENCES cast_category(castCnum)
 );
@@ -616,32 +615,23 @@ CREATE TABLE notice (
 
 CREATE TABLE funding_mate (
     fmNo NUMBER PRIMARY KEY,
-    memberId VARCHAR2(50) NOT NULL,
+    memberNo NUMBER NOT NULL,
+    fmcaNo NUMBER NOT NULL,
     fmSubject VARCHAR2(50) not null,
     fmContent CLOB not null,
     fmCount NUMBER(10),
-    fmCreated DATE DEFAULT SYSDATE,
     fmFilename VARCHAR2(100),
-    fmSaveFilename VARCHAR2(100),
     fmNumber NUMBER(4),
     fmAllNumber NUMBER(4),
-    FOREIGN KEY (memberId) REFERENCES member_detail (memberId)
+    FOREIGN key (memberNo) REFERENCES member_detail (memberNo),
+    FOREIGN key (fmcaNo) REFERENCES funding_mate_catagory (fmcaNo)
 );
 
-CREATE TABLE funding_mate_like(
-    fmNo NUMBER NOT NULL,
-    memberId VARCHAR2(50) NOT NULL,
-    PRIMARY KEY(fmNo, memberId),
-    FOREIGN KEY (fmNo) REFERENCES funding_mate(fmNo),
-    FOREIGN KEY (memberId) REFERENCES member_detail(memberId)
+CREATE TABLE funding_mate_catagory (
+    fmcaNo NUMBER PRIMARY key,
+    fmcaName VARCHAR2(10) NOT NULL
 );
 
-CREATE SEQUENCE funding_mate_like_seq
-    INCREMENT BY 1
-    START WITH 1
-    NOMAXVALUE
-    NOCYCLE
-    NOCACHE;
 
 CREATE SEQUENCE funding_mate_seq
     INCREMENT BY 1

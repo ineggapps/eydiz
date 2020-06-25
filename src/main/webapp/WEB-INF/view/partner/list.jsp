@@ -65,97 +65,34 @@
 	          <div class = "partnerListTitle">
 	          	<p>이디즈와 함께하는 사람들</p>
 	          </div>
-	          <div class = "partnerSearchBox">
-	          	<input type="text" name="partnerSearch" class= "partnerSearch" placeholder=" 파트너명을 입력하세요">
-				<button type="button" class = "partnerSearchBtn"></button>
-	          </div>
+	          <form name="partnerSerchForm" method="post">
+		          <div class = "partnerSearchBox">
+		          	<input type="text" name="keyword" id = "partnerSerchKeyword" class= "partnerSearch" value="${keyword}" placeholder=" 브랜드이름을 입력하세요">
+					<button type="button" class = "partnerSearchBtn" onclick="serchList();"></button>
+		          </div>
+	          </form>
               <ul class="gridContent partnerListContent">
-                <li class="item partnerBox" onclick="location.href='<%=cp%>/partner/article';">
-                  <div class="itemInner partnerBBoard">
-                    <div class="thumbnail"style="background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');">
-                      <span class="hidden">드럼</span>
-                    </div>
-                    <div class="textWrap ">
-                      <div class="subject awardsTabBName">
-                        <span>쌍용강북교육원</span>
-                      </div>
-                      <div class = "partnerBDetail">
-                      	<span>총 펀딩금액 </span><span class="partnerBData"> 1,640,356,383</span><span>원</span><br>
-                      	<span>프로젝트 </span><span class="partnerBData"> 28</span><span>건</span><br>
-                      	<span>투자자 </span><span class="partnerBData"> 2,985</span><span>명</span><br>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="item partnerBox" onclick="location.href='#';">
-                  <div class="itemInner partnerBBoard">
-                    <div class="thumbnail"style="background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');">
-                      <span class="hidden">드럼</span>
-                    </div>
-                    <div class="textWrap ">
-                      <div class="subject awardsTabBName">
-                        <span>쌍용강북교육원</span>
-                      </div>
-                      <div class = "partnerBDetail">
-                      	<span>총 펀딩금액 </span><span class="partnerBData"> 1,640,356,383</span><span>원</span><br>
-                      	<span>프로젝트 </span><span class="partnerBData"> 28</span><span>건</span><br>
-                      	<span>투자자 </span><span class="partnerBData"> 2,985</span><span>명</span><br>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="item partnerBox" onclick="location.href='#';">
-                  <div class="itemInner partnerBBoard">
-                    <div class="thumbnail"style="background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');">
-                      <span class="hidden">드럼</span>
-                    </div>
-                    <div class="textWrap ">
-                      <div class="subject awardsTabBName">
-                        <span>쌍용강북교육원</span>
-                      </div>
-                      <div class = "partnerBDetail">
-                      	<span>총 펀딩금액 </span><span class="partnerBData"> 1,640,356,383</span><span>원</span><br>
-                      	<span>프로젝트 </span><span class="partnerBData"> 28</span><span>건</span><br>
-                      	<span>투자자 </span><span class="partnerBData"> 2,985</span><span>명</span><br>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-               <li class="item partnerBox" onclick="location.href='#';">
-                  <div class="itemInner partnerBBoard">
-                    <div class="thumbnail"style="background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');">
-                      <span class="hidden">드럼</span>
-                    </div>
-                    <div class="textWrap ">
-                      <div class="subject awardsTabBName">
-                        <span>쌍용강북교육원</span>
-                      </div>
-                      <div class = "partnerBDetail">
-                      	<span>총 펀딩금액 </span><span class="partnerBData"> 1,640,356,383</span><span>원</span><br>
-                      	<span>프로젝트 </span><span class="partnerBData"> 28</span><span>건</span><br>
-                      	<span>투자자 </span><span class="partnerBData"> 2,985</span><span>명</span><br>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="item partnerBox" onclick="location.href='#';">
-                  <div class="itemInner partnerBBoard">
-                    <div class="thumbnail"style="background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');">
-                      <span class="hidden">드럼</span>
-                    </div>
-                    <div class="textWrap ">
-                      <div class="subject awardsTabBName">
-                        <span>쌍용강북교육원</span>
-                      </div>
-                      <div class = "partnerBDetail">
-                      	<span>총 펀딩금액 </span><span class="partnerBData"> 1,640,356,383</span><span>원</span><br>
-                      	<span>프로젝트 </span><span class="partnerBData"> 28</span><span>건</span><br>
-                      	<span>투자자 </span><span class="partnerBData"> 2,985</span><span>명</span><br>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                <c:forEach var="dto" items="${list}">
+	                <li class="item partnerBox" onclick="location.href='${articleUrl}&brandNo=${dto.brandNo}';">
+	                  <div class="itemInner partnerBBoard">
+	                    <div class="thumbnail"style="background-image: url('#');">
+	                      <span class="hidden">드럼</span>
+	                    </div>
+	                    <div class="textWrap ">
+	                      <div class="subject awardsTabBName">
+	                        <span>${dto.brandName}</span>
+	                      </div>
+	                      <div class = "partnerBDetail">
+	                      	<span>총 펀딩금액 </span><span class="partnerBData"> 1,640,356,383</span><span>원</span><br>
+	                      	<span>프로젝트 </span><span class="partnerBData"> 28</span><span>건</span><br>
+	                      	<span>투자자 </span><span class="partnerBData"> 2,985</span><span>명</span><br>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </li>
+                </c:forEach>
               </ul>
+              ${dataCount==0?"등록된 게시물이 없습니다.":paging}
             </div>
             </article>
             <div class = "partnerMakePJ">

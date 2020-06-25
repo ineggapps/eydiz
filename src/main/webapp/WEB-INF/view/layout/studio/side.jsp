@@ -9,7 +9,7 @@
   <div class="titleInboxGradient"></div>
   <div class="titleInboxBackground" style="background-image:url(${project.projectImageUrl})"></div>
   <div class="titleInboxContent">
-	  <p class="projectName">${sessionScope.brand.brandName}의<br />관리 페이지</p>
+	  <p class="projectName">${not empty project.projectName?project.projectName:"제목 없음"}의<br />관리 페이지</p>
 	  <p class="info">프로젝트 번호: <fmt:formatNumber pattern="00000" value="${projectNo}"/></p>
   </div>
 </div>
