@@ -63,7 +63,7 @@
 					</div>
 				</div>
 				<div class="projectItemController">
-					<a href="<%=cp %>/studio/project/${item.projectNo}/register" class="btnManage">스튜디오 바로가기</a>
+					<a href="<%=cp %>/studio/project/${item.projectNo}/dashboard" class="btnManage">스튜디오 바로가기</a>
 				</div>
 			</div>
 		</li>

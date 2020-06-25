@@ -56,7 +56,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
 		model.addAttribute(ATTRIBUTE_PROJECTNO, projectNo);
 	}
-	
+
 	private String getRealPath(HttpSession session) {
 		// "/"문자열 다음부터 추출해야...
 		String cpRealPath = session.getServletContext().getRealPath("/");
@@ -91,6 +91,13 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		model.addAttribute(ATTRIBUTE_CATEGORY, categoryName);
 		model.addAttribute(ATTRIBUTE_PROJECT, listProject);
 		return VIEW_PROJECT_LIST;
+	}
+
+	// 프로젝트 대시보드
+	@RequestMapping(value = "/{projectNo}/dashboard", method = RequestMethod.GET)
+	public String dashboard(@PathVariable Integer projectNo, Model model) {
+
+		return VIEW_PROJECT_DASHBOARD;
 	}
 
 	// 프로젝트 조회/편집
@@ -326,12 +333,11 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		}
 		return result;
 	}
-	
-	//스토리
+
+	// 스토리
 	// 프로젝트 조회/편집
-	@RequestMapping(value = {"/{projectNo}/story" }, method = RequestMethod.GET)
-	public String storyForm(@PathVariable(required = false) Integer projectNo, Model model, HttpServletRequest req,
-			HttpSession session) {
+	@RequestMapping(value = { "/{projectNo}/story" }, method = RequestMethod.GET)
+	public String storyForm(@PathVariable Integer projectNo, Model model, HttpServletRequest req, HttpSession session) {
 		try {
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 			Project project = service.readProject(projectNo, bInfo.getBrandNo());
@@ -343,10 +349,10 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		addModelURIAttribute(model, req, projectNo);
 		return VIEW_PROJECT_STORY;
 	}
-	
-	//스토리 변경
-	@RequestMapping(value= {"/{projectNo}/story"}, method=RequestMethod.POST)
-	public String storySubmit(@PathVariable(required=false) Integer projectNo, Project project, Model model, HttpSession session) {
+
+	// 스토리 변경
+	@RequestMapping(value = "/{projectNo}/story", method = RequestMethod.POST)
+	public String storySubmit(@PathVariable Integer projectNo, Project project, Model model, HttpSession session) {
 		try {
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 			project.setProjectNo(projectNo);
@@ -357,11 +363,11 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		}
 		return "redirect:" + String.format(API_PROJECT_STORY, projectNo);
 	}
-	
-	//프로젝트 삭제
-	@RequestMapping(value="/{projectNo}/delete", method=RequestMethod.POST)
+
+	// 프로젝트 삭제
+	@RequestMapping(value = "/{projectNo}/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> deleteProject(@PathVariable(required=false) Integer projectNo, HttpSession session){
+	public Map<String, Object> deleteProject(@PathVariable Integer projectNo, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 		try {
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
