@@ -2,6 +2,7 @@
 
 /*margin-hack*/
 .categoryContent::after,
+.gridContent::after,
 .item::after,
 .item .desc::after,
 .status ul::after {
@@ -84,25 +85,23 @@ ul.categoryContent .text {
 /*펀딩 리스트 (grid)*/
 
 .gridContent {
-  margin: 20px 0;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
-  display: -ms-flexbox;
-  -ms-flex-wrap: wrap;
-  -ms-flex-direction: row;
-  -ms-flex-pack: justify;
+  margin: 20px 0;  
 }
 
 .item {
-  width: calc(33.3333% - 30px);
+	width: 32%;
+	float:left;
   margin-bottom: 50px;
 }
 
-.item:not(:nth-child(3n)) {
-  border-right: 15px solid transparent;
+.item:nth-child(3n+2){
+	margin-left:2%;
+	margin-right:2%;
 }
+
+/* .item:not(:nth-child(3n)) {
+  border-right: 15px solid transparent;
+} */
 
 .itemInner {
   width: 100%;
@@ -192,6 +191,9 @@ ul.categoryContent .text {
   .categoryViewer{
   	overflow-x:scroll;
   }
+  .categoryContent{
+  	transform:translate(0,0) !important;
+  }
   .scrollPanel{
   	display:none;
   }
@@ -206,6 +208,10 @@ ul.categoryContent .text {
     width: 100%;
     clear: both;
     margin-bottom: 20px;
+  }
+  .item:nth-child(3n+2){
+  	margin-left:0;
+  	margin-right:0;
   }
   .gridContent {
     display: block;

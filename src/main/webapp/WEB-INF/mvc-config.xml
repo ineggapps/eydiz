@@ -71,6 +71,7 @@
             <mvc:exclude-mapping path="/member/logout"/>
             <mvc:exclude-mapping path="/member/join"/>
             <mvc:exclude-mapping path="/member/join/**"/>
+            <mvc:exclude-mapping path="/uploads/project/**"/>
             <bean class="com.eydiz.member.LoginCheckInterceptor"/>
         </mvc:interceptor>
         
