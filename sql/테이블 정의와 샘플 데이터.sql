@@ -78,6 +78,7 @@ CREATE TABLE project_category( -- 프로젝트 카테고리
     categoryNo NUMBER NOT NULL,
     parentCategoryNo NUMBER NULL,
     categoryName VARCHAR2(100) NOT NULL,
+    imageUrl VARCHAR2(200) NOT NULL,
     CONSTRAINT PK_CATEGORY_NO PRIMARY KEY(categoryNo),
     CONSTRAINT FK_CATEGORY_NO FOREIGN KEY(parentCategoryNo) REFERENCES project_category(categoryNo)    
 );
@@ -112,6 +113,7 @@ CREATE TABLE project(
     projectStatusMemo VARCHAR2(255)  NOT NULL, -- 프로젝트 진행상황 텍스트 작성
     projectImageUrl VARCHAR2(200), -- 프로젝트 이미지 경로
     projectGoalAmount NUMBER NOT NULL, -- 목표 금액
+    projectAttainAmount NUMBER DEFAULT 0 NOT NULL, -- 달성 금액 (0)
     projectCreatedDate DATE DEFAULT SYSDATE NOT NULL, -- 프로젝트 생성일자
     projectUpdatedDate DATE DEFAULT SYSDATE NOT NULL, -- 프로젝트 수정일자
     projectStartDate DATE NOT NULL, -- 프로젝트 시작일자
@@ -725,6 +727,24 @@ INSERT INTO project_category(categoryNo, parentCategoryNo, categoryName) VALUES(
 INSERT INTO project_category(categoryNo, parentCategoryNo, categoryName) VALUES(project_category_seq.NEXTVAL, 1, '게임·취미');
 INSERT INTO project_category(categoryNo, parentCategoryNo, categoryName) VALUES(project_category_seq.NEXTVAL, 1, '출판');
 COMMIT;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_donate.png' WHERE categoryNo=2;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_tech.png' WHERE categoryNo=3;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_fashion.png' WHERE categoryNo=4;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_beauty.png' WHERE categoryNo=5;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_food.png' WHERE categoryNo=6;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_living.png' WHERE categoryNo=7;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_design.png' WHERE categoryNo=8;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_leisure.png' WHERE categoryNo=9;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_sport.png' WHERE categoryNo=10;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_pet.png' WHERE categoryNo=11;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_circle.png' WHERE categoryNo=12;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_concert.png' WHERE categoryNo=13;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_social.png' WHERE categoryNo=14;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_educational.png' WHERE categoryNo=15;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_game.png' WHERE categoryNo=16;
+UPDATE project_category SET ImageUrl='/eydiz/resource/images/project/category_publish.png' WHERE categoryNo=17;
+COMMIT;
+
 
 INSERT INTO project_status(statusNo, statusName) VALUES(0, '작성 중');
 INSERT INTO project_status(statusNo, statusName) VALUES(1, '심사 중');
