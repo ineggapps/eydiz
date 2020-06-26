@@ -124,7 +124,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			Project project = service.readProject(projectNo, bInfo.getBrandNo());
 			if (project == null) {
 				// 자신의 브랜드의 프로젝트가 아니면 null을 반환함
-				return "redirect:" + String.format(API_PROJECT_DASHBOARD, projectNo);
+				return String.format(API_PROJECT_DASHBOARD, projectNo);
 			}
 			List<ProjectCategory> category = service.listCategory();
 			model.addAttribute(ATTRIBUTE_CATEGORY, category);
@@ -134,7 +134,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			e.printStackTrace();
 		}
 		addModelURIAttribute(model, req, projectNo);
-		return "redirect:" + String.format(API_PROJECT_DASHBOARD, projectNo);
+		return VIEW_PROJECT_REGISTER;
 	}
 
 	// 프로젝트 저장하기

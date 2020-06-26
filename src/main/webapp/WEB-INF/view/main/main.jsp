@@ -13,67 +13,23 @@
 <article class="row">
   <div class="rowInner">
     <h2 class="hidden">전체 분류</h2>
-    <ul class="categoryContent">
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">전체보기</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"
-            ><span class="circle"></span><span class="text">테크&centerdot;가전</span></a
-          >
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"
-            ><span class="circle"></span><span class="text">패션&centerdot;잡화</span></a
-          >
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">뷰티</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">푸드</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">홈리빙</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">디자인소품</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"
-            ><span class="circle"></span><span class="text">여행&centerdot;레저</span></a
-          >
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"
-            ><span class="circle"></span
-            ><span class="text">스포츠&centerdot;모빌리티</span></a
-          >
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">반려동물</span></a>
-        </div>
-      </li>
-    </ul>
+    <div class="categoryViewer">
+    	<div class="scrollPanel scrollLeft">
+    		<a href="#"><span class="hidden">이전</span></a>
+    	</div>
+    	<div class="scrollPanel scrollRight">
+    		<a href="#"><span class="hidden">다음</span></a>
+    	</div>
+	    <ul class="categoryContent">
+	    <c:forEach var="item" items="${fundingCategory}">
+	      <li>
+	        <div class="categoryItem">  
+	          <a href="#"><span class="circle" style="background-image: url(${item.imageUrl})"></span><span class="text">${item.categoryName}</span></a>
+	        </div>
+	      </li>
+	    </c:forEach>
+	    </ul>
+    </div>
   </div>
 </article>
 <article class="row">
@@ -340,4 +296,5 @@
       </li>
     </ul>
   </div>
+  <script src="<%=cp%>/resource/js/main/main.js"></script>
 </article>

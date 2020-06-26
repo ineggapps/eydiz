@@ -11,25 +11,57 @@
 }
 
 /*전체 분류 */
+.categoryViewer{
+	position:relative;
+	max-width:1440px;
+	height:95px;
+	overflow-y:hidden;
+}
+.categoryViewer .scrollPanel{
+	top:0;
+	position:absolute;
+	width:20px;
+	height:100%;
+	background-color:#fff;
+	z-index:1000;
+}
+.categoryViewer .scrollLeft{
+	left:0;
+}
+.categoryViewer .scrollRight{
+	right:0;	
+	transform:rotate(180deg);
+}
+.categoryViewer .scrollPanel a{
+	display:block;
+	width:100%;
+	height:100%;
+	background-image:url('../images/main/arrow-back.png');
+	background-size:100%;
+	background-repeat:no-repeat;
+	background-position:50% 50%;
+}
 ul.categoryContent {
-  width: 100%;
-  margin: 20px 0;
+/*카테고리 개수대로 직접 계산해야 함*/
+  width: 1704px;
 }
 
 ul.categoryContent li {
-  float: left;
+  display:inline-block;
   width: 80px;
   letter-spacing: -0.099rem;
+  margin:0 10px;
 }
 
 ul.categoryContent li:not(:first-child) {
-  margin-left: 33px;
+  /* margin-left: 22px; */
 }
 
 ul.categoryContent .circle {
   margin: 0 auto;
   background-color: #e5e5e5;
   border-radius: 100%;
+  background-size:100%;
   display: block;
   width: 60px;
   height: 60px;
@@ -144,11 +176,30 @@ ul.categoryContent .text {
 }
 
 /*반응형*/
-
-/*그리드 설정/해제 지점*/
-@media (min-width: 768px) {
+@media (min-width: 960px) {
+  .categoryViewer{
+  	overflow-x:hidden;
+	padding-left:20px;
+	padding-right:20px;
+	transition: transform 0.2s ease 0s;
+  }
+	
 }
-@media (max-width: 768px) {
+
+@media(max-width: 960px){
+  .categoryViewer{
+  	overflow-x:scroll;
+  }
+  .scrollPanel{
+  	display:none;
+  }
+  .rowInner{
+  	padding: 0 16px;
+  }
+}
+
+@media (max-width: 768px) {  
+  /*진행중인 펀딩 item들... grid 같은 레이아웃으로 구성*/
   .item {
     width: 100%;
     clear: both;
