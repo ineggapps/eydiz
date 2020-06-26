@@ -5,6 +5,21 @@
    String cp = request.getContextPath();
 %>
 
+<script type="text/javascript">
+
+function searchList() {
+	var f=document.searchForm;
+	f.submit();
+}
+
+$(function(){
+	var castCnum="${castCnum}";
+	$("#castItemMenu"+castCnum).addClass("on");
+	
+});
+
+</script>
+
 <article class="row">
 	 <div class="rowInner">
               <ul class="categoryncontent">
@@ -18,11 +33,11 @@
           <nav class="row">
             <div class="rowFull">
               <ul class="detailNav">
-                <li class="on">
-                  <a href="#"><span>이디즈 넥스트</span></a>
+                <li id="storyItemMenu1">
+                  <a href="<%=cp%>/cast/news?castCnum=1"><span>이디즈 넥스트</span></a>
                 </li>
-                <li>
-                  <a href="#"><span>이디즈 뉴스</span></a>
+                <li id="storyItemMenu2">
+                  <a href="<%=cp%>/cast/news?castCnum=2"><span>이디즈 뉴스</span></a>
                 </li>
               </ul>
             </div>
@@ -33,113 +48,49 @@
               <div class="titleBar">
                 <div class="title"><h2>이디즈 뉴스</h2></div>
                 <div class="option">
-                  <form name="titleBarForm">
+                  <form name="searchForm" action="<%=cp%>/cast/news" method="post">
                     <input
                       type="text"
                       name="keyword"
                       class="keyword transparent"
                       placeholder="검색"
+                      value="${keyword}"
                     />
-                    <a href="#" class="searchButton"><span class="hidden">검색</span></a>
-                    <select name="sort1">
-                      <option value="1">최신순</option>
-                      <option value="2">조회수</option>
-                      <option value="3">추천수</option>
+                    <a href="#" class="searchButton" onclick="searchList()"><span class="hidden">검색</span></a>
+                    <select name="condition">
+                      <option value="castTitle" ${condition=="castTitle"?"selected='selected'":""}>제목</option>
+                      <option value="castContent" ${condition=="castContent"?"selected='selected'":""}>내용</option>
+                      <option value="castCreated" ${condition=="castCreated"?"selected='selected'":""}>작성일자</option>
                     </select>
                   </form>
                 </div>
               </div>
               
+            <c:forEach var="dto" items="${list}">
             <div class="row2" >
              <ul>
-				<li class="title">슬기로운 재택생활 1편 : "집이 오피스가 되다"</li>
-				<li class="name">이디즈캐스터</li>
-				<li class="ncontent">하루 아침 사무실로 다시 태어난 '집'에서 펼쳐지는 이디즈 회원들의 놀라운 홈피스 적응기!!!</li>
+				<li class="title"><a href="${readUrl}&castNum=${dto.castNum}"> ${dto.castTitle} </a></li>
+				<li class="name">${sessionScope.member.memberId}</li>
+				<li class="ncontent">${dto.castContent}</li>
 				<li> <img class="thumbnail" style="background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg')"></li>
 			 </ul>
 			 <ul class="desc">
-                <li><span> 와디즈 캐스트 </span></li>
-                <li><span> 20.04.13 </span></li>
-                <li><span> ♥ 1 </span></li>
+                <li><span> ${sessionScope.member.memberId} </span></li>
+                <li><span> ${dto.castCreated} </span></li>
+                <li><span> ♥ </span></li>
              </ul>
-		   </div>
-		   
-		   <div class="row2" >
-             <ul>
-				<li class="title">슬기로운 재택생활 2편 : "재택근무에 눈을 뜨다"</li>
-				<li class="name">이디즈캐스터</li>
-				<li class="ncontent">하루 아침 사무실로 다시 태어난 '집'에서 펼쳐지는 이디즈 회원들의 놀라운 홈피스 적응기!!!</li>
-				<li> <img class="thumbnail" style="background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg')"></li>
-			 </ul>
-			 <ul class="desc">
-                <li><span> 와디즈 캐스트 </span></li>
-                <li><span> 20.04.13 </span></li>
-                <li><span> ♥ 1 </span></li>
-             </ul>
-		   </div>
-		   
-		   <div class="row2" >
-             <ul>
-				<li class="title">makes__#better vol.1</li>
-				<li class="name">이디즈캐스터</li>
-				<li class="ncontent">이디즈의 존재로 인해 조금 더 나아진 세상들의 변화를 메이커, 서포터, 그리고 미디어의 시각에서 조명하고자 한다.</li>
-				<li> <img class="thumbnail" style="background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg')"></li>
-			 </ul>
-			 <ul class="desc">
-                <li><span> 와디즈 캐스트 </span></li>
-                <li><span> 20.04.13 </span></li>
-                <li><span> ♥ 1 </span></li>
-             </ul>
-		   </div>
-		   
-		   <div class="row2" >
-             <ul>
-				<li class="title">슬기로운 재택생활 3편 : "우리 재택이대로"</li>
-				<li class="name">이디즈캐스터</li>
-				<li class="ncontent">하루 아침 사무실로 다시 태어난 '집'에서 펼쳐지는 이디즈 회원들의 놀라운 홈피스 적응기!!!</li>
-				<li> <img class="thumbnail" style="background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg')"></li>
-			 </ul>
-			 <ul class="desc">
-                <li><span> 와디즈 캐스트 </span></li>
-                <li><span> 20.04.13 </span></li>
-                <li><span> ♥ 1 </span></li>
-             </ul>
-		   </div>
-		   
-		   <div class="row2" >
-             <ul>
-				<li class="title">makes__#better vol.2</li>
-				<li class="name">이디즈캐스터</li>
-				<li class="ncontent">이디즈의 존재로 인해 조금 더 나아진 세상들의 변화를 메이커, 서포터, 그리고 미디어의 시각에서 조명하고자 한다.</li>
-				<li> <img class="thumbnail" style="background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg')"></li>
-			 </ul>
-			 <ul class="desc">
-                <li><span> 와디즈 캐스트 </span></li> 
-                <li><span> 20.04.13 </span></li>
-                <li><span> ♥ 1 </span></li>
-             </ul>
-		   </div>
-		   
-		   <div class="row2" >
-             <ul>
-				<li class="title">makes__#better vol.3</li>
-				<li class="name">이디즈캐스터</li>
-				<li class="ncontent">이디즈의 존재로 인해 조금 더 나아진 세상들의 변화를 메이커, 서포터, 그리고 미디어의 시각에서 조명하고자 한다.</li>
-				<li> <img class="thumbnail" style="background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg')"></li>
-			 </ul>
-			 <ul class="desc">
-                <li><span> 와디즈 캐스트 </span></li>
-                <li><span> 20.04.13 </span></li>
-                <li><span> ♥ 1 </span></li>
-             </ul>
-		   </div>
-                 
-             </div>
+		    </div>
+            </c:forEach>
+		    <div class="btnbox2">
+               <input type="hidden" name="castCnum" value="${castCnum}">
+               <button type="submit" class="btn" onclick="javascript:location.href='<%=cp%>/cast/write2?castCnum=2';"> 등록하기 </button>
+            </div>   
+           </div>
       
  		<table style="width: 100%; border-spacing: 0px;">
 			<tr height="35">
 				<td align="center">
-					1 | 2 | 3
+					 ${dataCount==0?"등록된 게시물이 없습니다.":paging}
 				</td>
 			</tr>
 		</table>

@@ -1,6 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="temp">
+<mapper namespace="cast">
 
+	<insert id="insertCast" parameterType="com.eydiz.cast.Cast">
+		INSERT INTO cast_board(castNum, memberId, castCnum, castTitle, castContent, castCreated)
+		VALUES(cast_board_seq.NEXTVAL, #{memberId}, #{castCnum}, #{castTitle}, #{castContent}, SYSDATE)
+	</insert>
+	
+	<sql id="where-list">
+		<choose>
+			<when test="condition == 'commentTitle' ">
+				(INSTR(commentTitle, #{keyword}) &gt; 0)
+			</when>
+			<when test="condition == 'commentContent' ">
+				(INSTR(commentContent, #{keyword}) &gt; 0)
+			</when>
+			<when test="condition == 'commentCreated' ">
+				(commentCreated, #{keyword})
+			</when>
+		</choose>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM cast_board ca
+		JOIN member_detail m ON ca.memberId = m.memberId
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+			AND ca.castCnum=#{castCnum}
+		</where>
+	</select>
+	
+	<select id="listCast" parameterType="map" resultType="com.eydiz.cast.Cast">
+		SELECT ca.castNum, ca.memberId, c.castCnum, castCname, castTitle, castContent, castCreated, NVL(castLikeCount, 0) castLikeCount
+		FROM cast_board ca JOIN member_detail m ON ca.memberId = m.memberId
+		JOIN cast_category c ON ca.castCnum = c.castCnum
+		LEFT OUTER JOIN (
+			SELECT castNum, COUNT(*) castLikeCount FROM cast_like
+			GROUP BY castNum
+		) cc ON ca.castNum = cc.castNum 
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+			AND ca.castCnum=#{castCnum}
+		</where>
+		ORDER BY castNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="readCast" parameterType="Integer" resultType="com.eydiz.cast.Cast">
+		SELECT ca.castNum, ca.memberId, c.castCnum, castCname, castTitle, castContent, castCreated, NVL(castLikeCount, 0) castLikeCount
+		FROM cast_board ca JOIN member_detail m ON ca.memberId = m.memberId
+		JOIN cast_category c ON ca.castCnum = c.castCnum
+		LEFT OUTER JOIN (
+			SELECT castNum, COUNT(*) castLikeCount FROM cast_like
+			GROUP BY castNum
+		) cc ON ca.castNum = cc.castNum 
+		WHERE ca.castNum = #{castNum}
+	</select>
+	
+	<update id="updateCast" parameterType="com.eydiz.cast.Cast">
+		UPDATE cast_board SET castTitle = #{castTitle}, castContent = #{castContent}
+		WHERE castNum = #{castNum}
+	</update>
+	
+	<delete id="deleteCast" parameterType="Integer">
+		DELETE FROM cast_board WHERE castNum = #{castNum}
+	</delete>
+	
+	<insert id="insertCastLike" parameterType="map">
+		INSERT INTO cast_like(castNum, memberId) VALUES(#{castNum}, #{memberId})
+	</insert>
+	
+	<select id="CastLikeCount" parameterType="Integer" resultType="Integer">
+		SELETE NVL(COUNT(*), 0) FROM cast_like WHERE castNum = #{castNum}
+	</select>
+	
+	<insert id="insertComment" parameterType="com.eydiz.cast.Comment">
+		INSERT INTO cast_comment(commentNum, castNum, memberId, commentContent, commentCreated) 
+		VALUES(cast_comment_seq.NEXTVAL, #{castNum}, #{memberId}, #{commentContent}, SYSDATE)
+	</insert>
+	
+	<select id="commentCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM cast_comment WHERE castNum = #{castNum}
+	</select>
+	
+	<select id="listComment" parameterType="map" resultType="com.eydiz.cast.Comment">
+		SELECT co.commentNum, co.memberId, castNum, commentContent, commentCreated
+		FROM cast_comment co
+		JOIN member_detail m ON co.memberId = m.memberId
+		WHERE castNum = #{castNum}
+		ORDER BY co.commentNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<delete id="deleteComment" parameterType="map">
+		DELETE FROM cast_comment WHERE commentNum = #{commentNum}
+	</delete>
+	
 </mapper>

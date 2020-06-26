@@ -1,21 +1,22 @@
 package com.eydiz.cast;
 
 public class Cast {
-	private int stroyNum;
+	private int castNum;
+	private int listNum;
 	private String memberId;
-	private int storyCnum;
-	private int stroyCname;
-	private String storyTitle;
-	private String content;
-	private String storyCreated;
-	private String storyThumbnail;
-	private String storyLikeCount;
+	private int castCnum;
+	private String castCname;
+	private String castTitle;
+	private String castContent;
+	private String castCreated;
+	private String castLikeCount;
+	private String castThumnail;
 	
-	public int getStroyNum() {
-		return stroyNum;
+	public int getCastNum() {
+		return castNum;
 	}
-	public void setStroyNum(int stroyNum) {
-		this.stroyNum = stroyNum;
+	public void setCastNum(int castNum) {
+		this.castNum = castNum;
 	}
 	public String getMemberId() {
 		return memberId;
@@ -23,47 +24,54 @@ public class Cast {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	public int getStoryCnum() {
-		return storyCnum;
+	public int getCastCnum() {
+		return castCnum;
 	}
-	public void setStoryCnum(int storyCnum) {
-		this.storyCnum = storyCnum;
+	public void setCastCnum(int castCnum) {
+		this.castCnum = castCnum;
 	}
-	public String getStoryTitle() {
-		return storyTitle;
+	public String getCastCname() {
+		return castCname;
 	}
-	public void setStoryTitle(String storyTitle) {
-		this.storyTitle = storyTitle;
+	public void setCastCname(String castCname) {
+		this.castCname = castCname;
 	}
-	public String getContent() {
-		return content;
+	public String getCastTitle() {
+		return castTitle;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setCastTitle(String castTitle) {
+		this.castTitle = castTitle;
 	}
-	public String getStoryCreated() {
-		return storyCreated;
+	public String getCastContent() {
+		return castContent;
 	}
-	public void setStoryCreated(String storyCreated) {
-		this.storyCreated = storyCreated;
+	public void setCastContent(String castContent) {
+		this.castContent = castContent;
 	}
-	public String getStoryThumbnail() {
-		return storyThumbnail;
+	public String getCastCreated() {
+		return castCreated;
 	}
-	public void setStoryThumbnail(String storyThumbnail) {
-		this.storyThumbnail = storyThumbnail;
+	public void setCastCreated(String castCreated) {
+		this.castCreated = castCreated;
 	}
-	public String getStoryLikeCount() {
-		return storyLikeCount;
+	public String getCastLikeCount() {
+		return castLikeCount;
 	}
-	public void setStoryLikeCount(String storyLikeCount) {
-		this.storyLikeCount = storyLikeCount;
+	public void setCastLikeCount(String castLikeCount) {
+		this.castLikeCount = castLikeCount;
 	}
-	public int getStroyCname() {
-		return stroyCname;
+	public int getListNum() {
+		return listNum;
 	}
-	public void setStroyCname(int stroyCname) {
-		this.stroyCname = stroyCname;
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
+	public String getCastThumnail() {
+		return castThumnail;
+	}
+	public void setCastThumnail(String castThumnail) {
+		this.castThumnail = castThumnail;
+	}
+	
 	
 }
