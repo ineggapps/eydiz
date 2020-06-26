@@ -115,6 +115,7 @@ ul.categoryContent .text {
   height: 180px;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: 50% 50%;
   border-radius: 5px;
   border: 1px solid #e5e5e5;
 }
@@ -126,8 +127,9 @@ ul.categoryContent .text {
 
 .item .subject {
   font-size: 1.1rem;
-  line-height: 1.5rem;
   font-weight: 800;
+  line-height: 1.5rem;
+  min-height: 50px;
 }
 
 .desc li {

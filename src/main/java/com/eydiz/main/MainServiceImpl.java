@@ -24,4 +24,21 @@ public class MainServiceImpl implements MainService, MainConstant {
 		return list;
 	}
 
+	@Override
+	public int dataProjectCount() {
+		return 0;
+	}
+
+	@Override
+	public List<Project> listProject() {
+		List<Project> list = null;
+		try {
+			list = dao.selectList(MAPPER_NAMESPACE+"listFunding");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	
 }

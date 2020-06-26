@@ -15,9 +15,17 @@ public class MainController implements MainConstant{
 	private MainService service;
 	
 	@RequestMapping(value="/main", method=RequestMethod.GET)
-	public String main(Model model) {
-		List<ProjectCategory> fundingCategories= service.listProjectCategoryOfFunding();
+	public String main(Model model) throws Exception {
+		List<ProjectCategory> fundingCategories = null;
+		List<Project> projects = null;
+		try {
+			fundingCategories = service.listProjectCategoryOfFunding();
+			projects = service.listProject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		model.addAttribute(ATTRIBUTE_FUNDING_CATEGORY, fundingCategories);
+		model.addAttribute(ATTRIBUTE_PROJECT, projects);
 		return ".mainLayout";
 	}
 }

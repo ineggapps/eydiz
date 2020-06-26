@@ -7,4 +7,19 @@
 		FROM project_category
 		WHERE parentCategoryNo = 1
 	</select>
+	
+	<!-- 나중에 WHERE조건까지 추가하기 -->
+	<select id="listFunding" resultType="com.eydiz.main.Project">
+		SELECT 
+			projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, 
+			projectImageUrl, projectGoalAmount, projectAttainAmount, 
+			projectEndDate, statusNo
+		FROM
+			project p
+		JOIN brand b ON p.brandNo = b.brandNo
+		JOIN project_category pc on p.categoryNo = pc.categoryNo
+		WHERE
+			statusNo=5
+		ORDER BY projectNo DESC
+	</select>
 </mapper>
