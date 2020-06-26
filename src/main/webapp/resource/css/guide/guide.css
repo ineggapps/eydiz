@@ -29,14 +29,14 @@
 	margin: 0 auto;
 } 
 
-.textqnaInner a.btnGuideInfoSearch {
-	position:absolute; 
+.btnGuideInfoSearch {
+	float:left;
 	right:0;
 	top: 0;
 	display:block;
 	width:50px;
 	height:50px;
-	background-image: url('../images/search.png');
+	background-image: url('../../images/search.png');
 	background-repeat: no-repeat;
 	background-size:100%;
 	box-sizing: border-box;
@@ -60,6 +60,13 @@
 	color: silver;
 }
 
+.guide_form {
+	width: 1100px;
+	height: 2000px;
+	margin: 0px auto;
+	background: #e4e4e4;
+}
+
 .guidebox {
 	width: 900px;
 	height: 150px;
@@ -73,6 +80,16 @@
 .boxcontent span{
 	padding: 17px;
 	padding-top: 7px;
+}
+
+.guideinfo {
+	width: 900px;
+	height: 150px;
+	margin: 0px auto;
+	margin-top: 10px;
+	background: #ffffe1;
+	padding: 10px;
+	border-radius: 5px;
 }
 
 
