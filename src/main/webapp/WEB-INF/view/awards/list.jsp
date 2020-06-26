@@ -5,7 +5,6 @@
    String cp = request.getContextPath();
 %>
 
-<!-- sp4 sbbs list참조할겨 -->
 
 <article class="row">
 <div class="contentWrapper">
@@ -34,22 +33,6 @@
                       </div>
                   </div>
                 </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업2</span>
-                      </div>
-                  </div>
-                </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업3</span>
-                      </div>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="rowInner awardContentBody">
@@ -66,22 +49,6 @@
                       </div>
                   </div>
                 </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업2</span>
-                      </div>
-                  </div>
-                </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업2</span>
-                      </div>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="rowInner awardContentBody">
@@ -90,22 +57,6 @@
 	            	<p class="aCDetail">손을 잡고 함께 성장히는 사람들</p>
 	           </div>
               <ul class="gridContent">
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업2</span>
-                      </div>
-                  </div>
-                </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업2</span>
-                      </div>
-                  </div>
-                </li>
                 <li class="item awardBrandCell">
                   <div class="itemInner">
                     <div class="awardBrandImage" style="background-image: url('');"></div>
@@ -126,23 +77,7 @@
                   <div class="itemInner">
                     <div class="awardBrandImage" style="background-image: url('');"></div>
                       <div class="subject awardBrandName">
-                        <span>기업1</span>
-                      </div>
-                  </div>
-                </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('');"></div>
-                      <div class="subject awardBrandName">
                         <span>기업2</span>
-                      </div>
-                  </div>
-                </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업3</span>
                       </div>
                   </div>
                 </li>
@@ -162,22 +97,6 @@
                       </div>
                   </div>
                 </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업2</span>
-                      </div>
-                  </div>
-                </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업3</span>
-                      </div>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="rowInner awardContentBody">
@@ -194,22 +113,6 @@
                       </div>
                   </div>
                 </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업2</span>
-                      </div>
-                  </div>
-                </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업3</span>
-                      </div>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="rowInner awardContentBody">
@@ -223,22 +126,6 @@
                     <div class="awardBrandImage" style="background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');"></div>
                       <div class="subject awardBrandName">
                         <span>기업1</span>
-                      </div>
-                  </div>
-                </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업2</span>
-                      </div>
-                  </div>
-                </li>
-                <li class="item awardBrandCell">
-                  <div class="itemInner">
-                    <div class="awardBrandImage" style="background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');"></div>
-                      <div class="subject awardBrandName">
-                        <span>기업3</span>
                       </div>
                   </div>
                 </li>
