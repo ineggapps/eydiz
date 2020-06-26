@@ -204,4 +204,9 @@
 	<delete id="deleteRewards" parameterType="map">
 		DELETE FROM reward WHERE projectNo = (SELECT projectNo FROM project WHERE <include refid="where-project-brand-no"/>)
 	</delete>
+	
+	<!-- 프로젝트 상태 수정 -->
+	<update id="updateProjectStatus" parameterType="map">
+		UPDATE project SET statusNo=#{statusNo} WHERE <include refid="where-project-brand-no"/>
+	</update>
 </mapper>

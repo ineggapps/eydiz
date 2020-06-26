@@ -43,5 +43,9 @@
 			</li>
 		</ul>
 	</div>
+	<div class="projectButtons">
+		<button type="button" class="btnSubmit" onclick="updateStatusNo(${project.projectNo})" >제출하기</button>
+	</div>
   </div>
+	<script src="<%=cp%>/resource/js/studio/dashboard.js"></script>
 </article>

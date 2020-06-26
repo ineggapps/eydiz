@@ -26,7 +26,7 @@
         </ul>
       </div>
     </li>
-    <li>
+    <li class="extended">
       <div class="menuItem">
         <div class="menuName">
           <a href="#" class="on">펀딩/후원 준비</a>

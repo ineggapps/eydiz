@@ -124,7 +124,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			Project project = service.readProject(projectNo, bInfo.getBrandNo());
 			if (project == null) {
 				// 자신의 브랜드의 프로젝트가 아니면 null을 반환함
-				return "redirect:" + API_PROJECT_LIST;
+				return "redirect:" + String.format(API_PROJECT_DASHBOARD, projectNo);
 			}
 			List<ProjectCategory> category = service.listCategory();
 			model.addAttribute(ATTRIBUTE_CATEGORY, category);
@@ -134,7 +134,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			e.printStackTrace();
 		}
 		addModelURIAttribute(model, req, projectNo);
-		return VIEW_PROJECT_REGISTER;
+		return "redirect:" + String.format(API_PROJECT_DASHBOARD, projectNo);
 	}
 
 	// 프로젝트 저장하기
@@ -384,5 +384,17 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
 		}
 		return map;
+	}
+
+	// 제출하기 버튼(임시 승인)
+	@RequestMapping(value = "/{projectNo}/submit")
+	public String submitProject(@PathVariable Integer projectNo, HttpSession session) {
+		try {
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			service.updateProjectStatus(projectNo, bInfo.getBrandNo(), 5);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:" + String.format(API_PROJECT_DASHBOARD, projectNo);
 	}
 }

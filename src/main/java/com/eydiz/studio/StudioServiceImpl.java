@@ -293,4 +293,18 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		}
 	}
 
+	@Override
+	public void updateProjectStatus(int projectNo, int brandNo, int statusNo) {
+		try {
+			Map<String, Integer> map = new HashMap<>();
+			map.put(ATTRIBUTE_BRANDNO, brandNo);
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			map.put(ATTRIBUTE_STATUSNO, statusNo);
+			dao.updateData(MAPPER_NAMESPACE+"updateProjectStatus", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 }

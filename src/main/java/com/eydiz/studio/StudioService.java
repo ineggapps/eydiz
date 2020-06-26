@@ -36,4 +36,7 @@ public interface StudioService {
 	
 	//스토리
 	public void updateStory(Project project) throws Exception;
+	
+	//제출
+	public void updateProjectStatus(int projectNo, int brandNo, int statusNo);
 }

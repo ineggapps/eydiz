@@ -56,3 +56,15 @@
 .projectStatus li p{
 	color:#babdc0;
 }
+
+
+@media(min-width:768px){
+	.projectButtons .btnSubmit{
+		width:400px;
+	}
+}
+@media(max-width:768px){
+	.projectButtons .btnSubmit{
+		width:100%;
+	}
+}
