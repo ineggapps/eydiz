@@ -7,10 +7,10 @@
 %>
       <header id="header">
         <div class="headerInner">
-          <h1 class="logo"><a href="#">eydiz</a></h1>
+          <h1 class="logo"><a href="<%=cp%>">eydiz</a></h1>
           <ul class="gnbExtended">
             <li> 
-              <a href="#" class="menu on"><span>펀딩하기</span></a>
+              <a href="#" class="menu"><span>펀딩하기</span></a>
             </li>
             <li>
               <a href="#" class="menu"><span> 기부하기</span></a>
@@ -18,7 +18,7 @@
           </ul>
           <div class="headerInnerRight">
             <ul class="gnbAuth">
-              <li><a href="#" class="btnSubmit bordering btnMakeProject">프로젝트 만들기</a></li>
+              <li><a href="<%=cp %>/studio/project/register" class="btnSubmit bordering btnMakeProject">프로젝트 만들기</a></li>
           	<c:if test="${empty sessionScope.member}">
               <li><a href="<%=cp%>/member/join">회원가입</a></li>
               <li><a href="<%=cp%>/member/login">로그인</a></li>
@@ -36,7 +36,7 @@
             <button type="button" class="btnBack btnFlat btnMobileNav">
               <span class="hidden">이전</span>
             </button>
-            <button type="button" class="btnHome btnFlat btnMobileNav">
+            <button type="button" class="btnHome btnFlat btnMobileNav" onclick="location.href='<%=cp%>';">
               <span class="hidden">홈</span>
             </button>
           </div>

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.eydiz.common.MyUtil;
 
 @Controller("partner.partnerController")
-@RequestMapping("/partner/*")
 public class PartnerController {
 	@Autowired
 	private PartnerService service;
@@ -25,10 +24,11 @@ public class PartnerController {
 	@Autowired
 	private MyUtil myUtil;
 
-	@RequestMapping(value="list")
+	@RequestMapping(value="/partner/list")
 	public String list(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="") String keyword,
+			Partner dto,
 			Model model,
 			HttpServletRequest req
 			) throws Exception {
@@ -63,7 +63,7 @@ public class PartnerController {
 		map.put("rows", rows);
 		
 		// 글 리스트
-		List<Partner> list = service.listPartner(map);
+		List<Partner> list = service.listPartner(map, dto.getBrandNo());
 	
 		
 		String query = "";
@@ -90,10 +90,23 @@ public class PartnerController {
 		model.addAttribute("keyword", keyword);
 		
 		
+		int totalBrandCount = service.totalBrandCount();
+		int totalProjectCount = service.totalProjectCount();
+		int totalBuyMemberCount = service.totalBuyMemberCount();
+		
+		model.addAttribute("totalBrandCount", totalBrandCount);
+		model.addAttribute("totalProjectCount", totalProjectCount);
+		model.addAttribute("totalBuyMemberCount", totalBuyMemberCount);
+				
+		String today;
+		today = service.getToday();
+		model.addAttribute("today", today);
+		
+		
 		return ".partnerLayout.list";
 	}
 	
-	@RequestMapping(value="article")
+	@RequestMapping(value="/partner/article")
 	public String article(
 			@RequestParam int brandNo,
 			@RequestParam String page,
@@ -121,7 +134,77 @@ public class PartnerController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 		
+		int brandTotalProject = service.brandTotalProject(brandNo);
+		int brandTotalBuyMember = service.brandTotalBuyMember(brandNo);
+		double brandTotalAmount = service.brandTotalAmount(brandNo);
+		String memberImageUrl = service.memberImageUrl(brandNo);
+		String today = service.getToday();
+
+		model.addAttribute("brandTotalProject", brandTotalProject);
+		model.addAttribute("brandTotalBuyMember", brandTotalBuyMember);
+		model.addAttribute("brandTotalAmount", brandTotalAmount);
+		model.addAttribute("memberImageUrl", memberImageUrl);
+		model.addAttribute("today", today);
+		
 		return ".partnerLayout.article";
+	}
+	
+	@RequestMapping(value="/partner/articleList")
+	public String articleList(
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="5") int statusNo,
+			Partner dto,
+			Model model
+		) throws Exception {
+		
+		int rows = 12;
+		int total_page;
+		int pDataCount;
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("statusNo", statusNo);
+		map.put("brandNo", dto.getBrandNo());
+		
+		pDataCount = service.pDataCount(map);
+		total_page = myUtil.pageCount(rows, pDataCount);
+		
+		if(total_page < current_page) {
+			current_page = total_page;
+		}
+		
+		int offset = (current_page-1)*rows;
+		if(offset < 0) offset = 0;
+		
+		map.put("offset", offset);
+		map.put("rows", rows);
+		
+		List<Partner> plist = service.listProject(map);
+		
+		String paging = myUtil.pagingMethod(current_page, total_page, "listProjectPage");
+		
+		int projectTotalAmount = 0;
+		int projectGoalAmount = 0;
+		int percentage = 0;
+		
+		
+		dto = service.getProjectMoneyInfo(dto.getProjectNo());
+		
+		
+		projectTotalAmount = dto.getProjectTotalAmount();
+		projectGoalAmount = dto.getProjectGoalAmount();
+		percentage = dto.getPercentage();
+		
+		
+		model.addAttribute("plist", plist);
+		model.addAttribute("pDataCount", pDataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("page", current_page);
+		model.addAttribute("paging", paging);
+		
+		model.addAttribute("projectTotalAmount", projectTotalAmount);
+		model.addAttribute("projectGoalAmount", projectGoalAmount);
+		model.addAttribute("percentage", percentage);
+		return "partner/articleList";
 	}
 	
 }

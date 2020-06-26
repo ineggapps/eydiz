@@ -67,19 +67,19 @@
                   <a href="#"><span>#Fashion Insight</span></a>
                 </li>
                 <li>
-                  <a href="#"><span>#Growing Togther</span><span class="badge"></span></a>
+                  <a href="#"><span>#Growing Togther</span></a>
                 </li>
                 <li>
-                  <a href="#"><span>#Life Balance</span><span class="badge"></span></a>
+                  <a href="#"><span>#Life Balance</span></a>
                 </li>
                 <li>
-                  <a href="#"><span>#New Lifeduct</span><span class="badge"></span></a>
+                  <a href="#"><span>#New Lifeduct</span></a>
                 </li>
                 <li>
-                  <a href="#"><span>#Real Happiness</span><span class="badge"></span></a>
+                  <a href="#"><span>#Real Happiness</span></a>
                 </li>
                 <li>
-                  <a href="#"><span>#Right Thing</span><span class="badge"></span></a>
+                  <a href="#"><span>#Right Thing</span></a>
                 </li>
               </ul>
             </div>

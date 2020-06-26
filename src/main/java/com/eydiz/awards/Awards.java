@@ -5,12 +5,13 @@ public class Awards {
 	private String projectName;		// 프로젝트명
 	private String projectSummary;	// 프로젝트 설명
 	private String projectImageUrl;	// 프로젝트 대표 이미지 경로
+	private String projectEndDate;	// 프로젝트 종료일
 	
 	private String brandNo;			// 브랜드 번호
 	private String brandName;		// 브랜드명
-	private String brandImage;		// 브랜드 이미지 경로
+	private String memberImageUrl;	// 브랜드 이미지 경로
 	
-	private int total;				// 현재 모인 금액
+	private int totalAmount;				// 현재 모인 금액
 	private int projectGoalAmaount;	// 목표액
 	private double percentage;		// 달성률	(%)	// 달성률 = total/target * 100
 	
@@ -19,9 +20,9 @@ public class Awards {
 	private String awardsGroupDetail;	// 수상종목설명?
 	
 	private int categoryNo;			// 프로젝트 카테고리 번호
+	
+	
 
-	
-	
 	public int getProjectNo() {
 		return projectNo;
 	}
@@ -54,6 +55,14 @@ public class Awards {
 		this.projectImageUrl = projectImageUrl;
 	}
 
+	public String getProjectEndDate() {
+		return projectEndDate;
+	}
+
+	public void setProjectEndDate(String projectEndDate) {
+		this.projectEndDate = projectEndDate;
+	}
+
 	public String getBrandNo() {
 		return brandNo;
 	}
@@ -70,20 +79,20 @@ public class Awards {
 		this.brandName = brandName;
 	}
 
-	public String getBrandImage() {
-		return brandImage;
+	public String getMemberImageUrl() {
+		return memberImageUrl;
 	}
 
-	public void setBrandImage(String brandImage) {
-		this.brandImage = brandImage;
+	public void setMemberImageUrl(String memberImageUrl) {
+		this.memberImageUrl = memberImageUrl;
 	}
 
-	public int getTotal() {
-		return total;
+	public int getTotalAmount() {
+		return totalAmount;
 	}
 
-	public void setTotal(int total) {
-		this.total = total;
+	public void setTotalAmount(int totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 	public int getProjectGoalAmaount() {
@@ -133,6 +142,10 @@ public class Awards {
 	public void setCategoryNo(int categoryNo) {
 		this.categoryNo = categoryNo;
 	}
+
+	
+	
+
 	
 	
 	

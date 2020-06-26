@@ -94,18 +94,13 @@
    		background-color: 
    }
     
-	.paListTitle {
+	.paListTitle p{
 	    font-size: 30px;
 	    color: #333333;
 	    font-weight: bold;
 	    text-align: left;
-    }	
-    	
-    
-    	color: #333333;
-    	font-weight: bold;
+	    display: inline-block;
     }
-    
     
     .prContent {
     	padding-top: 15px;
@@ -151,18 +146,24 @@
     
     
     .partnerStandard {
-    	width: 450px;
+    	width: 100%;
     }
     
     .partnerStandard p {
     	color: #707070;
     	font-size: 14px;
+    	display: inline-block;
     }
     
     
+     .partnerStandard span {
+     	color: #6bb7cf;
+     	float: right;
+     	font-size: 24px;
+     }
+    
     
     .partnerBox {
-    	width : 340px;
     	cursor: pointer;
     }
     
@@ -197,8 +198,23 @@
     	background-size: cover;
     	background-repeat : no-repeat;
 		vertical-align: sub;
-		border : 1px solid #efefef;
+		border : 1px solid lightgray;
 		border-radius: 5px;
+		background-color: white;
+		
+    }
+
+
+    .partnerReloadBtn {
+    	width: 30px;
+    	height: 30px;
+    	background-image: url("../../images/partner/iconmonstr-reload-thin-32.png");
+    	background-size: cover;
+    	background-repeat : no-repeat;
+		vertical-align: sub;
+		border : 1px solid lightgray;
+		border-radius: 5px;
+		background-color: white;
 		
     }
     
@@ -238,14 +254,15 @@
     
     .partnerMakePJ {
     	height: 160px;
-	    line-height: 40px;
+	    line-height: 50px;
 	    text-align: center;
 	    color: white;
 	    font-weight: bold;
-	    font-size: 18px;
+	    font-size: 22px;
 	    padding: 80px 0;
 	    background-image: url(../../images/partner/partnerImage.jpg);
 	    background-position: bottom;
+	    text-shadow: -1px 0 grey, 0 1px grey, 1px 0 grey, 0 -1px grey;
     }
     
      .paTitle {
@@ -253,3 +270,82 @@
     	font-weight: bold;
     }
     
+    .partnerPaging {
+    	text-align : center;
+    	padding: 20px;
+    	clear: both;
+    }
+    
+  .partnerGridContent {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    display: -ms-flexbox;
+    float: left;
+    -ms-flex-wrap: wrap;
+    -ms-flex-direction: row;
+    -ms-flex-pack: justify;
+}
+
+  .partnerItem {
+    width: 320px;
+    margin-bottom: 50px;
+    margin: 20px;
+}
+
+.partnerItem .thumbnail {
+  cursor: pointer;
+  width: 100%;
+  height: 180px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 5px;
+  border: 1px solid #e5e5e5;
+}
+
+.partnerItem .subject {
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+  font-weight: 800;
+}
+
+.partnerItemInner {
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+/*그리드 설정/해제 지점*/
+@media (min-width: 768px) {
+}
+
+@media (max-width: 768px) {
+  .partnerItem {
+    width: 100%;
+    clear: both;
+    margin-bottom: 20px;
+  }
+  .partnerGridContent {
+    display: block;
+    padding: 0 10px;
+    width: 100%
+  }
+ 
+ .partnerItemInner .textWrap {
+    float: left;
+    width: 58%;
+}
+
+.partnerItemInner .thumbnail {
+    float: left;
+    width: 152px;
+    height: 100px;
+    margin-right: 10px;
+    display: inline-block;
+  }
+ 
+}
+  
+
