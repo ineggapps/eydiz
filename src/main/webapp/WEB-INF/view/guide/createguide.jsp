@@ -13,12 +13,19 @@
         	</ul>
         	<ul>
         		<li> <p>내용 : </p> </li>
-        		<li> <input type="text"> </li>
+        		<li> <textarea></textarea> </li>
         	</ul>
         	<ul>
         		<li> <p>파일 : </p> </li>
         		<li> <input type="file"> </li>
         	</ul>
         	<br><br><br>
+        	<ul>
+        		<li>
+        			<button>등록하기</button>
+        			<button>다시입력</button>
+        			<button>등록취소</button>
+        		</li>
+        	</ul>
         </div>
 </article>

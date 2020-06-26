@@ -8,13 +8,14 @@
       <header class="guideheader">
 	  	<div class="headerInner">
 	        <br><br>
-	        <h1 class="logo"><a href="#" style="color: white;">wawawa</a></h1>
+	        <h1 class="logo"><a href="#" style="color: white;">eydiz
+	        </a></h1>
      	</div>
      	<br><br>
      	<div>
      		<a class="textqna">
      			<input type="text" class="headerinput" value="" placeholder="답변 검색중...">
      		</a>
-     		<button type="button" class="img-button"><img width="40" height="60" alt="" src="resource/images/search.png"> </button>
+     		<button type="button" class="btnGuideInfoSearch  img-button"></button>
      	</div>
       </header>

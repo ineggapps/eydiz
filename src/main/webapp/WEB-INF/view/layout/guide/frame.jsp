@@ -16,13 +16,13 @@
     <link rel="stylesheet" href="<%=cp%>/resource/css/reset.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/content.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/guideinto.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/guide.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/gcreate.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/guide/guideinto.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/guide/guide.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/guide/gcreate.css" />
     <!--[if lt IE 9]>
       <script src="resource/js//html5shiv.min.js"></script>
     <![endif]-->
-    <script src="resource/js/jquery-3.5.1.min.js"></script>
+    <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
   </head>
   <body>
     <div id="wrap">

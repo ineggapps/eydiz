@@ -14,7 +14,11 @@ public class GuideController {
 	
 	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public String main() {
-		service.test();
 		return ".guideLayout.main";
+	}
+	
+	@RequestMapping(value="/createguide", method=RequestMethod.GET)
+	public String createguide() {
+		return ".guideLayout.createguide";
 	}
 }
