@@ -5,6 +5,21 @@
    String cp = request.getContextPath();
 %>
 
+<script type="text/javascript">
+
+function searchList() {
+	var f=document.searchForm;
+	f.submit();
+}
+
+$(function(){
+	var castCnum="${castCnum}";
+	$("#castItemMenu"+castCnum).addClass("on");
+	
+});
+
+</script>
+
 <article class="row">
 	 <div class="rowInner">
               <ul class="categoryContent1">
@@ -19,10 +34,10 @@
             <div class="rowFull">
               <ul class="detailNav">
                 <li class="on">
-                  <a href="#"><span>이디즈 넥스트</span></a>
+                  <a href="<%=cp%>/cast/news?castCnum=1"><span>이디즈 넥스트</span></a>
                 </li>
                 <li>
-                  <a href="#"><span>이디즈 뉴스</span></a>
+                  <a href="<%=cp%>/cast/news?castCnum=2"><span>이디즈 뉴스</span></a>
                 </li>
               </ul>
             </div>
@@ -33,22 +48,25 @@
               <div class="titleBar">
                 <div class="title"><h2>이디즈 넥스트</h2></div>
                 <div class="option">
-                  <form name="titleBarForm">
+                   <form name="searchForm" action="<%=cp%>/cast/news" method="post">
                     <input
                       type="text"
                       name="keyword"
                       class="keyword transparent"
                       placeholder="검색"
+                      value="${keyword}"
                     />
-                    <a href="#" class="searchButton"><span class="hidden">검색</span></a>
-                    <select name="sort1">
-                      <option value="1">최신순</option>
-                      <option value="2">조회수</option>
-                      <option value="3">추천수</option>
+                    <a href="#" class="searchButton" onclick="searchList()"><span class="hidden">검색</span></a>
+                    <select name="condition">
+                      <option value="castTitle" ${condition=="castTitle"?"selected='selected'":""}>제목</option>
+                      <option value="castContent" ${condition=="castContent"?"selected='selected'":""}>내용</option>
+                      <option value="castCreated" ${condition=="castCreated"?"selected='selected'":""}>작성일자</option>
                     </select>
                   </form>
                 </div>
               </div>
+              
+              <c:forEach var="dto" items="${list}">
               <ul class="gridContent1">
                 <li class="item1">
                   <div class="itemInner1">
@@ -58,161 +76,38 @@
                         background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg');
                       "
                     >
-                      <span class="hidden">9호</span>
+                      <span class="hidden">호호</span>
                     </div>
                     <div class="textWrap1">
                       <div class="subject1">
-                        <a href="#"
+                        <a  href="${readUrl}&castNum=${dto.castNum}"
                           ><span
-                            >&lt; 와디즈 넥스트 &gt; 9호 : BEING READ</span
+                            >&lt; 와디즈 넥스트 &gt; ${dto.castTitle}</span
                           ></a
                         >
                       </div>
                       <ul class="desc1">
-                        <li><span class="category"> 와디즈 캐스트 </span></li>
-                        <li><span class="name"> 20.04.13 </span></li>
-                        <li><span class="name"> ♥ 1</span></li>
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-               <li class="item1">
-                  <div class="itemInner1">
-                    <div
-                      class="thumbnail1"
-                      style="
-                        background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg');
-                      "
-                    >
-                      <span class="hidden">9호</span>
-                    </div>
-                    <div class="textWrap1">
-                      <div class="subject1">
-                        <a href="#"
-                          ><span
-                            >&lt; 와디즈 넥스트 &gt; 9호 : BEING READ</span
-                          ></a
-                        >
-                      </div>
-                      <ul class="desc1">
-                        <li><span class="category"> 와디즈 캐스트 </span></li>
-                        <li><span class="name"> 20.04.13 </span></li>
-                        <li><span class="name"> ♥ 1</span></li>
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-              <li class="item1">
-                  <div class="itemInner1">
-                    <div
-                      class="thumbnail1"
-                      style="
-                        background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg');
-                      "
-                    >
-                      <span class="hidden">9호</span>
-                    </div>
-                    <div class="textWrap1">
-                      <div class="subject1">
-                        <a href="#"
-                          ><span
-                            >&lt; 와디즈 넥스트 &gt; 9호 : BEING READ</span
-                          ></a
-                        >
-                      </div>
-                      <ul class="desc1">
-                        <li><span class="category"> 와디즈 캐스트 </span></li>
-                        <li><span class="name"> 20.04.13 </span></li>
-                        <li><span class="name"> ♥ 1</span></li>
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-              <li class="item1">
-                  <div class="itemInner1">
-                    <div
-                      class="thumbnail1"
-                      style="
-                        background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg');
-                      "
-                    >
-                      <span class="hidden">9호</span>
-                    </div>
-                    <div class="textWrap1">
-                      <div class="subject1">
-                        <a href="#"
-                          ><span
-                            >&lt; 와디즈 넥스트 &gt; 9호 : BEING READ</span
-                          ></a
-                        >
-                      </div>
-                      <ul class="desc1">
-                        <li><span class="category"> 와디즈 캐스트 </span></li>
-                        <li><span class="name"> 20.04.13 </span></li>
-                        <li><span class="name"> ♥ 1</span></li>
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-                <li class="item1">
-                  <div class="itemInner1">
-                    <div
-                      class="thumbnail1"
-                      style="
-                        background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg');
-                      "
-                    >
-                      <span class="hidden">9호</span>
-                    </div>
-                    <div class="textWrap1">
-                      <div class="subject1">
-                        <a href="#"
-                          ><span
-                            >&lt; 와디즈 넥스트 &gt; 9호 : BEING READ</span
-                          ></a
-                        >
-                      </div>
-                      <ul class="desc1">
-                        <li><span class="category"> 와디즈 캐스트 </span></li>
-                        <li><span class="name"> 20.04.13 </span></li>
-                        <li><span class="name"> ♥ 1</span></li>
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-  				<li class="item1">
-                  <div class="itemInner1">
-                    <div
-                      class="thumbnail1"
-                      style="
-                        background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg');
-                      "
-                    >
-                      <span class="hidden">9호</span>
-                    </div>
-                    <div class="textWrap1">
-                      <div class="subject1">
-                        <a href="#"
-                          ><span
-                            >&lt; 와디즈 넥스트 &gt; 9호 : BEING READ</span
-                          ></a
-                        >
-                      </div>
-                      <ul class="desc1">
-                        <li><span class="category"> 와디즈 캐스트 </span></li>
-                        <li><span class="name"> 20.04.13 </span></li>
-                        <li><span class="name"> ♥ 1</span></li>
+                        <li><span class="category"> ${sessionScope.member.memberId} </span></li>
+                        <li><span class="name">  ${dto.castCreated} </span></li>
+                        <li><span class="name"> ♥ </span></li>
                       </ul>
                     </div>
                   </div>
                 </li>
               </ul>
-            </div>
+              </c:forEach>
+              
+             <div class="btnbox2">
+               <input type="hidden" name="castCnum" value="${castCnum}">
+               <button type="submit" class="btn" onclick="javascript:location.href='<%=cp%>/cast/write1?castCnum=1';"> 등록하기 </button>
+             </div>  
+              
+           </div>
 
-      <table style="width: 100%; border-spacing: 0px;">
+       <table style="width: 100%; border-spacing: 0px;">
 			<tr height="35">
 				<td align="center">
-					1 | 2 | 3
+					 ${dataCount==0?"등록된 게시물이 없습니다.":paging}
 				</td>
 			</tr>
 		</table>
