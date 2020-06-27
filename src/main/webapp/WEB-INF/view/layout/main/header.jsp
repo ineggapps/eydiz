@@ -46,9 +46,6 @@
       <li>
         <a href="#"><span>오픈예정</span></a>
       </li>
-      <li>
-        <a href="#"><span>글로벌</span></a>
-      </li>
     </ul>
   </div>
 </header>
