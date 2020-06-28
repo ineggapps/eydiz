@@ -23,6 +23,7 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
     <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
     <script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
+    <script type="text/javascript" src="<%=cp%>/resource/js/admin/admin_common.js"></script>
   </head>
   <body>
     <div id="wrap">
@@ -34,7 +35,7 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
           <div class="projectTitle"><h2>관리자 페이지</h2></div>
           <ul class="rightGnb">
             <li class="menuExit">
-              <a href="<%=cp %>/studio/project/list" class="none"><span>나가기</span></a>
+              <a href="<%=cp %>/" class="none"><span>나가기</span></a>
             </li>
             <li class="menuTemporary hide">
               <a href="#"><span>임시저장</span></a>
