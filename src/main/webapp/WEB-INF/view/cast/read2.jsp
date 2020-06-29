@@ -5,11 +5,10 @@
    String cp = request.getContextPath();
 %>
 
-
 <script type="text/javascript">
 function deleteCast(castNum, id) {
 	<c:if test="${sessionScope.member.memberId=='eydiz'}">
-		var q = "castNum=${dto.castNum}&${query}";
+		var q = "castNum=${dto.castNum}&${query}&castCnum=${castCnum}";
 		var url = "<%=cp%>/cast/delete?"+q;
 		
 		if(confirm("이 게시물을 삭제 하시겠습니까 ? ")) {
@@ -23,7 +22,7 @@ function deleteCast(castNum, id) {
 
 	function updateCast(castNum, id) {
 	<c:if test="${sessionScope.member.memberId=='eydiz'}">
-		var q = "castNum=${dto.castNum}&${query}";
+		var q = "castNum=${dto.castNum}&${query}&castCnum=${castCnum}";
 		var url = "<%=cp%>/cast/update?"+q;
 
 		location.href=url;
@@ -33,49 +32,138 @@ function deleteCast(castNum, id) {
 	</c:if>
 
 }
-	
-function ajaxJSON(url, type, query, fn) {
-	$.ajax({
-		type:type
-		,url:url
-		,data:query
-		,dataType:"json"
-		,success:function(data) {
-			fn(data);
-		}
-		,beforeSend:function(jqXHR) {
-	       jqXHR.setRequestHeader("AJAX", true);
-	    }
-		   ,error:function(jqXHR) {
-		   	if(jqXHR.status==403) {
-		   		login();
-		  		return false;
-		   	}
-		   	console.log(jqXHR.responseText);
-		   }
-	});
-}
+</script>
 
+<script type="text/javascript">
 
-$(function(){
-	$(".like").click(function(){
-		var url="<%=cp%>/cast/insertCastLike";
-		var castNum=$(this).attr("data-castNum");
-		var query = {castNum:castNum};
-		alert(castNum);
-		var fn = function(data){
-			var state=data.state;
-			if(state=="true") {
-				var count = data.castLikeCount;
-				$(".likecount").text(count);
-			} else if(state=="false") {
-				alert("이미 좋아요한 게시물입니다.");
+	function ajaxJSON(url, type, query, fn) {
+		$.ajax({
+			type:type
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				fn(data);
 			}
-		};
+			,beforeSend:function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==403) {
+		    		login();
+		    		return false;
+		    	}
+		    	console.log(jqXHR.responseText);
+		    }
+		});
+	}
+
+	function ajaxHTML(url, type, query, selector) {
+		$.ajax({
+			type:type
+			,url:url
+			,data:query
+			,success:function(data) {
+				$(selector).html(data);
+			}
+			,beforeSend:function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==403) {
+		    		login();
+		    		return false;
+		    	}
+		    	console.log(jqXHR.responseText);
+		    }
+	   });
+	}
+
+	$(function(){
+		$(".like").click(function(){
+			var url="<%=cp%>/cast/insertCastLike";
+			var castNum=$(this).attr("data-castNum");
+			var query = {castNum:castNum};
+			alert(castNum);
+			var fn = function(data){
+				var state=data.state;
+				if(state=="true") {
+					var count = data.castLikeCount;
+					$(".likecount").text(count);
+				} else if(state=="false") {
+					alert("이미 좋아요한 게시물입니다.");
+				}
+			};
 			
-		ajaxJSON(url, "post", query, fn);
+			ajaxJSON(url, "post", query, fn);
+		});
 	});
-});
+
+
+	$(function(){
+		listPage(1);
+	});
+
+	function listPage(page) {
+		var url = "<%=cp%>/cast/listComment";
+		var query = "castNum=${dto.castNum}&pageNo="+page;
+		var selector = "#listComment";
+		
+		ajaxHTML(url, "get", query, selector);
+	}
+
+	$(function(){
+		$(".commentbtn").click(function(e){
+			var $tb = $(this).closest("div.main");
+			var commentContent = $tb.find("textarea").val().trim();
+			if(! commentContent) {
+				$.find("textarea").focus();
+				return false;
+			}
+			
+			commentContent = encodeURIComponent(commentContent);
+			
+			var url = "<%=cp%>/cast/insertComment";
+			var query = "castNum=${dto.castNum}&commentContent="+encodeURIComponent(commentContent);
+			
+			var fn = function(data) {
+				$tb.find("textarea").val("");
+				
+				var state = data.state;
+				if(state == "true") {
+					listPage(1);
+				} else if(state == "false") {
+					alert("댓글을 작성하지못했습니다.");
+				}
+			};
+			
+			ajaxJSON(url, "post", query, fn);
+			
+		});
+	});
+
+
+	$(function() {
+		$("body").on("click", ".deleteComment", function(){
+			if(! confirm("게시물을 삭제하시겠습니까?")) {
+				return false;
+			}
+			var commentNum = $(this).attr("data-commentnum");
+			var page = $(this).attr("data-pageno");
+			
+			console.log(commentNum);
+			
+			var url = "<%=cp%>/cast/deleteComment";
+			var query = "commentNum="+commentNum;
+			
+			var fn = function(data) {
+				listPage(page);
+			};
+			
+			ajaxJSON(url, "post", query, fn);
+			
+		});
+	});
 
 </script>
 
@@ -85,7 +173,7 @@ $(function(){
 	    					<div class="story-info">
 	    						<p class="board">이디즈 캐스트</p>
 								<p class="title"> ${dto.castTitle} </p>
-								<p class="rlxk"><em class="editor">${sessionScope.member.memberId}</em><em class="date">${dto.castCreated}</em><em class="like">♥</em></p>
+								<p class="rlxk"><em class="editor">${sessionScope.member.memberId}</em><em class="date">${dto.castCreated}</em><em class="like">${dto.castLikeCount}</em></p>
 								
 							</div>
     					</div>
@@ -123,7 +211,7 @@ $(function(){
 		    				<div class="main">
 			    				<textarea placeholder="댓글을 입력하세요."></textarea>
 			    				<div class="btnbox">
-			    					<button type="button" class="btn">댓글달기</button>
+			    					<button type="button" class="commentbtn">댓글달기</button>
 			    				</div>
 		    				</div>
 		    				

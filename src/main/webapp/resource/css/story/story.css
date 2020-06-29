@@ -21,10 +21,10 @@ ul.categoryContent li {
 }
 
 ul.categoryContent a {
-  width: 100%;
+  width:400px;
   display: block;
   font-size: 30px;
-  text-align: center;
+  padding-right:130px;
   margin: 120px 0;
   display: inline-block;
   color: white;

@@ -22,9 +22,9 @@ $(function(){
 
 <article class="row">
 	 <div class="rowInner">
-              <ul class="categoryncontent">
+              <ul class="categoryContent2">
                 <li style="background-image: url('https://cdn.pixabay.com/photo/2020/06/07/13/21/toronto-5270413_960_720.jpg');">
-                  <a> w &nbsp; a &nbsp; d &nbsp; i &nbsp; z &nbsp; : &nbsp; c &nbsp; a &nbsp; s &nbsp; t &nbsp;</a>
+                  <a> e &nbsp; y &nbsp; d &nbsp; i &nbsp; z &nbsp; : &nbsp; c &nbsp; a &nbsp; s &nbsp; t &nbsp;</a>
                 </li>
                </ul>
             </div>
@@ -56,7 +56,7 @@ $(function(){
                       placeholder="검색"
                       value="${keyword}"
                     />
-                    <a href="#" class="searchButton" onclick="searchList()"><span class="hidden">검색</span></a>
+                    <button type="button" class="searchButton" onclick="searchList()">검색</button>
                     <select name="condition">
                       <option value="castTitle" ${condition=="castTitle"?"selected='selected'":""}>제목</option>
                       <option value="castContent" ${condition=="castContent"?"selected='selected'":""}>내용</option>
@@ -71,7 +71,7 @@ $(function(){
              <ul>
 				<li class="title"><a href="${readUrl}&castNum=${dto.castNum}"> ${dto.castTitle} </a></li>
 				<li class="name">${sessionScope.member.memberId}</li>
-				<li class="ncontent">${dto.castContent}</li>
+				<li class="ncontentn">${dto.castContent}</li>
 				<li> <img class="thumbnail" style="background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg')"></li>
 			 </ul>
 			 <ul class="desc">
