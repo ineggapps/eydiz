@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eydiz.common.dao.CommonDAO;
+import com.eydiz.studio.Project;
 
 @Service("main.mainService")
 public class MainServiceImpl implements MainService, MainConstant {

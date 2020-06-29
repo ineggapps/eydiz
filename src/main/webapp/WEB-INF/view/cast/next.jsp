@@ -24,7 +24,7 @@ $(function(){
 	 <div class="rowInner">
               <ul class="categoryContent1">
                 <li style="background-image: url('https://cdn.pixabay.com/photo/2020/06/07/13/21/toronto-5270413_960_720.jpg');">
-                  <a> w &nbsp; a &nbsp; d &nbsp; i &nbsp; z &nbsp; : &nbsp; c &nbsp; a &nbsp; s &nbsp; t &nbsp;</a>
+                  <a> e &nbsp; y &nbsp; d &nbsp; i &nbsp; z &nbsp; : &nbsp; c &nbsp; a &nbsp; s &nbsp; t &nbsp;</a>
                 </li>
                </ul>
             </div>
@@ -56,7 +56,7 @@ $(function(){
                       placeholder="검색"
                       value="${keyword}"
                     />
-                    <a href="#" class="searchButton" onclick="searchList()"><span class="hidden">검색</span></a>
+                    <button type="button" class="searchButton" onclick="searchList()">검색</button>
                     <select name="condition">
                       <option value="castTitle" ${condition=="castTitle"?"selected='selected'":""}>제목</option>
                       <option value="castContent" ${condition=="castContent"?"selected='selected'":""}>내용</option>
@@ -66,14 +66,14 @@ $(function(){
                 </div>
               </div>
               
-              <c:forEach var="dto" items="${list}">
               <ul class="gridContent1">
+              <c:forEach var="dto" items="${list}">
                 <li class="item1">
                   <div class="itemInner1">
                     <div
                       class="thumbnail1"
                       style="
-                        background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg');
+                        background-image: url('https://images.unsplash.com/photo-1536059540012-f2ed455bc0b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
                       "
                     >
                       <span class="hidden">호호</span>
@@ -94,8 +94,8 @@ $(function(){
                     </div>
                   </div>
                 </li>
-              </ul>
               </c:forEach>
+              </ul>
               
              <div class="btnbox2">
                <input type="hidden" name="castCnum" value="${castCnum}">

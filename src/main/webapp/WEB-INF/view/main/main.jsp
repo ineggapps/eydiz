@@ -70,12 +70,13 @@
             style="
               background-image: url('${dto.projectImageUrl}');
             "
+            onclick="javascript:location.href='<%=cp %>/detail/${dto.projectNo}'"
           >
             <span class="hidden">${dto.projectName}</span>
           </div>
           <div class="textWrap">
             <div class="subject">
-              <a href="#${dto.projectNo}"
+              <a href="<%=cp %>/detail/${dto.projectNo}"
                 ><span
                   >${dto.projectName}</span
                 ></a

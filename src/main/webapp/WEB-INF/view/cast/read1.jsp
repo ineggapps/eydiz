@@ -5,7 +5,6 @@
    String cp = request.getContextPath();
 %>
 
-
 <script type="text/javascript">
 function deleteCast(castNum, id) {
 <c:if test="${sessionScope.member.memberId=='eydiz'}">

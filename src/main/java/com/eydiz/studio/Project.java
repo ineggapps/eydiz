@@ -6,24 +6,35 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Project {
 	private int projectNo;
+	// 브랜드
 	private int brandNo;
+	private int memberNo;
 	private String brandName;
+	private String managerName;
+	private String managerEmail;
+	private String managerPhone;
+	// 브랜드 끝
 	private int categoryNo;
+	private String categoryName;
 	private String projectName;
 	private String projectStatusMemo;// 브랜드용 project 테이블의 메모
 	private String projectImageUrl;
 	private int projectGoalAmount;
+	private int projectAttainAmount;
+	private double projectAttainmentRate;
 	private String projectCreatedDate;
 	private String projectUpdatedDate;
 	private String projectStartDate;
 	private String projectEndDate;
+	private int remainDays;
 	private int statusNo;
 	private String statusMemo;// 사이트 관리자용 project_status_list에 들어갈 프로젝트 상태 메모(작성 중, 프로젝트 활성화 등...)
 	private String projectSummary;
 	private String projectStory;
-	private String categoryName;
 	private List<ProjectHashtag> hashTag;
 	private MultipartFile uploadImage;
+	private int likeCount;
+	private int myLikeCount;
 
 	public int getProjectNo() {
 		return projectNo;
@@ -41,6 +52,14 @@ public class Project {
 		this.brandNo = brandNo;
 	}
 
+	public int getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
+	}
+
 	public String getBrandName() {
 		return brandName;
 	}
@@ -49,12 +68,44 @@ public class Project {
 		this.brandName = brandName;
 	}
 
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+	public String getManagerEmail() {
+		return managerEmail;
+	}
+
+	public void setManagerEmail(String managerEmail) {
+		this.managerEmail = managerEmail;
+	}
+
+	public String getManagerPhone() {
+		return managerPhone;
+	}
+
+	public void setManagerPhone(String managerPhone) {
+		this.managerPhone = managerPhone;
+	}
+
 	public int getCategoryNo() {
 		return categoryNo;
 	}
 
 	public void setCategoryNo(int categoryNo) {
 		this.categoryNo = categoryNo;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	public String getProjectName() {
@@ -89,6 +140,22 @@ public class Project {
 		this.projectGoalAmount = projectGoalAmount;
 	}
 
+	public int getProjectAttainAmount() {
+		return projectAttainAmount;
+	}
+
+	public void setProjectAttainAmount(int projectAttainAmount) {
+		this.projectAttainAmount = projectAttainAmount;
+	}
+
+	public double getProjectAttainmentRate() {
+		return projectAttainmentRate;
+	}
+
+	public void setProjectAttainmentRate(double projectAttainmentRate) {
+		this.projectAttainmentRate = projectAttainmentRate;
+	}
+
 	public String getProjectCreatedDate() {
 		return projectCreatedDate;
 	}
@@ -119,6 +186,14 @@ public class Project {
 
 	public void setProjectEndDate(String projectEndDate) {
 		this.projectEndDate = projectEndDate;
+	}
+
+	public int getRemainDays() {
+		return remainDays;
+	}
+
+	public void setRemainDays(int remainDays) {
+		this.remainDays = remainDays;
 	}
 
 	public int getStatusNo() {
@@ -153,14 +228,6 @@ public class Project {
 		this.projectStory = projectStory;
 	}
 
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
 	public List<ProjectHashtag> getHashTag() {
 		return hashTag;
 	}
@@ -177,17 +244,20 @@ public class Project {
 		this.uploadImage = uploadImage;
 	}
 
-	@Override
-	public String toString() {
-		return "Project [projectNo=" + projectNo + ", brandNo=" + brandNo + ", brandName=" + brandName + ", categoryNo="
-				+ categoryNo + ", projectName=" + projectName + ", projectStatusMemo=" + projectStatusMemo
-				+ ", projectImageUrl=" + projectImageUrl + ", projectGoalAmount=" + projectGoalAmount
-				+ ", projectCreatedDate=" + projectCreatedDate + ", projectUpdatedDate=" + projectUpdatedDate
-				+ ", projectStartDate=" + projectStartDate + ", projectEndDate=" + projectEndDate + ", statusNo="
-				+ statusNo + ", statusMemo=" + statusMemo + ", projectSummary=" + projectSummary + ", projectStory="
-				+ projectStory + ", categoryName=" + categoryName + ", hashTag=" + hashTag + ", uploadImage="
-				+ uploadImage + "]";
+	public int getLikeCount() {
+		return likeCount;
 	}
 
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+
+	public int getMyLikeCount() {
+		return myLikeCount;
+	}
+
+	public void setMyLikeCount(int myLikeCount) {
+		this.myLikeCount = myLikeCount;
+	}
 
 }

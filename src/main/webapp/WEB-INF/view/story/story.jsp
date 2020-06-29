@@ -79,10 +79,10 @@ function deleteStory(storyNum, id) {
 </script>
 
 <article class="row">
- <div class="rowInner">
+ <div class="rowInner1">
               <ul class="categoryContent">
                 <li style="background-image: url('https://cdn.pixabay.com/photo/2020/06/07/13/21/toronto-5270413_960_720.jpg');">
-                  <a> w &nbsp; a &nbsp; d &nbsp; i &nbsp; z &nbsp; : &nbsp; s &nbsp; t &nbsp; o &nbsp; r &nbsp; y</a>
+                  <a>e &nbsp; y &nbsp; d &nbsp; i &nbsp; z &nbsp; : &nbsp; s &nbsp; t &nbsp; o &nbsp; r &nbsp; y</a>
                 </li>
                </ul>
             </div>
