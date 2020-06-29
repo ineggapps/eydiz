@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="detail">
+	<!-- 프로젝트 정보 불러오기 -->
+	<select id="readProject" parameterType="Integer" resultType="com.eydiz.studio.Project">
+		SELECT 
+			projectNo, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectCreatedDate, projectUpdatedDate, 
+			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
+			statusNo, projectSummary, projectStory,
+			p.brandNo, brandName, managerName, managerEmail, managerPhone
+		FROM project p
+		JOIN brand b ON p.brandNo = b.brandNo
+		JOIN project_category pc ON p.categoryNo = pc.categoryNo
+		WHERE p.projectNo = #{projectNo}
+	</select>
+	
+	<!-- 프로젝트 목록에 해당하는 리워드 번호 불러오기 -->
+	<select id="listReward" parameterType="Integer" resultType="com.eydiz.studio.Reward">
+		SELECT rewardNo, r.projectNo, amount, rewardTitle, rewardContent, rewardOption, 
+			isShipping, shipAmount, TO_CHAR(startShippingDate, 'YYYY-MM-DD') startShippingDate, limitQuantity, remainQuantity
+		FROM reward r
+		JOIN project p ON r.projectNo = p.projectNo
+		WHERE r.projectNo = #{projectNo}
+		ORDER BY amount 
+	</select>
+</mapper>

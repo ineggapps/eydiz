@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.eydiz.studio.Project;
+
 @Controller("mainController")
 public class MainController implements MainConstant{
 	
