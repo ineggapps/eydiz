@@ -3,14 +3,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="detail">
 	<!-- 프로젝트 정보 불러오기 -->
-	<select id="readProject" parameterType="Integer" resultType="com.eydiz.studio.Project">
+	<select id="readProject" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT 
-			projectNo, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			p.projectNo, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
 			projectCreatedDate, projectUpdatedDate, 
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
 			statusNo, projectSummary, projectStory,
-			p.brandNo, brandName, managerName, managerEmail, managerPhone
+			p.brandNo, brandName, managerName, managerEmail, managerPhone,
+			NVL(likeCount,0) likeCount
+			<if test="memberNo!=null and memberNo>0">
+			,NVL(myLikeCount, 0) myLikeCount
+			</if>
 		FROM project p
+		LEFT OUTER JOIN (
+			SELECT projectNo, COUNT(*) likeCount
+			FROM project_like
+			GROUP BY projectNo
+		) pl ON pl.projectNo = p.projectNo
+		<if test="memberNo!=null and memberNo>0">
+		LEFT OUTER JOIN (
+			SELECT projectNo, COUNT(*) myLikeCount
+			FROM project_like
+			WHERE memberNo = #{memberNo}
+			GROUP BY projectNo
+		) ml ON ml.projectNo = p.projectNo
+		</if>
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
 		WHERE p.projectNo = #{projectNo}
@@ -25,4 +42,43 @@
 		WHERE r.projectNo = #{projectNo}
 		ORDER BY amount 
 	</select>
+	
+	<!-- 인기 프로젝트: 일단 끝나는 날이 가장 미래인 순으로 정렬 -->
+	<select id="listPopularProject" resultType="com.eydiz.studio.Project">
+		SELECT 
+			projectNo, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectCreatedDate, projectUpdatedDate, 
+			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
+			statusNo, projectSummary, projectStory,
+			p.brandNo, brandName, managerName, managerEmail, managerPhone
+		FROM project p
+		JOIN brand b ON p.brandNo = b.brandNo
+		JOIN project_category pc ON p.categoryNo = pc.categoryNo
+		ORDER BY projectEndDate DESC
+		OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
+	</select>
+	
+	<!-- 좋아요 활성화/비활성화 -->
+	<select id="projectLikeCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM project_like
+		WHERE projectNo=#{projectNo}
+	</select>
+	
+	<select id="myProjectLikeCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM project_like
+		WHERE projectNo=#{projectNo} AND memberNo=#{memberNo}
+	</select>
+	
+	<insert id="insertProjectLike" parameterType="map">
+		INSERT INTO project_like(projectNo, memberNo)
+		VALUES (#{projectNo}, #{memberNo})
+	</insert>
+	
+	<delete id="deleteProjectLike" parameterType="map">
+		DELETE FROM project_like
+		where projectNo=#{projectNo} AND memberNo=#{memberNo}
+	</delete>
+	
 </mapper>
