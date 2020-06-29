@@ -182,23 +182,5 @@ public class PartnerServiceImpl implements PartnerService{
 		return result;
 	}
 
-	@Override
-	public Partner getProjectMoneyInfo(int projectNo) {
-		Partner vo = null;
-		
-		try {
-			vo = dao.selectOne("partner.getProjectMoneyInfo", projectNo);
-			if(vo == null) {
-				vo = new Partner();
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return vo;
-	}
-	
-	
-	
 
 }
