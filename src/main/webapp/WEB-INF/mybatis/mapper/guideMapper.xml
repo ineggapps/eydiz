@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="guide">
+
+	<insert id="insertGuide" parameterType="com.eydiz.guide.Guide">
+		INSERT INTO faq(faqNo, memberNo, faqSubject, faqContent, faqCreated, faqFilename, faqIcon)
+		VALUES (faq_seq.NEXTVAL, #{memberNo}, #{faqSubject}, #{faqContent}, SYSDATE, #{faqFilename, jdbcType=VARCHAR}, #{faqIcon, jdbcType=VARCHAR})
+	</insert>
+
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM faq
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				INSTR(faqSubject, #{keyword}) &gt; 0
+			</if>
+		</where>
+	</select>
+	
+	<select id="listGuide" parameterType="map" resultType="com.eydiz.guide.Guide"> 
+		SELECT faqNo, m.memberNo, memberNickname, faqSubject, faqContent, faqCreated, faqIcon, faqFilename
+		FROM faq f
+		JOIN member_detail m ON m.memberNo = f.memberNo
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				INSTR(faqSubject, #{keyword}) &gt; 0
+			</if>
+		</where>
+		ORDER BY faqNo DESC
+	</select>
+	
+	<select id="readGuide" parameterType="Integer" resultType="com.eydiz.guide.Guide">
+		SELECT faqNo, m.memberNo, memberNickname, faqSubject, faqContent, faqCreated, faqFilename, faqIcon
+		FROM faq f
+		JOIN member_detail m ON m.memberNo = f.memberNo
+		WHERE faqNo = #{faqNo}
+	</select>
+	
+	<update id="updateGuide" parameterType="com.eydiz.guide.Guide">
+		UPDATE faq SET faqSubject = #{faqSubject}, faqContent = #{faqContent}, faqCreated = SYSDATE, faqFilename = #{faqFilename, jdbcType=VARCHAR}
+		WHERE faqNo = #{faqNo}
+	</update>
+	
+	<delete id="deleteGuide" parameterType="map">
+		DELETE FROM faq WHERE faqNo = #{faqNo}
+	</delete>
+</mapper>
