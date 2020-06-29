@@ -25,11 +25,11 @@
 				</ul>
 				<div class="status">
 					<div class="progress">
-						<div class="progressBar" style="width:${percentage >= 100 ? '100' : 'percentage'}%;"></div>
+						<div class="progressBar" style="width:${dto.percentage >= 100 ? '100' : 'dto.percentage'}%;"></div>
 					</div>
 					<ul>
-						<li><span class="percent">${percentage}%</span>&centerdot;<span
-							class="totalAmount">${projectTotalAmount}원 달성</span>
+						<li><span class="percent">${dto.percentage}%</span>&centerdot;<span
+							class="totalAmount">${dto.projectTotalAmount}원 달성</span>
 						</li>
 					</ul>
 				</div>

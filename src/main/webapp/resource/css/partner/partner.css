@@ -114,7 +114,6 @@
     .partnerResultCell {
     	width: 340px;
     	float:left;
-    	margin-right: 130px;
     }
     
     
@@ -182,7 +181,7 @@
     
 	.partnerListContent {
 		margin: 0px;
-		padding-top: 50px;
+		padding: 50px;
 	}    
     
     .partnerSearchBox {
@@ -242,6 +241,10 @@
     	font-size: 13px;
     } 
     
+    .partnerBDetail span:nth-child(2) {
+    	margin-left: 12px;
+    } 
+    
     .partnerBData{
  		color: black !important;
     }
@@ -281,12 +284,12 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: space-between;
     display: -ms-flexbox;
     float: left;
     -ms-flex-wrap: wrap;
     -ms-flex-direction: row;
     -ms-flex-pack: justify;
+    width: 100%;
 }
 
   .partnerItem {
@@ -330,7 +333,7 @@
   .partnerGridContent {
     display: block;
     padding: 0 10px;
-    width: 100%
+    width: 100%;
   }
  
  .partnerItemInner .textWrap {
