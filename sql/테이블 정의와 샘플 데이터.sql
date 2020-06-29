@@ -143,6 +143,13 @@ CREATE TABLE project_detail( -- 프로젝트 상세 (심사를 위한 테이블)
     CONSTRAINT FK_PROJECT_DETAIL_PROJECTNO FOREIGN KEY(projectNo) REFERENCES project(projectNo) 
 );
 
+CREATE TABLE project_like(
+    projectNo NUMBER NOT NULL,
+    memberNo NUMBER NOT NULL,
+    CONSTRAINT PK_PROJECT_LIKE PRIMARY KEY (projectNo, memberNo),
+    CONSTRAINT FK_PROJECT_LIKE_PROJECT_NO FOREIGN KEY(projectNo) REFERENCES project(projectNo),
+    CONSTRAINT FK_PROJECT_LIKE_MEMBER_NO FOREIGN KEY(memberNo) REFERENCES member(memberNo)
+);
 
 CREATE TABLE project_status_list( -- 식별 테이블
     projectNo NUMBER NOT NULL, -- 프로젝트 번호
