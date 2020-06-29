@@ -5,13 +5,27 @@ import org.springframework.web.multipart.MultipartFile;
 public class Guide {
 	private int faqNo;
 	private int memberNo;
+	private String memberNickname;
 	private String faqSubject;
 	private String faqContent;
 	private String faqCreated;
 	private String faqFilename;
 	private String faqIcon;
+	private int listNum;
 	private MultipartFile upload;
-	
+
+	public String getMemberNickname() {
+		return memberNickname;
+	}
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
 	public int getFaqNo() {
 		return faqNo;
 	}
