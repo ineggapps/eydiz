@@ -4,7 +4,7 @@
 <%
    String cp = request.getContextPath();
 %>
-
+<script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
     function send() {
         var f = document.castForm;
@@ -51,7 +51,7 @@
            <tr class="boxrow3" align="left"> 
                <td class="text">내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
                <td class="text2"> 
-                 <textarea class="aaa" name="castContent" rows="12" style="width: 95%;">${dto.castContent}</textarea>
+                 <textarea class="aaa" name="castContent" rows="12" style="width: 95%;" id="content1">${dto.castContent}</textarea>
                </td>
            </tr>
            </table>
@@ -71,7 +71,51 @@
                </td>
              </tr>
            </table>
-           
+           <script type="text/javascript">
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+	oAppRef: oEditors,
+	elPlaceHolder: "content1",
+	sSkinURI: "<%=cp%>/resource/se/SmartEditor2Skin.html",	
+	htParams : {bUseToolbar : true,
+		fOnBeforeUnload : function(){
+			//alert("아싸!");
+		}
+	}, //boolean
+	fOnAppLoad : function(){
+		//예제 코드
+		//oEditors.getById["content"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
+	},
+	fCreator: "createSEditor2"
+});
+
+function pasteHTML() {
+	var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
+	oEditors.getById["content1"].exec("PASTE_HTML", [sHTML]);
+}
+
+function showHTML() {
+	var sHTML = oEditors.getById["content1"].getIR();
+	alert(sHTML);
+}
+	
+function submitContents(elClickedObj) {
+	oEditors.getById["content1"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+	
+	// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("content").value를 이용해서 처리하면 됩니다.
+	
+	try {
+		// elClickedObj.form.submit();
+		return check();
+	} catch(e) {}
+}
+
+function setDefaultFont() {
+	var sDefaultFont = '돋움';
+	var nFontSize = 24;
+	oEditors.getById["content1"].setDefaultFont(sDefaultFont, nFontSize);
+}
+</script>
            
           </form>
          </div>
