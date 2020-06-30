@@ -6,34 +6,14 @@
 %>
 <script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
-    function send() {
-        var f = document.castForm;
 
-    	var str = f.castTitle.value;
-        if(!str) {
-            alert("제목을 입력하세요. ");
-            f.castTitle.focus();
-            return;
-        }
-
-    	str = f.castContent.value;
-    	  if(!str || str=="<p>&nbsp;</p>") {
-            alert("내용을 입력하세요. ");
-            f.castContent.focus();
-            return;
-        }
-
-    	f.action="<%=cp%>/cast/${mode}";
-
-       f.submit();
-    }
 </script>
 	<div class="wcontent">
+      	  <form name="castForm" method="post" onsubmit="return submitContents(this)" action="<%=cp%>/cast/${mode}">
 		<div class="inner">
          <div class="cast">
           <h3><span class="cast_s"> 캐스트 </span> </h3>
          </div>
-      	  <form name="castForm" method="post">
            <table class="writebox">
            <tr class="boxrow1" align="left"> 
                <td class="title">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
@@ -46,7 +26,10 @@
                <td class="writer">작성자</td>
                <td class="writer2">${sessionScope.member.memberId}</td>
            </tr>
-         
+         <tr class="boxrow2" align="left"> 
+               <td class="writer">부제목</td>
+               <td class="writer2"> <input class="text_in" type="text" name="castSubtitle" value="${dto.castSubtitle}"></td>
+           </tr>
            <tr class="boxrow3" align="left"> 
                <td class="text">내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
                <td class="text2"> 
@@ -57,9 +40,9 @@
          
            <table class="btnbox">
               <tr height="45"> 
-               <td align="center" >
+               <td align="center">
                   <input type="hidden" name="castCnum" value="${castCnum}">
-                 <button type="button" class="btn" onclick="send();">${mode == 'update'?'수정하기':'등록하기'}</button>
+                 <button type="submit" class="btn">${mode == 'update'?'수정하기':'등록하기'}</button>
                  <button type="reset" class="btn">다시입력</button>
                  <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/cast/news';">${mode == 'update'?'수정취소':'등록취소'}</button>
               	 <c:if test="${mode == 'update'}">

@@ -4,7 +4,7 @@
 <%
    String cp = request.getContextPath();
 %>
-
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 <script type="text/javascript">
 
 function searchList() {
@@ -33,10 +33,10 @@ $(function(){
           <nav class="row">
             <div class="rowFull">
               <ul class="detailNav">
-                <li id="storyItemMenu1">
+                <li>
                   <a href="<%=cp%>/cast/news?castCnum=1"><span>이디즈 넥스트</span></a>
                 </li>
-                <li id="storyItemMenu2">
+                <li class="on">
                   <a href="<%=cp%>/cast/news?castCnum=2"><span>이디즈 뉴스</span></a>
                 </li>
               </ul>
@@ -48,7 +48,7 @@ $(function(){
               <div class="titleBar">
                 <div class="title"><h2>이디즈 뉴스</h2></div>
                 <div class="option">
-                  <form name="searchForm" action="<%=cp%>/cast/news" method="post">
+                  <form name="searchForm" action="<%=cp%>/cast/news?castCnum=2" method="post" >
                     <input
                       type="text"
                       name="keyword"
@@ -56,7 +56,7 @@ $(function(){
                       placeholder="검색"
                       value="${keyword}"
                     />
-                    <button type="button" class="searchButton" onclick="searchList()">검색</button>
+                    <button type="button" class="searchButton" onclick="searchList()"><i class="fa fa-search" aria-hidden="true"></i></button>
                     <select name="condition">
                       <option value="castTitle" ${condition=="castTitle"?"selected='selected'":""}>제목</option>
                       <option value="castContent" ${condition=="castContent"?"selected='selected'":""}>내용</option>
@@ -69,13 +69,13 @@ $(function(){
             <c:forEach var="dto" items="${list}">
             <div class="row2" >
              <ul>
-				<li class="title"><a href="${readUrl}&castNum=${dto.castNum}"> ${dto.castTitle} </a></li>
-				<li class="name">${sessionScope.member.memberId}</li>
-				<li class="ncontentn">${dto.castContent}</li>
-				<li> <img class="thumbnail" style="background-image: url('https://cdn.pixabay.com/photo/2020/06/03/16/30/wave-5255593__340.jpg')"></li>
+				<li class="title"><a href="${readUrl}&castNum=${dto.castNum}&castCnum=${dto.castCnum}"> ${dto.castTitle} </a></li>
+				<li class="name">${dto.memberId}</li>
+				<li class="ncontentn">${dto.castSubtitle}</li>
+				<li> <img class="thumbnail" style="background-image: url('${dto.castThumnail}')"></li>
 			 </ul>
 			 <ul class="desc">
-                <li><span> ${sessionScope.member.memberId} </span></li>
+                <li><span> ${dto.memberId} </span></li>
                 <li><span> ${dto.castCreated} </span></li>
                 <li><span> ♥ </span></li>
              </ul>

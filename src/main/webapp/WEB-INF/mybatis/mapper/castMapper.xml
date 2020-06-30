@@ -4,20 +4,20 @@
 <mapper namespace="cast">
 
 	<insert id="insertCast" parameterType="com.eydiz.cast.Cast">
-		INSERT INTO cast_board(castNum, memberId, castCnum, castTitle, castContent, castCreated)
-		VALUES(cast_board_seq.NEXTVAL, #{memberId}, #{castCnum}, #{castTitle}, #{castContent}, SYSDATE)
+		INSERT INTO cast_board(castNum, memberId, castCnum, castTitle, castContent, castCreated, castSubtitle)
+		VALUES(cast_board_seq.NEXTVAL, #{memberId}, #{castCnum}, #{castTitle}, #{castContent}, SYSDATE, #{castSubtitle, jdbcType=VARCHAR})
 	</insert>
 	
 	<sql id="where-list">
 		<choose>
-			<when test="condition == 'commentTitle' ">
-				(INSTR(commentTitle, #{keyword}) &gt; 0)
+			<when test="condition == 'castTitle' ">
+				(INSTR(castTitle, #{keyword}) &gt; 0)
 			</when>
-			<when test="condition == 'commentContent' ">
-				(INSTR(commentContent, #{keyword}) &gt; 0)
+			<when test="condition == 'castContent' ">
+				(DBMS_LOB.INSTR(castContent, #{keyword}) &gt; 0)
 			</when>
-			<when test="condition == 'commentCreated' ">
-				(commentCreated, #{keyword})
+			<when test="condition == 'castCreated' ">
+				(castCreated, #{keyword})
 			</when>
 		</choose>
 	</sql>
@@ -34,7 +34,7 @@
 	</select>
 	
 	<select id="listCast" parameterType="map" resultType="com.eydiz.cast.Cast">
-		SELECT ca.castNum, ca.memberId, c.castCnum, castCname, castTitle, castContent, castCreated, NVL(castLikeCount, 0) castLikeCount
+		SELECT ca.castNum, ca.memberId, c.castCnum, castCname, castTitle, castContent, castCreated, castSubtitle, NVL(castLikeCount, 0) castLikeCount
 		FROM cast_board ca JOIN member_detail m ON ca.memberId = m.memberId
 		JOIN cast_category c ON ca.castCnum = c.castCnum
 		LEFT OUTER JOIN (
@@ -63,7 +63,7 @@
 	</select>
 	
 	<update id="updateCast" parameterType="com.eydiz.cast.Cast">
-		UPDATE cast_board SET castTitle = #{castTitle}, castContent = #{castContent}
+		UPDATE cast_board SET castTitle = #{castTitle}, castContent = #{castContent}, castSubtitle = #{castSubtitle, jdbcType=VARCHAR}
 		WHERE castNum = #{castNum}
 	</update>
 	
