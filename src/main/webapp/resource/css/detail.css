@@ -39,6 +39,7 @@
   background-position: 50% 50%;
   background-size: cover;
   filter: brightness(0.8) blur(5px);
+  transform:scale(1.2);
 }
 
 ul.detailNav {
@@ -102,9 +103,33 @@ ul.detailNav a span.badge {
   box-sizing: border-box;
 }
 
+img.fullWidth{
+	width:100%;
+}
+
+.detailSummary p {
+	margin:24px 0;
+}
+
 .detailContent {
   float: left;
   width: calc(100% - 364px);
+}
+
+hr.divider {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    border: 0;
+    border-color: rgba(0,0,0,.1);
+    background: #e6eaed;
+    width: 100%;
+    height: 1px;
+}
+
+hr.divider.deeper{
+	margin-top: 32px;
+    margin-bottom: 32px;
+}
 }
 
 .detailContent > * {
@@ -118,6 +143,11 @@ ul.detailNav a span.badge {
   margin-left: 10px;
   min-width: 354px;
   max-width: 354px;
+}
+
+.detailSideController .btnPlain{
+	color:#4a4a4a;
+	font-weight:300;
 }
 
 p.stateText {
@@ -175,13 +205,16 @@ span.icon {
 }
 
 span.icon.heart {
-  background-image: url("../images/btn_icon_heart_blank.png");
+  background-image: url("../images/detail/btn_icon_heart_blank.png");
+}
+span.icon.heart.on{
+	background-image: url("../images/detail/btn_icon_heart_filled.png");
 }
 span.icon.talk {
-  background-image: url("../images/btn_icon_comment.png");
+  background-image: url("../images/detail/btn_icon_comment.png");
 }
 span.icon.share {
-  background-image: url("../images/btn_icon_share.png");
+  background-image: url("../images/detail/btn_icon_share.png");
 }
 
 .brandInfoBox {
@@ -203,7 +236,7 @@ span.icon.share {
   width: 40px;
   margin-left: 10px;
   margin-right: 15px;
-  background-image: url("../images/user-64.png");
+  background-image: url("../images/detail/user-64.png");
   background-repeat: no-repeat;
   background-size: 100%;
   vertical-align: middle;
@@ -294,6 +327,7 @@ p.small {
   color: #60656a;
   cursor: pointer;
   position: relative;
+  margin-bottom:24px;
 }
 
 .rewardItem:hover .overlay {
@@ -424,6 +458,7 @@ p.small {
   }
   .detailContent {
     clear: both;
+    padding: 20px;
     min-width: 100%;
   }
   .detailSide {

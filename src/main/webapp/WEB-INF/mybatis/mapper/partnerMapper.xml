@@ -18,15 +18,16 @@
 
 <!-- 브랜드 리스트 -->
 <select id="listPartner" parameterType="map" resultType="com.eydiz.partner.Partner">
-	SELECT brandNo, brandName 
-	FROM brand
+	SELECT brandNo, brandName, memberImageUrl, managerName, managerEmail
+	FROM brand b
+	JOIN member_detail md ON b.memberNo = md.memberNo
 	<where>
 		<if test="keyword != null and keyword != ''">
 			INSTR(brandName, #{keyword}) &gt; 0
 		</if>
 	</where>
 	ORDER BY brandNo DESC
-		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 </select>
 
 
@@ -68,7 +69,7 @@
 
 <!-- 프로젝트 리스트 -->
 <select id="listProject" parameterType="map" resultType="com.eydiz.partner.Partner">
-	SELECT p.projectNo, projectName, projectImageUrl, categoryName, parentcategoryNo, p.statusNo, p.brandNo
+	SELECT p.projectNo, projectName, projectImageUrl, categoryName, parentcategoryNo, p.statusNo, p.brandNo, projectAttainAmount, (projectAttainAmount/projectGoalAmount*100) percentage
 	FROM project_category c
 	JOIN project p ON c.categoryNo = p.categoryNo
 	JOIN brand b ON p.brandNo = b.brandNo
@@ -118,14 +119,6 @@
 	JOIN reward_shipping_location s ON m.memberNo = s.memberNo
 	JOIN brand b ON s.memberNo = b.memberNo
 	WHERE b.brandNo = #{brandNo} AND statusNo = 4
-</select>
-
-<select id="getProjectMoneyInfo" parameterType="Integer" resultType="com.eydiz.partner.Partner">
-	SELECT p.projectNo,NVL(SUM(totalAmount),0) projectTotalAmount, NVL(projectGoalAmount,0) projectGoalAmount, NVL(FLOOR((NVL(SUM(totalamount),0)/projectGoalAmount * 100 )),0) percentage
-	FROM project p
-	JOIN reward_buy_overview r ON r.projectNo = p.projectNo
-	WHERE p.projectNo = #{projectNo}
-	Group By projectGoalAmount, p.projectNo
 </select>
 
 

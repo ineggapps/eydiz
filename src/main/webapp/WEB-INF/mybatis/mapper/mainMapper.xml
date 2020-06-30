@@ -9,7 +9,7 @@
 	</select>
 	
 	<!-- 나중에 WHERE조건까지 추가하기 -->
-	<select id="listFunding" resultType="com.eydiz.main.Project">
+	<select id="listFunding" resultType="com.eydiz.studio.Project">
 		SELECT 
 			projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, 
 			projectImageUrl, projectGoalAmount, projectAttainAmount, 

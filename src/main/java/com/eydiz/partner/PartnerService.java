@@ -22,5 +22,4 @@ public interface PartnerService {
 	
 	public String getToday();										// 오늘 날짜
 	
-	public Partner getProjectMoneyInfo(int projectNo);					// 프로젝트 목표금액, 모금액, 퍼센트
 }
