@@ -51,7 +51,6 @@ $(function(){
 		var url="<%=cp%>/story/insertStoryLike";
 		var storyNum=$(this).attr("data-storyNum");
 		var query = {storyNum:storyNum};
-		alert(storyNum);
 		var fn = function(data){
 			var state=data.state;
 			if(state=="true") {

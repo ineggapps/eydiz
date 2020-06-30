@@ -22,7 +22,7 @@ function deleteCast(castNum, id) {
 
 	function updateCast(castNum, id) {
 	<c:if test="${sessionScope.member.memberId=='eydiz'}">
-		var q = "castNum=${dto.castNum}&${query}&castCnum=${castCnum}";
+		var q = "castNum=${dto.castNum}&${query}";
 		var url = "<%=cp%>/cast/update?"+q;
 
 		location.href=url;
@@ -172,14 +172,14 @@ function deleteCast(castNum, id) {
     					<div class="info">
 	    					<div class="story-info">
 	    						<p class="board">이디즈 캐스트</p>
-								<p class="title"> ${dto.castTitle} </p>
-								<p class="rlxk"><em class="editor">${sessionScope.member.memberId}</em><em class="date">${dto.castCreated}</em><em class="like">${dto.castLikeCount}</em></p>
+								<p class="rtitle"> ${dto.castTitle} </p>
+								<p class="rlxk"><em class="editor">${dto.memberId}</em><em class="date">${dto.castCreated}</em><em class="liker">${dto.castLikeCount}</em></p>
 								
 							</div>
     					</div>
     					<div class="detail-content">
     						<div class="inner-content">
-    							<div><img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img"></div>
+    							<div><img src="${dto.castThumnail}" class="img"></div>
     							<p>${dto.castContent}</p>
     						</div>
     					</div>
@@ -187,7 +187,7 @@ function deleteCast(castNum, id) {
 				
 				<div class="likebox">
 					<button type="button" class="like" data-castNum="${dto.castNum}">
-						<span class="likecount"> ♥ </span>
+						
 					</button>
 				</div>
 				
