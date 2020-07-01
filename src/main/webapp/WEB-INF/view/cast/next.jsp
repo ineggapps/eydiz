@@ -96,12 +96,12 @@ $(function(){
                 </li>
               </c:forEach>
               </ul>
-              
+              <c:if test="${sessionScope.member.memberId=='eydiz'}">
              <div class="btnbox2">
                <input type="hidden" name="castCnum" value="${castCnum}">
                <button type="submit" class="btn" onclick="javascript:location.href='<%=cp%>/cast/write1?castCnum=1';"> 등록하기 </button>
              </div>  
-              
+              </c:if>
            </div>
 
        <table style="width: 100%; border-spacing: 0px;">
