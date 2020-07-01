@@ -59,7 +59,7 @@ public class DetailController implements Constant,  DetailConstant, MemberConsta
 		return ".detailLayout";
 	}
 	
-	//프로젝트 좋아요
+	//프로젝트 좋아요 AJAX
 	@RequestMapping(value= {"/{projectNo}/like"})
 	@ResponseBody
 	public Map<String, Object> likeProject(@PathVariable Integer projectNo, HttpSession session){
@@ -82,4 +82,5 @@ public class DetailController implements Constant,  DetailConstant, MemberConsta
 		}
 		return result;
 	}
+	
 }
