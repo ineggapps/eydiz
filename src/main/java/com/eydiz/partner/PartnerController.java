@@ -24,8 +24,11 @@ public class PartnerController {
 	@Autowired
 	private MyUtil myUtil;
 	
-	@RequestMapping(value="/partner/main")
-	public String main(Model model) {
+	@RequestMapping(value="/partner/list")
+	public String main(
+			@RequestParam(value="page", defaultValue="1") String page,
+			Model model
+			) {
 		int totalBrandCount = service.totalBrandCount();
 		int totalProjectCount = service.totalProjectCount();
 		int totalBuyMemberCount = service.totalBuyMemberCount();
@@ -38,12 +41,13 @@ public class PartnerController {
 		today = service.getToday();
 		model.addAttribute("today", today);
 		
+		model.addAttribute("page", page);
 		
 		return ".partnerLayout.list";
 	}
 
 	@RequestMapping(value="/partner/brandList")
-	public String list(
+	public String brandList(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="") String keyword,
 			Partner dto,
@@ -52,7 +56,7 @@ public class PartnerController {
 			) throws Exception {
 		
 		
-		int rows = 12;
+		int rows = 3;
 		int total_page = 0;
 		int dataCount = 0;
 		
@@ -114,7 +118,7 @@ public class PartnerController {
 		}
 		
 		Partner dto = service.readPartner(brandNo);
-		System.out.println(dto);
+		//System.out.println(dto);
 		if(dto == null) {
 			return "redirect:/partner/list?"+query;
 		}
@@ -146,7 +150,7 @@ public class PartnerController {
 			Model model
 		) throws Exception {
 		
-		int rows = 12;
+		int rows = 9;
 		int total_page;
 		int pDataCount;
 		

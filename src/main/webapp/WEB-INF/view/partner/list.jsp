@@ -15,7 +15,7 @@ function ajaxHTML(url, type, query, selector) {
 		,data:query
 		,success:function(data) {
 			if($.trim(data)=="error") {
-				partnerBrandPage(1);
+				//partnerBrandPage(1);
 				return false;
 			}	
 			$(selector).html(data);
@@ -33,7 +33,7 @@ function ajaxHTML(url, type, query, selector) {
 	});
 }
 
-
+// 페이징
 function partnerBrandPage(page) {
 	var url = "<%=cp%>/partner/brandList";
 	var query = "page="+page;
@@ -44,6 +44,8 @@ function partnerBrandPage(page) {
 	ajaxHTML(url, "get", query, selector);
 }
 
+
+// 검색
 function searchList() {
 	var f = document.partnerSearchForm;
 	f.keyword.value = $.trim($("#partnerSearchKeyword").val());
@@ -51,6 +53,8 @@ function searchList() {
 	partnerBrandPage(1);
 }
 
+
+// 새로고침
 function reloadList(){
 	var f = document.partnerSearchForm;
 	f.keyword.value = "";
@@ -58,9 +62,23 @@ function reloadList(){
 	partnerBrandPage(1);
 }
 
+
 $(function(){
-	partnerBrandPage(1);
+	var page = "${page}";
+	if(page=="" ) page=1;
+	partnerBrandPage(page);
 });
+
+// 브랜드 보기
+function articleBrand(brandNo, page) {
+	var url = "<%=cp%>/partner/article?";
+	var query = "brandNo="+brandNo;
+	
+	var search = $('form[name=partnerSearchForm]').serialize();
+	query = query+"&page="+page+"&"+search;
+	
+	location.href = url+query;
+}
 
 </script>
 

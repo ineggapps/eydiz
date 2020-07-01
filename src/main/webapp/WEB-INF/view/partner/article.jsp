@@ -99,15 +99,15 @@ function reloadPartnerProject() {
 	               <li class="item partnerResultCell">
 	                  <div class="itemInner">
 	                    <div class="partnerResultIcon" style="background-image: url('../resource/images/partner/iconmonstr-party-21-120.png');"></div>
-	                      <div class="subject partnerResultText">
-	                        <p>참여한 투자자</p>
-	                        <span class="partnerResultTextPoint"><fmt:formatNumber value="${brandTotalBuyMember}"/></span><span> 명</span>
-	                      </div>
+	                    <div class="subject partnerResultText">
+	                      <p>참여한 투자자</p>
+	                      <span class="partnerResultTextPoint"><fmt:formatNumber value="${brandTotalBuyMember}"/></span><span> 명</span>
+	                    </div>
 	                  </div>
-	                </li>
+	               </li>
 	               <li class="item partnerResultCell partnerStandard">
-	                  <p> * 이디즈 파트너의 총 합산 기록입니다. (${today})</p> <span><a href="<%=cp%>/partner/list?${query}">목록으로</a></span>
-	                </li>
+	                  <p> * 이디즈 파트너의 총 합산 기록입니다. (${today})</p> <span><a onclick="javascript:location.href='<%=cp%>/partner/list?${query}';">목록으로</a></span>
+	               </li>
 	              </ul>
 		      </div>
             </div>
@@ -128,7 +128,7 @@ function reloadPartnerProject() {
 	                </li>
 	              </ul>
 	            </div>
-          </nav>
+          	 </nav>
           	<div id = "partnerArticleList"></div>
             </div>
             </article>

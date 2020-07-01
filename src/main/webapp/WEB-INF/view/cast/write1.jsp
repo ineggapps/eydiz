@@ -75,6 +75,7 @@
 var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({
 	oAppRef: oEditors,
+	elPlaceHolder: "content1",
 	elPlaceHolder: "castContent",
 	sSkinURI: "<%=cp%>/resource/se/SmartEditor2Skin.html",	
 	htParams : {bUseToolbar : true,
@@ -91,6 +92,11 @@ nhn.husky.EZCreator.createInIFrame({
 
 function pasteHTML() {
 	var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
+	oEditors.getById["content1"].exec("PASTE_HTML", [sHTML]);
+}
+
+function showHTML() {
+	var sHTML = oEditors.getById["content1"].getIR();
 	oEditors.getById["castContent"].exec("PASTE_HTML", [sHTML]);
 }
 

@@ -22,7 +22,7 @@ function deleteCast(castNum, id) {
 
 	function updateCast(castNum, id) {
 	<c:if test="${sessionScope.member.memberId=='eydiz'}">
-		var q = "castNum=${dto.castNum}&${query}";
+		var q = "castNum=${dto.castNum}&${query}&castCnum=${castCnum}";
 		var url = "<%=cp%>/cast/update?"+q;
 
 		location.href=url;
@@ -97,7 +97,7 @@ function deleteCast(castNum, id) {
 			
 			ajaxJSON(url, "post", query, fn);
 		});
-	});
+  });
 
 
 	$(function(){
@@ -142,7 +142,6 @@ function deleteCast(castNum, id) {
 		});
 	});
 
-
 	$(function() {
 		$("body").on("click", ".deleteComment", function(){
 			if(! confirm("게시물을 삭제하시겠습니까?")) {
@@ -173,8 +172,7 @@ function deleteCast(castNum, id) {
 	    					<div class="story-info">
 	    						<p class="board">이디즈 캐스트</p>
 								<p class="rtitle"> ${dto.castTitle} </p>
-								<p class="rlxk"><em class="editor">${dto.memberId}</em><em class="date">${dto.castCreated}</em><em class="liker">${dto.castLikeCount}</em></p>
-								
+								<p class="rlxk"><em class="editor">${dto.memberId}</em><em class="date">${dto.castCreated}</em><em class="liker">${dto.castLikeCount}</em></p>						
 							</div>
     					</div>
     					<div class="detail-content">

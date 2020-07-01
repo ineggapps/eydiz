@@ -9,7 +9,7 @@
 
 <ul class="partnerGridContent">
 <c:forEach var="dto" items="${plist}">
-	<li class="partnerItem" onclick="location.href='<%=cp%>/'">
+	<li class="partnerItem" onclick="location.href='<%=cp%>/detail/${dto.projectNo}'">
 		<div class="partnerItemInner">
 			<div class="thumbnail"
 				style="background-image: url('${dto.projectImageUrl}');">

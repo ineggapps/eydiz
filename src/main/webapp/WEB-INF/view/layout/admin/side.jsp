@@ -26,28 +26,27 @@
         </ul>
       </div>
     </li>
-    <li class="extended">
-      <div class="menuItem">
-        <div class="menuName">
-          <a href="#" class="on">펀딩 관리</a>
-          <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
-        </div>
-        <ul class="subMenu">
-          <li class="subMenuItem"><a href="#" class="on">펀딩 목록</a></li>
-          <li class="subMenuItem"><a href="#">펀딩 조회</a></li>
-          <li class="subMenuItem"><a href="#">기부 목록</a></li>
-          <li class="subMenuItem"><a href="#">기부 조회</a></li>
-        </ul>
-      </div>
-    </li>
     <li>
       <div class="menuItem">
         <div class="menuName">
-          <a href="#">회원 관리</a>
+          <a href="#">펀딩 관리</a>
           <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
         </div>
         <ul class="subMenu">
-          <li class="subMenuItem"><a href="#">일반 회원</a></li>
+          <li class="subMenuItem"><a href="#">펀딩 목록</a></li>
+          <li class="subMenuItem"><a href="#">펀딩 조회</a></li>
+          <li class="subMenuItem"><a href="#">기부 목록</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="extended">
+      <div class="menuItem">
+        <div class="menuName">
+          <a href="#"  class="on">회원 관리</a>
+          <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
+        </div>
+        <ul class="subMenu">
+          <li class="subMenuItem"><a href="#" class="on">일반 회원</a></li>
           <li class="subMenuItem"><a href="#">브랜드 회원</a></li>
           <li class="subMenuItem"><a href="#">탈퇴한 회원</a></li>
         </ul>
