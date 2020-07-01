@@ -15,7 +15,7 @@
 	        </form>
 			<ul class="partnerGridContent partnerListContent">
                 <c:forEach var="dto" items="${list}">
-	                <li class="item partnerBox" onclick="location.href='${articleUrl}&brandNo=${dto.brandNo}';">
+	                <li class="item partnerBox" onclick="articleBrand(${dto.brandNo}, ${page});">
 	                  <div class="itemInner partnerBBoard">
 	                    <div class="thumbnail"style="background-image: url('${dto.memberImageUrl}');">
 	                      <span class="hidden">드럼</span>
