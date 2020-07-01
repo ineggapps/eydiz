@@ -38,7 +38,7 @@
 	
 	<definition name=".adminLayout" template="/WEB-INF/view/layout/admin/frame.jsp">
 	  	<put-attribute name="side" value="/WEB-INF/view/layout/admin/side.jsp" />
-		<put-attribute name="content" value="/WEB-INF/view/admin/main.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/admin/view.jsp" />
 	</definition>
 	<definition name=".adminLayout.*.*" extends=".adminLayout">
 		<put-attribute name="content" value="/WEB-INF/view/admin/{1}/{2}.jsp"/>
@@ -141,6 +141,8 @@
 	<definition name=".castLayout.*" extends=".castLayout">
 		<put-attribute name="content" value="/WEB-INF/view/cast/{1}.jsp"/>
 	</definition>
+	
+	
 	
 	<!-- Enjin -->	
 	<definition name=".awardsLayout" template="/WEB-INF/view/layout/awards/frame.jsp">

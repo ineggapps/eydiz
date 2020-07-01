@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin/brand/*")
 public class AdminBrandController {
 	
-	@RequestMapping(value= {"/main","/"})
-	public String main() {
-		return ".adminLayout";
+	@RequestMapping(value= {"/view","/"})
+	public String view() {
+		return ".adminLayout"; 
 	}
+	
 }
