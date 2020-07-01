@@ -9,7 +9,7 @@
 
 <ul class="partnerGridContent">
 <c:forEach var="dto" items="${plist}">
-	<li class="partnerItem" onclick="location.href='<%=cp%>/'">
+	<li class="partnerItem" onclick="location.href='<%=cp%>/detail/${dto.projectNo}'">
 		<div class="partnerItemInner">
 			<div class="thumbnail"
 				style="background-image: url('${dto.projectImageUrl}');">
@@ -25,11 +25,11 @@
 				</ul>
 				<div class="status">
 					<div class="progress">
-						<div class="progressBar" style="width:${percentage >= 100 ? '100' : 'percentage'}%;"></div>
+						<div class="progressBar" style="width:${dto.percentage >= 100 ? '100' : 'dto.percentage'}%;"></div>
 					</div>
 					<ul>
-						<li><span class="percent">${percentage}%</span>&centerdot;<span
-							class="totalAmount">${projectTotalAmount}원 달성</span>
+						<li><span class="percent">${dto.percentage}%</span>&centerdot;<span
+							class="totalAmount">${dto.projectTotalAmount}원 달성</span>
 						</li>
 					</ul>
 				</div>

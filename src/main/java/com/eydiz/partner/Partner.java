@@ -7,6 +7,8 @@ public class Partner {
 	
 	private int brandNo;					// 브랜드 번호
 	private String brandName;				// 브랜드 이름
+	private String managerEmail;			// 대표이메일
+	private String managerName;				// 대표 이름
 	
 	private int brandTotalProject;			// 진행중 & 종료된 프로젝트 수
 	private int brandTotalBuyMember;		// 펀딩 or 후원에 한번이라도 참여한 회원 인원수
@@ -26,6 +28,20 @@ public class Partner {
 	private int percentage;					// 프로젝트 달성률	= projectTotalAmount/projectTargetAmount * 100
 	
 	private int statusNo;					// 활성 : 5, 종료 : 6
+	
+	
+	public String getManagerEmail() {
+		return managerEmail;
+	}
+	public void setManagerEmail(String managerEmail) {
+		this.managerEmail = managerEmail;
+	}
+	public String getManagerName() {
+		return managerName;
+	}
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
 	
 	public int getProjectTotalAmount() {
 		return projectTotalAmount;

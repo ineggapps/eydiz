@@ -97,7 +97,7 @@ function deleteCast(castNum, id) {
 			
 			ajaxJSON(url, "post", query, fn);
 		});
-	});
+  });
 
 
 	$(function(){
@@ -142,7 +142,6 @@ function deleteCast(castNum, id) {
 		});
 	});
 
-
 	$(function() {
 		$("body").on("click", ".deleteComment", function(){
 			if(! confirm("게시물을 삭제하시겠습니까?")) {
@@ -172,14 +171,13 @@ function deleteCast(castNum, id) {
     					<div class="info">
 	    					<div class="story-info">
 	    						<p class="board">이디즈 캐스트</p>
-								<p class="title"> ${dto.castTitle} </p>
-								<p class="rlxk"><em class="editor">${sessionScope.member.memberId}</em><em class="date">${dto.castCreated}</em><em class="like">${dto.castLikeCount}</em></p>
-								
+								<p class="rtitle"> ${dto.castTitle} </p>
+								<p class="rlxk"><em class="editor">${dto.memberId}</em><em class="date">${dto.castCreated}</em><em class="liker">${dto.castLikeCount}</em></p>						
 							</div>
     					</div>
     					<div class="detail-content">
     						<div class="inner-content">
-    							<div><img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img"></div>
+    							<div><img src="${dto.castThumnail}" class="img"></div>
     							<p>${dto.castContent}</p>
     						</div>
     					</div>
@@ -187,7 +185,7 @@ function deleteCast(castNum, id) {
 				
 				<div class="likebox">
 					<button type="button" class="like" data-castNum="${dto.castNum}">
-						<span class="likecount"> ♥ </span>
+						
 					</button>
 				</div>
 				

@@ -70,6 +70,9 @@ function toggleLike() {
     })
     .catch(function (e) {
       console.log(e.responseText);
+      if(e.message==null){
+    	  location.href= cp + "/member/login";
+      }
     });
 }
 
