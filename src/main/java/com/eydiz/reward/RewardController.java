@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.eydiz.common.Constant;
 import com.eydiz.detail.DetailConstant;
@@ -22,13 +23,14 @@ import com.eydiz.studio.Reward;
 
 @RequestMapping("/reward/*")
 @Controller("reward.rewardController")
-public class RewardController  implements Constant, MemberConstant, RewardConstant, DetailConstant{
-	
+public class RewardController implements Constant, MemberConstant, RewardConstant, DetailConstant {
+
 	@Autowired
 	private DetailService detailService;
-	
+
 	@RequestMapping("/{projectNo}/step1")
-	public String step1(@PathVariable Integer projectNo, HttpServletRequest req, Model model) {
+	public String step1(@PathVariable Integer projectNo, HttpServletRequest req, Model model,
+			@RequestParam(required = false, defaultValue = "0") int rewardNo) {
 		try {
 			SessionInfo info = (SessionInfo) req.getSession().getAttribute(SESSION_MEMBER);
 			Map<String, Object> map = new HashMap<>();
@@ -37,13 +39,13 @@ public class RewardController  implements Constant, MemberConstant, RewardConsta
 			Project project = detailService.readProject(map);
 			List<Reward> rewards = detailService.listRewards(projectNo);
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
-			model.addAttribute(ATTRIBUTE_REWARD,rewards);
-		} 
-		catch(NullPointerException e) {
+			model.addAttribute(ATTRIBUTE_REWARD, rewards);
+			model.addAttribute(ATTRIBUTE_REWARDNO, rewardNo);
+
+		} catch (NullPointerException e) {
 			return "redirect:" + req.getContextPath();
-		}
-		catch (Exception e) {
-			return "redirect:"  + req.getContextPath() + String.format(API_DETAIL_PROJECT, projectNo);
+		} catch (Exception e) {
+			return "redirect:" + req.getContextPath() + String.format(API_DETAIL_PROJECT, projectNo);
 		}
 		return ".detailLayout.step1";
 	}

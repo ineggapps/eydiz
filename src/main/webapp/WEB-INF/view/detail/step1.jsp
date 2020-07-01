@@ -28,7 +28,13 @@
                    <dl>
                      <dt>
                        <label class="checkbox">
-                         <input type="checkbox" name="reward${item.rewardNo}" class="rewardId" value="1" />
+                         <input 
+                         	type="checkbox" 
+                         	name="reward${item.rewardNo}" 
+                         	class="rewardId" 
+                         	value="1"
+                         	${item.rewardNo==rewardNo?"checked=\"checked\"":""}		
+                         />
                          <span class="checkmark"></span>
                        </label>
                      </dt>
