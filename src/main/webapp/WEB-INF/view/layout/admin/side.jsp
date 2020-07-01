@@ -34,9 +34,7 @@
         </div>
         <ul class="subMenu">
           <li class="subMenuItem"><a href="#" class="on">펀딩 목록</a></li>
-          <li class="subMenuItem"><a href="#">펀딩 조회</a></li>
           <li class="subMenuItem"><a href="#">기부 목록</a></li>
-          <li class="subMenuItem"><a href="#">기부 조회</a></li>
         </ul>
       </div>
     </li>
