@@ -8,6 +8,7 @@ public class Cast {
 	private String castCname;
 	private String castTitle;
 	private String castContent;
+	private String castSubtitle;
 	private String castCreated;
 	private String castLikeCount;
 	private String castThumnail;
@@ -71,6 +72,12 @@ public class Cast {
 	}
 	public void setCastThumnail(String castThumnail) {
 		this.castThumnail = castThumnail;
+	}
+	public String getCastSubtitle() {
+		return castSubtitle;
+	}
+	public void setCastSubtitle(String castSubtitle) {
+		this.castSubtitle = castSubtitle;
 	}
 	
 	
