@@ -68,13 +68,6 @@ function reloadPartnerProject() {
 	 listProjectPage(1);
 }
 
-// 목록으로 이동
-<%-- function goList() {
-	var url = "<%=cp%>/partner/main?${query}";
-	
-	location.href = url;	
-} --%>
-
 
 </script>
 
