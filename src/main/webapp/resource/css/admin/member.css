@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.membertitle {
+	margin: 0px 0px 20px 0px;
+}
+
+.memberlist {
+	width: 700px;
+}
+
+.memberlist ul{
+	
+}
+
+.memberlist ul li {
+	float : left;
+	display : inline;
+}
+
