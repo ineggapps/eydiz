@@ -1,6 +1,7 @@
 @charset "UTF-8";
 /*hack*/
-.rewardItemTitle::after {
+.rewardItemTitle::after,
+.rewardItemBox input.checkbox::after {
   content: "";
   display: block;
   clear: both;
@@ -25,7 +26,7 @@ label.checkbox {
   user-select: none;
 }
 label.checkbox input {
-  position: absolute;
+  /* position: absolute; */
   opacity: 0;
   cursor: pointer;
   height: 0;
@@ -33,6 +34,7 @@ label.checkbox input {
 }
 
 .checkmark {
+	background-color:#fff;
   transition: all linear 0.2s;
   position: absolute;
   top: 5px;
@@ -141,12 +143,17 @@ label.checkbox input:checked ~ .checkmark:after {
 
 .rewardItemBox dl > * {
   display: inline-block;
-  vertical-align: middle;
 }
 
+
 .rewardItemBox dl > dt {
+	vertical-align:top;
   margin: 0 50px;
   text-align: center;
+}
+
+.rewardItemBox dl > dt:first-child{
+	margin-top:30px;
 }
 
 .rewardItemBox dl > dd {
@@ -178,6 +185,11 @@ label.checkbox input:checked ~ .checkmark:after {
 
 .rewardOptionWrapper {
   margin: 20px 0;
+  display:none;
+}
+
+.rewardOptionWrapper.active{
+  display:block;	
 }
 
 .rewardOptionBox {

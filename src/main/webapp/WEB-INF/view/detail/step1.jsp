@@ -22,21 +22,23 @@
          <div class="rewardItemContent">
            <form method="post">
              <ul>
+             <c:forEach var="item" items="${reward}">
                <li>
                  <div class="rewardItemBox">
                    <dl>
                      <dt>
                        <label class="checkbox">
-                         <input type="checkbox" name="rewardId" value="" />
+                         <input type="checkbox" name="reward${item.rewardNo}" class="rewardId" value="1" />
                          <span class="checkmark"></span>
                        </label>
                      </dt>
                      <dd>
-                       <h5>60,000원을 펀딩합니다.</h5>
-                       <p>울트라 얼리버드 &quot;서.늘.반.바.지&quot;</p>
-                       <p class="rewardItemText">#사이즈: S, M, L, XL</p>
+                       <h5>${item.amount}원을 펀딩합니다.</h5>
+                       <p>${item.rewardTitle}</p>
+                       <p class="rewardItemText">${item.rewardContent}</p>
+                       <p class="rewardItemText">${item.rewardOption}</p>
                        <p class="rewardItemText">
-                         배송비 3,000원 | 리워드 제공 예상일: 2020년 7월 17일
+                         	배송비 ${item.shipAmount}원 | 리워드 제공 예상일: ${item.startShippingDate}
                        </p>
                        <div class="rewardOptionWrapper">
                          <div class="rewardOptionBox optionRequestQuantity">
@@ -57,6 +59,7 @@
                    </dl>
                  </div>
                </li>
+				</c:forEach>
              </ul>
              <button type="button" class="btnSubmit">다음 단계로</button>
            </form>
