@@ -34,7 +34,7 @@ public class CastController {
 	public String list(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="1") int castCnum,
-			@RequestParam(defaultValue="commentTitle") String condition,
+			@RequestParam(defaultValue="castTitle") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req, Model model
 			) throws Exception {
@@ -76,8 +76,17 @@ public class CastController {
 		for(Cast dto : list) {
 			listNum = dataCount - (offset + num);
 			dto.setListNum(listNum);
+			
+			List<String> imgs = myUtil.getImgSrc(dto.getCastContent());
+			if(imgs.size()>0) {
+				dto.setCastThumnail(imgs.get(0));
+			} else {
+				dto.setCastThumnail(cp+"/resource/images/people.jpg");
+			}
+			
 			num++;
 		}
+		
 		
 		String query = "";
 		String listUrl = cp+"/cast/news?castCnum="+castCnum;
@@ -217,6 +226,7 @@ public class CastController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 		model.addAttribute("castCnum", castCnum);
+		
 		
 		if(castCnum==1) {			
 			return ".castLayout.read1";

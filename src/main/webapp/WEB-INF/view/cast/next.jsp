@@ -4,7 +4,7 @@
 <%
    String cp = request.getContextPath();
 %>
-
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 <script type="text/javascript">
 
 function searchList() {
@@ -48,7 +48,7 @@ $(function(){
               <div class="titleBar">
                 <div class="title"><h2>이디즈 넥스트</h2></div>
                 <div class="option">
-                   <form name="searchForm" action="<%=cp%>/cast/news" method="post">
+                   <form name="searchForm" action="<%=cp%>/cast/news?castCnum=1" method="post">
                     <input
                       type="text"
                       name="keyword"
@@ -56,7 +56,7 @@ $(function(){
                       placeholder="검색"
                       value="${keyword}"
                     />
-                    <button type="button" class="searchButton" onclick="searchList()">검색</button>
+                    <button type="button" class="searchButton" onclick="searchList()"><i class="fa fa-search" aria-hidden="true"></i></button>
                     <select name="condition">
                       <option value="castTitle" ${condition=="castTitle"?"selected='selected'":""}>제목</option>
                       <option value="castContent" ${condition=="castContent"?"selected='selected'":""}>내용</option>
@@ -73,21 +73,21 @@ $(function(){
                     <div
                       class="thumbnail1"
                       style="
-                        background-image: url('https://images.unsplash.com/photo-1536059540012-f2ed455bc0b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
+                        background-image: url('${dto.castThumnail}');
                       "
                     >
                       <span class="hidden">호호</span>
                     </div>
                     <div class="textWrap1">
                       <div class="subject1">
-                        <a  href="${readUrl}&castNum=${dto.castNum}"
+                        <a  href="${readUrl}&castNum=${dto.castNum}&castCnum=${dto.castCnum}"
                           ><span
                             >&lt; 와디즈 넥스트 &gt; ${dto.castTitle}</span
                           ></a
                         >
                       </div>
                       <ul class="desc1">
-                        <li><span class="category"> ${sessionScope.member.memberId} </span></li>
+                        <li><span class="category"> ${dto.memberId} </span></li>
                         <li><span class="name">  ${dto.castCreated} </span></li>
                         <li><span class="name"> ♥ </span></li>
                       </ul>
@@ -96,12 +96,12 @@ $(function(){
                 </li>
               </c:forEach>
               </ul>
-              
+              <c:if test="${sessionScope.member.memberId=='eydiz'}">
              <div class="btnbox2">
                <input type="hidden" name="castCnum" value="${castCnum}">
                <button type="submit" class="btn" onclick="javascript:location.href='<%=cp%>/cast/write1?castCnum=1';"> 등록하기 </button>
              </div>  
-              
+              </c:if>
            </div>
 
        <table style="width: 100%; border-spacing: 0px;">

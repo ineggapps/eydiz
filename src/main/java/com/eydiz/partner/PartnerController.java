@@ -23,9 +23,31 @@ public class PartnerController {
 	
 	@Autowired
 	private MyUtil myUtil;
-
+	
 	@RequestMapping(value="/partner/list")
-	public String list(
+	public String main(
+			@RequestParam(value="page", defaultValue="1") String page,
+			Model model
+			) {
+		int totalBrandCount = service.totalBrandCount();
+		int totalProjectCount = service.totalProjectCount();
+		int totalBuyMemberCount = service.totalBuyMemberCount();
+		
+		model.addAttribute("totalBrandCount", totalBrandCount);
+		model.addAttribute("totalProjectCount", totalProjectCount);
+		model.addAttribute("totalBuyMemberCount", totalBuyMemberCount);
+				
+		String today;
+		today = service.getToday();
+		model.addAttribute("today", today);
+		
+		model.addAttribute("page", page);
+		
+		return ".partnerLayout.list";
+	}
+
+	@RequestMapping(value="/partner/brandList")
+	public String brandList(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="") String keyword,
 			Partner dto,
@@ -33,9 +55,8 @@ public class PartnerController {
 			HttpServletRequest req
 			) throws Exception {
 		
-		String cp = req.getContextPath();
 		
-		int rows = 12;
+		int rows = 3;
 		int total_page = 0;
 		int dataCount = 0;
 		
@@ -64,46 +85,18 @@ public class PartnerController {
 		
 		// 글 리스트
 		List<Partner> list = service.listPartner(map, dto.getBrandNo());
-	
 		
-		String query = "";
-        String listUrl = cp+"/partner/list";
-        String articleUrl = cp+"/partner/article?page=" + current_page;
-        if(keyword.length()!=0) {
-        	query =  "keyword=" + URLEncoder.encode(keyword, "utf-8");	
-        }
-        
-        if(query.length()!=0) {
-        	listUrl = cp+"/partner/list?" + query;
-        	articleUrl = cp+"/partner/article?page=" + current_page + "&"+ query;
-        }
-		
-		
-		String paging = myUtil.paging(current_page, total_page, listUrl);
+		String paging = myUtil.pagingMethod(current_page, total_page, "partnerBrandPage");
 		
 		model.addAttribute("list", list);
-		model.addAttribute("articleUrl", articleUrl);
-		model.addAttribute("page", current_page);
 		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("keyword", keyword);
 		
+		return "partner/brandList";
 		
-		int totalBrandCount = service.totalBrandCount();
-		int totalProjectCount = service.totalProjectCount();
-		int totalBuyMemberCount = service.totalBuyMemberCount();
-		
-		model.addAttribute("totalBrandCount", totalBrandCount);
-		model.addAttribute("totalProjectCount", totalProjectCount);
-		model.addAttribute("totalBuyMemberCount", totalBuyMemberCount);
-				
-		String today;
-		today = service.getToday();
-		model.addAttribute("today", today);
-		
-		
-		return ".partnerLayout.list";
 	}
 	
 	@RequestMapping(value="/partner/article")
@@ -125,7 +118,7 @@ public class PartnerController {
 		}
 		
 		Partner dto = service.readPartner(brandNo);
-		System.out.println(dto);
+		//System.out.println(dto);
 		if(dto == null) {
 			return "redirect:/partner/list?"+query;
 		}
@@ -157,7 +150,7 @@ public class PartnerController {
 			Model model
 		) throws Exception {
 		
-		int rows = 12;
+		int rows = 9;
 		int total_page;
 		int pDataCount;
 		
@@ -181,19 +174,7 @@ public class PartnerController {
 		List<Partner> plist = service.listProject(map);
 		
 		String paging = myUtil.pagingMethod(current_page, total_page, "listProjectPage");
-		
-		int projectTotalAmount = 0;
-		int projectGoalAmount = 0;
-		int percentage = 0;
-		
-		
-		dto = service.getProjectMoneyInfo(dto.getProjectNo());
-		
-		
-		projectTotalAmount = dto.getProjectTotalAmount();
-		projectGoalAmount = dto.getProjectGoalAmount();
-		percentage = dto.getPercentage();
-		
+
 		
 		model.addAttribute("plist", plist);
 		model.addAttribute("pDataCount", pDataCount);
@@ -201,9 +182,6 @@ public class PartnerController {
 		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
 		
-		model.addAttribute("projectTotalAmount", projectTotalAmount);
-		model.addAttribute("projectGoalAmount", projectGoalAmount);
-		model.addAttribute("percentage", percentage);
 		return "partner/articleList";
 	}
 	

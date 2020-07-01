@@ -34,15 +34,15 @@ ul.categoryContent2 a {
 
 .thumbnail {
   cursor: pointer;
-  width: 160px;
-  height: 110px;
+  width: 250px;
+  height: 135px;
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 5px;
   border: 1px solid #e5e5e5;
   text-align: center;
-  margin-right: 55px;
-  margin-top: 20px;
+  margin-right: 65px;
+  margin-top: 5px;
   margin-left: 40px;
 }
 
@@ -119,20 +119,24 @@ text-align: center;
 }
 
 .title{
-	width:220px; 
+	width:230px; 
 	margin-top: 65px;
 	font-weight: 800;
+	margin-left: 50px;
 }
 
+
 .name{
-	width:110px; 
+	width:150px; 
 	margin-top: 65px;
 }
 
 .ncontentn{
 	margin-top: 50px;
 	line-height :40px;
-	width: 300px;
+	width: 350px;
+	margin-left: 20px;
+	margin-right: 10px;
 }
 
 .like{
@@ -189,3 +193,7 @@ ul.detailNav a span.badge {
   color: #00b2b2;
 }
 
+.searchButton{
+	background-color: white;
+	border: 0px solid white;
+}
