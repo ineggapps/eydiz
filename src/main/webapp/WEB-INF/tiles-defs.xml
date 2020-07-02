@@ -38,7 +38,7 @@
 	
 	<definition name=".adminLayout" template="/WEB-INF/view/layout/admin/frame.jsp">
 	  	<put-attribute name="side" value="/WEB-INF/view/layout/admin/side.jsp" />
-		<put-attribute name="content" value="/WEB-INF/view/admin/view.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/admin/list.jsp" />
 	</definition>
 	<definition name=".adminLayout.*.*" extends=".adminLayout">
 		<put-attribute name="content" value="/WEB-INF/view/admin/{1}/{2}.jsp"/>
