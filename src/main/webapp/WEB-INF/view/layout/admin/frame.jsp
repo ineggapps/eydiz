@@ -14,19 +14,11 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/reward.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/story.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/dashboard.css" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <link rel="stylesheet" href="<%=cp%>/resource/css/admin/member.css" />
-=======
     <link rel="stylesheet" href="<%=cp%>/resource/css/admin/list.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/admin/view.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/admin/member/main.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/admin/member/brand.css" />
     
->>>>>>> 조장/master
-=======
-    <link rel="stylesheet" href="<%=cp%>/resource/css/admin/member.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/admin/list.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/admin/view.css" />
->>>>>>> 32df712dd0cc5c1ab87c47068887301a4e75ca61
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js/html5shiv.min.js"></script>
     <![endif]-->

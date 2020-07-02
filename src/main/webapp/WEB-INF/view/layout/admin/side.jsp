@@ -22,7 +22,6 @@
         </div>
         <ul class="subMenu">
           <li class="subMenuItem"><a href="#">브랜드 목록</a></li>
-          <li class="subMenuItem"><a href="#">프로젝트 목록</a></li>
         </ul>
       </div>
     </li>
@@ -34,8 +33,7 @@
         </div>
         <ul class="subMenu">
           <li class="subMenuItem"><a href="#">펀딩 목록</a></li>
-          <li class="subMenuItem"><a href="#">펀딩 조회</a></li>
-          <li class="subMenuItem"><a href="#">기부 목록</a></li>
+          <li class="subMenuItem"><a href="#">기부 목록</a></li> 
         </ul>
       </div>
     </li>
@@ -46,9 +44,8 @@
           <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
         </div>
         <ul class="subMenu">
-          <li class="subMenuItem"><a href="#" class="on">일반 회원</a></li>
-          <li class="subMenuItem"><a href="#">브랜드 회원</a></li>
-          <li class="subMenuItem"><a href="#">탈퇴한 회원</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/admin/member/memberlist" class="${menu=='member'?'on':''}">일반 회원</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/admin/member/brandMemberlist" class="${menu=='brand'?'on':''}">브랜드 회원</a></li>
         </ul>
       </div>
     </li>
