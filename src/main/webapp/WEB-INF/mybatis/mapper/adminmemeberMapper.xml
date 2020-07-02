@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="admin">
-	<select id="main" parameterType="map">
-		
+<mapper namespace="adminMember">
+
+	<sql id="where-list">
+		<if test="condition=='memberNo'">
+			( INSTR(memberNo, #{keyword}) &gt; 0 )
+		</if>
+		<if test="condition=='memberId'">
+			( INSTR(memberId, #{keyword}) &gt; 0 )
+		</if>
+	</sql>
+
+	<select id="main" parameterType="map" resultType="com.eydiz.admin.member.AdminMember">
+		SELECT memberNo, memberId, memberNickname, memberEmail
+		FROM member_detail
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"></include>
+			</if>
+		</where>
+		ORDER BY memberNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
-	<select id="list" parameterType="map">
-		
+	<select id="list" parameterType="map" resultType="com.eydiz.admin.member.AdminMember">
+		SELECT md.memberNo, memberId, brandName, managerName, managerEmail
+		FROM member_detail md
+		JOIN brand b ON md.memberNo = b.memberNo
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"></include>
+			</if>
+		</where>
+		ORDER BY memberNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
+	<select id="maindataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM member_detail
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"></include>
+			</if>
+		</where>
+	</select>
+	
+	<select id="listdataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM member_detail md
+		JOIN brand b ON md.memberNo=b.memberNo
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"></include>
+			</if>
+		</where>
+	</select>
 </mapper>
