@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eydiz.common.dao.CommonDAO;
-
+import com.eydiz.studio.Brand;
+import com.eydiz.studio.Project;
 
 @Service("brand.adminBrandService")
 public class AdminBrandServiceImpl implements AdminBrandService{
@@ -19,7 +20,7 @@ public class AdminBrandServiceImpl implements AdminBrandService{
 	public List<Brand> listBrand(Map<String, Object> map) {
 		List<Brand> list = null;
 		try {
-			list = dao.selectList("adminBrand.listBrand", map);
+			dao.selectList("brand.listBrand", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -27,29 +28,14 @@ public class AdminBrandServiceImpl implements AdminBrandService{
 	}
 
 	@Override
-	public int dataCount(Map<String, Object> map) {
-		int result = 0;
-		
+	public List<Project> listProject(Map<String, Object> map) {
+		List<Project> list = null;
 		try {
-			result = dao.selectOne("adminBrand.dataCount", map);
+			dao.selectList("brand.listProject", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return result;
-	}
-
-	@Override
-	public Brand readBrandList(int brandNo) {
-		Brand dto = null;
-		
-		try {
-			dto = dao.selectOne("adminBrand.readBrandList", brandNo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return dto;
+		return list;
 	}
 
 }
