@@ -9,6 +9,7 @@ import com.eydiz.studio.Reward;
 public interface DetailService {
 	public Project readProject(Map<String,Object> map);
 	public List<Reward> listRewards(int projectNo);
+	public Reward readReward(int rewardNo);
 	
 	public List<Project> listPopularProject();
 	

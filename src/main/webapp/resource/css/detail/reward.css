@@ -34,7 +34,7 @@ label.checkbox input {
 }
 
 .checkmark {
-	background-color:#fff;
+  background-color: #fff;
   transition: all linear 0.2s;
   position: absolute;
   top: 5px;
@@ -145,15 +145,14 @@ label.checkbox input:checked ~ .checkmark:after {
   display: inline-block;
 }
 
-
 .rewardItemBox dl > dt {
-	vertical-align:top;
+  vertical-align: top;
   margin: 0 50px;
   text-align: center;
 }
 
-.rewardItemBox dl > dt:first-child{
-	margin-top:30px;
+.rewardItemBox dl > dt:first-child {
+  margin-top: 30px;
 }
 
 .rewardItemBox dl > dd {
@@ -185,11 +184,11 @@ label.checkbox input:checked ~ .checkmark:after {
 
 .rewardOptionWrapper {
   margin: 20px 0;
-  display:none;
+  display: none;
 }
 
-.rewardOptionWrapper.active{
-  display:block;	
+.rewardOptionWrapper.active {
+  display: block;
 }
 
 .rewardOptionBox {
@@ -269,7 +268,9 @@ label.checkbox input:checked ~ .checkmark:after {
   .rewardItemBox dl > * {
     display: block;
   }
+
   .rewardItemBox dl > dt {
     margin: 0 0 20px !important;
   }
 }
+	

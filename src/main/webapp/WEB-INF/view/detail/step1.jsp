@@ -20,7 +20,7 @@
            <p>펀딩해주시는 금액에 따라 감사의 의미로 리워드를 제공해 드립니다.</p>
          </div>
          <div class="rewardItemContent">
-           <form method="post">
+           <form action="<%=cp %>/reward/${projectNo}/step1" method="post">
              <ul>
              <c:forEach var="item" items="${reward}">
                <li>
@@ -30,9 +30,9 @@
                        <label class="checkbox">
                          <input 
                          	type="checkbox" 
-                         	name="reward${item.rewardNo}" 
-                         	class="rewardId" 
-                         	value="1"
+                         	name="rewardNo" 
+                         	class="rewardNo"
+                         	value="${item.rewardNo}"
                          	${item.rewardNo==rewardNo?"checked=\"checked\"":""}		
                          />
                          <span class="checkmark"></span>
@@ -51,14 +51,14 @@
                            <p class="optionName">수량</p>
                            <input
                              type="text"
-                             name="requestQuantity"
+                             name="requestQuantity${item.rewardNo}"
                              value="1"
                              class="center"
                            />
                          </div>
                          <div class="rewardOptionBox optionAnswer">
                            <p class="optionName">옵션</p>
-                           <input type="text" name="optionAnswer" />
+                           <input type="text" name="optionAnswer${item.rewardNo}" />
                          </div>
                        </div>
                      </dd>
@@ -67,7 +67,7 @@
                </li>
 				</c:forEach>
              </ul>
-             <button type="button" class="btnSubmit">다음 단계로</button>
+             <button type="submit" class="btnSubmit">다음 단계로</button>
            </form>
          </div>
        </div>
