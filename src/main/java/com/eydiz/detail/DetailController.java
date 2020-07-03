@@ -45,7 +45,7 @@ public class DetailController implements Constant,  DetailConstant, MemberConsta
 			if(info!=null) {				
 				param.put(ATTRIBUTE_MEMBERNO, info.getMemberNo());
 			}
-			param.put(ATTRIBUTE_PROEJCTNO, projectNo);
+			param.put(ATTRIBUTE_PROJECTNO, projectNo);
 			project = service.readProject(param);
 			rewards = service.listRewards(projectNo);
 			popularProject = service.listPopularProject();
@@ -72,7 +72,7 @@ public class DetailController implements Constant,  DetailConstant, MemberConsta
 			Map<String, Object> map = new HashMap<>();
 			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
 			map.put(ATTRIBUTE_MEMBERNO, info.getMemberNo());
-			map.put(ATTRIBUTE_PROEJCTNO, projectNo);
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			result.put(JSON_RESULT, JSON_RESULT_OK);
 			boolean echo = service.toggleLike(map);
 			result.put(JSON_PROJECT_LIKE_RESULT, echo);

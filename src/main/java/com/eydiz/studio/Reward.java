@@ -13,6 +13,10 @@ public class Reward {
 	private String startShippingDate;
 	private int limitQuantity;
 	private int remainQuantity;
+	//////////////////////// buy_detail
+	private int requestQuantity;// 요청수량
+	private int purchasePrice;
+	private String optionAnswer;
 
 	public int getRewardNo() {
 		return rewardNo;
@@ -108,6 +112,30 @@ public class Reward {
 
 	public void setRemainQuantity(int remainQuantity) {
 		this.remainQuantity = remainQuantity;
+	}
+
+	public int getRequestQuantity() {
+		return requestQuantity;
+	}
+
+	public void setRequestQuantity(int requestQuantity) {
+		this.requestQuantity = requestQuantity;
+	}
+
+	public int getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(int purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	public String getOptionAnswer() {
+		return optionAnswer;
+	}
+
+	public void setOptionAnswer(String optionAnswer) {
+		this.optionAnswer = optionAnswer;
 	}
 
 	@Override

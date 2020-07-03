@@ -36,7 +36,7 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 		try {
 			SessionInfo info = (SessionInfo) req.getSession().getAttribute(SESSION_MEMBER);
 			Map<String, Object> map = new HashMap<>();
-			map.put(ATTRIBUTE_PROEJCTNO, projectNo);
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			map.put(ATTRIBUTE_MEMBERNO, info.getMemberNo());
 			Project project = detailService.readProject(map);
 			List<Reward> rewards = detailService.listRewards(projectNo);
@@ -54,23 +54,35 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 
 	@RequestMapping(value = "/{projectNo}/step1", method = RequestMethod.POST)
 	public String step1Submit(@PathVariable Integer projectNo, HttpServletRequest req,
-			@RequestParam(required = false, value="rewardNo") List<Integer> rewardNoList, @RequestParam Map<String, Object> param) {
+			@RequestParam(required = false, value = "rewardNo") List<Integer> rewardNoList,
+			@RequestParam Map<String, Object> param) {
 		try {
 			if (projectNo == null) {
 				throw new NullPointerException();
 			}
-			//리워드별로 수량
+			// 리워드별로 수량
 			HttpSession session = req.getSession();
 			SessionRewardInfo rInfo = new SessionRewardInfo();
 			rInfo.setProjectNo(projectNo);
 			Map<Integer, Reward> rewards = new HashMap<>();
 			rInfo.setRewards(rewards);
+			int totalAmount = 0;
+			int shipAmount = 0;
 			for (Integer rewardNo : rewardNoList) {
 				Reward r = detailService.readReward(rewardNo);
-				r.setAmount(Integer.parseInt((String)param.get(ATTRIBUTE_REQUEST_QUANTITY+rewardNo)));
-				r.setRewardOption((String)param.get(ATTRIBUTE_OPTION_ANSWER+rewardNo));
+				r.setRequestQuantity(Integer.parseInt((String) param.get(ATTRIBUTE_REQUEST_QUANTITY + rewardNo)));
+				r.setPurchasePrice(r.getAmount() * r.getRequestQuantity());
+				totalAmount += r.getPurchasePrice();
+				if (shipAmount < r.getShipAmount()) {
+					shipAmount = r.getShipAmount();
+				}
+				r.setOptionAnswer((String) param.get(ATTRIBUTE_OPTION_ANSWER + rewardNo));
 				rewards.put(rewardNo, r);
 			}
+			// 최종 결제해야 할 금액 계산하기
+			rInfo.setTotalAmount(totalAmount);
+			rInfo.setShipAmount(shipAmount);
+			rInfo.setFinalAmount(rInfo.getTotalAmount() + rInfo.getShipAmount());
 			session.setAttribute(SESSION_REWARD, rInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,12 +90,15 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 		}
 		return "redirect:" + String.format(API_REWARD_STEP2, projectNo);
 	}
-	
-	@RequestMapping(value="/{projectNo}/step2", method=RequestMethod.GET)
-	public String step2(HttpSession session){
+
+	@RequestMapping(value = "/{projectNo}/step2", method = RequestMethod.GET)
+	public String step2(@PathVariable Integer projectNo, HttpSession session, Model model) {
 		try {
+			Map<String, Object> map = new HashMap<>();
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			Project project = detailService.readProject(map);
 			SessionRewardInfo rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
-			
+			model.addAttribute(ATTRIBUTE_PROJECT, project);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

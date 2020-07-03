@@ -1,13 +1,19 @@
 @charset "UTF-8";
 /*hack*/
 .rewardItemTitle::after,
-.rewardItemBox input.checkbox::after {
+.rewardItemBox input.checkbox::after,
+.rewardBuyItem::after,
+.rewardShippingItem label::after {
   content: "";
   display: block;
   clear: both;
 }
 .btnSubmit {
   border: 0 none;
+}
+
+.center {
+  text-align: center;
 }
 
 /*옵션체크박스*/
@@ -77,7 +83,7 @@ label.checkbox input:checked ~ .checkmark:after {
 }
 .rewardInner {
   width: 860px;
-  margin: 0 auto;
+  margin: 10px auto;
 }
 
 /*리워드 프로세스*/
@@ -226,6 +232,93 @@ label.checkbox input:checked ~ .checkmark:after {
   text-align: center;
 }
 
+.rewardBuyOption {
+  display: inline-block;
+}
+.rewardBuyInformation {
+  float: right;
+}
+
+/*step2*/
+.rewardBuyList {
+  border-top: 1.5px solid #4a4a4a;
+  color: #4a4a4a;
+}
+.rewardBuyList li {
+  border-bottom: 0.5px dotted #4a4a4a;
+}
+.rewardBuyItem {
+  padding: 10px 0;
+}
+.rewardBuyTitle {
+  color: #00c4c4;
+  font-weight: 500;
+}
+.rewardBuyInformation {
+  float: right;
+}
+.rewardBuyInformation > *:first-child {
+  margin-right: 5px;
+}
+.rewardBuyText {
+  margin: 10px 0;
+}
+
+.rewardShippingWrapper h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+}
+
+.rewardBuySummary {
+  background-color: #ececec;
+}
+
+.rewardBuySummary dl {
+  padding: 15px 0;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+.rewardBuySummary dl > * {
+  display: table-cell;
+}
+.rewardBuySummary dl > dt {
+  width: 140px;
+  padding: 7px 0 7px 15px;
+}
+.rewardBuySummary dl > dd {
+  padding: 7px 15px 7px 0;
+  text-align: right;
+}
+
+.inputLabel {
+  display: block;
+  margin: 5px 0;
+}
+.rewardShippingWrapper {
+  margin: 30px 0;
+}
+
+.rewardShippingItem > * {
+  margin: 5px 0;
+}
+.rewardShippingItem input[type="text"] {
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 5px 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btnSubmit.noFull {
+  width: 140px;
+}
+
+/*반응형 웹*/
+
 @media (max-width: 960px) {
   .rewardProcess li {
     width: 60px;
@@ -265,6 +358,12 @@ label.checkbox input:checked ~ .checkmark:after {
     margin: 0 10px;
   }
 
+  .rewardInner.padding {
+    width: 90%;
+    margin: 0 auto !important;
+    padding: 0 30px;
+  }
+
   .rewardItemBox dl > * {
     display: block;
   }
@@ -273,4 +372,3 @@ label.checkbox input:checked ~ .checkmark:after {
     margin: 0 0 20px !important;
   }
 }
-	
