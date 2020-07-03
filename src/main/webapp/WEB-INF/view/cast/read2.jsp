@@ -4,7 +4,7 @@
 <%
    String cp = request.getContextPath();
 %>
-
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 <script type="text/javascript">
 function deleteCast(castNum, id) {
 	<c:if test="${sessionScope.member.memberId=='eydiz'}">
@@ -84,7 +84,6 @@ function deleteCast(castNum, id) {
 			var url="<%=cp%>/cast/insertCastLike";
 			var castNum=$(this).attr("data-castNum");
 			var query = {castNum:castNum};
-			alert(castNum);
 			var fn = function(data){
 				var state=data.state;
 				if(state=="true") {
@@ -172,7 +171,7 @@ function deleteCast(castNum, id) {
 	    					<div class="story-info">
 	    						<p class="board">이디즈 캐스트</p>
 								<p class="rtitle"> ${dto.castTitle} </p>
-								<p class="rlxk"><em class="editor">${dto.memberId}</em><em class="date">${dto.castCreated}</em><em class="liker">${dto.castLikeCount}</em></p>						
+								<p class="rlxk"><em class="editor">${dto.memberId}</em><em class="date">${dto.castCreated}</em><em class="liker">♥&nbsp;${dto.castLikeCount}</em></p>						
 							</div>
     					</div>
     					<div class="detail-content">
@@ -185,7 +184,7 @@ function deleteCast(castNum, id) {
 				
 				<div class="likebox">
 					<button type="button" class="like" data-castNum="${dto.castNum}">
-						
+						<i class="far fa-thumbs-up fa-3x"></i>
 					</button>
 				</div>
 				

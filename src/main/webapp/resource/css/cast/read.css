@@ -57,6 +57,7 @@
     font-weight: 350;
     color: #1D2129;
     line-height: 36px;
+    margin: 10px;
 }
 
 .comment {
@@ -95,6 +96,7 @@
     border: none;
     cursor: pointer;
     border: 1px solid #eeeeee;
+    margin-top: 5px;
 }
 
 .img {
@@ -112,6 +114,7 @@
     padding-right: max(10px, env(safe-area-inset-right));
     border-bottom: 1px solid #eeeeee;
     text-align: center;
+    padding-bottom: 10xp;
 }
 
 .likebox .like {
@@ -127,7 +130,7 @@
 }
 
 .commentbtn{
-	 display: inline-block;
+	display: inline-block;
     padding: 0 12px;
     height: 33px;
     line-height: 33px;
