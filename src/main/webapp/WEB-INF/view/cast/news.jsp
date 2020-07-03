@@ -77,7 +77,7 @@ $(function(){
 			 <ul class="desc">
                 <li><span> ${dto.memberId} </span></li>
                 <li><span> ${dto.castCreated} </span></li>
-                <li><span> ♥ </span></li>
+                <li><span> ♥&nbsp;${dto.castLikeCount}</span></li>
              </ul>
 		    </div>
             </c:forEach>
