@@ -21,7 +21,7 @@
           <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
         </div>
         <ul class="subMenu">
-          <li class="subMenuItem"><a href="#">브랜드 목록</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/admin/brand/list">브랜드 목록</a></li>
         </ul>
       </div>
     </li>
@@ -32,8 +32,8 @@
           <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
         </div>
         <ul class="subMenu">
-          <li class="subMenuItem"><a href="#">펀딩 목록</a></li>
-          <li class="subMenuItem"><a href="#">기부 목록</a></li> 
+          <li class="subMenuItem"><a href="<%=cp%>/admin/project/project?catagoryNo=1">펀딩 목록</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/admin/project/project?catagoryNo=2">기부 목록</a></li> 
         </ul>
       </div>
     </li>

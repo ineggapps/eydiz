@@ -20,7 +20,7 @@
 	</select>
 	
 	<select id="listGuide" parameterType="map" resultType="com.eydiz.guide.Guide"> 
-		SELECT faqNo, m.memberNo, memberNickname, faqSubject, faqContent, faqCreated, faqIcon, faqFilename
+		SELECT faqNo, m.memberNo, memberNickname, faqSubject, faqContent, TO_CHAR(faqCreated, 'YYYY-mm-dd') faqCreated, faqIcon, faqFilename
 		FROM faq f
 		JOIN member_detail m ON m.memberNo = f.memberNo
 		<where>

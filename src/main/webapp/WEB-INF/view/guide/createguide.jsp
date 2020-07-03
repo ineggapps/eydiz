@@ -45,6 +45,10 @@ function sendOk() {
 	        		<li> <p>파일 : </p> </li>
 	        		<li> <input type="file" name="upload"> </li>
 	        	</ul>
+	        	<ul>
+	        		<li> <p>아이콘 : </p> </li>
+	        		<li> <input type="text" name="faqIcon">${dto.faqIcon}</li>
+	        	</ul>
 	        	<br><br><br>
 	        	<ul>
 	        		<li>
