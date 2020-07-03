@@ -270,6 +270,6 @@ label.checkbox input:checked ~ .checkmark:after {
     display: block;
   }
   .rewardItemBox dl > dt {
-    margin: 0 0 20px;
+    margin: 0 0 20px !important;
   }
 }
