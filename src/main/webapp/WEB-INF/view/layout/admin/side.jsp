@@ -44,8 +44,8 @@
           <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
         </div>
         <ul class="subMenu">
-          <li class="subMenuItem"><a href="<%=cp%>/admin/member/memberlist" class="${menu=='member'?'on':''}">일반 회원</a></li>
-          <li class="subMenuItem"><a href="<%=cp%>/admin/member/brandMemberlist" class="${menu=='brand'?'on':''}">브랜드 회원</a></li>
+          <li class="subMenuItem"><a href="#">일반 회원</a></li>
+          <li class="subMenuItem"><a href="#">브랜드 회원</a></li>
         </ul>
       </div>
     </li>

@@ -26,9 +26,6 @@
         <a href="#"><span>스토리</span></a>
       </li>
       <li>
-        <a href="#"><span>펀딩 안내</span></a>
-      </li>
-      <li>
         <a href="#"><span>새소식</span><span class="badge">3</span></a>
       </li>
       <li>

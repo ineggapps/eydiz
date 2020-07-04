@@ -11,7 +11,7 @@
 	height: 800px;
 }
 
-.admin_list_project {
+.admin_list_brand {
 	text-align: center;
 	width: 100%;
 	height: 30px;
@@ -31,7 +31,7 @@
 
 .admin_list_oo {
 	line-height: 45px;
-	border: 1px solid #c0c0c0;
+	border: 2px solid #c0c0c0;
 }
 
 
