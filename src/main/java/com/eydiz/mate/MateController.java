@@ -193,7 +193,6 @@ public class MateController implements MemberConstant {
 	
 	@RequestMapping(value="insertMateProject", method=RequestMethod.POST)
 	@ResponseBody
-	
 	public Map<String, Object> insertMateProject(
 			@RequestParam int fmNo,
 			HttpSession session
