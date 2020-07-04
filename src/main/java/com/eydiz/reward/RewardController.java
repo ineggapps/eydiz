@@ -70,6 +70,7 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			int shipAmount = 0;
 			for (Integer rewardNo : rewardNoList) {
 				Reward r = detailService.readReward(rewardNo);
+				//수량 X 단가
 				r.setRequestQuantity(Integer.parseInt((String) param.get(ATTRIBUTE_REQUEST_QUANTITY + rewardNo)));
 				r.setPurchasePrice(r.getAmount() * r.getRequestQuantity());
 				totalAmount += r.getPurchasePrice();
