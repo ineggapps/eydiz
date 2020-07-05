@@ -6,7 +6,7 @@
 
 ![미리보기 이미지](https://raw.githubusercontent.com/ineggapps/eydiz/master/docs/eydis-studio-project.gif)
 
-![미리보기 이미지](https://raw.githubusercontent.com/ineggapps/eydiz/master/docs/eydis-detail-view.gif)
+![미리보기 이미지](https://raw.githubusercontent.com/ineggapps/eydiz/master/docs/eydiz-detail-view.gif)
 
 ## 세팅 방법
 
