@@ -45,7 +45,7 @@
 	
 	<!-- 리워드 읽기 -->
 	<select id="readReward" parameterType="Integer" resultType="com.eydiz.studio.Reward">
-		SELECT rewardNo, r.projectNo, amount, rewardTitle, rewardContent, rewardOption, 
+		SELECT rewardNo, r.projectNo, projectName, amount, rewardTitle, rewardContent, rewardOption, 
 			isShipping, shipAmount, TO_CHAR(startShippingDate, 'YYYY-MM-DD') startShippingDate, limitQuantity, remainQuantity
 		FROM reward r
 		JOIN project p ON r.projectNo = p.projectNo

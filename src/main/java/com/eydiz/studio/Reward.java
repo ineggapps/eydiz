@@ -3,6 +3,8 @@ package com.eydiz.studio;
 public class Reward {
 	private int rewardNo;
 	private int projectNo;
+	private int buyNo;
+	private String projectName;
 	private int brandNo; // 리워드 수정할 때 인증용도
 	private int amount;
 	private String rewardTitle;
@@ -32,6 +34,22 @@ public class Reward {
 
 	public void setProjectNo(int projectNo) {
 		this.projectNo = projectNo;
+	}
+
+	public int getBuyNo() {
+		return buyNo;
+	}
+
+	public void setBuyNo(int buyNo) {
+		this.buyNo = buyNo;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 	public int getBrandNo() {

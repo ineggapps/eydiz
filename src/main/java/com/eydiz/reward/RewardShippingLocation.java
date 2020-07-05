@@ -112,4 +112,36 @@ public class RewardShippingLocation extends MemberShippingLocation {
 		this.wasReceived = wasReceived;
 	}
 
+	public RewardShippingLocation() {
+	}
+	
+	public RewardShippingLocation(int buyNo, int memberNo, String phone, String zipCode, String address1,
+			String address2, String recipient, String message) {
+		this.buyNo = buyNo;
+		this.memberNo = memberNo;
+		this.phone = phone;
+		this.zipCode = zipCode;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.recipient = recipient;
+		this.message = message;
+	}
+
+	public RewardShippingLocation(int buyNo, int memberNo, String phone, String zipCode, String address1,
+			String address2, String recipient, String message, int courierNo, int invoiceNumber, int statusNo,
+			int wasReceived) {
+		this.buyNo = buyNo;
+		this.memberNo = memberNo;
+		this.phone = phone;
+		this.zipCode = zipCode;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.recipient = recipient;
+		this.message = message;
+		this.courierNo = courierNo;
+		this.invoiceNumber = invoiceNumber;
+		this.statusNo = statusNo;
+		this.wasReceived = wasReceived;
+	}
+
 }

@@ -1,7 +1,7 @@
 package com.eydiz.reward;
 
 public interface RewardConstant {
-	public static final String MAPPER_NAMESPACE = "reward";
+	public static final String MAPPER_NAMESPACE = "reward.";
 	
 	//SESSION
 	public static final String SESSION_REWARD = "reward";
