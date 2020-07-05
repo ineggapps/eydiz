@@ -392,6 +392,7 @@ CREATE SEQUENCE reward_buy_detail_seq
 CREATE TABLE reward_buy_cancel(
     cancelNo NUMBER NOT NULL,
     buyNo NUMBER NOT NULL,
+    canceledAmount NUMBER NOT NULL,
     memo VARCHAR2(4000) NOT NULL,
     canceledDate DATE DEFAULT SYSDATE NOT NULL, -- canceled <<< 주의
     CONSTRAINT REWARD_BUY_CANCEL_CANCELNO PRIMARY KEY(cancelNo),
