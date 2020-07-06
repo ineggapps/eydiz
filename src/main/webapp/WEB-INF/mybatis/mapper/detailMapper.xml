@@ -43,6 +43,16 @@
 		ORDER BY amount 
 	</select>
 	
+	<!-- 리워드 읽기 -->
+	<select id="readReward" parameterType="Integer" resultType="com.eydiz.studio.Reward">
+		SELECT rewardNo, r.projectNo, projectName, amount, rewardTitle, rewardContent, rewardOption, 
+			isShipping, shipAmount, TO_CHAR(startShippingDate, 'YYYY-MM-DD') startShippingDate, limitQuantity, remainQuantity
+		FROM reward r
+		JOIN project p ON r.projectNo = p.projectNo
+		WHERE r.rewardNo= #{rewardNo}
+		ORDER BY amount 
+	</select>
+	
 	<!-- 인기 프로젝트: 일단 끝나는 날이 가장 미래인 순으로 정렬 -->
 	<select id="listPopularProject" resultType="com.eydiz.studio.Project">
 		SELECT 

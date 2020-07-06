@@ -16,6 +16,10 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/dashboard.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/admin/list.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/admin/view.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/admin/member/main.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/admin/member/brand.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/admin/brand/list.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/admin/brand/read.css" />
     
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js/html5shiv.min.js"></script>

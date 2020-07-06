@@ -209,4 +209,6 @@
 	<update id="updateProjectStatus" parameterType="map">
 		UPDATE project SET statusNo=#{statusNo} WHERE <include refid="where-project-brand-no"/>
 	</update>
+	
+	
 </mapper>

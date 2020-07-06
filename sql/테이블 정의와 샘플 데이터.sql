@@ -355,6 +355,8 @@ CREATE TABLE reward_buy_overview(
     projectNo NUMBER NOT NULL,
     memberNo NUMBER NOT NULL,
     totalAmount NUMBER NOT NULL,
+    shipAmount NUMBER NOT NULL,
+    finalAmount NUMBER NOT NULL,
     boughtDate DATE DEFAULT SYSDATE NOT NULL,
     CONSTRAINT PK_REWARD_BUY_OVERVIEW_BUYNO PRIMARY KEY(buyNo),
     CONSTRAINT FK_REWARD_BUY_OVERVIEW_PROJECTNO FOREIGN KEY(projectNo) REFERENCES project(projectNo),
@@ -391,6 +393,7 @@ CREATE SEQUENCE reward_buy_detail_seq
 CREATE TABLE reward_buy_cancel(
     cancelNo NUMBER NOT NULL,
     buyNo NUMBER NOT NULL,
+    canceledAmount NUMBER NOT NULL,
     memo VARCHAR2(4000) NOT NULL,
     canceledDate DATE DEFAULT SYSDATE NOT NULL, -- canceled <<< 주의
     CONSTRAINT REWARD_BUY_CANCEL_CANCELNO PRIMARY KEY(cancelNo),
@@ -407,20 +410,18 @@ CREATE SEQUENCE reward_buy_cancel_seq
 
 CREATE TABLE reward_shipping_location(
     buyNo NUMBER NOT NULL,
-    memberNo NUMBER NOT NULL,
     phone VARCHAR2(100) NOT NULL,
     zipCode VARCHAR2(50) NOT NULL,
     address1 VARCHAR2(255) NOT NULL,
     address2 VARCHAR2(255) NOT NULL,
     recipient VARCHAR2(255) NOT NULL,
-    message VARCHAR2(255),
-    courierNo NUMBER NOT NULL,
-    invoiceNumber VARCHAR2(100) NOT NULL,
-    statusNo NUMBER NOT NULL,
-    wasReceived NUMBER(1) DEFAULT 0 NOT NULL, -- 수취확인 (1:수취확인)
+    message VARCHAR2(255), -- 배송 메시지
+    courierNo NUMBER, -- 택배사 번호
+    invoiceNumber VARCHAR2(100), -- 송장번호 번호
+    statusNo NUMBER, -- 배송상태번호
+    wasReceived NUMBER(1) DEFAULT 0, -- 수취확인 (1:수취확인)
     CONSTRAINT PK_REWARD_SHIPPING_LOCATION_BUYNO PRIMARY KEY(buyNo),
     CONSTRAINT FK_REWARD_SHIPPING_LOCATION_BUYNO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo),
-    CONSTRAINT FK_REWARD_SHIPPING_LOCATION_MEMBERNO FOREIGN KEY(memberNo) REFERENCES member(memberNo),
     CONSTRAINT FK_REWARD_SHIPPING_LOCATION_COURIERNO FOREIGN KEY(courierNo) REFERENCES courier(courierNo),
     CONSTRAINT FK_REWARD_SHIPPING_LOCATION_STATUSNO FOREIGN KEY(statusNo) REFERENCES shipping_status(statusNo)
 );

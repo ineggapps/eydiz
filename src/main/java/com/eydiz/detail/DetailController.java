@@ -21,36 +21,36 @@ import com.eydiz.studio.Reward;
 
 @Controller("detail.detailController")
 @RequestMapping("/detail/*")
-public class DetailController implements Constant,  DetailConstant, MemberConstant{
+public class DetailController implements Constant, DetailConstant, MemberConstant {
 
 	@Autowired
 	DetailService service;
-	
-	@RequestMapping(value="/")
+
+	@RequestMapping(value = "/")
 	public String main() {
 		return "redirect:/";
 	}
-	
-	@RequestMapping(value= {"/{projectNo}"})
+
+	@RequestMapping(value = { "/{projectNo}", "/{projectNo}/view" })
 	public String detailProject(@PathVariable Integer projectNo, Model model, HttpSession session) {
 		Project project = null;
 		List<Reward> rewards = null;
 		List<Project> popularProject = null;
 		try {
-			if(projectNo==null) {
+			if (projectNo == null) {
 				throw new Exception("프로젝트 번호를 찾을 수 없음");
 			}
 			Map<String, Object> param = new HashMap<>();
-			SessionInfo info = (SessionInfo)session.getAttribute(SESSION_MEMBER);
-			if(info!=null) {				
+			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
+			if (info != null) {
 				param.put(ATTRIBUTE_MEMBERNO, info.getMemberNo());
 			}
-			param.put(ATTRIBUTE_PROEJCTNO, projectNo);
+			param.put(ATTRIBUTE_PROJECTNO, projectNo);
 			project = service.readProject(param);
 			rewards = service.listRewards(projectNo);
 			popularProject = service.listPopularProject();
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
-			model.addAttribute(ATTRIBUTE_REWARD,rewards);
+			model.addAttribute(ATTRIBUTE_REWARD, rewards);
 			model.addAttribute(ATTRIBUTE_POPULAR_PROJECT, popularProject);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -58,21 +58,21 @@ public class DetailController implements Constant,  DetailConstant, MemberConsta
 		}
 		return ".detailLayout";
 	}
-	
-	//프로젝트 좋아요
-	@RequestMapping(value= {"/{projectNo}/like"})
+
+	// 프로젝트 좋아요 AJAX
+	@RequestMapping(value = { "/{projectNo}/like" })
 	@ResponseBody
-	public Map<String, Object> likeProject(@PathVariable Integer projectNo, HttpSession session){
+	public Map<String, Object> likeProject(@PathVariable Integer projectNo, HttpSession session) {
 		Map<String, Object> result = new HashMap<>();
 		try {
-			if(projectNo==null) {
+			if (projectNo == null) {
 				throw new Exception("There is no projectNo");
 			}
-			//좋아요 시도하기
+			// 좋아요 시도하기
 			Map<String, Object> map = new HashMap<>();
 			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
 			map.put(ATTRIBUTE_MEMBERNO, info.getMemberNo());
-			map.put(ATTRIBUTE_PROEJCTNO, projectNo);
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			result.put(JSON_RESULT, JSON_RESULT_OK);
 			boolean echo = service.toggleLike(map);
 			result.put(JSON_PROJECT_LIKE_RESULT, echo);
@@ -82,4 +82,5 @@ public class DetailController implements Constant,  DetailConstant, MemberConsta
 		}
 		return result;
 	}
+
 }

@@ -39,4 +39,6 @@ public interface StudioService {
 	
 	//제출
 	public void updateProjectStatus(int projectNo, int brandNo, int statusNo);
+	
+	// ----------------------------------------------------------------------------------
 }

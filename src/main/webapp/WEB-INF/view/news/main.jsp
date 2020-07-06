@@ -139,48 +139,6 @@ function insertForm() {
 	ajaxHTML(url, "get", query, selector);
 }
 
-// 글등록, 수정등록
-function sendOk(mode, page) {
-	var f = document.newsForm;
-	
-	var str = f.noticeSubject.value;
-	if(!str) {
-		alert("제목을 입력 하세요...");
-		f.noticeSubject.focus();
-		return;
-	}
-/*	
-	var str = f.noticeContent.value;
-	if(!str) {
-		alert("내용을 입력 하세요...");
-		f.noticeContent.focus();
-		return;
-	}
-*/		
-    var url="<%=cp%>/news/"+mode;
-    var query = new FormData(f); // IE는 10이상에서만 가능
-    
-	var fn = function(data){
-		var state=data.state;
-        if(state=="false") {
-            alert("게시물을 추가(수정)하지 못했습니다. !!!");
-            return false;
-        }
-        
-    	if(page==undefined || page=="") {
-    		page="1";
-    	}
-    	
-    	if(mode=="created") {
-    		reloadNews()
-    	} else {
-    		listPage(page);
-    	}
-	};
-	
-	ajaxFileJSON(url, "post", query, fn);		
-}
-
 // 글쓰기 취소, 수정 취소
 function sendCancel(page) {
 	if(page==undefined || page=="") {
