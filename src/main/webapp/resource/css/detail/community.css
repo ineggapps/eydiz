@@ -1,0 +1,225 @@
+@charset "utf-8";
+
+.btnGray{
+	border:0;
+	outline:0 !important;
+	background-color:#90949c;
+	color:#fff;
+	border-radius:3px;
+	padding:15px 30px;
+	transition:all ease-in-out 0.2s;
+}
+
+.btnGray:hover{
+	background-color:#60656a;
+}
+
+.per40{
+	width:40%;
+}
+
+.btnReply {
+  background-color: #fff;
+  padding: 5px 10px;
+  transition: all ease-in-out 0.2s;
+  border: 1px solid #ccced0;
+  border-radius: 3px;
+}
+
+.btnReply:hover {
+  background-color: #f0f2f5;
+}
+
+.commentWrap::after,
+.commentItem::after,
+.commentInput::after,
+.modalController::after {
+  clear: both;
+  display: block;
+  content: "";
+}
+
+.commentItem,
+.commentInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+}
+.commentSide,
+.commentInputSide {
+  width: 50px;
+  float: left;
+}
+
+.commentContent {
+  margin: 20px 0;
+}
+
+.commentArea,
+.commentInputContent {
+  width: calc(100% - 50px);
+  float: left;
+  word-break: break-all;
+}
+
+.commentHeader span.author {
+  font-weight: 600;
+}
+
+.commentHeader span.date {
+  font-weight: 300;
+  font-size: 0.95rem;
+}
+
+.commentInputContent{
+  background-color:#fff;
+  box-sizing: border-box;
+  border: 1px solid #d9d9d9;
+  position: relative;
+  height:36px;
+}
+
+.commentInputContent textarea{
+	height:32px;
+}
+
+.commentInputContent.focus{
+	border-color:#00c4c4;
+	height:100% !important;
+}
+.commentInputContentController{
+	display:none;
+}
+.commentInputContent.focus .commentInputContentController{
+	display:block;
+}
+
+.commentInput form{
+	height:100%;
+}
+
+.commentInput form,
+.commentInput input,
+.commentInput textarea {
+  border:0;
+  box-sizing:border-box;
+  width:100%;
+  resize:none;
+}
+
+.commentInput .btnSubmit{
+	border-radius:0;
+}
+
+
+.commentItem.reply {
+  margin-top: 20px;
+}
+
+.reply {
+  background-color: #f5f7fa;
+}
+
+/*프로필 아바타 사진*/
+span.commentAvatar {
+  display: block;
+  width: 36px;
+  height: 36px;
+  background-color: #a0a0a0;
+  border-radius: 100%;
+  text-indent: -1000em;
+}
+
+/*modal창*/
+.modalOverlay.show{
+	display:show;
+}
+.modalOverlay{
+	display:none;
+	z-index:9000;
+	position:fixed;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+	background-color:rgba(0,0,0,0.45);
+	overflow-y:auto;
+}
+
+.modal{
+	z-index:9000;
+	position:relative;
+	padding:50px;
+}
+.modal a.btnClose {
+    float: right;
+    position: relative;
+    top: -30px;
+}
+a.btnClose {
+    width: 50px;
+    height: 50px;
+}
+a.btnClose {
+    display: inline-block;
+    background-image: url(../../images/studio/close.png);
+    background-repeat: no-repeat;
+    background-size: 30%;
+    background-position: 50% 50%;
+}
+
+.modal{
+	border-radius:5px;
+	background-color:#fff;
+	width:800px;
+	margin:5% auto;
+}
+
+.modalContentWrap > *{
+	margin-bottom:20px;
+}
+
+.modalContentHeader{
+	margin-top:30px;
+}
+
+.modalContentHeader h2{
+	font-size:2rem;
+	font-weight:700;
+}
+
+.modalContentArea textarea{
+	width:100%;
+	height:100%;
+	min-height:200px;
+	resize:none;
+	border:1px solid #faf0f9;
+	padding:10px;
+	box-sizing:border-box;
+}
+
+.modalWarning{
+	background-color:#ffefef;
+	color:#ff6767;
+	border-box:box-sizing;
+	font-size:0.9rem;
+	padding:10px;
+}
+
+.modalController .btnSubmit{
+	float:right;
+	width:auto;
+	padding:15px 25px;
+	line-height:100%;
+}
+
+@media(max-width:960px){
+	.modal{
+		width:100%;
+		box-sizing:border-box;
+		padding-left:50px;
+		padding-right:50px;
+		border-radius:0;
+	}
+}
+

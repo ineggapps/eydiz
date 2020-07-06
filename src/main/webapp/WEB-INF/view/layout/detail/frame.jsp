@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="<%=cp%>/resource/css/detail.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/detail/reward.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/detail/step.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/detail/community.css" />
     <!--[if lt IE 9]>
       <script src="resource/js//html5shiv.min.js"></script>
     <![endif]-->
