@@ -1,5 +1,6 @@
 package com.eydiz.detail;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,12 +39,26 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public List<ProjectCommunity> listCommunityComments(int projectNo) {
 		List<ProjectCommunity> list = null;
 		try {
-			list = dao.selectList(MAPPER_NAMESPACE+"selectCommunityComment", projectNo);
+			list = dao.selectList(MAPPER_NAMESPACE + "selectCommunityComment", projectNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<ProjectCommunity> listCommunityComments(int projectNo, Integer parentCommentNo) {
+		List<ProjectCommunity> list = null;
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			map.put(ATTRIBUTE_PARENT_COMMENT_NO, parentCommentNo);
+			list = dao.selectList(MAPPER_NAMESPACE+"selectCommunityCommentReply", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,11 +74,11 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 			throw e;
 		}
 	}
-	
+
 	@Override
 	public void deleteCommunityComment(ProjectCommunity dto) throws Exception {
 		try {
-			dao.deleteData(MAPPER_NAMESPACE+"deleteCommunity", dto);
+			dao.deleteData(MAPPER_NAMESPACE + "deleteCommunity", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

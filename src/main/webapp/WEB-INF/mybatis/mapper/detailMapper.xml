@@ -99,6 +99,14 @@
 		ORDER BY commentNo DESC
 	</select>
 	
+	<!-- 커뮤니티 답글 조회하기 -->
+	<select id="selectCommunityCommentReply" parameterType="map" resultType="com.eydiz.studio.ProjectCommunity">
+		SELECT commentNo, parentCommentNo, projectNo, memberId, content, createdDate
+		FROM project_community
+		WHERE projectNo= #{projectNo} AND parentCommentNo=#{parentCommentNo}
+		ORDER BY commentNo DESC
+	</select>
+	
 	<!-- 커뮤니티 댓글 작성하기 / 삭제하기 -->
 	<insert id="insertCommunity" parameterType="com.eydiz.studio.ProjectCommunity">
 		INSERT INTO project_community(commentNo, parentCommentNo, projectNo, memberId, content, createdDate)

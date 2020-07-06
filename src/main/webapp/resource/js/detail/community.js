@@ -15,6 +15,30 @@ $(function(){
 	})
 })
 
+//댓글 불러오기
+$(function(){
+	const url = cp + "/detail/" + projectNo + "/community/view";
+	const method = "post";
+	const query = "projectNo="+projectNo;
+	const $wrap = $(".commentWrap");
+	const $target= $(".parent.commentItem");
+	ajaxJSON(url, method, query).then(function(data){
+		var $element; 
+		const comments = data.comments;
+		$.each(comments, function(idx, item){
+			$element = $target.clone().appendTo($wrap).removeClass("hide");
+			console.log($element);
+			$element.find("span.parent.author").eq(0).text(item.memberId);
+			$element.find("span.parent.date").eq(0).text(item.createdDate);
+			$element.find("div.parent.commentContent").eq(0).text(item.content);
+			
+			//답글 개수 등...
+		});
+	}).catch(function(e){
+		console.log(e);
+	});
+});
+
 //댓글쓰기
 $(function(){
 	const $modalForm = $("form[name=modalForm]");

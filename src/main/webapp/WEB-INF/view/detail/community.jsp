@@ -11,17 +11,16 @@
 <hr class="divider deeper" />
 <!--커뮤니티 덧글 영역-->
 <div class="commentWrap">
-  <c:forEach var="item" items="${comments}">
-  <div class="commentItem">
+  <div class="parent commentItem hide">
     <div class="commentSide">
-      <span class="commentAvatar">${item.memberId}</span>
+      <span class="parent commentAvatar"></span>
     </div>
     <div class="commentArea">
       <div class="commentHeader">
-        <span class="author">${item.memberId}</span>
-        <span class="date">${item.createdDate}</span>
+        <span class="parent author">${item.memberId}</span>
+        <span class="parent date">${item.createdDate}</span>
       </div>
-      <div class="commentContent">
+      <div class="parent commentContent">
         ${item.content}
       </div>
       <div class="commentButtonReply">
@@ -63,7 +62,6 @@
       </div>
     </div>
   </div>
-  </c:forEach>
 </div>
 <!--커뮤니티 덧글 영역 끝-->
 <div class="modalOverlay">

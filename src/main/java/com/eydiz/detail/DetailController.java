@@ -123,12 +123,35 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
 			model.addAttribute(ATTRIBUTE_REWARD, rewards);
 			model.addAttribute(ATTRIBUTE_POPULAR_PROJECT, popularProject);
-			//댓글
-			model.addAttribute(ATTRIBUTE_COMMUNITY_COMMENTS, service.listCommunityComments(projectNo));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return ".detailLayout.community";
+	}
+	
+	//댓글 보기
+	@RequestMapping(value="/{projectNo}/community/view")
+	@ResponseBody
+	public Map<String, Object> communityCommentView(@PathVariable Integer projectNo, Integer parentCommentNo){
+		//로그인 필요없음
+		Map<String, Object> map = new HashMap<>();
+		List<ProjectCommunity> list = null; 
+		try {
+			if(projectNo==null) {
+				throw new NullPointerException();
+			}
+			if(parentCommentNo==null) {//댓글
+				list = service.listCommunityComments(projectNo);
+			}else {//답글
+				list = service.listCommunityComments(projectNo, parentCommentNo);
+			}
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+			map.put(ATTRIBUTE_COMMUNITY_COMMENTS,list);
+		} catch (Exception e) {
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return map;
 	}
 	
 	//댓글 쓰기
