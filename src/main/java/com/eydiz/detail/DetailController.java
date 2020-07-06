@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +26,31 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 
 	@Autowired
 	DetailService service;
-
+	
+	private String getRealURI(String requestURI, String contextPath, int projectNo) {
+		return requestURI.substring(contextPath.length() + REQUEST_MAPPING.length()+ (projectNo+"/").length());
+	}
+	
+	private void addModelURIAttribute(Model model, HttpServletRequest req, Integer projectNo) {
+		StringBuilder uri = new StringBuilder(req.getRequestURI());
+		if (req.getQueryString() != null && req.getQueryString().length() > 0) {
+			uri.append("?" + req.getQueryString());
+		}
+		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath(), projectNo));
+	}
+	
 	@RequestMapping(value = "/")
 	public String main() {
 		return "redirect:/";
 	}
 
 	@RequestMapping(value = { "/{projectNo}", "/{projectNo}/view" })
-	public String detailProject(@PathVariable Integer projectNo, Model model, HttpSession session) {
+	public String detailProject(@PathVariable Integer projectNo, Model model, HttpSession session, HttpServletRequest req) {
 		Project project = null;
 		List<Reward> rewards = null;
 		List<Project> popularProject = null;
 		try {
+			addModelURIAttribute(model, req, projectNo);
 			if (projectNo == null) {
 				throw new Exception("프로젝트 번호를 찾을 수 없음");
 			}
@@ -52,6 +66,7 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
 			model.addAttribute(ATTRIBUTE_REWARD, rewards);
 			model.addAttribute(ATTRIBUTE_POPULAR_PROJECT, popularProject);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "redirect:/";
@@ -62,9 +77,10 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 	// 프로젝트 좋아요 AJAX
 	@RequestMapping(value = { "/{projectNo}/like" })
 	@ResponseBody
-	public Map<String, Object> likeProject(@PathVariable Integer projectNo, HttpSession session) {
+	public Map<String, Object> likeProject(@PathVariable Integer projectNo, Model model, HttpSession session, HttpServletRequest req) {
 		Map<String, Object> result = new HashMap<>();
 		try {
+			addModelURIAttribute(model, req, projectNo);
 			if (projectNo == null) {
 				throw new Exception("There is no projectNo");
 			}
@@ -83,4 +99,60 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 		return result;
 	}
 
+	@RequestMapping(value="/{projectNo}/community")
+	public String community(@PathVariable Integer projectNo, HttpSession session, Model model, HttpServletRequest req) throws Exception {
+		Project project = null;
+		List<Reward> rewards = null;
+		List<Project> popularProject = null;
+		try {
+			addModelURIAttribute(model, req, projectNo);			
+			if (projectNo == null) {
+				throw new Exception("프로젝트 번호를 찾을 수 없음");
+			}
+			Map<String, Object> param = new HashMap<>();
+			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
+			if (info != null) {
+				param.put(ATTRIBUTE_MEMBERNO, info.getMemberNo());
+			}
+			param.put(ATTRIBUTE_PROJECTNO, projectNo);
+			project = service.readProject(param);
+			rewards = service.listRewards(projectNo);
+			popularProject = service.listPopularProject();
+			model.addAttribute(ATTRIBUTE_PROJECT, project);
+			model.addAttribute(ATTRIBUTE_REWARD, rewards);
+			model.addAttribute(ATTRIBUTE_POPULAR_PROJECT, popularProject);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ".detailLayout.community";
+	}
+	
+	@RequestMapping(value="/{projectNo}/news")
+	public String news(@PathVariable Integer projectNo, HttpSession session, Model model, HttpServletRequest req) throws Exception{
+		Project project = null;
+		List<Reward> rewards = null;
+		List<Project> popularProject = null;
+		try {
+			addModelURIAttribute(model, req, projectNo);
+			if (projectNo == null) {
+				throw new Exception("프로젝트 번호를 찾을 수 없음");
+			}
+			Map<String, Object> param = new HashMap<>();
+			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
+			if (info != null) {
+				param.put(ATTRIBUTE_MEMBERNO, info.getMemberNo());
+			}
+			param.put(ATTRIBUTE_PROJECTNO, projectNo);
+			project = service.readProject(param);
+			rewards = service.listRewards(projectNo);
+			popularProject = service.listPopularProject();
+			model.addAttribute(ATTRIBUTE_PROJECT, project);
+			model.addAttribute(ATTRIBUTE_REWARD, rewards);
+			model.addAttribute(ATTRIBUTE_POPULAR_PROJECT, popularProject);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ".detailLayout.news";
+	}
 }

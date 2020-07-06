@@ -36,18 +36,7 @@
       </header>
       <main id="content">
         <div class="contentWrapper">
-	      	<article class="row">
-			  <div class="rowFull">
-			    <div class="detailWrap">
-			      <div class="detailContent">
-			      	<tiles:insertAttribute name="content"/>
-			      </div>
-			      <div class="detailSide">
-			        <tiles:insertAttribute name="side"/>
-			      </div>
-			    </div>
-			  </div>
-			</article>
+			<tiles:insertAttribute name="content"/>
         </div>
       </main>
       <footer id="footer">

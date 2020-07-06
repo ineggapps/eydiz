@@ -5,15 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-<div class="detailSummary">
 <p>
-	<img class="fullWidth" src="${project.projectImageUrl}" alt="${project.projectName}" />
+community
 </p>
-<p>
-	${project.projectSummary}
-</p>
-</div>
-<hr class="divider deeper" />
-<div class="detailStory">
-	${project.projectStory}
-</div>

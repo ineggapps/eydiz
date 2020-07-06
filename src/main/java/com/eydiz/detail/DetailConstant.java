@@ -2,6 +2,8 @@ package com.eydiz.detail;
 
 public interface DetailConstant {
 	public final static String MAPPER_NAMESPACE = "detail.";
+	
+	public final static String REQUEST_MAPPING = "/detail";
 
 	//ATTRIBUTE
 	public final static String ATTRIBUTE_PROJECT = "project";
@@ -11,6 +13,7 @@ public interface DetailConstant {
 	
 	public final static String ATTRIBUTE_PROJECTNO = "projectNo";
 	public final static String ATTRIBUTE_MEMBERNO = "memberNo";
+	public final static String ATTRIBUTE_URI = "uri";
 	
 	//JSON
 	public final static String JSON_PROJECT_LIKE_RESULT = "like_result";

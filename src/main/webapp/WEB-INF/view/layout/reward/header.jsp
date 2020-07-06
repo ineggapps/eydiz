@@ -40,32 +40,3 @@
     </button>
   </div>
 </div>
-<article class="row">
-  <div class="rowFull">
-    <div class="projectTitle">
-      <div
-        class="overlay"
-        style="
-          background-image: url('${project.projectImageUrl}');
-        "
-      ></div>
-      <h3><span>${project.categoryName}</span></h3>
-      <h2>${project.projectName}</h2>
-    </div>
-  </div>
-</article>
-<nav class="row">
-  <div class="rowFull">
-    <ul class="detailNav">
-      <li ${uri=="/view"?"class=\"on\"":""} ${uri=="/"?"class=\"on\"":""}>
-        <a href="<%=cp%>/detail/${projectNo}/view"><span>스토리</span></a>
-      </li>
-      <li  ${uri=="/news"?"class=\"on\"":""}>
-        <a href="<%=cp%>/detail/${projectNo}/news"><span>새소식</span><span class="badge">3</span></a>
-      </li>
-      <li  ${uri=="/community"?"class=\"on\"":""}>
-        <a href="<%=cp%>/detail/${projectNo}/community"><span>커뮤니티</span><span class="badge">20</span></a>
-      </li>
-    </ul>
-  </div>
-</nav>
