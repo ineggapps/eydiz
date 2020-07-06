@@ -28,16 +28,14 @@ $(function () {
 });
 //댓글 영역 비우기
 function clearComments() {
-  const $commentItem = $(".parent.commentItem");
-  $commentItem.each(function (idx) {
-    if (!$(this).hasClass("hide")) {
-      //샘플용 레이아웃 지우면 안 됨!!!
-      $(this).remove();
-    }
-  });
+  const $commentWrap = $(".commentWrap");
+  const $commentItem = $commentWrap.find(".parent.commentItem.hide").eq(0).clone(true);
+  $commentWrap.empty();
+  $commentWrap.prepend($commentItem);
 }
 // 댓글 불러오기
 function loadComment() {
+	clearComments();
   const url = cp + "/detail/" + projectNo + "/community/view";
   const method = "post";
   const query = "projectNo=" + projectNo;
@@ -47,7 +45,6 @@ function loadComment() {
     .then(function (data) {
       var $element;
       const comments = data.comments;
-      clearComments();
       $.each(comments, function (idx, item) {
         $element = $target.clone(true).appendTo($wrap).removeClass("hide");
         $element.attr("data-comment-no", item.commentNo);
@@ -154,14 +151,17 @@ $(function () {
     const content = $(this).closest(".commentInputContent").find("textarea").val();
     const parentCommentNo = $(this).closest(".parent.commentItem").data("comment-no");
     const q = { parentCommentNo: parentCommentNo, content: content };
-    console.log(q);
     submitComment(q)
       .then(function (data) {
         if (data.result == "ok") {
           alert("답글을 작성했습니다.");
           //fake comment
           const $element = $commentItem.clone(true).appendTo($wrap).removeClass("hide");
-          renderComment($element, { memberNickname: memberNickname, date: new Date(), content: content });
+          renderComment($element, {
+            memberNickname: memberNickname,
+            date: new Date(),
+            content: content,
+          });
         }
       })
       .catch(function (e) {
