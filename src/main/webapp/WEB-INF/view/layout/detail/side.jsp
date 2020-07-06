@@ -14,7 +14,7 @@
   <p class="stateText"><strong>${project.projectAttainAmount}</strong>원 펀딩</p>
   <p class="stateText"><strong>000</strong>명의 서포터</p>
 </div>
-<a href="#" class="btnSubmit">펀딩하기</a>
+<a href="<%=cp %>/reward/${projectNo}/step1" class="btnSubmit">펀딩하기</a>
 <ul class="detailSideController">
   <li>
     <button type="button" class="btnPlain" id="btnLike"><span class="icon heart ${project.myLikeCount==1?'on':''}"></span><span class="count">${project.likeCount}</span></button>
@@ -107,7 +107,7 @@
   </div>
   </c:forEach>
 </div>
-<div class="reports rowBox border">
+<%--div class="reports rowBox border">
   <div class="rowBoxInner">
     <h4>신고하기란?</h4>
     <p class="gray small">
@@ -118,7 +118,7 @@
       >프로젝트 신고하기</a
     >
   </div>
-</div>
+</div> --%>
 <div class="rank rowBox border">
   <div class="rowBoxInner">
     <h4 class="title large">인기 프로젝트</h4>

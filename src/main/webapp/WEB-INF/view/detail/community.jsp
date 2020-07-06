@@ -26,38 +26,36 @@
       <div class="commentButtonReply">
         <button
           type="button"
-          onclick="javascript:console.log('누름')"
           class="btnReply"
         >
           답글
         </button>
       </div>
-      <div class="commentItem reply">
+      <div class="commentReplyWrap">
+      <div class="commentItem reply hide">
         <div class="commentSide">
-          <span class="commentAvatar">프로필사진</span>
+          <span class="reply commentAvatar">프로필사진</span>
         </div>
         <div class="commentArea">
           <div class="commentHeader">
-            <span class="author">또치</span>
-            <span class="date">2020-09-00</span>
+            <span class="reply author">또치</span>
+            <span class="reply date">2020-09-00</span>
           </div>
           <div class="commentContent">
             답글 내용
           </div>
         </div>
       </div>
+      </div>
       <div class="commentInput reply">
         <div class="commentInputSide">
-          <span class="commentAvatar">프로필사진</span>
+          <span class="reply commentAvatar">프로필사진</span>
         </div>
         <div class="commentInputContent">
-        	<form>
-        	  <input type="hidden" name="parentCommentNo" value=""/>
 	          <textarea placeholder="답글을 입력하세요" name="content" data-autoresize="true"></textarea>
 	        	<div class="commentInputContentController">
-	        		<button type="button" class="btnSubmit">등록</button>
+	        		<button type="button" class="reply btnSubmit">등록</button>
 	        	</div>
-        	</form>
         </div>
       </div>
     </div>
@@ -80,7 +78,7 @@
 				<p>최근 브랜드에게 또는 제3자에게 허위사실 유포하거나 비방하는 댓글로 인해 당사자 간에 법적분쟁이 발생하고 있습니다. 악의적 댓을 작성하면 명예훼손, 모욕 등 법적으로 책임을 질 수 있습니다.</p>
 			</div>
 			<div class="modalController">
-				<button class="btnSubmit" type="button">등록</button>
+				<button class="comment btnSubmit" type="button">등록</button>
 			</div>
 		</div>
 		</form>

@@ -46,8 +46,16 @@
 .commentInput {
   width: 100%;
   box-sizing: border-box;
-  padding: 20px;
 }
+
+.commentItem{
+	padding:20px 20px 0 20px;
+}
+
+.commentInput{
+	padding:20px;
+}
+
 .commentSide,
 .commentInputSide {
   width: 50px;
@@ -56,6 +64,11 @@
 
 .commentContent {
   margin: 20px 0;
+  line-height: 1.5rem;
+}
+
+.commentButtonReply{
+	margin-bottom:20px;
 }
 
 .commentArea,
@@ -106,7 +119,7 @@
 .commentInput textarea {
   border:0;
   box-sizing:border-box;
-  width:100%;
+  width:99%;
   resize:none;
 }
 
@@ -115,12 +128,14 @@
 }
 
 
-.commentItem.reply {
+.commentReplyWrap{
+  background-color: #f5f7fa;
   margin-top: 20px;
 }
 
-.reply {
+.commentInput.reply{
   background-color: #f5f7fa;
+	padding-top:20px;
 }
 
 /*프로필 아바타 사진*/

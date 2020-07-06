@@ -93,18 +93,28 @@
 	
 	<!-- 커뮤니티 댓글 조회하기 -->
 	<select id="selectCommunityComment" parameterType="Integer" resultType="com.eydiz.studio.ProjectCommunity">
-		SELECT commentNo, parentCommentNo, projectNo, memberId, content, createdDate
-		FROM project_community
-		WHERE projectNo=#{projectNo}
+		SELECT commentNo, pc.parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate, 
+					memberImageUrl, NVL(replyCount, 0) replyCount
+		FROM project_community pc
+		JOIN member_detail m ON m.memberId = pc.memberId
+		LEFT OUTER JOIN(
+			SELECT parentCommentNo, count(*) replyCount
+			FROM project_community
+            GROUP BY parentCommentNo
+		) parentCmt ON parentCmt.parentCommentNo = commentNo
+		WHERE pc.projectNo= #{projectNo} AND pc.parentCommentNo IS NULL
 		ORDER BY commentNo DESC
 	</select>
 	
 	<!-- 커뮤니티 답글 조회하기 -->
 	<select id="selectCommunityCommentReply" parameterType="map" resultType="com.eydiz.studio.ProjectCommunity">
-		SELECT commentNo, parentCommentNo, projectNo, memberId, content, createdDate
-		FROM project_community
-		WHERE projectNo= #{projectNo} AND parentCommentNo=#{parentCommentNo}
-		ORDER BY commentNo DESC
+		SELECT commentNo, parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate,
+					memberImageUrl
+		FROM project_community pc
+		JOIN member_detail m ON m.memberId = pc.memberId
+		WHERE pc.projectNo= #{projectNo}
+		AND parentCommentNo =#{parentCommentNo}
+		ORDER BY commentNo
 	</select>
 	
 	<!-- 커뮤니티 댓글 작성하기 / 삭제하기 -->

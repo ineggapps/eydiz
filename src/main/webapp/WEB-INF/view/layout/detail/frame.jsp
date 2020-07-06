@@ -24,9 +24,12 @@
     <script>
     const cp = "<%=cp%>";
     const projectNo = ${project.projectNo};
+    const memberNickname ="${sessionScope.member.memberNickname}";
     </script>
     <script src="<%=cp %>/resource/js/jquery-3.5.1.min.js"></script>
+    <!--[if IE]> 
 	<script type="text/javascript" src="<%=cp %>/resource/js/lib/bluebird.js"></script>    
+	<![endif]-->
 	<script type="text/javascript" src="<%=cp %>/resource/js/detail/detail.js"></script>    
 	<script type="text/javascript" src="<%=cp %>/resource/js/detail/reward.js"></script>    
   </head>
