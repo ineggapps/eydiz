@@ -26,9 +26,6 @@
         <a href="#"><span>스토리</span></a>
       </li>
       <li>
-        <a href="#"><span>펀딩 안내</span></a>
-      </li>
-      <li>
         <a href="#"><span>새소식</span><span class="badge">3</span></a>
       </li>
       <li>
@@ -125,7 +122,7 @@
         <div class="rewards rowBox">
           <h3>리워드 선택</h3>
           <c:forEach var="item" items="${reward}">
-          <div class="rewardItem">
+          <div class="rewardItem" data-reward-no="${item.rewardNo}">
             <div class="overlay">
               <p class="text">이 리워드 펀딩하기</p>
             </div>

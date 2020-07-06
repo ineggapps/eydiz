@@ -113,6 +113,14 @@
 	<definition name=".schoolLayout" template="/WEB-INF/view/layout/school/frame.jsp">
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/school/header.jsp" />
 		<put-attribute name="content" value="/WEB-INF/view/layout/school/main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/school/footer.jsp" />
+	</definition>
+	
+	<definition name=".schoolLayout.*.*" extends=".schoolLayout">
+		<put-attribute name="content" value="/WEB-INF/view/school/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".schoolLayout.*" extends=".schoolLayout">
+		<put-attribute name="content" value="/WEB-INF/view/school/{1}.jsp"/>
 	</definition>
 	
 	<!-- Eunmi -->
@@ -172,10 +180,11 @@
 	</definition>
 	
 	<definition name=".adminProjectLayout" template="/WEB-INF/view/layout/adminProject/frame.jsp">
-	  	<put-attribute name="header" value="/WEB-INF/view/layout/adminProject/header.jsp" />
-		<put-attribute name="content" value="/WEB-INF/view/adminProject/main.jsp" />
+	  <put-attribute name="header" value="/WEB-INF/view/layout/adminProject/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/layout/adminProject/main.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/view/layout/adminProject/footer.jsp" />
 	</definition>
+  
 	<definition name=".adminProjectLayout.*.*" extends=".adminProjectLayout">
 		<put-attribute name="content" value="/WEB-INF/view/adminProject/{1}/{2}.jsp"/>
 	</definition>

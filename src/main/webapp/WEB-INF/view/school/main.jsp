@@ -5,339 +5,181 @@
    String cp = request.getContextPath();
 %>
 
+<style type="text/css">
+.titleDate {
+	display: inline-block;
+	font-weight: 600; 
+	font-size: 15px;
+	font-family: 나눔고딕, "맑은 고딕", 돋움, sans-serif;
+	padding:2px 4px 4px;
+	text-align:center;
+	position: relative;
+	top: 4px;
+}
+.btnDate {
+	display: inline-block;
+	font-size: 13px;
+	font-family: 나눔고딕, "맑은 고딕", 돋움, sans-serif;
+	color:#333333;
+	padding:3px 5px 5px;
+	border:1px solid #cccccc;
+    background-color:#fff;
+    text-align:center;
+    cursor: pointer;
+    border-radius:2px;
+}
+
+.textDate {
+      font-weight: 500; cursor: pointer;  display: block; color:#333333; line-height: 40px;
+}
+.preMonthDate, .nextMonthDate {
+      color:#aaaaaa;
+}
+.nowDate {
+      color:#111111;
+}
+.saturdayDate{
+      color:#0000ff;
+}
+.sundayDate{
+      color:#ff0000;
+}
+
+.barselect {
+	cursor: pointer;
+}
+
+.select-menu {
+	color: red;
+}
+</style>
+
+<script type="text/javascript">
+$(function(){
+	var today="${today}";
+	var date="${date}";
+	$(".schoolcalender .textDate").each(function (i) {
+        var s=$(this).attr("data-date");
+        if(s==today) {
+        	$(this).parent().css("background", "#ffffd9");
+        }
+        if(s==date) {
+        	$(this).css("font-weight", "600");
+        }
+    });
+});
+
+$(function(){
+	$(".contentBar .barselect").click(function(){
+		var sccaNo = $(this).attr("data-sccaNo");
+		var url="<%=cp%>/school/main?sccaNo="+sccaNo;
+		location.href=url;
+	});
+});
+
+function changeDate(date) {
+	var url="<%=cp%>/school/main?date="+date;
+	var sccaNo = "${sccaNo}";
+	if(sccaNo!="0") {
+		url+="&sccaNo="+sccaNo;
+	}
+	location.href=url;
+}
+
+$(function(){
+	$(".smallCalendar .textDate").click(function(){
+		var date = $(this).attr("data-date");
+		changeDate(date);
+	});
+});
+
+</script>
+
 <article class="row">
-  <div class="rowFull">
-    <h2>슬라이드</h2>
-  </div>
-</article>
-<article class="row">
-  <div class="rowInner">
-    <h2 class="hidden">전체 분류</h2>
-    <ul class="categoryContent">
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">전체보기</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"
-            ><span class="circle"></span><span class="text">테크&centerdot;가전</span></a
-          >
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"
-            ><span class="circle"></span><span class="text">패션&centerdot;잡화</span></a
-          >
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">뷰티</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">푸드</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">홈리빙</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">디자인소품</span></a>
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"
-            ><span class="circle"></span><span class="text">여행&centerdot;레저</span></a
-          >
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"
-            ><span class="circle"></span
-            ><span class="text">스포츠&centerdot;모빌리티</span></a
-          >
-        </div>
-      </li>
-      <li>
-        <div class="categoryItem">
-          <a href="#"><span class="circle"></span><span class="text">반려동물</span></a>
-        </div>
-      </li>
-    </ul>
-  </div>
-</article>
-<article class="row">
-  <div class="rowInner">
-    <div class="titleBar">
-      <div class="title"><h2>전체보기</h2></div>
-      <div class="option">
-        <form name="titleBarForm">
-          <input
-            type="text"
-            name="keyword"
-            class="keyword transparent"
-            placeholder="검색"
-          />
-          <a href="#" class="searchButton"><span class="hidden">검색</span></a>
-          <select name="sort1">
-            <option value="1">전체</option>
-            <option value="2">진행 중</option>
-            <option value="3">종료된</option>
-          </select>
-          <select name="sort2">
-            <option value="1">추천순</option>
-            <option value="2">인기순</option>
-            <option value="3">모금액순</option>
-            <option value="4">마감 임박순</option>
-            <option value="5">최신순</option>
-            <option value="6">응원 참여자순</option>
-          </select>
-        </form>
-      </div>
-    </div>
-    <ul class="gridContent">
-      <li class="item">
-        <div class="itemInner">
-          <div
-            class="thumbnail"
-            style="
-              background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');
-            "
-          >
-            <span class="hidden">드럼</span>
-          </div>
-          <div class="textWrap">
-            <div class="subject">
-              <a href="#"
-                ><span
-                  >[1억 앵콜] 드럼? 게임하듯 쉽게 따라하세요, 어느덧 나도 드럼 고수!</span
-                ></a
-              >
-            </div>
-            <ul class="desc">
-              <li><span class="category">게임&centerdot;취미</span></li>
-              <li><span class="name">모플레이</span></li>
-            </ul>
-            <div class="status">
-              <div class="progress">
-                <div class="progressBar" style="width: 100%;"></div>
-              </div>
-              <ul>
-                <li>
-                  <span class="percent">330%</span>&centerdot;<span class="totalAmount"
-                    >338,050,000원</span
-                  >
-                </li>
-                <li><span class="remainDays">9일 남음</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="itemInner">
-          <div
-            class="thumbnail"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1517420879524-86d64ac2f339?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1226&q=80');
-            "
-          >
-            <span class="hidden">드럼</span>
-          </div>
-          <div class="textWrap">
-            <div class="subject">
-              <a href="#"
-                ><span
-                  >[글로벌 최초 펀딩] 스마트워치가 3만원대? 가성비 끝판왕! 헬로우
-                  솔라</span
-                ></a
-              >
-            </div>
-            <ul class="desc">
-              <li><span class="category">테크&centerdot;가전</span></li>
-              <li><span class="name">주식회사 위즈굿</span></li>
-            </ul>
-            <div class="status">
-              <div class="progress">
-                <div class="progressBar" style="width: 30%;"></div>
-              </div>
-              <ul>
-                <li>
-                  <span class="percent">30%</span>&centerdot;<span class="totalAmount"
-                    >338,050,000원</span
-                  >
-                </li>
-                <li><span class="remainDays">11일 남음</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="itemInner">
-          <div
-            class="thumbnail"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1563822249510-04678c78df85?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80');
-            "
-          >
-            <span class="hidden">드럼</span>
-          </div>
-          <div class="textWrap">
-            <div class="subject">
-              <a href="#"
-                ><span
-                  >[누적3억펀딩, 제주귤이 돌아왔다] 여름에도 만나는 상큼시원
-                  하우스감귤</span
-                ></a
-              >
-            </div>
-            <ul class="desc">
-              <li><span class="category">푸드</span></li>
-              <li><span class="name">아일랜드박스</span></li>
-            </ul>
-            <div class="status">
-              <div class="progress">
-                <div class="progressBar" style="width: 50%;"></div>
-              </div>
-              <ul>
-                <li>
-                  <span class="percent">50%</span>&centerdot;<span class="totalAmount"
-                    >338,050,000원</span
-                  >
-                </li>
-                <li><span class="remainDays">9일 남음</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="itemInner">
-          <div
-            class="thumbnail"
-            style="
-              background-image: url('https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');
-            "
-          >
-            <span class="hidden">드럼</span>
-          </div>
-          <div class="textWrap">
-            <div class="subject">
-              <a href="#"
-                ><span
-                  >[1억 앵콜] 드럼? 게임하듯 쉽게 따라하세요, 어느덧 나도 드럼 고수!</span
-                ></a
-              >
-            </div>
-            <ul class="desc">
-              <li><span class="category">게임&centerdot;취미</span></li>
-              <li><span class="name">모플레이</span></li>
-            </ul>
-            <div class="status">
-              <div class="progress">
-                <div class="progressBar" style="width: 100%;"></div>
-              </div>
-              <ul>
-                <li>
-                  <span class="percent">330%</span>&centerdot;<span class="totalAmount"
-                    >338,050,000원</span
-                  >
-                </li>
-                <li><span class="remainDays">9일 남음</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="itemInner">
-          <div
-            class="thumbnail"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1517420879524-86d64ac2f339?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1226&q=80');
-            "
-          >
-            <span class="hidden">드럼</span>
-          </div>
-          <div class="textWrap">
-            <div class="subject">
-              <a href="#"
-                ><span
-                  >[글로벌 최초 펀딩] 스마트워치가 3만원대? 가성비 끝판왕! 헬로우
-                  솔라</span
-                ></a
-              >
-            </div>
-            <ul class="desc">
-              <li><span class="category">테크&centerdot;가전</span></li>
-              <li><span class="name">주식회사 위즈굿</span></li>
-            </ul>
-            <div class="status">
-              <div class="progress">
-                <div class="progressBar" style="width: 30%;"></div>
-              </div>
-              <ul>
-                <li>
-                  <span class="percent">30%</span>&centerdot;<span class="totalAmount"
-                    >338,050,000원</span
-                  >
-                </li>
-                <li><span class="remainDays">11일 남음</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="itemInner">
-          <div
-            class="thumbnail"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1563822249510-04678c78df85?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80');
-            "
-          >
-            <span class="hidden">드럼</span>
-          </div>
-          <div class="textWrap">
-            <div class="subject">
-              <a href="#"
-                ><span
-                  >[누적3억펀딩, 제주귤이 돌아왔다] 여름에도 만나는 상큼시원
-                  하우스감귤</span
-                ></a
-              >
-            </div>
-            <ul class="desc">
-              <li><span class="category">푸드</span></li>
-              <li><span class="name">아일랜드박스</span></li>
-            </ul>
-            <div class="status">
-              <div class="progress">
-                <div class="progressBar" style="width: 50%;"></div>
-              </div>
-              <ul>
-                <li>
-                  <span class="percent">50%</span>&centerdot;<span class="totalAmount"
-                    >338,050,000원</span
-                  >
-                </li>
-                <li><span class="remainDays">9일 남음</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
+	<div class="schoolForm">
+		<div class="schoolimage">
+			<div class="imageindex">
+				<div class="schoolimginto">
+					<h2>eydiz School</h2>
+					<p>이디즈 스쿨은 최고의 크라우드펀딩 콘텐츠를 개발하고 전파합니다.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="schoolcontent">
+		<h2>이디즈스쿨</h2>
+		<p>이디즈스쿨은 국내 최고의 크라우드 펀딩 전문가 그룹이 약 3,000여개의 펀딩 사례를 연구 및 분석한 결과를 바탕으로 예비 메이커에게 온.오프라인 교육 서비스를 제공합니다.</p>
+	</div>
+	<div class="scontent">
+		<h2>이디즈스쿨 온라인 강의</h2>
+		<p>이디즈펀딩의 핵심적인 기본개념을 온라인 강의를 통해 쉽고 빠르게 이해할 수 있습니다.</p>
+	</div>
+	<div class="contentBar">
+		<ul>
+			<li class="bartitle"><a href="#">모집중인 이디즈스쿨 강의 리스트</a></li>
+			<li class="barselect ${sccaNo==0?'select-menu':'' }" data-sccaNo="0" >전체 보기</li>
+			<li class="barselect ${sccaNo==1?'select-menu':'' }" data-sccaNo="1" >입문</li>
+			<li class="barselect ${sccaNo==2?'select-menu':'' }" data-sccaNo="2" >실전</li>
+			<li class="barselect ${sccaNo==3?'select-menu':'' }" data-sccaNo="3" >멘토링</li>
+			<li class="barselect ${sccaNo==4?'select-menu':'' }" data-sccaNo="4" >특강</li>
+		</ul>
+	</div>
+	<div class="slistForm">
+		<div class="schoollist-content" style="display: inline-block; vertical-align: top;">
+			<div class="schoollist">
+				<ul>
+					<li>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</li>
+				</ul>	
+			</div>
+			<div class="schoollist">
+				<ul>
+					<li>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</li>
+				</ul>	
+			</div>
+			<div class="schoollist">
+				<ul>
+					<li>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</li>
+				</ul>	
+			</div>
+			<div class="schoollist">
+				<ul>
+					<li>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</li>
+				</ul>	
+			</div>
+		</div>
+		<div class="schoolcalender" style="display: inline-block; vertical-align: top;">
+			<table style="width: 100%; border-spacing: 0;" >
+				  <tr height="35">
+				   	<td align="center">
+				   		<span class="btnDate" onclick="changeDate('${today}');">오늘</span>
+				   		<span class="btnDate" onclick="changeDate('${preMonth}');">＜</span>
+				   		<span class="titleDate">${year}年 ${month}月</span>
+				   		<span class="btnDate" onclick="changeDate('${nextMonth}');">＞</span>
+				   	</td>
+				  </tr>
+			</table>
+			
+			<table class="smallCalendar" style="width: 100%; margin-top:5px; border-spacing: 1px;  " >
+				<tr align="center" height="40" bgcolor="#ffffff">
+					<td width="40" style="color:#ff0000;">일</td>
+					<td width="40">월</td>
+					<td width="40">화</td>
+					<td width="40">수</td>
+					<td width="40">목</td>
+					<td width="40">금</td>
+					<td width="40" style="color:#0000ff;">토</td>
+				</tr>
+						   		
+			    <c:forEach var="row" items="${days}" >
+					<tr align="left" height="40" bgcolor="#ffffff">
+						<c:forEach var="d" items="${row}">
+							<td align="center" class="tdDay" valign="middle">
+								${d}
+							</td>
+						</c:forEach>
+					</tr>
+			    </c:forEach>
+			</table>			
+		</div>
+	</div>
 </article>

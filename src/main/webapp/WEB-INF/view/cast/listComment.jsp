@@ -6,6 +6,8 @@
 	String cp=request.getContextPath();
 %>
 
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
 <table style='width: 100%; margin: 10px auto 30px; border-spacing: 0px;'>
 	<thead id='listCommentHeader'>
 		<tr height='35'>
@@ -20,20 +22,22 @@
 	
 	<tbody id='listCommentBody'>
 	<c:forEach var="dto" items="${listComment}">
-	    <tr height='35' style='background: #eeeeee;'>
-	       <td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-right:none;'>
-	           <span><b>${dto.memberId}</b></span>
-	        </td>
-	       <td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-left:none;' align='right'>
-	           <span>${dto.commentCreated}</span> |
-	           <c:if test="${dto.memberId == sessionScope.member.memberId ||  sessionScope.member.memberId == 'eydiz' }">
-	                <span class="deleteComment" style="cursor: pointer;" data-commentNum='${dto.commentNum}' data-pageNo='${pageNo}'>삭제</span>
-	           	</c:if>
-	        </td>
+	    <tr style="border-top: 1px solid #eeeeee;">
+	       <td height="30px;" style="border: none; padding: 10px; vertical-align: baseline;">
+	         <i class="far fa-user-circle fa-1x" style="font-size: 30px;"></i><span style="position:relative;top:-5px;">&nbsp;&nbsp;${dto.memberId}</span>         
+	       </td>
 	    </tr>
 	    <tr>
-	        <td colspan='2' valign='top' style='padding:5px 5px;'>
-	              ${dto.commentContent}
+	       <td  style="border: none; padding: 10px;">
+	             ${dto.commentContent}
+	       </td>
+	    </tr>
+	    <tr>
+	       <td height="20px;" style="border-bottom: 1px solid #eeeeee; padding: 10px; color: #A4A4A4">
+	           <span>${dto.commentCreated}</span> |
+	           <c:if test="${dto.memberId == sessionScope.member.memberId ||  sessionScope.member.memberId == 'eydiz' }">
+	                <span class="deleteComment" style="cursor: pointer; color: #6E6E6E " data-commentNum='${dto.commentNum}' data-pageNo='${pageNo}'>삭제</span>
+	           </c:if>
 	        </td>
 	    </tr>
 	</c:forEach>

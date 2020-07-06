@@ -70,8 +70,8 @@ function toggleLike() {
     })
     .catch(function (e) {
       console.log(e.responseText);
-      if(e.message==null){
-    	  location.href= cp + "/member/login";
+      if (e.message == null) {
+        location.href = cp + "/member/login";
       }
     });
 }
@@ -79,5 +79,13 @@ function toggleLike() {
 $(function () {
   $("#btnLike").click(function () {
     toggleLike();
+  });
+});
+
+$(function () {
+  $(".rewardItem").click(function () {
+    const rewardNo = $(this).attr("data-reward-no");
+    const url = cp + "/reward/" + projectNo + "/step1?rewardNo=" + rewardNo;
+    location.href = url;
   });
 });

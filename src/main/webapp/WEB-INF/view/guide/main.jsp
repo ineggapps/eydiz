@@ -6,6 +6,7 @@
    String cp = request.getContextPath();
 %>
 
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 <script type="text/javascript">
 function updateGuide(faqNo) {
 	var q = "faqNo="+faqNo;
@@ -49,6 +50,7 @@ $(function() {
 			        <div class="guidebox">
 			        	<a href="#" class="boxcontent">
 			        		<br><br>
+			        		<span class="guideicon">${dto.faqIcon}</span>
 			        		<span>${dto.faqSubject}</span><br><br><br><br><br>
 			        		<span>${dto.memberNickname}</span>&nbsp;&nbsp;&nbsp;<span style="float: right;">${dto.faqCreated}</span>
 			        	</a>
