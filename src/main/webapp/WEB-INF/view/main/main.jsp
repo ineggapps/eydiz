@@ -5,11 +5,11 @@
    String cp = request.getContextPath();
 %>
 
-<article class="row">
+<%--article class="row">
   <div class="rowFull">
     <h2>슬라이드</h2>
   </div>
-</article>
+</article--%>
 <article class="row">
   <div class="rowInner">
     <h2 class="hidden">전체 분류</h2>
@@ -24,7 +24,7 @@
 	    <c:forEach var="item" items="${fundingCategory}">
 	      <li>
 	        <div class="categoryItem">  
-	          <a href="#"><span class="circle" style="background-image: url(${item.imageUrl})"></span><span class="text">${item.categoryName}</span></a>
+	          <a href="<%=cp %>/category/${item.categoryNo}"><span class="circle" style="background-image: url(${item.imageUrl})"></span><span class="text">${item.categoryName}</span></a>
 	        </div>
 	      </li>
 	    </c:forEach>

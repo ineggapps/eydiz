@@ -143,6 +143,7 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 		try {
 			rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
 			rInfo.setBuyNo(rewardService.nextBuyNo());
+			System.out.println(rInfo.getBuyNo());
 			memberInfo = (SessionInfo) session.getAttribute(SESSION_MEMBER);
 			if (projectNo == null || projectNo == 0 || rInfo == null || memberInfo == null) {
 				return "redirect:/";
