@@ -11,17 +11,18 @@
 <hr class="divider deeper" />
 <!--커뮤니티 덧글 영역-->
 <div class="commentWrap">
+  <c:forEach var="item" items="${comments}">
   <div class="commentItem">
     <div class="commentSide">
-      <span class="commentAvatar">프로필사진</span>
+      <span class="commentAvatar">${item.memberId}</span>
     </div>
     <div class="commentArea">
       <div class="commentHeader">
-        <span class="author">김길동</span>
-        <span class="date">2020-07-00</span>
+        <span class="author">${item.memberId}</span>
+        <span class="date">${item.createdDate}</span>
       </div>
       <div class="commentContent">
-        덧글 내용
+        ${item.content}
       </div>
       <div class="commentButtonReply">
         <button
@@ -62,6 +63,7 @@
       </div>
     </div>
   </div>
+  </c:forEach>
 </div>
 <!--커뮤니티 덧글 영역 끝-->
 <div class="modalOverlay">

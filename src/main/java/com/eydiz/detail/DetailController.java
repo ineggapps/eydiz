@@ -12,12 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eydiz.common.Constant;
 import com.eydiz.member.MemberConstant;
 import com.eydiz.member.SessionInfo;
 import com.eydiz.studio.Project;
+import com.eydiz.studio.ProjectCommunity;
 import com.eydiz.studio.Reward;
 
 @Controller("detail.detailController")
@@ -99,7 +101,7 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 		return result;
 	}
 
-	@RequestMapping(value="/{projectNo}/community")
+	@RequestMapping(value="/{projectNo}/community", method=RequestMethod.GET)
 	public String community(@PathVariable Integer projectNo, HttpSession session, Model model, HttpServletRequest req) throws Exception {
 		Project project = null;
 		List<Reward> rewards = null;
@@ -121,11 +123,56 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
 			model.addAttribute(ATTRIBUTE_REWARD, rewards);
 			model.addAttribute(ATTRIBUTE_POPULAR_PROJECT, popularProject);
+			//댓글
+			model.addAttribute(ATTRIBUTE_COMMUNITY_COMMENTS, service.listCommunityComments(projectNo));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return ".detailLayout.community";
 	}
+	
+	//댓글 쓰기
+	@RequestMapping(value="/{projectNo}/community/create", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> communityCommentCreate(@PathVariable Integer projectNo, ProjectCommunity dto, HttpSession session){
+		Map<String, Object> map = new HashMap<>();
+		try {
+			//commentNo, parentCommentNo(답글인 경우), projectNo, memberId, content, createdDate
+			//폼에서는 댓글이면 content만, 답글이면 content와 parentCommentNo만 받아 올 것임!
+			if(projectNo==null) {
+				throw new NullPointerException();
+			}
+			dto.setProjectNo(projectNo);
+			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
+			dto.setMemberId(info.getMemberId());
+			service.insertCommunityComment(dto);
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
+	//댓글 삭제
+	@RequestMapping(value="/{projectNo}/community/delete", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> communityCommentDelete(ProjectCommunity dto, HttpSession session){
+		Map<String, Object> map = new HashMap<>();
+		try {
+			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
+			dto.setMemberId(info.getMemberId());
+			service.deleteCommunityComment(dto);
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return map;
+	}
+	
 	
 	@RequestMapping(value="/{projectNo}/news")
 	public String news(@PathVariable Integer projectNo, HttpSession session, Model model, HttpServletRequest req) throws Exception{

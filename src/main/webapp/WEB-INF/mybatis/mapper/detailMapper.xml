@@ -91,4 +91,31 @@
 		where projectNo=#{projectNo} AND memberNo=#{memberNo}
 	</delete>
 	
+	<!-- 커뮤니티 댓글 조회하기 -->
+	<select id="selectCommunityComment" parameterType="Integer" resultType="com.eydiz.studio.ProjectCommunity">
+		SELECT commentNo, parentCommentNo, projectNo, memberId, content, createdDate
+		FROM project_community
+		WHERE projectNo=#{projectNo}
+		ORDER BY commentNo DESC
+	</select>
+	
+	<!-- 커뮤니티 댓글 작성하기 / 삭제하기 -->
+	<insert id="insertCommunity" parameterType="com.eydiz.studio.ProjectCommunity">
+		INSERT INTO project_community(commentNo, parentCommentNo, projectNo, memberId, content, createdDate)
+		VALUES(project_community_seq.NEXTVAL, #{parentCommentNo, jdbcType=INTEGER}, #{projectNo}, #{memberId}, #{content}, SYSDATE)
+	</insert>
+	
+	<!-- 커뮤니티 댓글 수정하기 -->
+	<update id="updateCommunity" parameterType="com.eydiz.studio.ProjectCommunity">
+		UPDATE project_community
+		SET content=#{content}
+		WHERE commentNo = #{commentNo} AND memberId=#{memberId}
+	</update>
+	
+	<!-- 커뮤니티 댓글 삭제하기 -->
+	<delete id="deleteCommunity" parameterType="com.eydiz.studio.ProjectCommunity">
+		DELETE FROM project_community 
+		WHERE commentNo=#{commentNo} AND memberId=#{memberId}
+	</delete>
+	
 </mapper>

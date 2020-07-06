@@ -10,6 +10,7 @@ public interface DetailConstant {
 	public final static String ATTRIBUTE_REWARD = "reward";
 	public final static String ATTRIBUTE_POPULAR_PROJECT = "popularProject";
 	public final static String ATTRIBUTE_REWARDNO = "rewardNo";
+	public final static String ATTRIBUTE_COMMUNITY_COMMENTS = "comments";
 	
 	public final static String ATTRIBUTE_PROJECTNO = "projectNo";
 	public final static String ATTRIBUTE_MEMBERNO = "memberNo";

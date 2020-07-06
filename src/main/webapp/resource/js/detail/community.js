@@ -1,11 +1,17 @@
 //모달창 제어
 const $overlay = $(".modalOverlay");
+function openModal(){
+	$overlay.addClass("show");
+}
+function closeModal(){
+	$overlay.removeClass("show");
+}
 $(function(){
 	$("#btnCommentModal").click(function(){
-		$overlay.addClass("show");
+		openModal();
 	});
 	$overlay.find(".btnClose").click(function(){
-		$overlay.removeClass("show");
+		closeModal();
 	})
 })
 
@@ -13,7 +19,18 @@ $(function(){
 $(function(){
 	const $modalForm = $("form[name=modalForm]");
 	$overlay.find(".btnSubmit").click(function(){
-		console.log($modalForm.serialize());
+		query = $modalForm.serialize();
+		const url = cp + "/detail/" + projectNo + "/community/create";
+		console.log(query);
+		ajaxJSON(url, "post", query).then(function(data){
+			if(data.result=="ok"){
+				alert("댓글을 작성했습니다.");
+				//TODO: 댓글 새로 불러오기 명령어 호출하기
+				closeModal();
+			}
+		}).catch(function(e){
+			console.log(e);
+		});
 	});
 });
 
@@ -25,11 +42,9 @@ $(function(){
 		$(this).addClass("focus");
 	});
 	$commentInputContent.on("focusout", function(){
-		$commentInputContent.removeClass("focus");
-	});
-	$commentInputContent.find("textarea").on("focusout",function(){
-		const content = $(this).text();
+		const content = $(this).find("textarea").val();
 		if(!content.trim()){
+			$commentInputContent.removeClass("focus");
 			$(this).css("height","32px");
 		}
 	});
