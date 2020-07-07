@@ -397,7 +397,7 @@ CREATE TABLE reward_buy_cancel(
     memo VARCHAR2(4000) NOT NULL,
     canceledDate DATE DEFAULT SYSDATE NOT NULL, -- canceled <<< 주의
     CONSTRAINT REWARD_BUY_CANCEL_CANCELNO PRIMARY KEY(cancelNo),
-    CONSTRAINT REWARD_BUY_CANCEL_BUYNO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo)
+    CONSTRAINT REWARD_BUY_CANCEL_BUYNO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo),
 );
 
 CREATE SEQUENCE reward_buy_cancel_seq
@@ -772,3 +772,42 @@ INSERT INTO story_category(storyCnum, stroyCname) VALUES(3,'프로젝트후기')
 COMMIT;
 
 --샘플 데이터 은진
+
+
+--구매내역 초기화 코드
+delete from reward_shipping_location;
+delete from reward_buy_detail;
+delete from reward_buy_overview;
+commit;
+
+--리워드 구매 시 트리거
+
+CREATE OR REPLACE TRIGGER insertTriggerRewardBuyDetail
+AFTER INSERT ON reward_buy_detail
+FOR EACH ROW
+
+BEGIN
+     UPDATE reward SET remainQuantity = remainQuantity - :NEW.requestQuantity
+           WHERE rewardNo = :NEW.rewardNo;
+END;
+/
+
+CREATE OR REPLACE TRIGGER updateTriggerRewardBuyDetail
+AFTER UPDATE ON reward_buy_detail
+FOR EACH ROW
+BEGIN
+     UPDATE reward SET remainQuantity = remainQuantity + :OLD.requestQuantity - :NEW.requestQuantity
+            WHERE rewardNo = :NEW.rewardNo;
+END;
+/
+
+CREATE OR REPLACE TRIGGER deleteTriggerRewardBuyDetail
+AFTER DELETE ON reward_buy_detail
+FOR EACH ROW
+BEGIN
+     UPDATE reward SET remainQuantity = remainQuantity + :OLD.requestQuantity
+           WHERE rewardNo = :OLD.rewardNo;
+END;
+/
+
+-- 리워드 구매 취소 시 트리거 쓸 수 있을까?
