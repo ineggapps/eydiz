@@ -14,7 +14,22 @@
 		WHERE parentCategoryNo = 1
 	</select>
 	
+	<select id="selectCategoryName" parameterType="Integer" resultType="String">
+		SELECT categoryName
+		FROM project_category
+		WHERE categoryNo=#{categoryNo}
+	</select>
+	
 	<!-- 나중에 WHERE조건까지 추가하기 -->
+	<select id="fundingDataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM project
+		WHERE statusNo=5
+					AND FLOOR(projectEndDate - SYSDATE) >= 0
+		<if test="categoryNo != null and categoryNo > 0">
+			AND p.categoryNo = #{categoryNo}
+		</if>
+	</select>
 	<select id="listFunding" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT 
 			p.projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, 
@@ -39,6 +54,7 @@
 			AND p.categoryNo = #{categoryNo}
 			</if>
 		ORDER BY projectNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 	

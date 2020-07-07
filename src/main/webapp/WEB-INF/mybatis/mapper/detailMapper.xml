@@ -94,8 +94,8 @@
 		FROM project p
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
-		ORDER BY projectEndDate DESC
 		WHERE statusNo = 5
+		ORDER BY projectEndDate DESC
 		OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
 	</select>
 	

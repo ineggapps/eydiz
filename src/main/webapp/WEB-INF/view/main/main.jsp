@@ -36,7 +36,7 @@
 <article class="row">
   <div class="rowInner">
     <div class="titleBar">
-      <div class="title"><h2>전체보기</h2></div>
+      <div class="title"><h2>${empty categoryName?"전체 보기":categoryName}</h2></div>
       <div class="option">
         <form name="titleBarForm">
           <input
@@ -62,16 +62,16 @@
         </form>
       </div>
     </div>
-    <ul class="gridContent">
-      <c:forEach var="dto" items="${project}">
-      <li class="item">
+    <ul class="gridContent"></ul>
+    <ul class="gridContent sample">
+      <li class="item sample">
         <div class="itemInner">
           <div
             class="thumbnail"
             style="
               background-image: url('${dto.projectImageUrl}');
             "
-            onclick="javascript:location.href='<%=cp %>/detail/${dto.projectNo}'"
+            onclick="goToLocation(this)";
           >
             <span class="hidden">${dto.projectName}</span>
           </div>
@@ -94,7 +94,7 @@
               <ul>
                 <li>
                   <span class="percent"><fmt:formatNumber type = "number" pattern = "###.##" value = "${dto.attainRate*100}" />%</span>&centerdot;<span class="totalAmount"
-                    ><fmt:formatNumber type = "number" pattern = "#,###" value = "${dto.projectGoalAmount}" />원</span
+                    ><fmt:formatNumber type = "number" pattern = "#,###" value = "${dto.totalAmount}" />원</span
                   >
                 </li>
                 <li><span class="remainDays">${dto.remainDays}일 남음</span></li>
@@ -103,7 +103,6 @@
           </div>
         </div>
       </li>
-      </c:forEach>
     </ul>
   </div>
   <script src="<%=cp%>/resource/js/main/main.js"></script>
