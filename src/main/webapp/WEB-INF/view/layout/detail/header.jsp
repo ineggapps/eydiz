@@ -61,10 +61,10 @@
         <a href="<%=cp%>/detail/${projectNo}/view"><span>스토리</span></a>
       </li>
       <li  ${uri=="/news"?"class=\"on\"":""}>
-        <a href="<%=cp%>/detail/${projectNo}/news"><span>새소식</span><span class="badge">3</span></a>
+        <a href="<%=cp%>/detail/${projectNo}/news"><span>새소식</span><span class="badge">${project.newsCount}</span></a>
       </li>
       <li  ${uri=="/community"?"class=\"on\"":""}>
-        <a href="<%=cp%>/detail/${projectNo}/community"><span>커뮤니티</span><span class="badge">20</span></a>
+        <a href="<%=cp%>/detail/${projectNo}/community"><span>커뮤니티</span><span class="badge">${project.communityCount}</span></a>
       </li>
     </ul>
   </div>

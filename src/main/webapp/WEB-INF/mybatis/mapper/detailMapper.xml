@@ -10,7 +10,13 @@
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
 			statusNo, projectSummary, projectStory,
 			p.brandNo, brandName, managerName, managerEmail, managerPhone,
-			NVL(likeCount,0) likeCount
+			FLOOR(projectEndDate - SYSDATE) remainDays,
+			NVL(likeCount,0) likeCount,
+			NVL(supportCount, 0) supportCount,
+			NVL(communityCount, 0) communityCount,
+			NVL(newsCount, 0) newsCount,
+			NVL(totalAmount, 0) totalAmount,
+			NVL(totalAmount,0)/projectGoalAmount attainRate
 			<if test="memberNo!=null and memberNo>0">
 			,NVL(myLikeCount, 0) myLikeCount
 			</if>
@@ -28,6 +34,30 @@
 			GROUP BY projectNo
 		) ml ON ml.projectNo = p.projectNo
 		</if>
+		LEFT OUTER JOIN (
+			SELECT projectNo, count(memberNo) supportCount 
+			FROM reward_buy_overview
+			WHERE projectNo=#{projectNo}
+			GROUP BY projectNo
+		) sc ON sc.projectNo = p.projectNo
+		LEFT OUTER JOIN (
+            SELECT projectNo, count(*) communityCount
+            FROM project_community
+            WHERE projectNo = #{projectNo} and parentCommentNo IS NULL
+            GROUP BY projectNo
+        ) pc ON pc.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+        	SELECT projectNo, count(*) newsCount
+        	FROM project_news
+        	WHERE projectNo = #{projectNo}
+        	GROUP BY projectNo
+        ) pn ON pn.projectNo = p.projectNo
+        LEFT OUTER JOIN(
+            SELECT projectNo, sum(totalAmount) totalAmount
+            FROM reward_buy_overview
+            WHERE projectNo = #{projectNo}
+            GROUP BY projectNo
+        ) ro ON ro.projectNo = p.projectNo
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
 		WHERE p.projectNo = #{projectNo}

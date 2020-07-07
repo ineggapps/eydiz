@@ -143,9 +143,11 @@ span.commentAvatar {
   display: block;
   width: 36px;
   height: 36px;
-  background-color: #a0a0a0;
   border-radius: 100%;
   text-indent: -1000em;
+  background-color: #a0a0a0;
+  background-image:url("../../images/detail/user-64.png");
+  background-size:100%;
 }
 
 /*modal창*/

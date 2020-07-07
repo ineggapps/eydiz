@@ -88,6 +88,12 @@ function renderComment($element, jsonItem, prefix) {
   if (prefix == undefined) {
     prefix = "";
   }
+  if(jsonItem.memberImageUrl){
+	  $element
+		.find(prefix + ".commentAvatar")
+		.eq(0)
+		.css("background-image", "url(\""+jsonItem.memberImageUrl+"\")");
+  }
   $element
     .find(prefix + ".author")
     .eq(0)
@@ -148,7 +154,9 @@ $(function () {
   $commentWrap.on("click", ".reply.btnSubmit", function () {
     const $wrap = $(this).closest(".commentArea").find(".commentReplyWrap");
     const $commentItem = $(this).closest(".commentArea").find(".hide.commentItem");
+    const $content = $(this).closest(".commentInputContent").find("textarea");
     const content = $(this).closest(".commentInputContent").find("textarea").val();
+    $content.val("");
     const parentCommentNo = $(this).closest(".parent.commentItem").data("comment-no");
     const q = { parentCommentNo: parentCommentNo, content: content };
     submitComment(q)

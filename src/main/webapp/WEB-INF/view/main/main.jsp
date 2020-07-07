@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
    String cp = request.getContextPath();
 %>
@@ -88,15 +89,15 @@
             </ul>
             <div class="status">
               <div class="progress">
-                <div class="progressBar" style="width: 100%;"></div>
+                <div class="progressBar" style="width: ${dto.attainRate*100}%;"></div>
               </div>
               <ul>
                 <li>
-                  <span class="percent">330%</span>&centerdot;<span class="totalAmount"
-                    >${dto.projectGoalAmount}원</span
+                  <span class="percent"><fmt:formatNumber type = "number" pattern = "###.##" value = "${dto.attainRate*100}" />%</span>&centerdot;<span class="totalAmount"
+                    ><fmt:formatNumber type = "number" pattern = "#,###" value = "${dto.projectGoalAmount}" />원</span
                   >
                 </li>
-                <li><span class="remainDays">9일 남음</span></li>
+                <li><span class="remainDays">${dto.remainDays}일 남음</span></li>
               </ul>
             </div>
           </div>

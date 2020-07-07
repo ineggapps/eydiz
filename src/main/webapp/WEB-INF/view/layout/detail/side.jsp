@@ -6,13 +6,23 @@
 	String cp=request.getContextPath();
 %>
 <div class="stateBox">
-  <p class="stateText">00일 남음</p>
+  <p class="stateText">
+  	<c:if test="${project.remainDays>0}">
+	  	${project.remainDays}일 남음
+  	</c:if>
+  	<c:if test="${project.remainDays==0}">
+	  	오늘 마감!
+  	</c:if>
+  	<c:if test="${project.remainDays<0}">
+	  	마감
+  	</c:if>
+  </p>
   <div class="progress">
-    <div class="progressBar" style="width: ${project.projectAttainmentRate}%;"></div>
+    <div class="progressBar" style="width: ${project.attainRate*100}%;"></div>
   </div>
-  <p class="stateText"><strong>${project.projectAttainmentRate}</strong>% 달성</p>
-  <p class="stateText"><strong>${project.projectAttainAmount}</strong>원 펀딩</p>
-  <p class="stateText"><strong>000</strong>명의 서포터</p>
+  <p class="stateText"><strong><fmt:formatNumber type = "number" pattern = "###.#" value = "${project.attainRate*100}" /></strong>% 달성</p>
+  <p class="stateText"><strong><fmt:formatNumber type = "number" pattern = "#,###" value = "${project.totalAmount}" /></strong>원 펀딩</p>
+  <p class="stateText"><strong><fmt:formatNumber type = "number" pattern = "#,###" value = "${project.supportCount}" /></strong>명의 서포터</p>
 </div>
 <a href="<%=cp %>/reward/${projectNo}/step1" class="btnSubmit">펀딩하기</a>
 <ul class="detailSideController">
