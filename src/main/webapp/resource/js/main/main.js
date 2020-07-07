@@ -114,7 +114,8 @@ function renderSnippet(items) {
     $project.find(".subject a").text(item.projectName);
     $project.find(".category").text(item.categoryName);
     $project.find(".name").text(item.name);
-    $project.find(".progressBar").css({ width: item.attainRate * 100 });
+    var rate = item.attainRate * 100 <= 100 ? item.attainRate * 100 : 100;
+    $project.find(".progressBar").css({ width: rate + "%" });
     $project.find(".percent").text(parseFloat(item.attainRate * 100).toFixed(2) + "%");
     $project.find(".totalAmount").text(item.totalAmount.format() + "원");
 

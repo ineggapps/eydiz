@@ -18,7 +18,7 @@
   	</c:if>
   </p>
   <div class="progress">
-    <div class="progressBar" style="width: ${project.attainRate*100}%;"></div>
+    <div class="progressBar" style="width: ${project.attainRate*100>100?100:project.attainRate*100}%;"></div>
   </div>
   <p class="stateText"><strong><fmt:formatNumber type = "number" pattern = "###.#" value = "${project.attainRate*100}" /></strong>% 달성</p>
   <p class="stateText"><strong><fmt:formatNumber type = "number" pattern = "#,###" value = "${project.totalAmount}" /></strong>원 펀딩</p>
@@ -87,7 +87,7 @@
       <p class="text">이 리워드 펀딩하기</p>
     </div>
     <dl class="rewardInfo">
-      <dt>${item.amount}원 펀딩</dt>
+      <dt><fmt:formatNumber type = "number" pattern = "#,###" value = "${item.amount}" />원 펀딩</dt>
       <dd>
         <p>${item.rewardTitle}</p>
         <c:if test="${not empty item.rewardOption}">
@@ -98,20 +98,20 @@
     <c:if test="${item.isShipping==1}">
     <dl class="rewardOptions">
       <dt>배송비</dt>
-      <dd>${item.shipAmount}원</dd>
+      <dd><fmt:formatNumber type = "number" pattern = "#,###" value = "${item.shipAmount}" />원</dd>
       <dt>리워드 발송 시작일</dt>
       <dd>${item.startShippingDate}</dd>
     </dl>
     </c:if>
     <div class="rewardQuantity">
       <div class="quantityRow mint">
-        <span class="limitQuantity">제한수량 <strong>${item.limitQuantity}</strong>개</span>
+        <span class="limitQuantity">제한수량 <strong><fmt:formatNumber type = "number" pattern = "#,###" value = "${item.limitQuantity}" /></strong>개</span>
         <span class="remainingQuantity highlighting">
-          현재 <strong>${item.remainQuantity}</strong>개 남음!
+          현재 <strong><fmt:formatNumber type = "number" pattern = "#,###" value = "${item.remainQuantity}" /></strong>개 남음!
         </span>
       </div>
       <div class="quantityRow">
-        <span class="soldQuantity">총 00개 펀딩완료</span>
+        <span class="soldQuantity">총 <fmt:formatNumber type = "number" pattern = "#,###" value = "${item.limitQuantity - item.remainQuantity}" />개 펀딩완료</span>
       </div>
     </div>
   </div>

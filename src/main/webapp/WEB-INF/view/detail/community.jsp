@@ -5,10 +5,12 @@
 <%
 	String cp=request.getContextPath();
 %>
+<c:if test="${not empty sessionScope.member}">
 <div class="commentButtonController">
 	<button type="button" class="btnGray per40" id="btnCommentModal">글 남기기</button>
 </div>
 <hr class="divider deeper" />
+</c:if>
 <!--커뮤니티 덧글 영역-->
 <div class="commentWrap">
   <div class="parent commentItem hide">
@@ -47,6 +49,7 @@
         </div>
       </div>
       </div>
+      <c:if test="${not empty sessionScope.member }">
       <div class="commentInput reply">
         <div class="commentInputSide">
           <span class="reply commentAvatar">프로필사진</span>
@@ -58,6 +61,7 @@
 	        	</div>
         </div>
       </div>
+      </c:if>
     </div>
   </div>
 </div>
