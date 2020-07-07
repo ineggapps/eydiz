@@ -34,6 +34,7 @@
 		JOIN project_category pc on p.categoryNo = pc.categoryNo
 		WHERE
 			statusNo=5
+			AND FLOOR(projectEndDate - SYSDATE) >= 0
 			<if test="categoryNo != null and categoryNo > 0">
 			AND p.categoryNo = #{categoryNo}
 			</if>
