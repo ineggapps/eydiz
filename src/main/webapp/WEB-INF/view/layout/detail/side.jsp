@@ -8,7 +8,7 @@
 <div class="stateBox">
   <p class="stateText">
   	<c:if test="${project.remainDays>0}">
-	  	${project.remainDays}일 남음
+	  	<strong id="cuRemainDays">${project.remainDays}</strong>일 남음
   	</c:if>
   	<c:if test="${project.remainDays==0}">
 	  	오늘 마감!
@@ -20,9 +20,9 @@
   <div class="progress">
     <div class="progressBar" style="width: ${project.attainRate*100>100?100:project.attainRate*100}%;"></div>
   </div>
-  <p class="stateText"><strong><fmt:formatNumber type = "number" pattern = "###.#" value = "${project.attainRate*100}" /></strong>% 달성</p>
-  <p class="stateText"><strong><fmt:formatNumber type = "number" pattern = "#,###" value = "${project.totalAmount}" /></strong>원 펀딩</p>
-  <p class="stateText"><strong><fmt:formatNumber type = "number" pattern = "#,###" value = "${project.supportCount}" /></strong>명의 서포터</p>
+  <p class="stateText"><strong id="cuAttainRate"><fmt:formatNumber type = "number" pattern = "###.#" value = "${project.attainRate*100}" /></strong>% 달성</p>
+  <p class="stateText"><strong id="cuTotalAmount"><fmt:formatNumber type = "number" pattern = "####" value = "${project.totalAmount}" /></strong>원 펀딩</p>
+  <p class="stateText"><strong id="cuSupportCount"><fmt:formatNumber type = "number" pattern = "#,###" value = "${project.supportCount}" /></strong>명의 서포터</p>
 </div>
 <a href="<%=cp %>/reward/${projectNo}/step1" class="btnSubmit">펀딩하기</a>
 <ul class="detailSideController">
@@ -135,12 +135,19 @@
     <ol class="rankList">
     <c:forEach var="item" items="${popularProject}" varStatus="status">
       <li>
-        <p>
-          <span class="rankNumber">${status.count}</span
-          ><a href="<%=cp%>/detail/${item.projectNo}">${item.projectName}</a>
+	    <span class="rankNumber">${status.count}</span>
+        <p class="rankItem">
+          <a class="rankText" href="<%=cp%>/detail/${item.projectNo}">${item.projectName}</a>
         </p>
       </li>
     </c:forEach>
     </ol>
   </div>
 </div>
+<script>
+$(function(){
+	$(".rankItem").dotdotdot({
+		ellipsis: "...",
+	})
+})
+</script>

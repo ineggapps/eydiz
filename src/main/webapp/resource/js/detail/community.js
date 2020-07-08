@@ -67,7 +67,6 @@ function loadReplyComment(commentNo, $element) {
   const method = "post";
   const query = { projectNo: projectNo, parentCommentNo: commentNo };
   const $wrap = $element.find(".commentReplyWrap");
-  console.log($wrap);
   const $target = $element.find(".reply.commentItem.hide");
   ajaxJSON(url, method, query)
     .then(function (data) {
