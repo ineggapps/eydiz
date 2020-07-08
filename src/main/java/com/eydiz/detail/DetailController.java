@@ -48,7 +48,7 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 		if (req.getQueryString() != null && req.getQueryString().length() > 0) {
 			uri.append("?" + req.getQueryString());
 		}
-		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath(), projectNo));
+		model.addAttribute(MemberConstant.ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath(), projectNo));
 	}
 
 	@RequestMapping(value = "/")
