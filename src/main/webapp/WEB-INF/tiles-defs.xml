@@ -24,6 +24,18 @@
 		<put-attribute name="content" value="/WEB-INF/view/member/{1}.jsp"/>
 	</definition>
 	
+	<definition name=".myPageLayout" template="/WEB-INF/view/layout/mypage/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/mypage/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/mypage/list.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/mypage/footer.jsp" />
+	</definition>
+	<definition name=".myPageLayout.*.*" extends=".myPageLayout">
+		<put-attribute name="content" value="/WEB-INF/view/mypage/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".myPageLayout.*" extends=".myPageLayout">
+		<put-attribute name="content" value="/WEB-INF/view/mypage/{1}.jsp"/>
+	</definition>
+	
 	<definition name=".detailLayout" template="/WEB-INF/view/layout/detail/frame.jsp">
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/detail/header.jsp" />
 		<put-attribute name="content" value="/WEB-INF/view/detail/main.jsp" />

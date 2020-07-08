@@ -23,12 +23,12 @@
     </ul>
   </div>
   <div class="footerInner">
-    <div class="footerInfo">
+    <%--div class="footerInfo">
       <div class="info1">
         <p class="title">대표 고객센터</p>
         <p class="tel">1577-0000</p>
       </div>
-    </div>
+    </div --%>
   </div>
   <div class="footerWarning">
     <div class="footerWarningInner">
