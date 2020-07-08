@@ -16,7 +16,7 @@
 	<!--  구매상세 쿼리 삽입 -->
 	<insert id="insertRewardBuyDetail" parameterType="com.eydiz.studio.Reward">
 		INSERT INTO reward_buy_detail(detailNo, buyNo, rewardNo, requestQuantity, purchasePrice, optionAnswer)
-		VALUES(reward_buy_detail_seq.NEXTVAL, #{buyNo}, #{rewardNo}, #{requestQuantity}, #{purchasePrice}, #{optionAnswer})
+		VALUES(reward_buy_detail_seq.NEXTVAL, #{buyNo}, #{rewardNo}, #{requestQuantity}, #{purchasePrice}, #{optionAnswer, jdbcType=VARCHAR})
 	</insert>
 	
 	<!--  구매 배송지 정보 삽입하기 --> 

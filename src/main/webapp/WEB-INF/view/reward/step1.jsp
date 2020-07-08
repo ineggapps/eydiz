@@ -11,7 +11,7 @@
          <div class="rewardProcessWrap">
            <ul class="rewardProcess">
              <li class="on"><span>리워드 선택</span></li>
-             <li><span>결제 예약</span></li>
+             <li><span>결제</span></li>
              <li><span>결제 완료</span></li>
            </ul>
          </div>
@@ -56,10 +56,12 @@
                              class="center"
                            />
                          </div>
+                         <c:if test="${item.rewardOption != null}">
                          <div class="rewardOptionBox optionAnswer">
                            <p class="optionName">옵션</p>
-                           <input type="text" name="optionAnswer${item.rewardNo}" />
+                           <input type="text" name="optionAnswer${item.rewardNo}" class="optionAnswer" />
                          </div>
+                         </c:if>
                        </div>
                      </dd>
                    </dl>
@@ -67,7 +69,7 @@
                </li>
 				</c:forEach>
              </ul>
-             <button type="submit" class="btnSubmit">다음 단계로</button>
+             <button type="submit" class="btnSubmit step1">다음 단계로</button>
            </form>
          </div>
        </div>

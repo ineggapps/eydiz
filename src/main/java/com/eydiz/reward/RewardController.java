@@ -154,6 +154,11 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 		return "redirect:" + kakaoPayService.kakaoPayReady(rInfo, memberInfo);
 	}
 
+	@RequestMapping(value="/pay/kakao/abort")//결제 중단
+	public String stepPayAbort(Model model, HttpSession session) {
+		return ".rewardLayout.payAbort";
+	}
+	
 	@RequestMapping(value = "/{projectNo}/pay/kakao/success")
 	@ResponseBody
 	public Map<String, Object> stepSuccess(@PathVariable Integer projectNo, @RequestParam("pg_token") String pg_token,
@@ -180,6 +185,7 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
 			memberInfo = (SessionInfo) session.getAttribute(SESSION_MEMBER);
 			rewardService.insertReward(rInfo, memberInfo);
+			model.addAttribute(ATTRIBUTE_PROJECTNO, rInfo.getProjectNo());
 			model.addAttribute("kakaoPay", rInfo.getKakaoPayApproval());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -187,5 +193,6 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 
 		return ".rewardLayout.paySuccess";
 	}
+	
 
 }

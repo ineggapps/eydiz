@@ -12,7 +12,7 @@
       	<div class="rewardProcessWrap">
            <ul class="rewardProcess">
              <li><span>리워드 선택</span></li>
-             <li><span>결제 예약</span></li>
+             <li><span>결제</span></li>
              <li class="on"><span>결제 완료</span></li>
            </ul>
          </div>

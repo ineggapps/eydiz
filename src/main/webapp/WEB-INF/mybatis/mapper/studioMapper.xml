@@ -171,6 +171,7 @@
 				rewardOption=#{rewardOption}, isShipping=#{isShipping}, shipAmount=#{shipAmount, jdbcType=VARCHAR}, 
 				startShippingDate=#{startShippingDate}, limitQuantity=#{limitQuantity}
 		WHERE projectNo = (SELECT projectNo FROM project WHERE projectNo = #{projectNo} AND brandNo = #{brandNo})
+		AND rewardNo = #{rewardNo}
 	</update>
 	
 	<delete id="deleteReward" parameterType="map">

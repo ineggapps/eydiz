@@ -317,6 +317,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		try {
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 			reward.setProjectNo(projectNo);
+			reward.setRewardNo(rewardNo);
 			reward.setBrandNo(bInfo.getBrandNo());
 			service.updateReward(reward);
 			result.put(JSON_RESULT, JSON_RESULT_OK);
