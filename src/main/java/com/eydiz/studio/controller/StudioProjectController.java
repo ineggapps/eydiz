@@ -57,7 +57,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		if (req.getQueryString() != null && req.getQueryString().length() > 0) {
 			uri.append("?" + req.getQueryString());
 		}
-		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
+		model.addAttribute(MemberConstant.ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
 		model.addAttribute(ATTRIBUTE_PROJECTNO, projectNo);
 	}
 

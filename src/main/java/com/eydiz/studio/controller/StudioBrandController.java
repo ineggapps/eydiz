@@ -35,7 +35,7 @@ public class StudioBrandController implements StudioConstant, MemberConstant {
 		if (req.getQueryString() != null && req.getQueryString().length() > 0) {
 			uri.append("?" + req.getQueryString());
 		}
-		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
+		model.addAttribute(MemberConstant.ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
 	}
 
 		//////////////////////////////////////////////브랜드
