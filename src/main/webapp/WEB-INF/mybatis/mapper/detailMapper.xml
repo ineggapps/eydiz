@@ -10,7 +10,13 @@
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
 			statusNo, projectSummary, projectStory,
 			p.brandNo, brandName, managerName, managerEmail, managerPhone,
-			NVL(likeCount,0) likeCount
+			FLOOR(projectEndDate - SYSDATE) remainDays,
+			NVL(likeCount,0) likeCount,
+			NVL(supportCount, 0) supportCount,
+			NVL(communityCount, 0) communityCount,
+			NVL(newsCount, 0) newsCount,
+			NVL(totalAmount, 0) totalAmount,
+			NVL(totalAmount,0)/projectGoalAmount attainRate
 			<if test="memberNo!=null and memberNo>0">
 			,NVL(myLikeCount, 0) myLikeCount
 			</if>
@@ -28,6 +34,30 @@
 			GROUP BY projectNo
 		) ml ON ml.projectNo = p.projectNo
 		</if>
+		LEFT OUTER JOIN (
+			SELECT projectNo, count(memberNo) supportCount 
+			FROM reward_buy_overview
+			WHERE projectNo=#{projectNo}
+			GROUP BY projectNo
+		) sc ON sc.projectNo = p.projectNo
+		LEFT OUTER JOIN (
+            SELECT projectNo, count(*) communityCount
+            FROM project_community
+            WHERE projectNo = #{projectNo} and parentCommentNo IS NULL
+            GROUP BY projectNo
+        ) pc ON pc.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+        	SELECT projectNo, count(*) newsCount
+        	FROM project_news
+        	WHERE projectNo = #{projectNo}
+        	GROUP BY projectNo
+        ) pn ON pn.projectNo = p.projectNo
+        LEFT OUTER JOIN(
+            SELECT projectNo, sum(totalAmount) totalAmount
+            FROM reward_buy_overview
+            WHERE projectNo = #{projectNo}
+            GROUP BY projectNo
+        ) ro ON ro.projectNo = p.projectNo
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
 		WHERE p.projectNo = #{projectNo}
@@ -45,7 +75,7 @@
 	
 	<!-- 리워드 읽기 -->
 	<select id="readReward" parameterType="Integer" resultType="com.eydiz.studio.Reward">
-		SELECT rewardNo, r.projectNo, amount, rewardTitle, rewardContent, rewardOption, 
+		SELECT rewardNo, r.projectNo, projectName, amount, rewardTitle, rewardContent, rewardOption, 
 			isShipping, shipAmount, TO_CHAR(startShippingDate, 'YYYY-MM-DD') startShippingDate, limitQuantity, remainQuantity
 		FROM reward r
 		JOIN project p ON r.projectNo = p.projectNo
@@ -64,6 +94,7 @@
 		FROM project p
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
+		WHERE statusNo = 5
 		ORDER BY projectEndDate DESC
 		OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
 	</select>
@@ -89,6 +120,51 @@
 	<delete id="deleteProjectLike" parameterType="map">
 		DELETE FROM project_like
 		where projectNo=#{projectNo} AND memberNo=#{memberNo}
+	</delete>
+	
+	<!-- 커뮤니티 댓글 조회하기 -->
+	<select id="selectCommunityComment" parameterType="Integer" resultType="com.eydiz.studio.ProjectCommunity">
+		SELECT commentNo, pc.parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate, 
+					memberImageUrl, NVL(replyCount, 0) replyCount
+		FROM project_community pc
+		JOIN member_detail m ON m.memberId = pc.memberId
+		LEFT OUTER JOIN(
+			SELECT parentCommentNo, count(*) replyCount
+			FROM project_community
+            GROUP BY parentCommentNo
+		) parentCmt ON parentCmt.parentCommentNo = commentNo
+		WHERE pc.projectNo= #{projectNo} AND pc.parentCommentNo IS NULL
+		ORDER BY commentNo DESC
+	</select>
+	
+	<!-- 커뮤니티 답글 조회하기 -->
+	<select id="selectCommunityCommentReply" parameterType="map" resultType="com.eydiz.studio.ProjectCommunity">
+		SELECT commentNo, parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate,
+					memberImageUrl
+		FROM project_community pc
+		JOIN member_detail m ON m.memberId = pc.memberId
+		WHERE pc.projectNo= #{projectNo}
+		AND parentCommentNo =#{parentCommentNo}
+		ORDER BY commentNo
+	</select>
+	
+	<!-- 커뮤니티 댓글 작성하기 / 삭제하기 -->
+	<insert id="insertCommunity" parameterType="com.eydiz.studio.ProjectCommunity">
+		INSERT INTO project_community(commentNo, parentCommentNo, projectNo, memberId, content, createdDate)
+		VALUES(project_community_seq.NEXTVAL, #{parentCommentNo, jdbcType=INTEGER}, #{projectNo}, #{memberId}, #{content}, SYSDATE)
+	</insert>
+	
+	<!-- 커뮤니티 댓글 수정하기 -->
+	<update id="updateCommunity" parameterType="com.eydiz.studio.ProjectCommunity">
+		UPDATE project_community
+		SET content=#{content}
+		WHERE commentNo = #{commentNo} AND memberId=#{memberId}
+	</update>
+	
+	<!-- 커뮤니티 댓글 삭제하기 -->
+	<delete id="deleteCommunity" parameterType="com.eydiz.studio.ProjectCommunity">
+		DELETE FROM project_community 
+		WHERE commentNo=#{commentNo} AND memberId=#{memberId}
 	</delete>
 	
 </mapper>

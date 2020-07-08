@@ -423,8 +423,10 @@ p.small {
   height: 1px;
 }
 
+
 .rank .rankNumber {
-  display: inline-block;
+  display: block;
+  position:absolute;
   width: 18px;
   height: 18px;
   line-height: 18px;
@@ -440,7 +442,13 @@ p.small {
 }
 
 .rankList li {
+  position:relative;
   margin: 2px 0;
+}
+
+.rankList p{
+  padding-left:30px;
+  margin:10px 0;
 }
 
 .rankList li a {

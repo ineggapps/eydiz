@@ -2,24 +2,60 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="main">
+	<select id="listCategory" resultType="com.eydiz.main.ProjectCategory">
+		SELECT categoryNo, parentCategoryNo, categoryName, ImageUrl
+		FROM project_category
+		WHERE parentCategoryNo IS NOT NULL
+	</select>
+	
 	<select id="listCategoryOfFunding" resultType="com.eydiz.main.ProjectCategory">
 		SELECT categoryNo, parentCategoryNo, categoryName, ImageUrl
 		FROM project_category
 		WHERE parentCategoryNo = 1
 	</select>
 	
+	<select id="selectCategoryName" parameterType="Integer" resultType="String">
+		SELECT categoryName
+		FROM project_category
+		WHERE categoryNo=#{categoryNo}
+	</select>
+	
 	<!-- 나중에 WHERE조건까지 추가하기 -->
-	<select id="listFunding" resultType="com.eydiz.studio.Project">
+	<select id="fundingDataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM project
+		WHERE statusNo=5
+					AND FLOOR(projectEndDate - SYSDATE) >= 0
+		<if test="categoryNo != null and categoryNo > 0">
+			AND p.categoryNo = #{categoryNo}
+		</if>
+	</select>
+	<select id="listFunding" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT 
-			projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, 
+			p.projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, 
 			projectImageUrl, projectGoalAmount, projectAttainAmount, 
-			projectEndDate, statusNo
+			projectEndDate, statusNo,
+			FLOOR(projectEndDate - SYSDATE) remainDays,
+			NVL(totalAmount,0) totalAmount,
+			NVL(totalAmount,0)/projectGoalAmount attainRate
 		FROM
 			project p
+		LEFT OUTER JOIN(
+            SELECT projectNo, sum(totalAmount) totalAmount
+            FROM reward_buy_overview
+            GROUP BY projectNo
+        ) ro ON ro.projectNo = p.projectNo
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc on p.categoryNo = pc.categoryNo
 		WHERE
 			statusNo=5
+			AND FLOOR(projectEndDate - SYSDATE) >= 0
+			<if test="categoryNo != null and categoryNo > 0">
+			AND p.categoryNo = #{categoryNo}
+			</if>
 		ORDER BY projectNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
+	
+	
 </mapper>

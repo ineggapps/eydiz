@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.language.bm.PhoneticEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eydiz.common.Constant;
 import com.eydiz.detail.DetailConstant;
 import com.eydiz.detail.DetailService;
 import com.eydiz.member.MemberConstant;
 import com.eydiz.member.SessionInfo;
+import com.eydiz.reward.kakao.KakaoPayService;
 import com.eydiz.studio.Project;
 import com.eydiz.studio.Reward;
 
@@ -29,6 +32,12 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 
 	@Autowired
 	private DetailService detailService;
+
+	@Autowired
+	private KakaoPayService kakaoPayService;
+
+	@Autowired
+	private RewardService rewardService;
 
 	@RequestMapping(value = "/{projectNo}/step1", method = RequestMethod.GET)
 	public String step1(@PathVariable Integer projectNo, HttpServletRequest req, Model model,
@@ -49,7 +58,7 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 		} catch (Exception e) {
 			return "redirect:" + req.getContextPath() + String.format(API_DETAIL_PROJECT, projectNo);
 		}
-		return ".detailLayout.step1";
+		return ".rewardLayout.step1";
 	}
 
 	@RequestMapping(value = "/{projectNo}/step1", method = RequestMethod.POST)
@@ -70,6 +79,7 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			int shipAmount = 0;
 			for (Integer rewardNo : rewardNoList) {
 				Reward r = detailService.readReward(rewardNo);
+				// 수량 X 단가
 				r.setRequestQuantity(Integer.parseInt((String) param.get(ATTRIBUTE_REQUEST_QUANTITY + rewardNo)));
 				r.setPurchasePrice(r.getAmount() * r.getRequestQuantity());
 				totalAmount += r.getPurchasePrice();
@@ -97,11 +107,85 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			Map<String, Object> map = new HashMap<>();
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			Project project = detailService.readProject(map);
-			SessionRewardInfo rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return ".detailLayout.step2";
+		return ".rewardLayout.step2";
 	}
+
+	@RequestMapping(value = "/save/rewardShippingLocation", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> saveRewardShippingLocation(HttpSession session, String recipient,
+			String zipCode, String phone, String address1,
+			String address2, String message) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			System.out.println(String.format("%s, %s, %s, %s, %s, %s ==============", recipient, zipCode, phone, address1, address2, message));
+			SessionRewardInfo rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
+			SessionInfo memberInfo = (SessionInfo) session.getAttribute(SESSION_MEMBER);
+			RewardShippingLocation rewardShippingLocation = new RewardShippingLocation(rInfo.getBuyNo(),
+					memberInfo.getMemberNo(), phone, zipCode, address1, address2, recipient, message);
+			rInfo.setRewardShippingLocation(rewardShippingLocation);
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return map;
+	}
+
+	@RequestMapping(value = "/{projectNo}/pay/kakao")
+	public String step2Submit(@PathVariable Integer projectNo, HttpSession session, Model model) {
+		SessionRewardInfo rInfo = null;
+		SessionInfo memberInfo = null;
+		try {
+			rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
+			rInfo.setBuyNo(rewardService.nextBuyNo());
+			System.out.println(rInfo.getBuyNo());
+			memberInfo = (SessionInfo) session.getAttribute(SESSION_MEMBER);
+			if (projectNo == null || projectNo == 0 || rInfo == null || memberInfo == null) {
+				return "redirect:/";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:" + kakaoPayService.kakaoPayReady(rInfo, memberInfo);
+	}
+
+	@RequestMapping(value = "/{projectNo}/pay/kakao/success")
+	@ResponseBody
+	public Map<String, Object> stepSuccess(@PathVariable Integer projectNo, @RequestParam("pg_token") String pg_token,
+			HttpSession session) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			SessionRewardInfo rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
+			SessionInfo memberInfo = (SessionInfo) session.getAttribute(SESSION_MEMBER);
+			rInfo.setKakaoPayApproval(kakaoPayService.kakaoPayInfo(pg_token, rInfo, memberInfo));
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+			map.put(JSON_PG_TOKEN, pg_token);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+
+	@RequestMapping(value = "/pay/success") // 최종적인 결제 완료 시 쿼리 등록하기
+	public String stepPaySuccess(Model model, HttpSession session) {
+		SessionRewardInfo rInfo = null;
+		SessionInfo memberInfo = null;
+		try {
+			// 쿼리 등록하기
+			rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
+			memberInfo = (SessionInfo) session.getAttribute(SESSION_MEMBER);
+			rewardService.insertReward(rInfo, memberInfo);
+			model.addAttribute("kakaoPay", rInfo.getKakaoPayApproval());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return ".rewardLayout.paySuccess";
+	}
+
 }

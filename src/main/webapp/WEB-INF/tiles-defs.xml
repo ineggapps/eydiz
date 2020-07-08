@@ -27,6 +27,7 @@
 	<definition name=".detailLayout" template="/WEB-INF/view/layout/detail/frame.jsp">
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/detail/header.jsp" />
 		<put-attribute name="content" value="/WEB-INF/view/detail/main.jsp" />
+		<put-attribute name="side" value="/WEB-INF/view/layout/detail/side.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/view/layout/detail/footer.jsp" />
 	</definition>
 	<definition name=".detailLayout.*.*" extends=".detailLayout">
@@ -34,6 +35,18 @@
 	</definition>
 	<definition name=".detailLayout.*" extends=".detailLayout">
 		<put-attribute name="content" value="/WEB-INF/view/detail/{1}.jsp"/>
+	</definition>
+	
+	<definition name=".rewardLayout" template="/WEB-INF/view/layout/reward/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/reward/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/reward/main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/reward/footer.jsp" />
+	</definition>
+	<definition name=".rewardLayout.*.*" extends=".rewardLayout">
+		<put-attribute name="content" value="/WEB-INF/view/reward/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".rewardLayout.*" extends=".rewardLayout">
+		<put-attribute name="content" value="/WEB-INF/view/reward/{1}.jsp"/>
 	</definition>
 	
 	<definition name=".adminLayout" template="/WEB-INF/view/layout/admin/frame.jsp">
@@ -180,11 +193,11 @@
 	</definition>
 	
 	<definition name=".adminProjectLayout" template="/WEB-INF/view/layout/adminProject/frame.jsp">
-	  	<put-attribute name="header" value="/WEB-INF/view/layout/adminProject/header.jsp" />
+	  <put-attribute name="header" value="/WEB-INF/view/layout/adminProject/header.jsp" />
 		<put-attribute name="content" value="/WEB-INF/view/layout/adminProject/main.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/view/layout/adminProject/footer.jsp" />
 	</definition>
-	
+  
 	<definition name=".adminProjectLayout.*.*" extends=".adminProjectLayout">
 		<put-attribute name="content" value="/WEB-INF/view/adminProject/{1}/{2}.jsp"/>
 	</definition>
