@@ -307,4 +307,71 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	}
 
 	
+	// 새소식  -------------------------------------------
+	
+	
+	@Override
+	public void insertProjectNews(ProjectNews dto) throws Exception {
+		try {
+			dao.insertData("studio.insertProjectNews", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public List<ProjectNews> listProjectNews(Map<String, Object> map) {
+		List<ProjectNews> list = null;
+		
+		try {
+			list = dao.selectList("studio.listProjectNews", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int dataCount(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("studio.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public ProjectNews readProjectNews(int newsNo, int projectNo) {
+		ProjectNews dto = null;
+		
+		try {
+			Map<Integer, Integer> map = new HashMap<>();
+			map.put(newsNo, newsNo);
+			map.put(projectNo, projectNo);
+			dto = dao.selectOne("studio.readProjectNews", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public void updateProjectNews(ProjectNews dto) throws Exception {
+		try {
+			dao.updateData("studio.updateProjectNews", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	
 }

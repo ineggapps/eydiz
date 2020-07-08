@@ -5,6 +5,8 @@
 <%
    String cp = request.getContextPath();
 %>
+
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 <script type="text/javascript">
 function search() {
 	var f = document.searchForm;
@@ -16,15 +18,12 @@ function search() {
       <header class="guideheader">
 	  	<div class="headerInner">
 	        <br><br>
-	        <h1 class="logo"><a href="#" style="color: white;">eydiz
-	        </a></h1>
+	        <p class="qlogo"><a href="#"> eydiz </a></p>
      	</div>
      	<br><br>
-     	<div>
-     		<a class="textqna">
-     			<input type="text" class="headerinput" value="${keyword}" name="keyword" placeholder="답변 검색중...">
-     		</a>
-     		<button type="button" class="btnGuideInfoSearch  img-button" onclick="search();"></button>
+     	<div class="textqna">
+     		<input type="text" class="headerinput" value="${keyword}" name="keyword" placeholder="답변 검색중...">
+     		<button type="button" class="btnGuideInfoSearch  img-button" onclick="search();"><i class="fas fa-search fa-1x"></i></button>
      	</div>
       </header>
 </form>
