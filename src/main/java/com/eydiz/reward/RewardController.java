@@ -58,7 +58,7 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 		} catch (Exception e) {
 			return "redirect:" + req.getContextPath() + String.format(API_DETAIL_PROJECT, projectNo);
 		}
-		return ".detailLayout.step1";
+		return ".rewardLayout.step1";
 	}
 
 	@RequestMapping(value = "/{projectNo}/step1", method = RequestMethod.POST)
@@ -111,7 +111,7 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return ".detailLayout.step2";
+		return ".rewardLayout.step2";
 	}
 
 	@RequestMapping(value = "/save/rewardShippingLocation", method = RequestMethod.POST)
@@ -185,7 +185,7 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			e.printStackTrace();
 		}
 
-		return ".detailLayout.paySuccess";
+		return ".rewardLayout.paySuccess";
 	}
 
 }

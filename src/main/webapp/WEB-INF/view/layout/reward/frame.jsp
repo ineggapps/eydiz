@@ -17,19 +17,15 @@
     <link rel="stylesheet" href="<%=cp%>/resource/css/detail.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/detail/reward.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/detail/step.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/detail/community.css" />
     <!--[if lt IE 9]>
       <script src="resource/js//html5shiv.min.js"></script>
     <![endif]-->
     <script>
     const cp = "<%=cp%>";
     const projectNo = ${project.projectNo};
-    const memberNickname ="${sessionScope.member.memberNickname}";
     </script>
     <script src="<%=cp %>/resource/js/jquery-3.5.1.min.js"></script>
-    <!--[if IE]> 
 	<script type="text/javascript" src="<%=cp %>/resource/js/lib/bluebird.js"></script>    
-	<![endif]-->
 	<script type="text/javascript" src="<%=cp %>/resource/js/detail/detail.js"></script>    
 	<script type="text/javascript" src="<%=cp %>/resource/js/detail/reward.js"></script>    
   </head>
@@ -40,18 +36,7 @@
       </header>
       <main id="content">
         <div class="contentWrapper">
-	      	<article class="row">
-			  <div class="rowFull">
-			    <div class="detailWrap">
-			      <div class="detailContent">
-			      	<tiles:insertAttribute name="content"/>
-			      </div>
-			      <div class="detailSide">
-			        <tiles:insertAttribute name="side"/>
-			      </div>
-			    </div>
-			  </div>
-			</article>
+			<tiles:insertAttribute name="content"/>
         </div>
       </main>
       <footer id="footer">
