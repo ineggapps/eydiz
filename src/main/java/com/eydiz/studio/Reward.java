@@ -3,6 +3,8 @@ package com.eydiz.studio;
 public class Reward {
 	private int rewardNo;
 	private int projectNo;
+	private int buyNo;
+	private String projectName;
 	private int brandNo; // 리워드 수정할 때 인증용도
 	private int amount;
 	private String rewardTitle;
@@ -13,6 +15,10 @@ public class Reward {
 	private String startShippingDate;
 	private int limitQuantity;
 	private int remainQuantity;
+	//////////////////////// buy_detail
+	private int requestQuantity;// 요청수량
+	private int purchasePrice;
+	private String optionAnswer;
 
 	public int getRewardNo() {
 		return rewardNo;
@@ -28,6 +34,22 @@ public class Reward {
 
 	public void setProjectNo(int projectNo) {
 		this.projectNo = projectNo;
+	}
+
+	public int getBuyNo() {
+		return buyNo;
+	}
+
+	public void setBuyNo(int buyNo) {
+		this.buyNo = buyNo;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 	public int getBrandNo() {
@@ -108,6 +130,30 @@ public class Reward {
 
 	public void setRemainQuantity(int remainQuantity) {
 		this.remainQuantity = remainQuantity;
+	}
+
+	public int getRequestQuantity() {
+		return requestQuantity;
+	}
+
+	public void setRequestQuantity(int requestQuantity) {
+		this.requestQuantity = requestQuantity;
+	}
+
+	public int getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(int purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	public String getOptionAnswer() {
+		return optionAnswer;
+	}
+
+	public void setOptionAnswer(String optionAnswer) {
+		this.optionAnswer = optionAnswer;
 	}
 
 	@Override

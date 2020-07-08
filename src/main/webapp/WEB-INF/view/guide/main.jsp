@@ -50,8 +50,9 @@ $(function() {
 			        	<a href="#" class="boxcontent">
 			        		<br><br>
 			        		<span class="guideicon">${dto.faqIcon}</span>
-			        		<span style="font-size: 30px; font-weight: normal;">${dto.faqSubject}</span><br><br><br><br><br>
-			        		<span style="font-weight: normal; margin-left: 5px;"><i class="far fa-user" style="color: #2ed5d5"></i>&nbsp;${dto.memberNickname}</span>&nbsp;&nbsp;&nbsp;<span style="float: right; font-weight: normal;">${dto.faqCreated}</span>
+
+			        		<span>${dto.faqSubject}</span><br><br><br><br><br>
+			        		<span>${dto.memberNickname}</span>&nbsp;&nbsp;&nbsp;<span style="float: right;">${dto.faqCreated}</span>
 			        	</a>
 			       	</div>
 			       	<div class="guideinfo">

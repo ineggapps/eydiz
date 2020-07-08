@@ -49,6 +49,7 @@ function sendOk() {
                  	<li> <p>아이콘 : </p> </li>
                     <li> <input type="text" name="faqIcon">${dto.faqIcon}</li>
               	</ul>
+	        	
 	        	<br><br><br>
 	        	<ul>
 	        		<li>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reward">
+	<!-- 구매번호 하나 받아오기 , 카카오페이에서 구매번호를 미리 넘겨야 함-->
+	<select id="nextBuyNo" resultType="Integer">
+		SELECT reward_buy_overview_seq.NEXTVAL FROM dual
+	</select>
+	
+	<!-- 구매개요 쿼리 삽입 -->
+	<insert id="insertRewardBuyOverview" parameterType="com.eydiz.studio.RewardOverview">
+		INSERT INTO reward_buy_overview(buyNo, projectNo, memberNo, totalAmount, shipAmount, finalAmount, boughtDate)
+		VALUES(#{buyNo}, #{projectNo}, #{memberNo}, #{totalAmount}, #{shipAmount}, #{totalAmount} + #{shipAmount}, SYSDATE)
+	</insert>
+	
+	<!--  구매상세 쿼리 삽입 -->
+	<insert id="insertRewardBuyDetail" parameterType="com.eydiz.studio.Reward">
+		INSERT INTO reward_buy_detail(detailNo, buyNo, rewardNo, requestQuantity, purchasePrice, optionAnswer)
+		VALUES(reward_buy_detail_seq.NEXTVAL, #{buyNo}, #{rewardNo}, #{requestQuantity}, #{purchasePrice}, #{optionAnswer})
+	</insert>
+	
+	<!--  구매 배송지 정보 삽입하기 --> 
+	<insert id="insertRewardShippingLocation" parameterType="com.eydiz.reward.RewardShippingLocation">
+		INSERT INTO reward_shipping_location(buyNo, phone, zipCode, address1, address2, recipient, message)
+		VALUES(#{buyNo}, #{phone}, #{zipCode}, #{address1}, #{address2}, #{recipient}, #{message})
+	</insert>
+	
+	<!-- 구매취소 쿼리 삽입 -->	
+	<insert id="insertRewardBuyCancel" parameterType="com.eydiz.studio.RewardCancel">
+		INSERT INTO reward_buy_cancel(cancelNo, buyNo, canceledAmount, memo, canceledDate)
+		VALUES(reward_buy_cancel_seq.NEXTVAL, #{buyNo}, #{canceledAmount}, #{memo}, SYSDATE)
+	</insert>
+</mapper>

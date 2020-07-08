@@ -37,6 +37,17 @@ public class DetailServiceImpl implements DetailService, DetailConstant{
 		}
 		return list;
 	}
+	
+	@Override
+	public Reward readReward(int rewardNo) {
+		Reward reward = null;
+		try {
+			reward = dao.selectOne(MAPPER_NAMESPACE+"readReward", rewardNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return reward;
+	}
 
 	@Override
 	public List<Project> listPopularProject() {

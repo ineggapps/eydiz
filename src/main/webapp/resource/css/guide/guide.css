@@ -98,6 +98,15 @@
 	color: #818a97;
 }
 
+.guideicon {
+	float: left;
+	width: 100px;
+	height: 100px;
+	font-size: 68px;
+	margin-left: 10px;
+	color: silver;
+}
+
 .boxcontent span{
 	padding: 17px;
 	padding-top: 7px;
