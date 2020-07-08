@@ -4,13 +4,85 @@
 <mapper namespace="school">
 	<insert id="insertSchool" parameterType="com.eydiz.school.School">
 		INSERT INTO school(scNo, memberNo, sccaNo, scSubject, scContent, scSavefilename, scDate, scNumber, scAllNumber)
-		VALUES (school_seq.NEXTVAL, #{memberNo}, #{sccaNo}, #{scSubject}, #{scContent}, #{scSavefilename, jdbcType=VARCHAR}, SYSDATE, 1, #{scAllNumber})
+		VALUES (school_seq.NEXTVAL, #{memberNo}, #{sccaNo}, #{scSubject}, #{scContent}, #{scSavefilename, jdbcType=VARCHAR}, #{scDate}, 1, #{scAllNumber})
 	</insert>
 	
 	<select id="listSchool" parameterType="map" resultType="com.eydiz.school.School">
-		SELECT scNo, memberNo, sc.sccaNo, scSubject, scContent, scSavefilename, scDate, scNumber, scAllNumber
+		SELECT s.scNo, m.memberNo, sc.sccaNo, sccaName, scSubject, scContent, scSavefilename, scDate, TO_CHAR(scDate, 'YYYYMMDD') strDate, scNumber, scAllNumber, NVL(schoolProject, 0) schoolProject
 		FROM school s
 		JOIN member_detail m ON m.memberNo = s.memberNo
 		JOIN school_category sc ON s.sccaNo = sc.sccaNo
+		LEFT OUTER JOIN (
+			SELECT scNo, COUNT(*) schoolProject FROM school_project
+			GROUP BY scNo
+		) sp ON s.scNo = sp.scNo
+		<where>
+			<if test="sccaNo != 0">
+				( s.sccaNo = #{sccaNo} )
+			</if>
+			<choose>
+				<when test="date==null or date == ''">
+					AND ( TO_CHAR(scDate, 'YYYYMM') = TO_CHAR(SYSDATE, 'YYYYMM'))
+				</when>
+				<otherwise>
+					AND ( TO_CHAR(scDate, 'YYYYMMDD') = #{date})
+				</otherwise>
+			</choose>
+		</where>
 	</select>
+	<select id="listSchool2" parameterType="map" resultType="com.eydiz.school.School">
+		SELECT s.scNo, m.memberNo, sc.sccaNo, sccaName, scSubject, scContent, scSavefilename, scDate, TO_CHAR(scDate, 'YYYYMMDD') strDate, scNumber, scAllNumber,  NVL(schoolProject, 0) schoolProject
+		FROM school s
+		JOIN member_detail m ON m.memberNo = s.memberNo
+		JOIN school_category sc ON s.sccaNo = sc.sccaNo
+		LEFT OUTER JOIN (
+			SELECT scNo, COUNT(*) schoolProject FROM school_project
+			GROUP BY scNo
+		) sp ON s.scNo = sp.scNo
+		<where>
+			<if test="sccaNo != 0">
+				( s.sccaNo = #{sccaNo} )
+			</if>
+			<choose>
+				<when test="date==null or date == ''">
+					AND ( TO_CHAR(scDate, 'YYYYMM') = TO_CHAR(SYSDATE, 'YYYYMM'))
+				</when>
+				<otherwise>
+					AND ( TO_CHAR(scDate, 'YYYYMM') = #{date2})
+				</otherwise>
+			</choose>
+		</where>
+	</select>	
+	<select id="readSchool" parameterType="Integer" resultType="com.eydiz.school.School">
+		SELECT s.scNo, m.memberNo, memberNickname, sc.sccaNo, sccaName, scSubject, scContent, scSavefilename, scDate, scNumber, scAllNumber, NVL(schoolProject, 0) schoolProject
+		FROM school s
+		JOIN member_detail m ON m.memberNo = s.memberNo
+		JOIN school_category sc ON s.sccaNo = sc.sccaNo
+		LEFT OUTER JOIN (
+			SELECT scNo, COUNT(*) schoolProject FROM school_project
+			GROUP BY scNo
+		) sp ON s.scNo = sp.scNo
+		WHERE s.scNo = #{scNo}
+	</select>
+	
+	<update id="updateSchool" parameterType="com.eydiz.school.School">
+		UPDATE school SET sccaNo=#{sccaNo}, scSubject=#{scSubject}, scContent=#{scContent}, scSavefilename=#{scSavefilename, jdbcType=VARCHAR}, scDate=#{scDate}, scAllNumber=#{scAllNumber}
+		WHERE scNo=#{scNo}
+	</update>
+	
+	<delete id="deleteSchool" parameterType="Integer">
+		DELETE FROM school WHERE scNo=#{scNo}
+	</delete>
+	
+	<insert id="insertSchoolProject" parameterType="map">
+		INSERT INTO school_project(scNo, memberNo) VALUES(#{scNo}, #{memberNo})
+	</insert>
+	
+	<select id="schoolProject" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM school_project WHERE scNo=#{scNo}
+	</select>
+	
+	
+	
+	
 </mapper>
