@@ -6,15 +6,30 @@ public class School {
 	private int scNo;
 	private int memberNo;
 	private int sccaNo;
+	private String memberNickname;
+	private String sccaName;
 	private String scSubject;
 	private String scContent;
 	private String scSavefilename;
-	private String scDate;
+	private String scDate, strDate;
 	private int scNumber;
 	private int scAllNumber;
 	private int listNum;
 	private MultipartFile upload;
+	private int schoolProject;
 	
+	public int getSchoolProject() {
+		return schoolProject;
+	}
+	public void setSchoolProject(int schoolProject) {
+		this.schoolProject = schoolProject;
+	}
+	public String getSccaName() {
+		return sccaName;
+	}
+	public void setSccaName(String sccaName) {
+		this.sccaName = sccaName;
+	}
 	public int getScNo() {
 		return scNo;
 	}
@@ -80,5 +95,17 @@ public class School {
 	}
 	public void setUpload(MultipartFile upload) {
 		this.upload = upload;
+	}
+	public String getStrDate() {
+		return strDate;
+	}
+	public void setStrDate(String strDate) {
+		this.strDate = strDate;
+	}
+	public String getMemberNickname() {
+		return memberNickname;
+	}
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
 	}
 }

@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+.schoolcreate {
+	width: 60%;
+	margin: 0px auto;
+	padding-top: 35px;
+}
+
+.schoolcreate ul li {
+	border-bottom: 1px solid silver;
+	padding: 7px;
+}
+
+.createscca select {
+	width: 200px;
+	margin-left: 20px;
+}
+
+.createsub input {
+	width: 500px;
+	margin-left: 50px;
+}
+
+.createcon textarea{
+	width: 500px;
+	margin-left: 50px;
+}
+
+.createfile input {
+	width: 500px;
+	margin-left: 50px;
+}
+
+.createDate input {
+	width: 500px;
+	margin-left: 20px;
+}
+
+.createNumber input {
+	width: 500px;
+	margin-left: 20px;
+}
+
+.createbutton {
+	text-align: center;
+	padding-bottom: 30px;
+}
