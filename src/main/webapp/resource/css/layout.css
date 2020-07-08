@@ -434,7 +434,6 @@ ul.fnb li:not(:last-child) {
     display: none;
   }
     .contentWrapper{
-  	padding-top:46px;
   }
   
 }
