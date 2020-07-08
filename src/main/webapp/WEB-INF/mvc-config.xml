@@ -70,6 +70,7 @@
             <mvc:exclude-mapping path="/category/**"/>
             <mvc:exclude-mapping path="/detail/**"/>
             <mvc:exclude-mapping path="/resource/**"/>
+            <mvc:exclude-mapping path="/uploads/image/**"/>
             <mvc:exclude-mapping path="/member/login"/>
             <mvc:exclude-mapping path="/member/logout"/>
             <mvc:exclude-mapping path="/member/join"/>

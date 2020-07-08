@@ -24,6 +24,10 @@ a {
   outline: 0 !important;
 }
 
+.sample{/*ajax sample template*/
+	display:none;
+}
+
 .hidden {
   display: inline-block;
   overflow: hidden;
