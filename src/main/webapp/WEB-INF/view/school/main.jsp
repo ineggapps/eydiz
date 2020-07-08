@@ -5,63 +5,14 @@
    String cp = request.getContextPath();
 %>
 
-<style type="text/css">
-.titleDate {
-	display: inline-block;
-	font-weight: 600; 
-	font-size: 15px;
-	font-family: 나눔고딕, "맑은 고딕", 돋움, sans-serif;
-	padding:2px 4px 4px;
-	text-align:center;
-	position: relative;
-	top: 4px;
-}
-.btnDate {
-	display: inline-block;
-	font-size: 13px;
-	font-family: 나눔고딕, "맑은 고딕", 돋움, sans-serif;
-	color:#333333;
-	padding:3px 5px 5px;
-	border:1px solid #cccccc;
-    background-color:#fff;
-    text-align:center;
-    cursor: pointer;
-    border-radius:2px;
-}
-
-.textDate {
-      font-weight: 500; cursor: pointer;  display: block; color:#333333; line-height: 40px;
-}
-.preMonthDate, .nextMonthDate {
-      color:#aaaaaa;
-}
-.nowDate {
-      color:#111111;
-}
-.saturdayDate{
-      color:#0000ff;
-}
-.sundayDate{
-      color:#ff0000;
-}
-
-.barselect {
-	cursor: pointer;
-}
-
-.select-menu {
-	color: red;
-}
-</style>
-
 <script type="text/javascript">
 $(function(){
 	var today="${today}";
 	var date="${date}";
 	$(".schoolcalender .textDate").each(function (i) {
         var s=$(this).attr("data-date");
-        if(s==today) {
-        	$(this).parent().css("background", "#ffffd9");
+        if(s==date) {
+        	$(this).parent().css("background", "#e4e4e4");
         }
         if(s==date) {
         	$(this).css("font-weight", "600");
@@ -116,7 +67,7 @@ $(function(){
 	</div>
 	<div class="contentBar">
 		<ul>
-			<li class="bartitle"><a href="#">모집중인 이디즈스쿨 강의 리스트</a></li>
+			<li class="bartitle">${month}월  모집중인 이디즈스쿨 강의 리스트</li>
 			<li class="barselect ${sccaNo==0?'select-menu':'' }" data-sccaNo="0" >전체 보기</li>
 			<li class="barselect ${sccaNo==1?'select-menu':'' }" data-sccaNo="1" >입문</li>
 			<li class="barselect ${sccaNo==2?'select-menu':'' }" data-sccaNo="2" >실전</li>
@@ -125,36 +76,39 @@ $(function(){
 		</ul>
 	</div>
 	<div class="slistForm">
-		<div class="schoollist-content" style="display: inline-block; vertical-align: top;">
-			<div class="schoollist">
-				<ul>
-					<li>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</li>
-				</ul>	
+			<div class="schoollist-content">
+				<c:forEach var="dto" items="${list}">
+					<div class="schoollist">
+						<ul>
+							<li class="leftlist"><a href="<%=cp%>/school/article?scNo=${dto.scNo}&sccaNo=${sccaNo}&date=${date}">${dto.scSubject}</a></li>
+						</ul>
+						<ul>
+							<li class="sccaN">${dto.sccaName}</li>
+							<li class="sccaS"><a href="<%=cp%>/school/article?scNo=${dto.scNo}&sccaNo=${sccaNo}&date=${date}"> &nbsp;&nbsp; [${dto.sccaName}] &nbsp; ${dto.scSubject}</a></li>
+							<li class="sccaC"> &nbsp;&nbsp; ${dto.scContent}</li>
+							<li>&nbsp;&nbsp; 일시 :  ${dto.scDate}</li>
+							<li class="scAllCount"> ${dto.scAllNumber} 명</li>
+							<li class="scCount">  ${dto.schoolProject} / &nbsp;</li>
+						</ul>
+					</div>
+				</c:forEach>
+				
+				<c:if test="${list.size()==0}">
+					<div class="schoollist2">
+						<ul>
+							<li>등록된 게시물이 없습니다...</li>
+						</ul>
+					</div>
+				</c:if>
 			</div>
-			<div class="schoollist">
-				<ul>
-					<li>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</li>
-				</ul>	
-			</div>
-			<div class="schoollist">
-				<ul>
-					<li>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</li>
-				</ul>	
-			</div>
-			<div class="schoollist">
-				<ul>
-					<li>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</li>
-				</ul>	
-			</div>
-		</div>
 		<div class="schoolcalender" style="display: inline-block; vertical-align: top;">
 			<table style="width: 100%; border-spacing: 0;" >
 				  <tr height="35">
 				   	<td align="center">
-				   		<span class="btnDate" onclick="changeDate('${today}');">오늘</span>
 				   		<span class="btnDate" onclick="changeDate('${preMonth}');">＜</span>
-				   		<span class="titleDate">${year}年 ${month}月</span>
+				   		<span class="titleDate">${year}년 ${month}월</span>
 				   		<span class="btnDate" onclick="changeDate('${nextMonth}');">＞</span>
+				   		<span class="btnDate" onclick="changeDate('${today}');">오늘</span>
 				   	</td>
 				  </tr>
 			</table>
@@ -181,5 +135,10 @@ $(function(){
 			    </c:forEach>
 			</table>			
 		</div>
+		<c:if test="${sessionScope.member.memberNo==1 || sessionScope.member.memberNo==dto.memberNo}">
+			<div>
+				<button class="schoolbtn" type="button" onclick="javascript:location.href='<%=cp%>/school/createschool'">등록하기</button>
+		   	</div>
+		</c:if>
 	</div>
 </article>

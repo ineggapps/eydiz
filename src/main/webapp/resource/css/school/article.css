@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+.schoolAll {
+	width: 100%;
+	background: #f4f4f4;	
+}
+
+.schoolarticle {
+	width: 60%;
+	margin: 0px auto;
+}
+
+.sContentTitle {
+	padding-top: 30px;
+}
+
+.sContentTitle h2{
+	font-size: 26px;
+}
+
+.sContentTitle p {
+	font-size: 17px;
+	padding-top: 17px;
+	padding-bottom: 30px;
+}
+
+.titlesbtn {
+	text-align: right;
+}
+
+.titlebtn {
+	background: white;
+}
+
+.sContentl {
+	width: 330px;
+	height: 200px;
+	background: #008080;
+	color: white;
+	font-size: 33px;
+	padding: 100px 0px 0px 30px;
+}
+
+.sContentr {
+	width: 330px;
+	height: 288px;
+	background: white;
+	display: inline-block; 
+	vertical-align: top;
+}
+
+.sContentr ul {
+	border: 1px solid silver;
+	height: 55px;
+	padding-top: 15px;
+}
+
+.topcontent {
+	float: left; 
+	display: inline; 
+	padding: 10px;
+	text-align: left;
+}
+
+.bottomcontent {
+	text-align: right;
+	padding: 10px;
+	padding-left: 20px;
+	
+}
+
+.projectbutton {
+	width: 329px;
+	height: 41px;
+	background: #2CC89D;
+	color: white;
+	text-align: center;
+	font-size: 17px;
+	padding-top: 14px;
+}
+
+.contentbutton p {
+	float: left;
+	display: inline;
+}
+
+.contentbutton::after {
+	clear: both;
+}
