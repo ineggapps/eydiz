@@ -376,7 +376,7 @@ CREATE TABLE reward_buy_detail(
     rewardNo NUMBER NOT NULL,
     requestQuantity NUMBER NOT NULL,
     purchasePrice NUMBER NOT NULL,
-    optionAnswer VARCHAR2(255) NOT NULL,
+    optionAnswer VARCHAR2(255), --옵션이 없는 상품이 있을 수도 있음.
     CONSTRAINT PK_REWARD_BUY_DETAIL_DETAILNO PRIMARY KEY(detailNo),
     CONSTRAINT FK_REWARD_BUY_BUYNO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo),
     CONSTRAINT FK_REWARD_BUY_REWARDNO FOREIGN KEY(rewardNo) REFERENCES reward(rewardNo)
