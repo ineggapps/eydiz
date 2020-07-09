@@ -1,11 +1,23 @@
 @charset "UTF-8";
 
 .guidecreate {
-	text-align: center;
-	width: 1200px;
+	width: 60%;
+	margin: 0px auto;
+	padding-top: 35px;
 }
 
-.guidecreate ul li {
-	display: inline-block;
-	margin: 10px;
+.guidecreate ul{
+	margin-bottom: 20px;
+}
+
+.guidesname {
+	float: left;
+}
+
+.guideInput {
+	margin-left: 10px;
+}
+
+.guidebottombutton {
+	margin: 0px auto;
 }

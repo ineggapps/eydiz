@@ -504,4 +504,13 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		
 		return "redirect:/studio/project/"+projectNo+"/news/list";
 	}
+	
+	// 발송 관리
+	@RequestMapping(value="/shipping/{projectNo}")
+	public String sendList (
+			@PathVariable Integer projectNo
+			) throws Exception {
+		
+		return ".studioLayout.sendlist";
+	}
 }
