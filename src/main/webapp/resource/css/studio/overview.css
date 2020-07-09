@@ -124,6 +124,7 @@ ul.detailNav a span.badge {
   }
 
   .contentInner {
+    padding-top: 80px;
     padding-left: 40px;
     padding-right: 40px;
   }

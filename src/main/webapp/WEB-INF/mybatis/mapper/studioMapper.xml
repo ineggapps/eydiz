@@ -171,6 +171,7 @@
 				rewardOption=#{rewardOption}, isShipping=#{isShipping}, shipAmount=#{shipAmount, jdbcType=VARCHAR}, 
 				startShippingDate=#{startShippingDate}, limitQuantity=#{limitQuantity}
 		WHERE projectNo = (SELECT projectNo FROM project WHERE projectNo = #{projectNo} AND brandNo = #{brandNo})
+		AND rewardNo = #{rewardNo}
 	</update>
 	
 	<delete id="deleteReward" parameterType="map">
@@ -231,13 +232,19 @@
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0) FROM project_news
-		WHERE  projectNo = #{projectNo}
+		<where>
+			projectNo = #{projectNo}
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
 	</select>
 	
 	<select id="listProjectNews" parameterType="map" resultType="com.eydiz.studio.ProjectNews">
 		SELECT newsNo, pn.projectNo, createdDate, title, content FROM project_news pn
 		JOIN project p ON pn.projectNo = p.projectNo
 		<where>
+			p.projectNo = #{projectNo}
 			<if test="keyword!=null and keyword!='' ">
 				<include refid="where-list"/>
 			</if>

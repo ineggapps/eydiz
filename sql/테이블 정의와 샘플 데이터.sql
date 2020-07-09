@@ -376,7 +376,7 @@ CREATE TABLE reward_buy_detail(
     rewardNo NUMBER NOT NULL,
     requestQuantity NUMBER NOT NULL,
     purchasePrice NUMBER NOT NULL,
-    optionAnswer VARCHAR2(255) NOT NULL,
+    optionAnswer VARCHAR2(255), --옵션이 없는 상품이 있을 수도 있음.
     CONSTRAINT PK_REWARD_BUY_DETAIL_DETAILNO PRIMARY KEY(detailNo),
     CONSTRAINT FK_REWARD_BUY_BUYNO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo),
     CONSTRAINT FK_REWARD_BUY_REWARDNO FOREIGN KEY(rewardNo) REFERENCES reward(rewardNo)
@@ -433,7 +433,6 @@ CREATE SEQUENCE reward_shipping_location_seq
    NOMAXVALUE
    NOCYCLE
    NOCACHE;
-
 
 CREATE TABLE member_account( -- 현금계좌
     accountNo NUMBER NOT NULL,
@@ -761,6 +760,12 @@ INSERT INTO project_status(statusNo, statusName) VALUES(3, '신고 접수');
 INSERT INTO project_status(statusNo, statusName) VALUES(4, '신고 반영');
 INSERT INTO project_status(statusNo, statusName) VALUES(5, '활성');--승인되어 진행 중인 프로젝트
 INSERT INTO project_status(statusNo, statusName) VALUES(6, '종료');--프로젝트 기간이 모두 끝남
+COMMIT;
+
+INSERT INTO shipping_status(statusno, statusname) VALUES(0, '결제 완료');
+INSERT INTO shipping_status(statusno, statusname) VALUES(1, '배송 준비 중');
+INSERT INTO shipping_status(statusno, statusname) VALUES(2, '배송 중');
+INSERT INTO shipping_status(statusno, statusname) VALUES(3, '수취 완료');
 COMMIT;
 
 --샘플 데이터 준익

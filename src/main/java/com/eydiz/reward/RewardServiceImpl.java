@@ -32,8 +32,10 @@ public class RewardServiceImpl implements RewardService, RewardConstant {
 		try {
 			insertRewardOverview(rewardInfo, memberInfo);
 			insertRewardDetail(rewardInfo, rewardInfo.getRewards());
-			rewardInfo.getRewardShippingLocation().setBuyNo(rewardInfo.getBuyNo());
-			insertRewardShppingLocation(rewardInfo.getRewardShippingLocation());
+			if(rewardInfo.isAnyShipping()) {
+				rewardInfo.getRewardShippingLocation().setBuyNo(rewardInfo.getBuyNo());
+				insertRewardShppingLocation(rewardInfo.getRewardShippingLocation());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

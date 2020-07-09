@@ -8,6 +8,7 @@ public class Member {
 	private String memberEmail;
 	private int memberSocial;
 	private boolean isAdmin;
+	private String memberImageUrl;
 
 	public int getMemberNo() {
 		return memberNo;
@@ -64,7 +65,21 @@ public class Member {
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-	
-	
 
+	public String getMemberImageUrl() {
+		return memberImageUrl;
+	}
+
+	public void setMemberImageUrl(String memberImageUrl) {
+		this.memberImageUrl = memberImageUrl;
+	}
+
+	@Override
+	public String toString() {
+		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberNickname=" + memberNickname
+				+ ", memberPwd=" + memberPwd + ", memberEmail=" + memberEmail + ", memberSocial=" + memberSocial
+				+ ", isAdmin=" + isAdmin + ", memberImageUrl=" + memberImageUrl + "]";
+	}
+
+	
 }

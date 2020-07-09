@@ -8,8 +8,9 @@
 			p.projectNo, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
 			projectCreatedDate, projectUpdatedDate, 
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
-			statusNo, projectSummary, projectStory,
+			statusNo, projectSummary, projectStory, 
 			p.brandNo, brandName, managerName, managerEmail, managerPhone,
+			memberImageUrl,
 			FLOOR(projectEndDate - SYSDATE) remainDays,
 			NVL(likeCount,0) likeCount,
 			NVL(supportCount, 0) supportCount,
@@ -60,6 +61,7 @@
         ) ro ON ro.projectNo = p.projectNo
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
+		JOIN member_detail md ON md.memberNo = b.memberNo
 		WHERE p.projectNo = #{projectNo}
 	</select>
 	

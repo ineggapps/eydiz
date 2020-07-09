@@ -57,7 +57,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		if (req.getQueryString() != null && req.getQueryString().length() > 0) {
 			uri.append("?" + req.getQueryString());
 		}
-		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
+		model.addAttribute(MemberConstant.ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
 		model.addAttribute(ATTRIBUTE_PROJECTNO, projectNo);
 	}
 
@@ -317,6 +317,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		try {
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 			reward.setProjectNo(projectNo);
+			reward.setRewardNo(rewardNo);
 			reward.setBrandNo(bInfo.getBrandNo());
 			service.updateReward(reward);
 			result.put(JSON_RESULT, JSON_RESULT_OK);

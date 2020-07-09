@@ -140,7 +140,7 @@ $(window).scroll(function () {
   var scrollTop = $(window).scrollTop();
   var height = $(document).height() - $(window).height() - 100; //- 여분
   console.log(scrollTop, height, "...", page, pageCount);
-  if (isVisibleScrollBar && scrollTop >= height && page <= pageCount) {
+  if (isVisibleScrollBar() && scrollTop >= height && page <= pageCount) {
     console.log("... 다음 호출!!!");
     loadProjectSnippet(categoryNo, page++);
   }

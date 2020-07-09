@@ -1,9 +1,9 @@
-﻿<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-   String cp = request.getContextPath();
+	String cp=request.getContextPath();
 %>
 <header id="header">
   <div class="headerInner">
@@ -47,21 +47,14 @@
     </div>
   </div>
   <div class="headerInnerMobile">
-    <div class="headerMobile">
-      <h1 class="logo"><a href="#">eydiz</a></h1>
+    <div class="mobileNav">
+      <h2 class="title">이디즈 마이 페이지</h2>
+      <a href="#" class="btnBack btnFlat btnMobileNav">
+        <span class="hidden">이전</span>
+      </a>
+      <a href="#" class="btnHome btnFlat btnMobileNav">
+        <span class="hidden">홈</span>
+      </a>
     </div>
   </div>
-  <%--div class="headerInnerTab">
-    <ul class="gnbSub">
-      <li>
-        <a href="#" class="on"><span>펀딩 홈</span></a>
-      </li>
-      <li class="trivial">
-        <a href="#"><span>카테고리</span></a>
-      </li>
-      <li>
-        <a href="#"><span>오픈예정</span></a>
-      </li>
-    </ul>
-  </div --%>
 </header>

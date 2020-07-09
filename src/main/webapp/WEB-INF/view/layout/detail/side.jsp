@@ -38,7 +38,14 @@
 </ul>
 <div class="brandInfoBox">
   <div class="brandName">
-    <a href="#"><span class="image"></span><span class="name">${project.brandName}</span></a>
+    <a href="#">
+    <c:if test="${project.memberImageUrl==null}">
+    <span class="image"></span>
+    </c:if>
+    <c:if test="${project.memberImageUrl!=null}">
+    <span class="image" style="background-image:url('${project.memberImageUrl}')"></span>
+    </c:if>
+    <span class="name">${project.brandName}</span></a>
   </div>
   <div class="brandStatus">
     <div class="statusItem">

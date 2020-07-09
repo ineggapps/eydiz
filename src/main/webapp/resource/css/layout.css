@@ -24,6 +24,10 @@ a {
   outline: 0 !important;
 }
 
+.sample{/*ajax sample template*/
+	display:none;
+}
+
 .hidden {
   display: inline-block;
   overflow: hidden;
@@ -71,6 +75,23 @@ h2 {
   clear: both;
   content: "";
   display: block;
+}
+
+
+#header{
+	border-bottom:1px solid #f0f2f5;
+}
+
+.displayAvatar{
+	display:inline-block;
+	width:37px;
+	height:37px;
+	background-image:url('../images/detail/user-64.png');
+	background-repeat:no-repeat;
+	background-size:cover;
+	border-radius:100%;
+	vertical-align:middle;
+	margin-right:8px;
 }
 
 /*모바일용 컴포넌트*/
@@ -430,7 +451,6 @@ ul.fnb li:not(:last-child) {
     display: none;
   }
     .contentWrapper{
-  	padding-top:46px;
   }
   
 }

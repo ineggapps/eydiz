@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+div.avatar{
+	display:block;
+	width:128px;
+	height:128px;
+	border-radius:100%;
+	background-image:url("../../images/detail/user-64.png");
+	background-size:cover;
+	background-repeat:no-repeat;
+}
+
+.btnSubmit.avatar{
+	margin-top:10px;
+	width:60px;
+	height:40px;
+	line-height:40px;
+}
+
+.hide{
+	display:none;
+}

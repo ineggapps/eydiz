@@ -14,27 +14,20 @@
     <title>크라우드 펀딩</title>
     <link rel="stylesheet" href="<%=cp%>/resource/css/reset.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/detail.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/detail/reward.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/detail/step.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/detail/community.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/overview.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/brand_info.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/project_list.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/myinfo/myinfo.css" />
     <!--[if lt IE 9]>
-      <script src="resource/js//html5shiv.min.js"></script>
+      <script src="<%=cp%>/resource/js//html5shiv.min.js"></script>
     <![endif]-->
     <script>
     const cp = "<%=cp%>";
-    const projectNo = ${project.projectNo};
-    const memberNickname ="${sessionScope.member.memberNickname}";
     </script>
-    <script src="<%=cp %>/resource/js/jquery-3.5.1.min.js"></script>
-    <!--[if IE]> 
-	<script type="text/javascript" src="<%=cp %>/resource/js/lib/bluebird.js"></script>    
-	<![endif]-->
-	<script type="text/javascript" src="<%=cp %>/resource/js/countUp.js"></script>    
-	<script type="text/javascript" src="<%=cp %>/resource/js/dotdotdot.js"></script>    
-	<script type="text/javascript" src="<%=cp %>/resource/js/detail/detail.js"></script>    
-	<script type="text/javascript" src="<%=cp %>/resource/js/detail/reward.js"></script>    
-	<script>
+    <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="/eydiz/resource/jquery/js/jquery.form.js"></script>
+	<script src="<%=cp %>/resource/js/studio/brand_studio.js"></script>
+    <script>
     	//sticky 구현
     	$(function(){
     		const $nav = $("div.nav");
@@ -60,28 +53,36 @@
   </head>
   <body>
     <div id="wrap">
-      <header id="header">
-        <tiles:insertAttribute name="header" />
-      </header>
+      <tiles:insertAttribute name="header"/>
       <main id="content">
         <div class="contentWrapper">
-	      	<article class="row">
-			  <div class="rowFull">
-			    <div class="detailWrap">
-			      <div class="detailContent">
-			      	<tiles:insertAttribute name="content"/>
-			      </div>
-			      <div class="detailSide">
-			        <tiles:insertAttribute name="side"/>
-			      </div>
-			    </div>
-			  </div>
-			</article>
+          <article class="row bgWhite">
+            <div class="rowFull">
+              <div class="projectTitle">
+                <h2>마이 페이지</h2>
+              </div>
+            </div>
+          </article>
+          <nav class="row">
+            <div class="rowFull nav bgWhite">
+              <ul class="detailNav">
+                <li ${uri=='' || uri=='/' || uri=='/myInfo' || uri=='/main' ? "class=\"on\"":""}>
+                  <a href="<%=cp%>/mypage/main"><span>개인정보</span></a>
+                </li>
+                <li ${uri=='/funding'?"class=\"on\"":""}>
+                  <a href="<%=cp%>/mypage/funding"><span>펀딩 내역</span></a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <article class="row">
+            <div class="contentInner">
+              <tiles:insertAttribute name="content"/>
+            </div>
+          </article>
         </div>
       </main>
-      <footer id="footer">
-        <tiles:insertAttribute name="footer" />
-      </footer>
+      <tiles:insertAttribute name="footer"/>
     </div>
   </body>
 </html>

@@ -36,7 +36,12 @@
       <div class="commentReplyWrap">
       <div class="commentItem reply hide">
         <div class="commentSide">
-          <span class="reply commentAvatar">프로필사진</span>
+			<c:if test="${sessionScope.member.memberImageUrl == null}">
+		    <span class="reply commentAvatar">프로필사진</span>
+			</c:if>
+			<c:if test="${sessionScope.member.memberImageUrl != null}">
+          	<span class="reply commentAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">프로필사진</span>
+			</c:if>
         </div>
         <div class="commentArea">
           <div class="commentHeader">
@@ -52,7 +57,12 @@
       <c:if test="${not empty sessionScope.member }">
       <div class="commentInput reply">
         <div class="commentInputSide">
-          <span class="reply commentAvatar">프로필사진</span>
+			<c:if test="${sessionScope.member.memberImageUrl == null}">
+		    <span class="reply commentAvatar">프로필사진</span>
+			</c:if>
+			<c:if test="${sessionScope.member.memberImageUrl != null}">
+          	<span class="reply commentAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">프로필사진</span>
+			</c:if>
         </div>
         <div class="commentInputContent">
 	          <textarea placeholder="답글을 입력하세요" name="content" data-autoresize="true"></textarea>
