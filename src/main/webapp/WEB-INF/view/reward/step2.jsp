@@ -28,8 +28,10 @@
                     <p class="rewardBuyTitle">${item.value.rewardTitle}</p>
                     <p class="rewardBuyText">${item.value.rewardContent}</p>
                     <div class="rewardBuyOption">
-                      <span class="rewardBuyOptionTitle">옵션:</span>
-                      <span class="rewardBuyOptionText">${item.value.optionAnswer}</span>
+                   		<c:if test="${item.value.rewardOption != null}">
+	                      <span class="rewardBuyOptionTitle">옵션:</span>
+	                      <span class="rewardBuyOptionText">${item.value.optionAnswer}</span>
+                   		</c:if>
                     </div>
                   </dt>
                   <dd>

@@ -34,6 +34,29 @@
 	<script type="text/javascript" src="<%=cp %>/resource/js/dotdotdot.js"></script>    
 	<script type="text/javascript" src="<%=cp %>/resource/js/detail/detail.js"></script>    
 	<script type="text/javascript" src="<%=cp %>/resource/js/detail/reward.js"></script>    
+	<script>
+    	//sticky 구현
+    	$(function(){
+    		const $nav = $("div.nav");
+    		const $clone = $nav.clone(true).attr("id","cloneNav");
+    		const $mobileNav = $(".mobileNav");
+    		$( window ).on("scroll resize", function() {
+    		const offset = $mobileNav.css("display")=="block"?$mobileNav.height():0;
+       		const navTop = $nav.offset().top;
+    			if ( $(window).scrollTop() > navTop - offset) {
+    				if($("header").find("#cloneNav").length==0){    					
+			    		$clone.appendTo("header");
+    				}
+    					$clone.addClass( 'sticky' );
+    			}
+    			else {
+    				$clone.remove();
+    			   	$clone.removeClass( 'sticky' );
+    			}			
+      		});
+    		$(window).scrollTop(0);
+    });
+        </script>
   </head>
   <body>
     <div id="wrap">

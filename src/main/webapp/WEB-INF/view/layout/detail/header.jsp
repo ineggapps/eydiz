@@ -64,7 +64,7 @@
   </div>
 </article>
 <nav class="row">
-  <div class="rowFull">
+  <div class="rowFull nav">
     <ul class="detailNav">
       <li ${uri=="/view"?"class=\"on\"":""} ${uri=="/"?"class=\"on\"":""}>
         <a href="<%=cp%>/detail/${projectNo}/view"><span>스토리</span></a>

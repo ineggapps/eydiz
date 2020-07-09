@@ -8,22 +8,22 @@ public class SessionInfo {
 	private String memberNickname;
 	private String memberEmail;
 	private int memberSocial;
+	private String memberImageUrl;
 	private boolean isAvailable;
 	private boolean isAdmin;
 
 	public SessionInfo() {
 	}
-	
+
 	public SessionInfo(Member dto) {
 		this.memberNo = dto.getMemberNo();
 		this.memberId = dto.getMemberId();
 		this.memberNickname = dto.getMemberNickname();
-		this.memberEmail= dto.getMemberEmail();
+		this.memberEmail = dto.getMemberEmail();
 		this.memberSocial = dto.getMemberSocial();
 		this.isAdmin = dto.isAdmin();
+		this.memberImageUrl = dto.getMemberImageUrl();
 	}
-
-
 
 	public SessionInfo(int memberNo, String memberId, String memberNickname, String memberEmail, int memberSocial,
 			boolean isAvailable) {
@@ -33,6 +33,17 @@ public class SessionInfo {
 		this.memberEmail = memberEmail;
 		this.memberSocial = memberSocial;
 		this.isAvailable = isAvailable;
+	}
+
+	public SessionInfo(int memberNo, String memberId, String memberNickname, String memberEmail, int memberSocial,
+			boolean isAvailable, String memberImageUrl) {
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberNickname = memberNickname;
+		this.memberEmail = memberEmail;
+		this.memberSocial = memberSocial;
+		this.isAvailable = isAvailable;
+		this.memberImageUrl = memberImageUrl;
 	}
 
 	public int getMemberNo() {
@@ -89,6 +100,14 @@ public class SessionInfo {
 
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public String getMemberImageUrl() {
+		return memberImageUrl;
+	}
+
+	public void setMemberImageUrl(String memberImageUrl) {
+		this.memberImageUrl = memberImageUrl;
 	}
 
 }

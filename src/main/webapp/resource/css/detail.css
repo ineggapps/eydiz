@@ -49,6 +49,7 @@ ul.detailNav {
   text-align: center;
   border-top: 1px solid #f0f2f5;
   border-bottom: 3px solid #e5e5e5;
+  background-color:#fff;
   user-select: none;
 }
 

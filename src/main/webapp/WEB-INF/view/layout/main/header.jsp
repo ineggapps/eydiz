@@ -33,8 +33,15 @@
         <li><a href="<%=cp%>/member/login">로그인</a></li>
     	</c:if>
     	<c:if test="${not empty sessionScope.member}">
-<li><a href="<%=cp%>/member/logout">로그아웃</a><li>
-<li><a href="<%=cp%>/mypage" class="profilePic">${sessionScope.member.memberNickname}님</a></li>
+		<li><a href="<%=cp%>/member/logout">로그아웃</a><li>
+		<li><a href="<%=cp%>/mypage" class="profilePic">
+			<c:if test="${sessionScope.member.memberImageUrl!=null}">
+			<span class="displayAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">&nbsp;</span>
+			</c:if>
+			<c:if test="${sessionScope.member.memberImageUrl==null}">
+			<span class="displayAvatar">&nbsp;</span>
+			</c:if>
+			${sessionScope.member.memberNickname}님</a></li>
     	</c:if>
     	</ul>
     </div>
@@ -44,7 +51,7 @@
       <h1 class="logo"><a href="#">eydiz</a></h1>
     </div>
   </div>
-  <div class="headerInnerTab">
+  <%--div class="headerInnerTab">
     <ul class="gnbSub">
       <li>
         <a href="#" class="on"><span>펀딩 홈</span></a>
@@ -56,5 +63,5 @@
         <a href="#"><span>오픈예정</span></a>
       </li>
     </ul>
-  </div>
+  </div --%>
 </header>

@@ -11,4 +11,6 @@ public interface Constant {
 	public static final String ATTRIBUTE_OFFSET = "offset";
 	public static final String ATTRIBUTE_ROWS = "rows";
 	public static final String ATTRIBUTE_PAGE_COUNT = "page_count";
+	
+	public static final String ATTRIBUTE_MEMBER = "member";
 }

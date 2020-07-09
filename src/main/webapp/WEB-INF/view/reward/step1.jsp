@@ -43,9 +43,11 @@
                        <p>${item.rewardTitle}</p>
                        <p class="rewardItemText">${item.rewardContent}</p>
                        <p class="rewardItemText">${item.rewardOption}</p>
+                       <c:if test="${item.isShipping==1}">
                        <p class="rewardItemText">
                          	배송비 ${item.shipAmount}원 | 리워드 제공 예상일: ${item.startShippingDate}
                        </p>
+                       </c:if>
                        <div class="rewardOptionWrapper">
                          <div class="rewardOptionBox optionRequestQuantity">
                            <p class="optionName">수량</p>

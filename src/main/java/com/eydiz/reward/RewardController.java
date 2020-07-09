@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.codec.language.bm.PhoneticEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -116,12 +115,12 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 
 	@RequestMapping(value = "/save/rewardShippingLocation", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> saveRewardShippingLocation(HttpSession session, String recipient,
-			String zipCode, String phone, String address1,
-			String address2, String message) {
+	public Map<String, Object> saveRewardShippingLocation(HttpSession session, String recipient, String zipCode,
+			String phone, String address1, String address2, String message) {
 		Map<String, Object> map = new HashMap<>();
 		try {
-			System.out.println(String.format("%s, %s, %s, %s, %s, %s ==============", recipient, zipCode, phone, address1, address2, message));
+			System.out.println(String.format("%s, %s, %s, %s, %s, %s ==============", recipient, zipCode, phone,
+					address1, address2, message));
 			SessionRewardInfo rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
 			SessionInfo memberInfo = (SessionInfo) session.getAttribute(SESSION_MEMBER);
 			RewardShippingLocation rewardShippingLocation = new RewardShippingLocation(rInfo.getBuyNo(),
@@ -154,11 +153,11 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 		return "redirect:" + kakaoPayService.kakaoPayReady(rInfo, memberInfo);
 	}
 
-	@RequestMapping(value="/pay/kakao/abort")//결제 중단
+	@RequestMapping(value = "/pay/kakao/abort") // 결제 중단
 	public String stepPayAbort(Model model, HttpSession session) {
 		return ".rewardLayout.payAbort";
 	}
-	
+
 	@RequestMapping(value = "/{projectNo}/pay/kakao/success")
 	@ResponseBody
 	public Map<String, Object> stepSuccess(@PathVariable Integer projectNo, @RequestParam("pg_token") String pg_token,
@@ -193,6 +192,5 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 
 		return ".rewardLayout.paySuccess";
 	}
-	
 
 }

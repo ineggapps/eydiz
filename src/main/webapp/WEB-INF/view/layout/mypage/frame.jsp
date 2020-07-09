@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/overview.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/brand_info.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/project_list.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/myinfo/myinfo.css" />
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js//html5shiv.min.js"></script>
     <![endif]-->
@@ -24,6 +25,7 @@
     const cp = "<%=cp%>";
     </script>
     <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="/eydiz/resource/jquery/js/jquery.form.js"></script>
 	<script src="<%=cp %>/resource/js/studio/brand_studio.js"></script>
     <script>
     	//sticky 구현
@@ -44,7 +46,8 @@
     				$clone.remove();
     			   	$clone.removeClass( 'sticky' );
     			}			
-      	});
+      		});
+    		$(window).scrollTop(0);
     });
         </script>
   </head>
@@ -63,7 +66,7 @@
           <nav class="row">
             <div class="rowFull nav bgWhite">
               <ul class="detailNav">
-                <li ${uri=='' || uri=='/' || uri=='/main' ? "class=\"on\"":""}>
+                <li ${uri=='' || uri=='/' || uri=='/myInfo' || uri=='/main' ? "class=\"on\"":""}>
                   <a href="<%=cp%>/mypage/main"><span>개인정보</span></a>
                 </li>
                 <li ${uri=='/funding'?"class=\"on\"":""}>

@@ -77,6 +77,23 @@ h2 {
   display: block;
 }
 
+
+#header{
+	border-bottom:1px solid #f0f2f5;
+}
+
+.displayAvatar{
+	display:inline-block;
+	width:37px;
+	height:37px;
+	background-image:url('../images/detail/user-64.png');
+	background-repeat:no-repeat;
+	background-size:cover;
+	border-radius:100%;
+	vertical-align:middle;
+	margin-right:8px;
+}
+
 /*모바일용 컴포넌트*/
 .headerInnerMobile,
 .mobileNav {
