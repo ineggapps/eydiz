@@ -418,7 +418,7 @@ CREATE TABLE reward_shipping_location(
     message VARCHAR2(255), -- 배송 메시지
     courierNo NUMBER, -- 택배사 번호
     invoiceNumber VARCHAR2(100), -- 송장번호 번호
-    statusNo NUMBER, -- 배송상태번호
+    statusNo NUMBER DEFAULT 0, -- 배송상태번호
     wasReceived NUMBER(1) DEFAULT 0, -- 수취확인 (1:수취확인)
     CONSTRAINT PK_REWARD_SHIPPING_LOCATION_BUYNO PRIMARY KEY(buyNo),
     CONSTRAINT FK_REWARD_SHIPPING_LOCATION_BUYNO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo),
