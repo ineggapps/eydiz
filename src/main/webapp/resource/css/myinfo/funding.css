@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+.historyItem{
+	margin-top:30px;
+	user-select:none;
+	cursor:pointer;
+}
+
+.historyItem{
+	width:100%;
+	border:1px solid #f2f2f2;
+	background-color:#fff;
+	padding:10px 20px 5px 20px;
+	box-sizing:border-box;
+}
+
+.historyItem > * {
+	margin:10px 0;
+}
+
+.historyCategory,
+.historyBrandName,
+.historyDate{
+	font-size:0.8rem;
+	color:#969aa1;
+}
+
+.historyProjectStatus{
+	margin-top:20px;
+	font-size:0.75rem;
+	color:#969aa1;
+}
+
+.historyProjectName{
+	font-weight:600;
+	font-size:1.3rem;
+}
+
+.historyStatus{
+	margin-top:40px;
+	font-weight:600;
+}
+
+.historyDate{
+	text-align:right;
+}
+
+.blue{
+	color:#557cf2;
+}
