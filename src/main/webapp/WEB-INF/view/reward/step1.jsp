@@ -54,8 +54,14 @@
                            <input
                              type="text"
                              name="requestQuantity${item.rewardNo}"
-                             value="1"
-                             class="center"
+                             class="requestQuantity center"
+                             placeholder="최대 ${item.remainQuantity}"
+                           />
+                           <input
+                           	type="hidden"
+                           	class="remainQuantity"
+                           	data-remain-quantity="${item.remainQuantity}"
+                           	value="${item.remainQuantity}"
                            />
                          </div>
                          <c:if test="${item.rewardOption != null}">

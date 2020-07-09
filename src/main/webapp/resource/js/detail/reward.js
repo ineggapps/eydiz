@@ -1,6 +1,5 @@
 function flushOptionWrapper() {
   $(".rewardNo").each(function (idx, item) {
-    console.log(item);
     const checked = $(item).prop("checked");
     const $obj = $(item).closest(".rewardItemBox").find(".rewardOptionWrapper");
     if (checked) {
@@ -24,27 +23,111 @@ $(function () {
   flushOptionWrapper();
 });
 
+$(function () {
+  $("input.requestQuantity").on("keyup", function (e) {
+    $(this).val(
+      $(this)
+        .val()
+        .replace(/[^0-9]/g, "")
+    );
+  });
+});
+
 //입력 체크
 $(function () {
   $(".btnSubmit.step1").click(function (e) {
     //step1 다음단계로
-    var $inputs = $("input.optionAnswer");
+    var $items = $(".rewardItemBox");
     //#1. 체크한 리워드가 하나도 없을 경우
     const checkedCount = $("input.rewardNo:checked").length;
     if (checkedCount == 0) {
       alert("리워드를 최소 한 개 이상 선택하셔야 합니다.");
       e.preventDefault();
+      return false;
     }
-    $inputs.each(function (idx, item) {
-      const chk = $(this).closest(".rewardItemBox").find("input.rewardNo").prop("checked");
-      const v = $(this).val().trim();
+    $items.each(function (idx, item) {
+      console.log(item, chk, "현재... 아이템");
+      var chk = $(this).find("input.rewardNo").prop("checked");
+      var $reqQuantity = $(this).find("input.requestQuantity");
+      var $optionAns = $(this).find(".optionAnswer");
+      var optionAnswer = $optionAns.val();
+
+      console.log(chk, item, "log...", $reqQuantity.val());
 
       //#2. 체크한 리워드의 옵션을 기입하지 않은 경우
-      if (chk && !v) {
-        alert("선택하신 리워드는 옵션을 기입하셔야 합니다.");
-        e.preventDefault();
-        return false;
+      if (chk) {
+        if (!$reqQuantity.val()) {
+          alert("선택하신 리워드의 구매 수량을 기입하시기 바랍니다.");
+          $reqQuantity.focus();
+          e.preventDefault();
+          return false;
+        }
+        if ($optionAns.length>0 && !optionAnswer) {
+          alert("선택하신 리워드는 옵션을 기입하셔야 합니다.");
+          e.preventDefault();
+          return false;
+        }
+
+        //#3. 체크한 리워드가 잔여 수량을 초과한 경우
+        const remainQuantity = $(this).closest(".rewardItemBox").find("input.remainQuantity").val();
+        const requestQuantity = $reqQuantity.val();
+        const after = remainQuantity - requestQuantity;
+        if (after < 0) {
+          alert("선택하신 리워드는 " + remainQuantity + "개 까지만 가능합니다.");
+          $reqQuantity.val("");
+          $reqQuantity.focus();
+          e.preventDefault();
+          return false;
+        }
       }
     });
   });
 });
+// $(function () {
+//   $(".btnSubmit.step1").click(function (e) {
+//     //step1 다음단계로
+//     var $inputs = $("input.optionAnswer");
+//     //#1. 체크한 리워드가 하나도 없을 경우
+//     const checkedCount = $("input.rewardNo:checked").length;
+//     if (checkedCount == 0) {
+//       alert("리워드를 최소 한 개 이상 선택하셔야 합니다.");
+//       e.preventDefault();
+//       return false;
+//     }
+//     $inputs.each(function (idx, item) {
+//       const chk = $(this).closest(".rewardItemBox").find("input.rewardNo").prop("checked");
+//       console.log(item, chk, "아이템");
+//       const $reqQuantity = $(this).closest(".rewardItemBox").find("input.requestQuantity");
+//       const v = $(this).val().trim();
+
+//       //#2. 체크한 리워드의 옵션을 기입하지 않은 경우
+//       if (chk) {
+//         if (!$reqQuantity.val()) {
+//           alert("선택하신 리워드의 구매 수량을 기입하시기 바랍니다.");
+//           $reqQuantity.focus();
+//           e.preventDefault();
+//           return false;
+//         }
+//         if (!v) {
+//           alert("선택하신 리워드는 옵션을 기입하셔야 합니다.");
+//           e.preventDefault();
+//           return false;
+//         }
+
+//         //#3. 체크한 리워드가 잔여 수량을 초과한 경우
+//         const remainQuantity = $(this).closest(".rewardItemBox").find("input.remainQuantity").val();
+//         const requestQuantity = $reqQuantity.val();
+//         const after = remainQuantity - requestQuantity;
+//         if (after < 0) {
+//           alert("선택하신 리워드는 " + remainQuantity + "개 까지만 가능합니다.");
+//           $reqQuantity.val("");
+//           $reqQuantity.focus();
+//           e.preventDefault();
+//           return false;
+//         }
+//       }
+//       console.log("prvd");
+//       e.preventDefault();
+//     });
+//   });
+// });
