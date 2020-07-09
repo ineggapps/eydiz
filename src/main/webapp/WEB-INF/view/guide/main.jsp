@@ -61,15 +61,19 @@ $(function() {
 			        	<div>
 							<img alt="" src="<%=cp%>/uploads/guide/${dto.faqFilename}" width="180" height="90">
 						</div>
-						<div align="right">
-			        	<button type="button" onclick="updateGuide('${dto.faqNo}');" class="bbuuttoon">수정</button>
-			        	<button type="button" onclick="deleteGuide('${dto.faqNo}');" class="bbuuttoon">삭제</button>
-			        	</div>
+						<c:if test="${sessionScope.member.memberNo==1}">
+							<div align="right">
+					        	<button type="button" onclick="updateGuide('${dto.faqNo}');" class="bbuuttoon">수정</button>
+					        	<button type="button" onclick="deleteGuide('${dto.faqNo}');" class="bbuuttoon">삭제</button>
+				        	</div>
+			        	</c:if>
 			       	</div>
 		       	</c:forEach>
-		       	<div align="right">
-		       		<button type="button" onclick="javascript:location.href='<%=cp%>/guide/createguide'" class="bbuuttoon" style="margin-right: 85px;">등록하기</button>
-		       	</div>
+		       	<c:if test="${sessionScope.member.memberNo==1}">
+			       	<div align="right">
+			       		<button type="button" onclick="javascript:location.href='<%=cp%>/guide/createguide'" class="bbuuttoon" style="margin-right: 85px;">등록하기</button>
+			       	</div>
+		       	</c:if>
 	       	</div>
         </div>
 </article>

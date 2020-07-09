@@ -18,7 +18,7 @@ function search() {
       <header class="guideheader">
 	  	<div class="headerInner">
 	        <br><br>
-	        <p class="qlogo"><a href="#"> eydiz </a></p>
+	        <p class="qlogo"><a href="<%=cp%>/main"> eydiz </a></p>
      	</div>
      	<br><br>
      	<div class="textqna">
