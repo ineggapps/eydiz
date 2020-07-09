@@ -25,7 +25,7 @@ import com.eydiz.member.SessionInfo;
 
 @Controller("mypage.myPageController")
 @RequestMapping(value = { "/mypage", "/mypage/*" })
-public class MyPageController implements Constant, MemberConstant {
+public class MyPageController implements Constant, MemberConstant, MyPageConstant {
 	private static final String REQUEST_MAPPING = "/mypage";
 	private static final String JSON_AVATAR_URI = "avatar_uri";
 
@@ -57,7 +57,7 @@ public class MyPageController implements Constant, MemberConstant {
 		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
 	}
 
-	@RequestMapping(value = { "", "/", "/main", "/myInfo", "/myInfo/" })
+	@RequestMapping(value = { "", "/", "/main", "/myInfo", "/myInfo/" }, method=RequestMethod.GET)
 	public String main(Model model, HttpServletRequest req) {
 		addModelURIAttribute(model, req);
 		try {
@@ -71,6 +71,22 @@ public class MyPageController implements Constant, MemberConstant {
 			e.printStackTrace();
 		}
 		return ".myPageLayout.myInfo";
+	}
+	
+	@RequestMapping(value="/myInfo", method=RequestMethod.POST)
+	public String myInfoSubmit(Model model, HttpServletRequest req, Member member) {
+		addModelURIAttribute(model, req);
+		try {
+			SessionInfo info = (SessionInfo) req.getSession().getAttribute(SESSION_MEMBER);
+			if(info==null) {
+				throw new NullPointerException();
+			}
+			member.setMemberNo(info.getMemberNo());
+			myPageService.updateMyInfo(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:"+API_MYPAGE_MYINFO;
 	}
 
 	@RequestMapping(value = "/upload/avatar", method = RequestMethod.POST)

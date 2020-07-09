@@ -58,6 +58,17 @@
 			memberImageUrl=#{memberImageUrl}
 		WHERE memberNo = #{memberNo}
 	</update>
+	
+	<!-- 회원정보 수정(닉네임, 이메일) -->
+	<update id="updateMyInfo" parameterType="com.eydiz.member.Member">
+		UPDATE member_detail
+		SET
+			memberNickname = #{memberNickname},
+			memberEmail = #{memberEmail}
+		WHERE
+			memberNo =#{memberNo}
+	</update>
+	
 	<!-- 
 	마이바티스 이용시 insert into select를 하면
 	"; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: ORA-00933: SQL 명령어가 올바르게 종료되지 않았습니다" 00933에러를 보게된다. 

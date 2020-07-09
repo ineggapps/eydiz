@@ -22,7 +22,7 @@ $(function(){
 });
 </script>
 <article class="row">
-  <form name="<%=cp %>/mypage/myInfo" method="post" name="myInfoForm">
+  <form action="<%=cp %>/mypage/myInfo" method="post" name="myInfoForm">
     <h2>개인정보 수정</h2>
     <p class="description">
       안녕하세요. 개인정보를 확인하거나 수정하세요.
@@ -62,7 +62,7 @@ $(function(){
       
       <div class="infoItem required">
         <div class="infoTitle"><span>닉네임</span></div>
-        <p class="desc">이디즈에서 활동하실 때 필요한 이름을 작성하세요.</p>
+        <p class="desc"></p>
         <div class="inputWrap">
           <input type="text" id="memberNickname" name="memberNickname" value="${member.memberNickname}" />
         </div>

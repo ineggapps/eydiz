@@ -52,7 +52,7 @@ $(function () {
       var $optionAns = $(this).find("input.optionAnswer");
       var optionAnswer = $optionAns.val();
 
-      console.log(chk, item, "요구수량:", $reqQuantity.val(), "옵션:", $optionAns, optionAnswer);
+      //console.log(chk, item, "요구수량:", $reqQuantity.val(), "옵션:", $optionAns, optionAnswer);
 
       //#2. 체크한 리워드의 옵션을 기입하지 않은 경우
       if (chk) {
