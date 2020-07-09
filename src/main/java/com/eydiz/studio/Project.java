@@ -36,6 +36,7 @@ public class Project {
 	private int likeCount;
 	private int myLikeCount;
 	//////////////////////////////////////////////////////
+	private String memberImageUrl; // 브랜드 프로필 이미지
 	private int newsCount; // 새소식 카운트 V
 	private int communityCount; // 커뮤니티 상위댓글 카운트 V
 	private double attainRate;// 달성률
@@ -304,6 +305,14 @@ public class Project {
 
 	public void setSupportCount(int supportCount) {
 		this.supportCount = supportCount;
+	}
+
+	public String getMemberImageUrl() {
+		return memberImageUrl;
+	}
+
+	public void setMemberImageUrl(String memberImageUrl) {
+		this.memberImageUrl = memberImageUrl;
 	}
 
 }

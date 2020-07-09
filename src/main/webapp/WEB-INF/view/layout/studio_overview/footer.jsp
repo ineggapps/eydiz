@@ -1,46 +1,34 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-	String cp=request.getContextPath();
+   String cp = request.getContextPath();
 %>
 <footer id="footer">
   <div class="footerFull">
     <ul class="fnb">
       <li>
-        <a href="#"><span>회원가입 약관</span></a>
+        <a href="<%=cp %>/news/main"><span>공지사항</span></a>
       </li>
       <li>
-        <a href="#"><span>서비스 이용 약관</span></a>
+        <a href="<%=cp%>/mate/main"><span>펀딩메이트</span></a>
       </li>
       <li>
-        <a href="#"><span>개인정보 처리방침</span></a>
+        <a href="<%=cp%>/school/main"><span>이디즈 스쿨</span></a>
       </li>
       <li>
-        <a href="#"><span>운영정책</span></a>
-      </li>
-      <li>
-        <a href="#"><span>제휴문의</span></a>
-      </li>
-      <li>
-        <a href="#"><span>공지사항</span></a>
-      </li>
-      <li>
-        <a href="#"><span>인재채용</span></a>
-      </li>
-      <li>
-        <a href="#"><span>SNS</span></a>
+        <a href="<%=cp%>/guide/main"><span>이용 가이드</span></a>
       </li>
     </ul>
   </div>
   <div class="footerInner">
-    <div class="footerInfo">
+    <%--div class="footerInfo">
       <div class="info1">
         <p class="title">대표 고객센터</p>
         <p class="tel">1577-0000</p>
       </div>
-    </div>
+    </div --%>
   </div>
   <div class="footerWarning">
     <div class="footerWarningInner">
