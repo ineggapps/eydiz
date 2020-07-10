@@ -77,4 +77,11 @@
 			AND projectEndDate - SYSDATE >= 0
 	</update>
 	
+	<!-- 카카오 TID 읽어 반환하기 -->
+	<select id="readKakaoTid" parameterType="Integer" resultType="String">
+		SELECT tid
+		FROM reward_buy_kakao
+		WHERE buyNo=#{buyNo}
+	</select>
+	
 </mapper>

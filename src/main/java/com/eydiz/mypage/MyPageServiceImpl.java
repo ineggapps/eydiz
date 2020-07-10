@@ -12,6 +12,7 @@ import com.eydiz.common.FileManager;
 import com.eydiz.common.dao.CommonDAO;
 import com.eydiz.member.Member;
 import com.eydiz.member.MemberConstant;
+import com.eydiz.reward.kakao.KakaoPayService;
 import com.eydiz.studio.Project;
 import com.eydiz.studio.Reward;
 import com.eydiz.studio.StudioConstant;
@@ -21,6 +22,9 @@ public class MyPageServiceImpl implements MyPageService, MemberConstant, StudioC
 
 	@Autowired
 	CommonDAO dao;
+
+	@Autowired
+	KakaoPayService kakaoPayService;
 
 	@Autowired
 	FileManager fileManager;
@@ -124,5 +128,18 @@ public class MyPageServiceImpl implements MyPageService, MemberConstant, StudioC
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public String readKakaoTid(int buyNo) {
+		String tid = null;
+		try {
+			tid = dao.selectOne(MyPageConstant.MAPPER_NAMESPACE+"readKakaoTid", buyNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tid;
+	}
+	
+	
 
 }

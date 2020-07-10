@@ -23,6 +23,7 @@ public interface MyPageService {
 	public List<Reward> readBoughtMyReward(int memberNo, int buyNo);
 	
 	//결제 취소
+	public String readKakaoTid(int buyNo);
 	public void insertCancel(int memberNo, int buyNo, String memo) throws Exception;
 	
 }

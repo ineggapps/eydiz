@@ -24,6 +24,7 @@ import com.eydiz.member.Member;
 import com.eydiz.member.MemberConstant;
 import com.eydiz.member.MemberService;
 import com.eydiz.member.SessionInfo;
+import com.eydiz.reward.kakao.KakaoPayService;
 import com.eydiz.studio.Project;
 import com.eydiz.studio.Reward;
 
@@ -33,6 +34,9 @@ public class MyPageController implements Constant, MemberConstant, MyPageConstan
 	private static final String REQUEST_MAPPING = "/mypage";
 	private static final String JSON_AVATAR_URI = "avatar_uri";
 
+	@Autowired
+	private KakaoPayService kakaoPayService;
+	
 	@Autowired
 	private MyPageService myPageService;
 
@@ -154,6 +158,9 @@ public class MyPageController implements Constant, MemberConstant, MyPageConstan
 				throw new Exception("buyNo...T^T");
 			}
 			SessionInfo info = (SessionInfo) req.getSession().getAttribute(SESSION_MEMBER);
+			Project project = myPageService.readBoughtMyProject(info.getMemberNo(), buyNo);
+			String tid = myPageService.readKakaoTid(buyNo);
+			kakaoPayService.kakayPayCancel(project.getFinalAmount(), 0, tid);
 			myPageService.insertCancel(info.getMemberNo(), buyNo, "전액 펀딩 취소");
 			map.put(JSON_RESULT, JSON_RESULT_OK);
 		} catch (Exception e) {

@@ -390,6 +390,14 @@ CREATE SEQUENCE reward_buy_detail_seq
    NOCYCLE
    NOCACHE;
 
+--카카오페이 관련 테이블
+CREATE TABLE reward_buy_kakao(
+    buyNo NUMBER NOT NULL,
+    tid VARCHAR2(50) NOT NULL,
+    CONSTRAINT PK_REWARD_BUY_KAKAO PRIMARY KEY(buyNo),
+    CONSTRAINT FK_REWARD_BUY_KAKAO_BUY_NO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo)
+);
+
 CREATE TABLE reward_buy_cancel(
     cancelNo NUMBER NOT NULL,
     buyNo NUMBER NOT NULL,

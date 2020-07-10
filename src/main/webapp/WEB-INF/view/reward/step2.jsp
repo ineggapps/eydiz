@@ -168,6 +168,10 @@ $(function(){
 				location.href= cp+"/reward/pay/success";
 			}else if(currentUrl.indexOf("/pay/kakao/abort")>0){
 				$overlay.removeClass("show");
+				this.contentWindow.location.href="about:blank";
+			}else if(currentUrl.indexOf("/pay/kakao/fail")>0){
+				alert("결제에 실패했습니다. 다시 시도해 주세요.");
+				location.reload();
 			}
 		} catch (e) {
 			console.log(e);
