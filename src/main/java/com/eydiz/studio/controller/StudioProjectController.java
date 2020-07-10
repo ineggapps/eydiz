@@ -2,6 +2,7 @@ package com.eydiz.studio.controller;
 
 import java.io.File;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -411,7 +412,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 	@RequestMapping(value = "/{projectNo}/news/list")
 	public String newsList(
 			@PathVariable Integer projectNo,
-			@RequestParam(defaultValue = "1") int current_page,
+			@RequestParam(value="page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue="title") String condition,
 			@RequestParam(defaultValue="") String keyword, HttpServletRequest req, Model model
 			) throws Exception {
@@ -457,12 +458,12 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		}
 		
 		String query = "";
-		String listUrl = cp+"/studio/project/{projectNo}/news/list";
-		String readUrl = cp+"/studio/project/{projectNo}/news/read?page=" + current_page;
+		String listUrl = cp+"/studio/project/"+projectNo+"/news/list";
+		String readUrl = cp+"/studio/project/"+projectNo+"/news/read?page=" + current_page;
 		
 		if(keyword.length() != 0) {
-			listUrl = cp+"/studio/project/{projectNo}/news/list?query=" + query;
-			readUrl = cp+"/studio/project/{projectNo}/news/read?page=" + current_page + "&" + query;
+			listUrl += "?query=" + query;
+			readUrl += "&" + query;
 		}
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
@@ -479,11 +480,6 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		return ".studioLayout.newsList";
 	}
 	
-	@RequestMapping(value = "/{projectNo}/news/read")
-	public String newsRead(@PathVariable Integer projectNo) throws Exception {
-		
-		return ".studioLayout.newsRead";
-	}
 	
 	@RequestMapping(value = "/{projectNo}/news/write", method=RequestMethod.GET)
 	public String newsWriteForm(@PathVariable Integer projectNo, Model model) throws Exception {
@@ -503,4 +499,90 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		
 		return "redirect:/studio/project/"+projectNo+"/news/list";
 	}
+	
+	@RequestMapping(value = "/{projectNo}/news/read")
+	public String newsRead(@PathVariable Integer projectNo,
+			@RequestParam String page, Model map,
+			@RequestParam(defaultValue="title") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			@RequestParam int newsNo
+			) throws Exception {
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		
+		String query = "page=" + page;
+		if(keyword.length() != 0) {
+			query = "condition=" +condition+ "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		ProjectNews dto = service.readProjectNews(newsNo);
+		
+		if(dto == null) {
+			return "redirect:/studio/project/"+projectNo+"/news/list?"+query;
+		}
+		
+
+		map.addAttribute("keyword", keyword);
+		map.addAttribute("condition", condition);
+		map.addAttribute("query", query);
+		map.addAttribute("dto", dto);
+		map.addAttribute("newsNo", newsNo);
+		map.addAttribute("projectNo", projectNo);
+		map.addAttribute("page", page);
+		
+		return ".studioLayout.newsRead";
+	}
+	
+	
+	@RequestMapping(value = "/{projectNo}/news/update", method=RequestMethod.GET)
+	public String newsUpdateForm(@PathVariable Integer projectNo, Model model,
+			@RequestParam String page, @RequestParam int newsNo
+			) throws Exception {
+		ProjectNews dto = service.readProjectNews(newsNo);
+		
+		if(dto == null) {
+			return "redirect:/studio/project/"+projectNo+"/news/list?page="+page;
+		}
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("projectNo",projectNo);
+		model.addAttribute("mode", "update");
+		return ".studioLayout.newsWrite";
+	}
+	
+	@RequestMapping(value = "/{projectNo}/news/update", method=RequestMethod.POST)
+	public String newsUpdateSubmit(@PathVariable Integer projectNo, ProjectNews dto, String page) throws Exception {
+		try {
+			dto.setProjectNo(projectNo);
+			service.updateProjectNews(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/studio/project/"+projectNo+"/news/list?page="+page;
+	}
+	
+	@RequestMapping(value="/{projectNo}/news/delete")
+	public String delete(@PathVariable Integer projectNo,
+			@RequestParam int newsNo,
+			@RequestParam(required=false,defaultValue="1") String page,
+			@RequestParam(defaultValue="title") String condition,
+			@RequestParam(defaultValue="") String keyword
+			) throws Exception {
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		
+		String query = "page="+page;
+		if(keyword.length() != 0) {
+			query = "condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		service.deleteProjectNews(newsNo);
+		
+		return "redirect:/studio/project/"+projectNo+"/news/list?"+query;
+	}
+	
+	
+	// 펀딩/후원 현황 ------------------------------------------
+	
+	
 }
