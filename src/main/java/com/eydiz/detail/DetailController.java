@@ -70,7 +70,7 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 			Map<String, Object> param = new HashMap<>();
 			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
 			if (info != null) {
-				param.put(ATTRIBUTE_MEMBERNO, info.getMemberNo());
+				param.put(MemberConstant.ATTRIBUTE_MEMBERNO, info.getMemberNo());
 			}
 			param.put(ATTRIBUTE_PROJECTNO, projectNo);
 			project = service.readProject(param);
@@ -101,7 +101,7 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 			// 좋아요 시도하기
 			Map<String, Object> map = new HashMap<>();
 			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
-			map.put(ATTRIBUTE_MEMBERNO, info.getMemberNo());
+			map.put(MemberConstant.ATTRIBUTE_MEMBERNO, info.getMemberNo());
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			result.put(JSON_RESULT, JSON_RESULT_OK);
 			boolean echo = service.toggleLike(map);
@@ -127,7 +127,7 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 			Map<String, Object> param = new HashMap<>();
 			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
 			if (info != null) {
-				param.put(ATTRIBUTE_MEMBERNO, info.getMemberNo());
+				param.put(MemberConstant.ATTRIBUTE_MEMBERNO, info.getMemberNo());
 			}
 			param.put(ATTRIBUTE_PROJECTNO, projectNo);
 			project = service.readProject(param);
@@ -224,7 +224,7 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 			Map<String, Object> param = new HashMap<>();
 			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
 			if (info != null) {
-				param.put(ATTRIBUTE_MEMBERNO, info.getMemberNo());
+				param.put(MemberConstant.ATTRIBUTE_MEMBERNO, info.getMemberNo());
 			}
 			param.put(ATTRIBUTE_PROJECTNO, projectNo);
 			project = service.readProject(param);

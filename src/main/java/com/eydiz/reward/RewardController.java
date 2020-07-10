@@ -45,7 +45,7 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			SessionInfo info = (SessionInfo) req.getSession().getAttribute(SESSION_MEMBER);
 			Map<String, Object> map = new HashMap<>();
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
-			map.put(ATTRIBUTE_MEMBERNO, info.getMemberNo());
+			map.put(MemberConstant.ATTRIBUTE_MEMBERNO, info.getMemberNo());
 			Project project = detailService.readProject(map);
 			List<Reward> rewards = detailService.listRewards(projectNo);
 			model.addAttribute(ATTRIBUTE_PROJECT, project);

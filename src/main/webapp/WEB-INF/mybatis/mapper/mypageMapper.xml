@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mypage">
+	<select id="countMyBoughProjects" parameterType="map" resultType="Integer">
+		SELECT count(*) 
+		FROM reward_buy_overview 
+		WHERE memberNo = #{memberNo}
+	</select>
+	<select id="readMyBoughtProjects" parameterType="map" resultType="com.eydiz.studio.Project">
+		SELECT DISTINCT ro.buyNo,
+			p.projectNo, p.brandNo, projectName, projectEndDate,
+			p.categoryNo, categoryName, totalAmount,
+			brandName,
+			boughtdate,
+				CASE 
+		            WHEN projectEndDate-SYSDATE > 0 THEN 5
+		            ELSE 6
+	            END AS statusNo,
+	       NVL(rc.cancelNo, 0) isCanceled
+		FROM reward_buy_overview ro
+		JOIN project p ON p.projectNo = ro.projectNo
+		JOIN project_category pc ON p.categoryNo = pc.categoryNo
+		JOIN brand b ON b.brandNo = p.brandNo
+		LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+		WHERE ro.memberNo=#{memberNo}
+		ORDER BY ro.buyNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+</mapper>

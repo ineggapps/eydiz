@@ -70,7 +70,7 @@
           </ul>
         </div>
       </div>
-      <%--div class="rewardInner padding">
+      <div class="rewardInner padding">
 		카카오페이 결제가 정상적으로 완료되었습니다.
 		결제일시:     [[${kakaoPay.approved_at}]]<br/>
 		주문번호:    [[${kakaoPay.partner_order_id}]]<br/>
@@ -78,7 +78,9 @@
 		상품수량:    [[${kakaoPay.quantity}]]<br/>
 		결제금액:    [[${kakaoPay.amount.total}]]<br/>
 		결제방법:    [[${kakaoPay.payment_method_type}]]<br/>
-      </div --%>
+		결제카드 정보:    [[${kakaoPay.selected_card_info}]]<br/>
+		결제상세:    [[${kakaoPay.payment_action_details}]]<br/>
+      </div>
       <div class="rewardInner padding center">
         <button type="button" class="btnSubmit noFull" onclick="location.href='<%=cp%>/detail/${sessionScope.reward.projectNo}'">돌아가기</button>
       </div>

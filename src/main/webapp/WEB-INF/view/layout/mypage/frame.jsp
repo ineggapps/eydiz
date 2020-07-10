@@ -28,6 +28,7 @@
     <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="/eydiz/resource/jquery/js/jquery.form.js"></script>
 	<script src="<%=cp %>/resource/js/studio/brand_studio.js"></script>
+	<script src="<%=cp %>/resource/js/mypage/funding.js"></script>
     <script>
     	//sticky 구현
     	$(function(){

@@ -42,6 +42,9 @@ public class Project {
 	private double attainRate;// 달성률
 	private int totalAmount;// 펀딩 총 금액
 	private int supportCount; // 지지자 카운트(리워드 총 카운트) V
+	///////////////////////////////////////////////////////
+	private String boughtDate;
+	private int isCanceled;
 
 	public int getProjectNo() {
 		return projectNo;
@@ -313,6 +316,22 @@ public class Project {
 
 	public void setMemberImageUrl(String memberImageUrl) {
 		this.memberImageUrl = memberImageUrl;
+	}
+
+	public String getBoughtDate() {
+		return boughtDate;
+	}
+
+	public void setBoughtDate(String boughtDate) {
+		this.boughtDate = boughtDate;
+	}
+
+	public int getIsCanceled() {
+		return isCanceled;
+	}
+
+	public void setIsCanceled(int isCanceled) {
+		this.isCanceled = isCanceled;
 	}
 
 }

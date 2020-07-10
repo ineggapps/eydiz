@@ -2,6 +2,7 @@ package com.eydiz.mypage;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,11 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eydiz.common.Constant;
-import com.eydiz.common.FileManager;
+import com.eydiz.common.Pager;
 import com.eydiz.member.Member;
 import com.eydiz.member.MemberConstant;
 import com.eydiz.member.MemberService;
 import com.eydiz.member.SessionInfo;
+import com.eydiz.studio.Project;
 
 @Controller("mypage.myPageController")
 @RequestMapping(value = { "/mypage", "/mypage/*" })
@@ -30,13 +33,13 @@ public class MyPageController implements Constant, MemberConstant, MyPageConstan
 	private static final String JSON_AVATAR_URI = "avatar_uri";
 
 	@Autowired
-	private FileManager fileManager;
-
-	@Autowired
 	private MyPageService myPageService;
 
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private Pager pager;
 
 	private String getRealPath(HttpSession session) {
 		// "/"문자열 다음부터 추출해야...
@@ -124,4 +127,29 @@ public class MyPageController implements Constant, MemberConstant, MyPageConstan
 		}
 		return ".myPageLayout.funding";
 	}
+	
+	@RequestMapping(value="/history/{page}")
+	@ResponseBody
+	public Map<String, Object> readMyBoughtProjects(Model model, HttpServletRequest req, @PathVariable Integer page){
+		Map<String, Object> map = new HashMap<>();
+		try {
+			if(page==null) {
+				throw new NullPointerException();
+			}
+			final int rows = 5;
+			int offset = pager.getOffset(page, rows);
+			SessionInfo info = (SessionInfo) req.getSession().getAttribute(SESSION_MEMBER);
+			int dataCount = myPageService.countBoughtMyProjects(info.getMemberNo());
+			List<Project> project = myPageService.readBoughtMyProjects(info.getMemberNo(), offset, rows);
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+			map.put(JSON_MY_BOUGHT_PROJECTS, project);
+			map.put(JSON_PAGE_COUNT, pager.pageCount(rows, dataCount));
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return map;
+	}
+	
 }

@@ -13,4 +13,5 @@ public interface Constant {
 	public static final String ATTRIBUTE_PAGE_COUNT = "page_count";
 	
 	public static final String ATTRIBUTE_MEMBER = "member";
+	public static final String ATTRIBUTE_MEMBERNO = "memberNo";
 }

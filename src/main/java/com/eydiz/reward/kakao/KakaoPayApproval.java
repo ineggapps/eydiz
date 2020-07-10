@@ -25,6 +25,9 @@ public class KakaoPayApproval {
 	private Date created_at;
 	private Date approved_at;
 
+	private String selected_card_info;
+	private String payment_action_details;
+
 	public String getAid() {
 		return aid;
 	}
@@ -159,6 +162,22 @@ public class KakaoPayApproval {
 
 	public void setApproved_at(Date approved_at) {
 		this.approved_at = approved_at;
+	}
+
+	public String getSelected_card_info() {
+		return selected_card_info;
+	}
+
+	public void setSelected_card_info(String selected_card_info) {
+		this.selected_card_info = selected_card_info;
+	}
+
+	public String getPayment_action_details() {
+		return payment_action_details;
+	}
+
+	public void setPayment_action_details(String payment_action_details) {
+		this.payment_action_details = payment_action_details;
 	}
 
 }
