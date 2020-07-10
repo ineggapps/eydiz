@@ -67,14 +67,14 @@
                   <a href="<%=cp%>/studio/brand/info"><span>브랜드</span></a>
                 </li>
                 <li ${uri=='/project/list'?"class=\"on\"":""}>
-                  <a href="<%=cp%>/studio/project/list"><span>프로젝트 전체</span></a>
+                  <a href="<%=cp%>/studio/project/list"><span>프로젝트 관리</span></a>
                 </li>
-                <li ${categoryName=='funding'?"class=\"on\"":""}>
+                <%-- li ${categoryName=='funding'?"class=\"on\"":""}>
                   <a href="<%=cp%>/studio/project/list/funding"><span>펀딩</span></a>
                 </li>
                 <li ${categoryName=='donate'?"class=\"on\"":""}>
                   <a href="<%=cp%>/studio/project/list/donate"><span>후원</span></a>
-                </li>
+                </li--%>
               </ul>
             </div>
           </nav>

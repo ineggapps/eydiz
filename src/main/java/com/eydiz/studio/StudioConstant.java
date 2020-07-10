@@ -40,10 +40,7 @@ public interface StudioConstant extends Constant {
 	public final static String ATTRIBUTE_BRANDNO = "brandNo";
 	public final static String ATTRIBUTE_REWARDNO = "rewardNo";
 	public final static String ATTRIBUTE_STATUSNO = "statusNo";
-	public final static String ATTRIBUTE_OFFSET = "offset";
-	public final static String ATTRIBUTE_ROWS = "rows";
 	public final static String ATTRIBUTE_CURRENT_PAGE = "currentPage";
-	public final static String ATTRIBUTE_PAGE_COUNT = "pageCount";
 	
 	// JSON
 	public final static String JSON_IMAGE_URL = "url";

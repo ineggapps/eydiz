@@ -81,7 +81,7 @@ public class GuideController {
 			HttpSession session
 			) throws Exception {
 		String root = session.getServletContext().getRealPath("/");
-		String path = root+"upload"+File.separator+"mate";
+		String path = root+"upload"+File.separator+"guide";
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		try {

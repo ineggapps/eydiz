@@ -46,8 +46,8 @@
           <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
         </div>
         <ul class="subMenu">
-          <li class="subMenuItem"><a href="#">새소식 목록</a></li>
-          <li class="subMenuItem"><a href="#">새소식 등록</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/studio/project/${projectNo}/news/list">새소식 목록</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/studio/project/${projectNo}/news/write">새소식 등록</a></li>
         </ul>
       </div>
     </li>

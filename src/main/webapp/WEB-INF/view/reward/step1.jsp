@@ -11,7 +11,7 @@
          <div class="rewardProcessWrap">
            <ul class="rewardProcess">
              <li class="on"><span>리워드 선택</span></li>
-             <li><span>결제 예약</span></li>
+             <li><span>결제</span></li>
              <li><span>결제 완료</span></li>
            </ul>
          </div>
@@ -43,23 +43,33 @@
                        <p>${item.rewardTitle}</p>
                        <p class="rewardItemText">${item.rewardContent}</p>
                        <p class="rewardItemText">${item.rewardOption}</p>
+                       <c:if test="${item.isShipping==1}">
                        <p class="rewardItemText">
                          	배송비 ${item.shipAmount}원 | 리워드 제공 예상일: ${item.startShippingDate}
                        </p>
+                       </c:if>
                        <div class="rewardOptionWrapper">
                          <div class="rewardOptionBox optionRequestQuantity">
                            <p class="optionName">수량</p>
                            <input
                              type="text"
                              name="requestQuantity${item.rewardNo}"
-                             value="1"
-                             class="center"
+                             class="requestQuantity center"
+                             placeholder="최대 ${item.remainQuantity}"
+                           />
+                           <input
+                           	type="hidden"
+                           	class="remainQuantity"
+                           	data-remain-quantity="${item.remainQuantity}"
+                           	value="${item.remainQuantity}"
                            />
                          </div>
+                         <c:if test="${item.rewardOption != null}">
                          <div class="rewardOptionBox optionAnswer">
                            <p class="optionName">옵션</p>
-                           <input type="text" name="optionAnswer${item.rewardNo}" />
+                           <input type="text" name="optionAnswer${item.rewardNo}" class="optionAnswer" />
                          </div>
+                         </c:if>
                        </div>
                      </dd>
                    </dl>
@@ -67,7 +77,7 @@
                </li>
 				</c:forEach>
              </ul>
-             <button type="submit" class="btnSubmit">다음 단계로</button>
+             <button type="submit" class="btnSubmit step1">다음 단계로</button>
            </form>
          </div>
        </div>

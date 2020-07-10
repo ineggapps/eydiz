@@ -5,7 +5,6 @@
 <%
    String cp = request.getContextPath();
 %>
-
 <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 <script type="text/javascript">
 function updateGuide(faqNo) {
@@ -47,27 +46,34 @@ $(function() {
         	<div class="guide_form">
 	        	<br><br><br><br>
 	        	<c:forEach var="dto" items="${list}">
-			        <div class="guidebox">
+					<div class="guidebox">
 			        	<a href="#" class="boxcontent">
 			        		<br><br>
 			        		<span class="guideicon">${dto.faqIcon}</span>
+
 			        		<span>${dto.faqSubject}</span><br><br><br><br><br>
 			        		<span>${dto.memberNickname}</span>&nbsp;&nbsp;&nbsp;<span style="float: right;">${dto.faqCreated}</span>
 			        	</a>
 			       	</div>
 			       	<div class="guideinfo">
-			       		<span>${dto.faqSubject}</span><br><br>
-			        	<span>${dto.faqContent}</span><br><br>
-			        	<div style="width: 210px; padding-bottom: 30px;">
+			       		<span class="faqwpahr"><i class="far fa-lightbulb"></i> &nbsp; ${dto.faqSubject}</span><br>
+			        	<span class="faqekqrmf">${dto.faqContent}</span><br>
+			        	<div>
 							<img alt="" src="<%=cp%>/uploads/guide/${dto.faqFilename}" width="180" height="90">
 						</div>
-			        	<button type="button" onclick="updateGuide('${dto.faqNo}');">수정</button>
-			        	<button type="button" onclick="deleteGuide('${dto.faqNo}');">삭제</button>
+						<c:if test="${sessionScope.member.memberNo==1}">
+							<div align="right">
+					        	<button type="button" onclick="updateGuide('${dto.faqNo}');" class="bbuuttoon">수정</button>
+					        	<button type="button" onclick="deleteGuide('${dto.faqNo}');" class="bbuuttoon">삭제</button>
+				        	</div>
+			        	</c:if>
 			       	</div>
 		       	</c:forEach>
-		       	<div>
-		       		<button type="button" onclick="javascript:location.href='<%=cp%>/guide/createguide'">등록하기</button>
-		       	</div>
+		       	<c:if test="${sessionScope.member.memberNo==1}">
+			       	<div align="right">
+			       		<button type="button" onclick="javascript:location.href='<%=cp%>/guide/createguide'" class="bbuuttoon" style="margin-right: 85px;">등록하기</button>
+			       	</div>
+		       	</c:if>
 	       	</div>
         </div>
 </article>

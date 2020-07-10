@@ -376,7 +376,7 @@ CREATE TABLE reward_buy_detail(
     rewardNo NUMBER NOT NULL,
     requestQuantity NUMBER NOT NULL,
     purchasePrice NUMBER NOT NULL,
-    optionAnswer VARCHAR2(255) NOT NULL,
+    optionAnswer VARCHAR2(255), --옵션이 없는 상품이 있을 수도 있음.
     CONSTRAINT PK_REWARD_BUY_DETAIL_DETAILNO PRIMARY KEY(detailNo),
     CONSTRAINT FK_REWARD_BUY_BUYNO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo),
     CONSTRAINT FK_REWARD_BUY_REWARDNO FOREIGN KEY(rewardNo) REFERENCES reward(rewardNo)
@@ -397,7 +397,7 @@ CREATE TABLE reward_buy_cancel(
     memo VARCHAR2(4000) NOT NULL,
     canceledDate DATE DEFAULT SYSDATE NOT NULL, -- canceled <<< 주의
     CONSTRAINT REWARD_BUY_CANCEL_CANCELNO PRIMARY KEY(cancelNo),
-    CONSTRAINT REWARD_BUY_CANCEL_BUYNO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo)
+    CONSTRAINT REWARD_BUY_CANCEL_BUYNO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo),
 );
 
 CREATE SEQUENCE reward_buy_cancel_seq
@@ -418,7 +418,7 @@ CREATE TABLE reward_shipping_location(
     message VARCHAR2(255), -- 배송 메시지
     courierNo NUMBER, -- 택배사 번호
     invoiceNumber VARCHAR2(100), -- 송장번호 번호
-    statusNo NUMBER, -- 배송상태번호
+    statusNo NUMBER DEFAULT 0, -- 배송상태번호
     wasReceived NUMBER(1) DEFAULT 0, -- 수취확인 (1:수취확인)
     CONSTRAINT PK_REWARD_SHIPPING_LOCATION_BUYNO PRIMARY KEY(buyNo),
     CONSTRAINT FK_REWARD_SHIPPING_LOCATION_BUYNO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo),
@@ -433,7 +433,6 @@ CREATE SEQUENCE reward_shipping_location_seq
    NOMAXVALUE
    NOCYCLE
    NOCACHE;
-
 
 CREATE TABLE member_account( -- 현금계좌
     accountNo NUMBER NOT NULL,
@@ -763,6 +762,12 @@ INSERT INTO project_status(statusNo, statusName) VALUES(5, '활성');--승인되
 INSERT INTO project_status(statusNo, statusName) VALUES(6, '종료');--프로젝트 기간이 모두 끝남
 COMMIT;
 
+INSERT INTO shipping_status(statusno, statusname) VALUES(0, '결제 완료');
+INSERT INTO shipping_status(statusno, statusname) VALUES(1, '배송 준비 중');
+INSERT INTO shipping_status(statusno, statusname) VALUES(2, '배송 중');
+INSERT INTO shipping_status(statusno, statusname) VALUES(3, '수취 완료');
+COMMIT;
+
 --샘플 데이터 준익
 
 --샘플 데이터 은미
@@ -772,3 +777,146 @@ INSERT INTO story_category(storyCnum, stroyCname) VALUES(3,'프로젝트후기')
 COMMIT;
 
 --샘플 데이터 은진
+
+
+--구매내역 초기화 코드
+delete from reward_shipping_location;
+delete from reward_buy_detail;
+delete from reward_buy_cancel;
+delete from reward_buy_overview;
+update reward set remainQuantity=limitQuantity;
+commit;
+
+--리워드 구매 시 트리거
+
+CREATE OR REPLACE TRIGGER insertTriggerRewardBuyDetail
+AFTER INSERT ON reward_buy_detail
+FOR EACH ROW
+
+BEGIN
+     UPDATE reward SET remainQuantity = remainQuantity - :NEW.requestQuantity
+           WHERE rewardNo = :NEW.rewardNo;  
+END;
+/
+
+CREATE OR REPLACE TRIGGER updateTriggerRewardBuyDetail
+AFTER UPDATE ON reward_buy_detail
+FOR EACH ROW
+BEGIN
+     UPDATE reward SET remainQuantity = remainQuantity + :OLD.requestQuantity - :NEW.requestQuantity
+            WHERE rewardNo = :NEW.rewardNo;
+END;
+/
+
+CREATE OR REPLACE TRIGGER deleteTriggerRewardBuyDetail
+AFTER DELETE ON reward_buy_detail
+FOR EACH ROW
+BEGIN
+     UPDATE reward SET remainQuantity = remainQuantity + :OLD.requestQuantity
+           WHERE rewardNo = :OLD.rewardNo;
+END;
+/
+
+
+-- 취소 트리거
+CREATE OR REPLACE TRIGGER insertTriggerRewardCancel
+AFTER INSERT ON reward_buy_cancel
+FOR EACH ROW
+
+DECLARE
+        CURSOR cur_list IS 
+            SELECT rewardNo, requestQuantity
+            FROM reward_buy_cancel rc
+            JOIN reward_buy_overview ro ON ro.buyNo = rc.buyNo
+            JOIN reward_buy_detail rd ON rd.buyNo = ro.buyNo
+            WHERE cancelNo = :NEW.cancelNo;
+        curChoice cur_list%ROWTYPE;
+BEGIN
+         OPEN cur_list;
+        LOOP
+            FETCH cur_list INTO curChoice;
+            EXIT WHEN cur_list%NOTFOUND;
+            --
+           UPDATE reward SET remainQuantity = remainQuantity + curChoice.requestQuantity
+           WHERE rewardNo = curChoice.rewardNo;  
+            --
+        END LOOP;
+        CLOSE cur_list;
+END;
+/
+
+CREATE OR REPLACE TRIGGER updateTriggerRewardCancel
+AFTER UPDATE ON reward_buy_cancel
+FOR EACH ROW
+BEGIN
+     UPDATE reward SET remainQuantity = remainQuantity + :OLD.requestQuantity - :NEW.requestQuantity
+            WHERE rewardNo = :NEW.rewardNo;
+END;
+/
+
+CREATE OR REPLACE TRIGGER deleteTriggerRewardCancel
+AFTER DELETE ON reward_buy_cancel
+FOR EACH ROW
+BEGIN
+     UPDATE reward SET remainQuantity = remainQuantity + :OLD.requestQuantity
+           WHERE rewardNo = :OLD.rewardNo;
+END;
+/
+
+
+-- 취소 트리거 관련
+CREATE OR REPLACE TRIGGER insertTriggerRewardCancel
+BEFORE INSERT ON reward_buy_cancel
+FOR EACH ROW
+    
+DECLARE
+    vBuyNo NUMBER;
+    --vAAAAA NUMBER;
+BEGIN
+        vBuyNo := :NEW.buyNo;
+        DBMS_OUTPUT.PUT_LINE(vbuyNo);
+        
+        --select count(*) into vAAAAA FROM reward_buy_overview ro 
+        --    JOIN reward_buy_detail rd ON rd.buyNo = ro.buyNo
+        --    WHERE ro.buyNo = vBuyNo;
+        --DBMS_OUTPUT.PUT_LINE(vAAAAA);
+                
+        FOR REC IN (
+            SELECT rewardNo, rd.requestQuantity
+            FROM reward_buy_overview ro
+            JOIN reward_buy_detail rd ON rd.buyNo = ro.buyNo
+            WHERE ro.buyNo = vBuyNo
+        ) LOOP 
+            DBMS_OUTPUT.PUT_LINE(REC.rewardNo||'.a'||REC.requestQuantity);
+            -- 리워드 잔여수량 정보 갱신
+           UPDATE reward SET remainQuantity = remainQuantity + REC.requestQuantity
+           WHERE rewardNo = REC.rewardNo;  
+           INSERT INTO test_log VALUES (test_log_seq.NEXTVAL, REC.requestQuantity, REC.rewardNo);
+        END LOOP;
+END;
+/
+
+CREATE OR REPLACE TRIGGER deleteTriggerRewardCancel
+BEFORE INSERT ON reward_buy_cancel
+FOR EACH ROW
+    
+DECLARE
+    vBuyNo NUMBER;
+BEGIN
+        vBuyNo := :OLD.buyNo;
+        DBMS_OUTPUT.PUT_LINE(vbuyNo);
+        
+        FOR REC IN (
+            SELECT rewardNo, rd.requestQuantity
+            FROM reward_buy_overview ro
+            JOIN reward_buy_detail rd ON rd.buyNo = ro.buyNo
+            WHERE ro.buyNo = vBuyNo
+        ) LOOP 
+            -- 리워드 잔여수량 정보 갱신
+           UPDATE reward SET remainQuantity = remainQuantity - REC.requestQuantity
+           WHERE rewardNo = REC.rewardNo;  
+           INSERT INTO test_log VALUES (test_log_seq.NEXTVAL, REC.requestQuantity, REC.rewardNo);
+        END LOOP;
+END;
+/
+

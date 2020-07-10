@@ -46,13 +46,13 @@ public class MemberServiceImpl implements MemberService, MemberConstant {
 		}
 		return isTaken;
 	}
-	
+
 	@Override
 	public boolean isTakenEmail(String memberEmail) {
 		boolean isTaken = true;
 		try {
-			Member dto = (Member)dao.selectOne(TABLE+"readMemberByEmail",memberEmail);
-			if(dto==null) {
+			Member dto = (Member) dao.selectOne(TABLE + "readMemberByEmail", memberEmail);
+			if (dto == null) {
 				isTaken = false;
 			}
 		} catch (Exception e) {
@@ -60,23 +60,22 @@ public class MemberServiceImpl implements MemberService, MemberConstant {
 			e.printStackTrace();
 
 		}
-		
+
 		return isTaken;
 	}
 
 	@Override
-	public boolean isValidateNewMember(Member dto) throws JoinException {//회원가입 유효성 검사
-		//id, nickname, pwd, email만 있으면 된다.
+	public boolean isValidateNewMember(Member dto) throws JoinException {// 회원가입 유효성 검사
+		// id, nickname, pwd, email만 있으면 된다.
 		boolean result = true;
 		try {
-			if(dto==null) {
+			if (dto == null) {
 				throw new JoinException("신규 회원정보가 아무것도 입력되지 않았습니다.");
-			}
-			else if(dto.getMemberId()== null || dto.getMemberId().length()==0) {
+			} else if (dto.getMemberId() == null || dto.getMemberId().length() == 0) {
 				throw new JoinException("아이디가 입력되지 않았습니다.");
-			}else if(isTakenId(dto.getMemberId())) {
+			} else if (isTakenId(dto.getMemberId())) {
 				throw new JoinException("중복된 아이디입니다.");
-			}else if(dto.getMemberNickname()==null || dto.getMemberNickname().length()==0) {
+			} else if (dto.getMemberNickname() == null || dto.getMemberNickname().length() == 0) {
 				throw new JoinException("닉네임이 입력되지 않았습니다.");
 			}
 		} catch (Exception e) {
@@ -88,21 +87,20 @@ public class MemberServiceImpl implements MemberService, MemberConstant {
 	}
 
 	@Override
-	public void insertMember(Member dto) throws JoinException,Exception {//회원가입
+	public void insertMember(Member dto) throws JoinException, Exception {// 회원가입
 		try {
 			isValidateNewMember(dto);
-			int memberNo = dao.selectOne(TABLE+"getNewMemberNo");
+			int memberNo = dao.selectOne(TABLE + "getNewMemberNo");
 			System.out.println(memberNo + "번호...");
 			dto.setMemberNo(memberNo);
-			//아이디 이메일 모두 소문자로 통일
+			// 아이디 이메일 모두 소문자로 통일
 			dto.setMemberId(dto.getMemberId().toLowerCase());
 			dto.setMemberEmail(dto.getMemberEmail().toLowerCase());
 			dao.insertData(TABLE + "insertMember", dto);
-		}catch(JoinException e) {
+		} catch (JoinException e) {
 			e.printStackTrace();
 			throw e;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
@@ -122,14 +120,13 @@ public class MemberServiceImpl implements MemberService, MemberConstant {
 
 	@Override
 	public Member readMember(String userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Member readMember(long memberIdx) {
-		// TODO Auto-generated method stub
-		return null;
+		Member member = null;
+		try {
+			member = dao.selectOne(TABLE + "readMemberById", userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return member;
 	}
 
 	@Override
@@ -148,6 +145,18 @@ public class MemberServiceImpl implements MemberService, MemberConstant {
 	public List<Member> listMember(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	////
+
+	@Override
+	public void updateMemberImageUrl(Member member) throws Exception {
+		try {
+			dao.updateData(TABLE + "updateMemberImageUrl", member);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 }

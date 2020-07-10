@@ -14,6 +14,10 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/reward.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/story.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/dashboard.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/newsList.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/newsRead.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/newsWrite.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/sendlist.css" />
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js/html5shiv.min.js"></script>
     <![endif]-->

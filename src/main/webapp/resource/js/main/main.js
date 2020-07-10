@@ -1,3 +1,51 @@
+// 숫자 타입에서 쓸 수 있도록 format() 함수 추가
+Number.prototype.format = function () {
+  if (this == 0) return 0;
+
+  var reg = /(^[+-]?\d+)(\d{3})/;
+  var n = this + "";
+
+  while (reg.test(n)) n = n.replace(reg, "$1" + "," + "$2");
+
+  return n;
+};
+
+// 문자열 타입에서 쓸 수 있도록 format() 함수 추가
+String.prototype.format = function () {
+  var num = parseFloat(this);
+  if (isNaN(num)) return "0";
+
+  return num.format();
+};
+
+//위의 스크립트 출처: https://stove99.tistory.com/113 [스토브 훌로구]
+
+//ajax
+function ajaxJSON(url, method, data) {
+  return new Promise(function (resolve, reject) {
+    try {
+      $.ajax({
+        url: url,
+        type: method,
+        data: data,
+        success: function (data) {
+          if (data.result == "ok") {
+            resolve(data);
+          } else {
+            reject(data);
+          }
+        },
+        error: function (e) {
+          reject(e.responseText);
+        },
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+///
+
 $(".scrollPanel a").click(function (e) {
   scrollCategory();
 });
@@ -19,7 +67,7 @@ function scrollCategory() {
   const currentPosition = $content.offset().left;
   const nextItemPosition = itemCount * itemWidth + itemWidth; //다음 아이템 위치
   var scrollTo = currentPosition - nextItemPosition;
-//  console.log(scrollTo, currentPosition, nextItemPosition);
+  //  console.log(scrollTo, currentPosition, nextItemPosition);
 
   if (-scrollTo > endItemPos) {
     //그러나 전체 너비를 벗어나면 다시 초기로 되돌림.
@@ -33,4 +81,77 @@ function scrollCategory() {
     transform: "translate(" + scrollTo + "px, 0)",
   });
   categoryScrollLeft = scrollTo;
+}
+
+//ajax 프로젝트 불러오기
+var page = 1;
+var pageCount = 1;
+function loadProjectSnippet(categoryNo, page) {
+  const url = cp + "/main/project/snippet";
+  const method = "get";
+  const query = {
+    categoryNo: categoryNo,
+    page: page,
+    // rows: 9,
+  };
+  ajaxJSON(url, method, query)
+    .then(function (data) {
+      pageCount = data.page_count;
+      renderSnippet(data.project);
+    })
+    .catch(function (e) {
+      console.log(e);
+    });
+}
+
+function renderSnippet(items) {
+  const $element = $(".item.sample");
+  const $wrap = $("ul.gridContent");
+  $.each(items, function (idx, item) {
+    var $project = $element.clone(true).removeClass("sample");
+    $project.find(".thumbnail").css("background-image", "url('" + item.projectImageUrl + "')");
+    $project.find(".thumbnail").attr("data-project-no", item.projectNo);
+    $project.find(".subject a").text(item.projectName);
+    $project.find(".category").text(item.categoryName);
+    $project.find(".name").text(item.name);
+    var rate = item.attainRate * 100 <= 100 ? item.attainRate * 100 : 100;
+    $project.find(".progressBar").css({ width: rate + "%" });
+    $project.find(".percent").text(parseFloat(item.attainRate * 100).toFixed(2) + "%");
+    $project.find(".totalAmount").text(item.totalAmount.format() + "원");
+
+    var s;
+    if (item.remainDays > 0) {
+      s = item.remainDays + "일 남음";
+    } else if (item.remainDays == 0) {
+      s = "오늘 마감";
+    }
+    $project.find(".remainDays").text(s);
+    $project.appendTo($wrap);
+  });
+}
+
+//프로젝트 불러오기 등..
+$(function () {
+  loadProjectSnippet(categoryNo, page++);
+
+  //스크롤 이벤트
+});
+$(window).scroll(function () {
+  var scrollTop = $(window).scrollTop();
+  var height = $(document).height() - $(window).height() - 100; //- 여분
+  console.log(scrollTop, height, "...", page, pageCount);
+  if (isVisibleScrollBar() && scrollTop >= height && page <= pageCount) {
+    console.log("... 다음 호출!!!");
+    loadProjectSnippet(categoryNo, page++);
+  }
+});
+
+function isVisibleScrollBar() {
+  //true:스크롤바 있음, false: 스크롤바 없음
+  return $("body").height() >= $(window).height();
+}
+
+function goToLocation(element) {
+  const projectNo = $(element).attr("data-project-no");
+  location.href = cp + "/detail/" + projectNo;
 }

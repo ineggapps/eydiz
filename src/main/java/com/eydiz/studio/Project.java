@@ -35,6 +35,16 @@ public class Project {
 	private MultipartFile uploadImage;
 	private int likeCount;
 	private int myLikeCount;
+	//////////////////////////////////////////////////////
+	private String memberImageUrl; // 브랜드 프로필 이미지
+	private int newsCount; // 새소식 카운트 V
+	private int communityCount; // 커뮤니티 상위댓글 카운트 V
+	private double attainRate;// 달성률
+	private int totalAmount;// 펀딩 총 금액
+	private int supportCount; // 지지자 카운트(리워드 총 카운트) V
+	///////////////////////////////////////////////////////
+	private String boughtDate;
+	private int isCanceled;
 
 	public int getProjectNo() {
 		return projectNo;
@@ -258,6 +268,70 @@ public class Project {
 
 	public void setMyLikeCount(int myLikeCount) {
 		this.myLikeCount = myLikeCount;
+	}
+
+	public int getNewsCount() {
+		return newsCount;
+	}
+
+	public void setNewsCount(int newsCount) {
+		this.newsCount = newsCount;
+	}
+
+	public int getCommunityCount() {
+		return communityCount;
+	}
+
+	public void setCommunityCount(int communityCount) {
+		this.communityCount = communityCount;
+	}
+
+	public double getAttainRate() {
+		return attainRate;
+	}
+
+	public void setAttainRate(double attainRate) {
+		this.attainRate = attainRate;
+	}
+
+	public int getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(int totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public int getSupportCount() {
+		return supportCount;
+	}
+
+	public void setSupportCount(int supportCount) {
+		this.supportCount = supportCount;
+	}
+
+	public String getMemberImageUrl() {
+		return memberImageUrl;
+	}
+
+	public void setMemberImageUrl(String memberImageUrl) {
+		this.memberImageUrl = memberImageUrl;
+	}
+
+	public String getBoughtDate() {
+		return boughtDate;
+	}
+
+	public void setBoughtDate(String boughtDate) {
+		this.boughtDate = boughtDate;
+	}
+
+	public int getIsCanceled() {
+		return isCanceled;
+	}
+
+	public void setIsCanceled(int isCanceled) {
+		this.isCanceled = isCanceled;
 	}
 
 }

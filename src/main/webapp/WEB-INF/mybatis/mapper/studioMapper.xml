@@ -171,6 +171,7 @@
 				rewardOption=#{rewardOption}, isShipping=#{isShipping}, shipAmount=#{shipAmount, jdbcType=VARCHAR}, 
 				startShippingDate=#{startShippingDate}, limitQuantity=#{limitQuantity}
 		WHERE projectNo = (SELECT projectNo FROM project WHERE projectNo = #{projectNo} AND brandNo = #{brandNo})
+		AND rewardNo = #{rewardNo}
 	</update>
 	
 	<delete id="deleteReward" parameterType="map">
@@ -210,5 +211,46 @@
 		UPDATE project SET statusNo=#{statusNo} WHERE <include refid="where-project-brand-no"/>
 	</update>
 	
+	
+	<!-- 새소식  -->
+	
+	<insert id="insertProjectNews" parameterType="com.eydiz.studio.ProjectNews">
+		INSERT INTO project_news(newsNo, projectNo, createdDate, title, content)
+		VALUES(project_news_seq.NEXTVAL, #{projectNo}, SYSDATE, #{title}, #{content})
+	</insert>
+	
+	<sql id="where-list">
+		<choose>
+			<when test="condition == 'title' ">
+				(INSTR(title, #{keyword}) &gt; 0)
+			</when>
+			<when test="condition == 'createdDate' ">
+				(createdDate, #{keyword})
+			</when>
+		</choose>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM project_news
+		<where>
+			projectNo = #{projectNo}
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="listProjectNews" parameterType="map" resultType="com.eydiz.studio.ProjectNews">
+		SELECT newsNo, pn.projectNo, createdDate, title, content FROM project_news pn
+		JOIN project p ON pn.projectNo = p.projectNo
+		<where>
+			p.projectNo = #{projectNo}
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY newsNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
 	
 </mapper>

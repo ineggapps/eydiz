@@ -40,5 +40,11 @@ public interface StudioService {
 	//제출
 	public void updateProjectStatus(int projectNo, int brandNo, int statusNo);
 	
-	// ----------------------------------------------------------------------------------
+	// 새소식 ----------------------------- 
+	public void insertProjectNews(ProjectNews dto) throws Exception;
+	public List<ProjectNews> listProjectNews(Map<String, Object> map);
+	public int dataCount(Map<String, Object> map);
+	public ProjectNews readProjectNews(int newsNo, int projectNo);
+	public void updateProjectNews(ProjectNews dto) throws Exception;
+	
 }

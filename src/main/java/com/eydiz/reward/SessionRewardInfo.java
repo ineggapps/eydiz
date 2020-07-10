@@ -78,6 +78,19 @@ public class SessionRewardInfo {
 	public void setKakaoPayApproval(KakaoPayApproval kakaoPayApproval) {
 		this.kakaoPayApproval = kakaoPayApproval;
 	}
+	
+	public boolean isAnyShipping() {
+		try {
+			for(int key: rewards.keySet()) {
+				Reward r = rewards.get(key);
+				if(r.getIsShipping()==1) {
+					return true;
+				}
+			}
+		} catch (Exception e) {
+		}
+		return false;
+	}
 
 	@Override
 	public String toString() {

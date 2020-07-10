@@ -130,7 +130,7 @@ $(function () {
     if ($shipAmount.val() == "") {
       $shipAmount.val("0");
     }
-    const q = $("form[name=rewardForm]").serialize();
+    var q = $("form[name=rewardForm]").serialize();
     console.log(projectNo, url, q);
     ajaxJSON(url, "post", q)
       .then(function (data) {

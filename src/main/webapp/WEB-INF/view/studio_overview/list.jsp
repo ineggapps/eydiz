@@ -57,7 +57,7 @@
 						</c:if>
 						<c:if test="${item.statusNo==6}">
 						<p>
-							<span><i class="projectStatus expire"></i> 반려</span>
+							<span><i class="projectStatus expire"></i> 종료</span>
 						</p>
 						</c:if>
 					</div>

@@ -7,7 +7,8 @@
 	<select id="readMemberById"  parameterType="String" resultType="com.eydiz.member.Member">
 		SELECT 
 		    m.memberNo, memberId, memberNickname, 
-		    memberPwd, memberEmail, memberSocial, available, NVL(ma.isAdmin,0) isAdmin 
+		    memberPwd, memberEmail, memberSocial, available, NVL(ma.isAdmin,0) isAdmin,
+		    memberImageUrl
 		FROM member m
 		JOIN member_detail md ON m.memberNo = md.memberNo
         LEFT OUTER JOIN (
@@ -31,8 +32,8 @@
 	<!-- 로그인 정보 확인 -->
 	<select id="confirmMember" parameterType="com.eydiz.member.Member" resultType="com.eydiz.member.Member">
 		SELECT 
-		    m.memberNo, memberId, memberNickname, 
-		    memberPwd, memberEmail, memberSocial, available
+		    m.memberNo, memberId, memberNickname, memberPwd, memberEmail, memberSocial, available,
+		    memberImageUrl
 		FROM member m
 		JOIN member_detail md ON m.memberNo = md.memberNo
 		WHERE memberId = #{memberId} AND memberPwd = #{memberPwd} AND available = 1
@@ -49,6 +50,23 @@
 		INTO member_detail(memberNo, memberId, memberNickname, memberPwd, memberEmail, memberSocial)
 		VALUES (#{memberNo}, #{memberId}, #{memberNickname}, #{memberPwd}, #{memberEmail}, #{memberSocial})
 		SELECT * FROM dual
+	</update>
+	
+	<!-- 회원정보 수정(이미지) -->
+	<update id="updateMemberImageUrl" parameterType="com.eydiz.member.Member">
+		UPDATE member_detail SET 
+			memberImageUrl=#{memberImageUrl}
+		WHERE memberNo = #{memberNo}
+	</update>
+	
+	<!-- 회원정보 수정(닉네임, 이메일) -->
+	<update id="updateMyInfo" parameterType="com.eydiz.member.Member">
+		UPDATE member_detail
+		SET
+			memberNickname = #{memberNickname},
+			memberEmail = #{memberEmail}
+		WHERE
+			memberNo =#{memberNo}
 	</update>
 	
 	<!-- 

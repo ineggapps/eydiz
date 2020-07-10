@@ -30,28 +30,28 @@ function sendOk() {
 }
 </script>
 
-<article class="row">
 	<form name="guideForm" method="post" enctype="multipart/form-data">
 		<div class="guidecreate">
 	        	<ul>
-	        		<li> <p>제목 : </p> </li>
-	        		<li> <input type="text" name="faqSubject" value="${dto.faqSubject}"> </li>
+	        		<li class="guidesname"> <p> 제목 : </p> </li>
+	        		<li class="guideInput"> <input type="text" name="faqSubject" value="${dto.faqSubject}"> </li>
 	        	</ul>
 	        	<ul>
-	        		<li> <p>내용 : </p> </li>
+	        		<li class="guidesname"> <p>내용 : </p> </li>
 	        		<li> <textarea name="faqContent">${dto.faqContent}</textarea> </li>
 	        	</ul>
 	        	<ul>
-	        		<li> <p>파일 : </p> </li>
+	        		<li class="guidesname"> <p>파일 : </p> </li>
 	        		<li> <input type="file" name="upload"> </li>
 	        	</ul>
 	        	<ul>
-	        		<li> <p>아이콘 : </p> </li>
-	        		<li> <input type="text" name="faqIcon">${dto.faqIcon}</li>
-	        	</ul>
+                 	<li class="guidesname"> <p>아이콘 : </p> </li>
+                    <li> <input type="text" name="faqIcon">${dto.faqIcon}</li>
+              	</ul>
+	        	
 	        	<br><br><br>
 	        	<ul>
-	        		<li>
+	        		<li class="guidebottombutton">
 	        			<button type="button" onclick="sendOk();">${mode=='update' ? '수정완료' : '등록하기'}</button>
 	        			<button type="reset">다시입력</button>
 	        			<button type="button" onclick="javascript:location.href='<%=cp%>/guide/main'">${mode=='update' ? '수정취소' : '등록취소'}</button>
@@ -63,4 +63,3 @@ function sendOk() {
 	        	</ul>
 		</div>
 	</form>
-</article>

@@ -16,9 +16,13 @@ public interface MemberConstant extends Constant {
 	public final static String API_JOIN_INTRO = "/member/join";
 	public final static String API_JOIN_DETAIL = "/member/join?" + PARAM_STEP + "=2";
 
-	//location
+	// FOLDER
 	public final static String FOLDER_UPLOADS_ROOT = "uploads";
-	
+	public final static String FOLDER_UPLOADS_MEMBER = "member";
+
+	// ATTRIBUTE
+	public final static String ATTRIBUTE_URI = "uri";
+
 	// 세션 정보
 	public final static String SESSION_MEMBER = "member";
 

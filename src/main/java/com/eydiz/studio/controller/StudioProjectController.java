@@ -1,6 +1,7 @@
 package com.eydiz.studio.controller;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +18,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eydiz.common.Constant;
+import com.eydiz.common.MyUtil;
 import com.eydiz.common.Pager;
 import com.eydiz.member.MemberConstant;
 import com.eydiz.studio.BrandSessionInfo;
@@ -27,6 +30,7 @@ import com.eydiz.studio.Project;
 import com.eydiz.studio.ProjectCategory;
 import com.eydiz.studio.ProjectHashtag;
 import com.eydiz.studio.ProjectImage;
+import com.eydiz.studio.ProjectNews;
 import com.eydiz.studio.Reward;
 import com.eydiz.studio.StudioConstant;
 import com.eydiz.studio.StudioService;
@@ -53,7 +57,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		if (req.getQueryString() != null && req.getQueryString().length() > 0) {
 			uri.append("?" + req.getQueryString());
 		}
-		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
+		model.addAttribute(MemberConstant.ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
 		model.addAttribute(ATTRIBUTE_PROJECTNO, projectNo);
 	}
 
@@ -313,6 +317,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		try {
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 			reward.setProjectNo(projectNo);
+			reward.setRewardNo(rewardNo);
 			reward.setBrandNo(bInfo.getBrandNo());
 			service.updateReward(reward);
 			result.put(JSON_RESULT, JSON_RESULT_OK);
@@ -396,5 +401,116 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			e.printStackTrace();
 		}
 		return "redirect:" + String.format(API_PROJECT_DASHBOARD, projectNo);
+	}
+
+	
+	// 새소식 ----------------------------------------------
+	
+	@Autowired
+	private MyUtil myUtil;
+	
+	@RequestMapping(value = "/{projectNo}/news/list")
+	public String newsList(
+			@PathVariable Integer projectNo,
+			@RequestParam(defaultValue = "1") int current_page,
+			@RequestParam(defaultValue="title") String condition,
+			@RequestParam(defaultValue="") String keyword, HttpServletRequest req, Model model
+			) throws Exception {
+		String cp = req.getContextPath();
+		
+		int rows = 10;
+		int total_page = 0;
+		int dataCount = 0;
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "utf-8");
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("projectNo", projectNo);
+		
+		dataCount = service.dataCount(map);
+		
+		if(dataCount != 0) {
+			total_page = myUtil.pageCount(rows, dataCount);
+		}
+		
+		if(total_page < current_page) {
+			current_page = total_page;
+		}
+		
+		int offset = (current_page -1) * rows;
+		if(offset < 0) offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+		
+		List<ProjectNews> list = service.listProjectNews(map);
+		
+		int listNum = 0;
+		int num = 0;
+		for(ProjectNews dto : list) {
+			listNum = dataCount-(offset+num);
+			dto.setListNum(listNum);
+			num++;
+			
+		}
+		
+		String query = "";
+		String listUrl = cp+"/studio/project/{projectNo}/news/list";
+		String readUrl = cp+"/studio/project/{projectNo}/news/read?page=" + current_page;
+		
+		if(keyword.length() != 0) {
+			listUrl = cp+"/studio/project/{projectNo}/news/list?query=" + query;
+			readUrl = cp+"/studio/project/{projectNo}/news/read?page=" + current_page + "&" + query;
+		}
+		
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("readUrl", readUrl);
+		model.addAttribute("page", current_page);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("paging", paging);
+		
+		return ".studioLayout.newsList";
+	}
+	
+	@RequestMapping(value = "/{projectNo}/news/read")
+	public String newsRead(@PathVariable Integer projectNo) throws Exception {
+		
+		return ".studioLayout.newsRead";
+	}
+	
+	@RequestMapping(value = "/{projectNo}/news/write", method=RequestMethod.GET)
+	public String newsWriteForm(@PathVariable Integer projectNo, Model model) throws Exception {
+		model.addAttribute("projectNo",projectNo);
+		model.addAttribute("mode", "write");
+		return ".studioLayout.newsWrite";
+	}
+	
+	@RequestMapping(value = "/{projectNo}/news/write", method=RequestMethod.POST)
+	public String newsWriteSubmit(@PathVariable Integer projectNo, ProjectNews dto, HttpSession session) throws Exception {
+		try {
+			dto.setProjectNo(projectNo);
+			service.insertProjectNews(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/studio/project/"+projectNo+"/news/list";
+	}
+	
+	// 발송 관리
+	@RequestMapping(value="/shipping/{projectNo}")
+	public String sendList (
+			@PathVariable Integer projectNo
+			) throws Exception {
+		
+		return ".studioLayout.sendlist";
 	}
 }
