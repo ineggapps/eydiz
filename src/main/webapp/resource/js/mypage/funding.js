@@ -34,15 +34,9 @@ function renderItems(items) {
     $item.find(".historyProjectStatus span").text(statusLabel);
     $item.find(".historyProjectStatus i").addClass(statusClassName);
     $item.find(".historyDate").text(item.boughtDate);
+    $item.find(".historyStatus").addClass(item.isCanceled == 0 ? "blue" : "red");
     $item.find(".historyStatus").text(item.isCanceled == 0 ? "결제 완료" : "취소 완료");
     $item.appendTo("ul.historyFundingList");
+    $item.find(".historyItem").attr("data-buy-no", item.buyNo);
   });
 }
-
-$(function () {
-  loadMyBoughtProjects(page++);
-
-  $(".mypage.newsMore").click(function () {
-    loadMyBoughtProjects(page++);
-  });
-});

@@ -18,7 +18,7 @@
 					<p class="historyProjectStatus"><i class="projectStatus"></i><span>진행 중</span></p>
 		    		<p class="historyProjectName">피곤하고 땡땡한 종아리 때문이라면</p>
 		    		<p class="historyBrandName">by 나인테크놀로지</p>
-		    		<p class="historyStatus blue">결제 예약 취소</p>
+		    		<p class="historyStatus">결제 예약 취소</p>
 		    		<p class="historyDate">2020. 07. 05. 펀딩</p>
 		    	</div>
 		    </div>
@@ -28,3 +28,17 @@
 		<button type="button" class="btnNewsMore">더 보기<span class="bgMore">&nbsp;</span></button>
 	</div>
 </article>
+<script>
+$(function () {
+  loadMyBoughtProjects(page++);
+
+  $(".mypage.newsMore").click(function () {
+    loadMyBoughtProjects(page++);
+  });
+  
+  $("body").on("click", ".historyItem", function(e){
+	  const buyNo = $(this).attr("data-buy-no");
+	  location.href = cp + "/mypage/funding/" + buyNo;
+  });
+});
+</script>

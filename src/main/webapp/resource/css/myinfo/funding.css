@@ -1,12 +1,41 @@
 @charset "UTF-8";
+strong{
+	font-weight:600;
+}
 
-.historyItem{
+.full{
+	width:100%;
+}
+
+.border{
+	border:1px solid #d9d9d9;
+	border-radius:3px;
+	height:45px;
+	line-height:45px;
+	transition:all ease-in-out 0.2s;
+}
+
+.border:hover{
+	border-color:#39d1d1;
+}
+
+.historyRewardAmount::after{
+	clear:both;
+	display:block;
+	content:"";
+}
+
+.historyItem,
+.historyRewardItem,
+.historyRewardPayment{
 	margin-top:30px;
 	user-select:none;
 	cursor:pointer;
 }
 
-.historyItem{
+.historyItem,
+.historyRewardItem,
+.historyRewardPayment{
 	width:100%;
 	border:1px solid #f2f2f2;
 	background-color:#fff;
@@ -14,7 +43,13 @@
 	box-sizing:border-box;
 }
 
-.historyItem > * {
+.historyRewardPayment{
+	padding-bottom:10px;
+}
+
+.historyItem > * ,
+.historyRewardItem > *,
+.historyRewardPayment > *{
 	margin:10px 0;
 }
 
@@ -36,6 +71,11 @@
 	font-size:1.3rem;
 }
 
+.historyRewardTitle{
+	font-weight:600;
+	font-size:1.1rem;	
+}
+
 .historyStatus{
 	margin-top:40px;
 	font-weight:600;
@@ -47,6 +87,17 @@
 
 .blue{
 	color:#557cf2;
+}
+.red{
+	color:#f77;
+}
+
+.historyRewardAmount span.left{
+	float:left;
+}
+
+.historyRewardAmount span.right{
+	float:right;
 }
 
 /*더보기*/

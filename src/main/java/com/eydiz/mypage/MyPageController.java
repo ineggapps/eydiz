@@ -25,9 +25,10 @@ import com.eydiz.member.MemberConstant;
 import com.eydiz.member.MemberService;
 import com.eydiz.member.SessionInfo;
 import com.eydiz.studio.Project;
+import com.eydiz.studio.Reward;
 
 @Controller("mypage.myPageController")
-@RequestMapping(value = { "/mypage", "/mypage/*" })
+@RequestMapping(value = { "/mypage/*" })
 public class MyPageController implements Constant, MemberConstant, MyPageConstant {
 	private static final String REQUEST_MAPPING = "/mypage";
 	private static final String JSON_AVATAR_URI = "avatar_uri";
@@ -40,7 +41,7 @@ public class MyPageController implements Constant, MemberConstant, MyPageConstan
 	
 	@Autowired
 	private Pager pager;
-
+	
 	private String getRealPath(HttpSession session) {
 		// "/"문자열 다음부터 추출해야...
 		String cpRealPath = session.getServletContext().getRealPath("/");
@@ -60,7 +61,13 @@ public class MyPageController implements Constant, MemberConstant, MyPageConstan
 		model.addAttribute(ATTRIBUTE_URI, getRealURI(uri.toString(), req.getContextPath()));
 	}
 
-	@RequestMapping(value = { "", "/", "/main", "/myInfo", "/myInfo/" }, method=RequestMethod.GET)
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public String emptyMapping() {
+		return "redirect:"+API_MYPAGE_MYINFO;
+	}
+
+	@RequestMapping(value = {"/main", "/myInfo", "/myInfo/" }, method=RequestMethod.GET)
 	public String main(Model model, HttpServletRequest req) {
 		addModelURIAttribute(model, req);
 		try {
@@ -119,15 +126,42 @@ public class MyPageController implements Constant, MemberConstant, MyPageConstan
 		return map;
 	}
 
-	@RequestMapping(value = "/mypage/funding")
-	public String funding(Model model, HttpServletRequest req) {
+	@RequestMapping(value = {"/funding","/funding/","/funding/{buyNo}"})
+	public String funding(@PathVariable(required=false) Integer buyNo, Model model, HttpServletRequest req) {
 		addModelURIAttribute(model, req);
 		try {
-
+			if(buyNo!=null) {
+				//buyNo 이용해서 관련 구매정보 추출
+				SessionInfo sessionInfo = (SessionInfo)req.getSession().getAttribute(SESSION_MEMBER);
+				Project project = myPageService.readBoughtMyProject(sessionInfo.getMemberNo(), buyNo);
+				List<Reward> rewards = myPageService.readBoughtMyReward(sessionInfo.getMemberNo(), buyNo);
+				model.addAttribute(ATTRIBUTE_PROJECT, project);
+				model.addAttribute(ATTRIBUTE_REWARDS, rewards);
+				return ".myPageLayout.fundingDetail";
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}	
 		return ".myPageLayout.funding";
+	}
+	
+	@RequestMapping(value="/cancel", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> cancelFunding(@RequestParam(required=false, defaultValue="0") int buyNo, HttpServletRequest req) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			if(buyNo<=0) {
+				throw new Exception("buyNo...T^T");
+			}
+			SessionInfo info = (SessionInfo) req.getSession().getAttribute(SESSION_MEMBER);
+			myPageService.insertCancel(info.getMemberNo(), buyNo, "전액 펀딩 취소");
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR, e.getMessage());
+		}
+		return map;
 	}
 	
 	@RequestMapping(value="/history/{page}")
@@ -153,5 +187,4 @@ public class MyPageController implements Constant, MemberConstant, MyPageConstan
 		}
 		return map;
 	}
-	
 }

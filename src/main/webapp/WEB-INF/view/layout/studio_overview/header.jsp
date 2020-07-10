@@ -27,14 +27,14 @@
     </ul>
     <div class="headerInnerRight">
       <ul class="gnbAuth">
-        <li><a href="<%=cp %>/studio/project/list" class="btnSubmit bordering btnMakeProject">프로젝트 관리</a></li>
+        <li><a href="<%=cp %>/studio/project/register" class="btnSubmit bordering btnMakeProject">프로젝트 등록</a></li>
     	<c:if test="${empty sessionScope.member}">
         <li><a href="<%=cp%>/member/join">회원가입</a></li>
         <li><a href="<%=cp%>/member/login">로그인</a></li>
     	</c:if>
     	<c:if test="${not empty sessionScope.member}">
 		<li><a href="<%=cp%>/member/logout">로그아웃</a><li>
-		<li><a href="<%=cp%>/mypage" class="profilePic">
+		<li><a href="<%=cp%>/mypage/myInfo" class="profilePic">
 			<c:if test="${sessionScope.member.memberImageUrl!=null}">
 			<span class="displayAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">&nbsp;</span>
 			</c:if>

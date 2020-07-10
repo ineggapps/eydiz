@@ -45,6 +45,9 @@ public class Project {
 	///////////////////////////////////////////////////////
 	private String boughtDate;
 	private int isCanceled;
+	private int buyNo;
+	private int shipAmount;// 최종 결제 시 배송비
+	private int finalAmount;// 최종 결제 시 배송비 포함 결제금액
 
 	public int getProjectNo() {
 		return projectNo;
@@ -332,6 +335,30 @@ public class Project {
 
 	public void setIsCanceled(int isCanceled) {
 		this.isCanceled = isCanceled;
+	}
+
+	public int getBuyNo() {
+		return buyNo;
+	}
+
+	public void setBuyNo(int buyNo) {
+		this.buyNo = buyNo;
+	}
+
+	public int getShipAmount() {
+		return shipAmount;
+	}
+
+	public void setShipAmount(int shipAmount) {
+		this.shipAmount = shipAmount;
+	}
+
+	public int getFinalAmount() {
+		return finalAmount;
+	}
+
+	public void setFinalAmount(int finalAmount) {
+		this.finalAmount = finalAmount;
 	}
 
 }
