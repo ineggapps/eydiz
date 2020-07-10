@@ -36,15 +36,15 @@
 		) ml ON ml.projectNo = p.projectNo
 		</if>
 		LEFT OUTER JOIN (
-			SELECT projectNo, count(memberNo) supportCount 
-			FROM reward_buy_overview
-			WHERE projectNo=#{projectNo}
-			GROUP BY projectNo
+			SELECT DISTINCT projectNo, count(DISTINCT memberNo) over(partition by projectNo) supportCount 
+			FROM reward_buy_overview ro
+            LEFT OUTER JOIN  reward_buy_cancel rc ON ro.buyNo = rc.buyNo
+			WHERE cancelNo IS NULL AND projectNo=#{projectNo}
 		) sc ON sc.projectNo = p.projectNo
 		LEFT OUTER JOIN (
             SELECT projectNo, count(*) communityCount
             FROM project_community
-            WHERE projectNo = #{projectNo} and parentCommentNo IS NULL
+            WHERE projectNo = #{projectNo} AND parentCommentNo IS NULL
             GROUP BY projectNo
         ) pc ON pc.projectNo = p.projectNo
         LEFT OUTER JOIN (
@@ -54,10 +54,10 @@
         	GROUP BY projectNo
         ) pn ON pn.projectNo = p.projectNo
         LEFT OUTER JOIN(
-            SELECT projectNo, sum(totalAmount) totalAmount
-            FROM reward_buy_overview
-            WHERE projectNo = #{projectNo}
-            GROUP BY projectNo
+            SELECT DISTINCT projectNo, SUM(totalAmount) OVER(PARTITION BY projectNo) totalAmount
+            FROM reward_buy_overview ro
+            LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+            WHERE projectNo = #{projectNo} AND rc.cancelNo IS NULL
         ) ro ON ro.projectNo = p.projectNo
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
