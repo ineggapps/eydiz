@@ -114,11 +114,12 @@
 
 <!-- 브랜드 프로젝트에 참여한 인원수 -->
 <select id="brandTotalBuyMember" parameterType="Integer" resultType="Integer">
-	SELECT NVL(COUNT(m.memberNo),0) brandTotalBuyMember
-	FROM member m
-	JOIN reward_shipping_location s ON m.memberNo = s.memberNo
-	JOIN brand b ON s.memberNo = b.memberNo
-	WHERE b.brandNo = #{brandNo} AND statusNo = 4
+	SELECT NVL(COUNT(o.memberNo),0) brandTotalBuyMember
+	FROM reward_buy_overview o 
+    JOIN project p ON o.projectNo = p.projectNo
+	JOIN brand b ON p.brandNo = b.brandNo
+	LEFT JOIN reward_shipping_location s ON o.buyNo = s.buyNo
+	WHERE b.brandNo = #{brandNo} AND s.statusNo = 4
 </select>
 
 

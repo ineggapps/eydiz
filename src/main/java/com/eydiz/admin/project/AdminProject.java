@@ -9,13 +9,12 @@ public class AdminProject {
 	private String created;
 	
 	private int statusNo;
-	private String statusMemo;
+	private String statusMemo;	// 상태메모(반려사유) : 체크박스 내용
 	
 	private String brandName;
 	private String managerName;
 	
 	private String categoryName;
-	private int parentCategoryNo;
 	
 	
 	
@@ -85,13 +84,6 @@ public class AdminProject {
 		this.categoryName = categoryName;
 	}
 
-	public int getParentCategoryNo() {
-		return parentCategoryNo;
-	}
-
-	public void setParentCategoryNo(int parentCategoryNo) {
-		this.parentCategoryNo = parentCategoryNo;
-	}
 
 	public int getRowNum() {
 		return rowNum;

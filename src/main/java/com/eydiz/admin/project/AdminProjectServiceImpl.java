@@ -48,7 +48,7 @@ public class AdminProjectServiceImpl implements AdminProjectService{
 	}
 
 	@Override
-	public void insertProjectStatusList(AdminProjectReject dto) throws Exception {
+	public void insertProjectStatusList(AdminProject dto) throws Exception {
 		try {
 			dao.insertData("adminProject.insertProjectStatusList", dto);
 		} catch (Exception e) {

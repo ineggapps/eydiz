@@ -29,19 +29,12 @@ public class AdminProjectController {
 	@Autowired
 	private MyUtil myUtil;
 	
-	@RequestMapping(value= {"project"})
-	public String main(
-			@RequestParam(defaultValue="1") int categotyNo,
-			@RequestParam(defaultValue="1") int statusNo
-			) {
-		return ".adminLayout.project.list";
-	}
 	
 	
 	// 프로젝트 리스트
 	@RequestMapping(value="list")
 	public String projectList(
-			@RequestParam(defaultValue="1") int categoryNo,
+			@RequestParam(defaultValue="1") int parentCategoryNo,
 			@RequestParam(defaultValue="1") int statusNo,
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="projectName") String condition,
@@ -62,7 +55,7 @@ public class AdminProjectController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
-		map.put("categoryNo", categoryNo);
+		map.put("parentCategoryNo", parentCategoryNo);
 		map.put("statusNo", statusNo);
 		
 		dataCount = service.dataCount(map);
@@ -82,8 +75,8 @@ public class AdminProjectController {
 		List<AdminProject> list = service.adminProjectList(map);
 		
 		String query = "";
-		String listUrl = cp+"/admin/project/list?categoryNo="+categoryNo+"&stausNo="+statusNo;
-		String articleUrl = cp+"admin/project/article?categoryNo="+categoryNo+"&stausNo="+statusNo+"page=" + current_page;
+		String listUrl = cp+"/admin/project/list?parentCategoryNo="+parentCategoryNo+"&stausNo="+statusNo;
+		String articleUrl = cp+"/admin/project/article?parentCategoryNo="+parentCategoryNo+"&stausNo="+statusNo+"&page=" + current_page;
 		
 		if(keyword.length() != 0) {
 			query = "condition="+condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
@@ -107,6 +100,8 @@ public class AdminProjectController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		
+		model.addAttribute("parentCategoryNo",parentCategoryNo);
+		
 		return ".adminLayout.project.list";
 	}
 		
@@ -115,7 +110,7 @@ public class AdminProjectController {
 	public String articleProject(
 			@RequestParam int projectNo,
 			@RequestParam String page,
-			@RequestParam(defaultValue="1") int categoryNo,
+			@RequestParam(defaultValue="1") int parentCategoryNo,
 			@RequestParam(defaultValue="1") int statusNo,
 			@RequestParam(defaultValue="projectName") String condition,
 			@RequestParam(defaultValue="") String keyword,
@@ -123,7 +118,7 @@ public class AdminProjectController {
 			) throws Exception {
 		keyword = URLDecoder.decode(keyword, "UTF-8");
 		
-		String query = "categoryNo="+categoryNo+"&stausNo="+statusNo;
+		String query = "parentCategoryNo="+parentCategoryNo+"&stausNo="+statusNo;
 		if(keyword.length() != 0) {
 			query += "&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
@@ -132,7 +127,7 @@ public class AdminProjectController {
 		List<Reward> rewards = service.listRewards(projectNo);
 		
 		if(project == null) {
-			return "ridirect:/admin/project/list?"+query;
+			return "redirect:/admin/project/list?"+query;
 		}
 		
 		
@@ -154,20 +149,23 @@ public class AdminProjectController {
 	public String projectSubmit(
 			@RequestParam int projectNo,
 			@RequestParam String page,
-			@RequestParam(defaultValue="1") int categoryNo,
-			AdminProjectReject reject
+			@RequestParam(defaultValue="1") int parentCategoryNo,
+			AdminProject dto
 			) throws Exception {
 		
-		Map<String, Object> map = new HashMap<>();	// statusNo, projectNo
+		Map<String, Object> map = new HashMap<>();
 		map.put("projectNo", projectNo);
+		map.put("statusNo", dto.getStatusNo());
+		
+		dto.setProjectNo(projectNo);
 		
 		try {
-			service.insertProjectStatusList(reject);	// 로그찍는거
-			service.updateProject(map);					// 프로젝트 상태번호
+			service.updateProject(map);				// 프로젝트 상태번호 업뎃
+			service.insertProjectStatusList(dto);	// 로그찍는거
 		} catch (Exception e) {
 		}
 		
-		return "redirect:/admin/project/list?categoryNo="+categoryNo+"&statusNo=1"+"&page="+page;
+		return "redirect:/admin/project/list?parentCategoryNo="+parentCategoryNo+"&statusNo=1"+"&page="+page;
 	}
 	
 }

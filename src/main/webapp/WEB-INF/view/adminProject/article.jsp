@@ -5,6 +5,94 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style>
+.projectRejectMemo{
+	width: 100%;
+	border: 1px solid #e6eaed;
+	margin-bottom: 20px;
+}
+
+.projectMemoCheckBox {
+	margin: 20px 20px;
+}
+
+
+.projectMemoCheckBox input {
+	margin: 10px 10px;
+}
+
+.projectRejectSubmit {
+	border: 1px solid #e6eaed;
+    width: 100%;
+    margin-top: 17px;
+    color: white;
+    background-color: #f55a2d;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.projectRejectSubmit:hover {
+	background-color: #e73601e6;
+}
+
+</style>
+
+
+<script type="text/javascript">
+	$(function() {
+		$(".projectRejectMemo").hide();
+		$(".projectRejectBtn").click(function(){
+			var isHidden = $(".projectRejectMemo").is(':hidden');
+			$(".projectRejectMemo").hide();
+			
+			if(isHidden) {
+				$(".projectRejectMemo").show();
+			} else {
+				$(".projectRejectMemo").hide();
+			}
+		});
+	});
+	
+	
+	function adminProjectSubmit() {
+		var f = document.adminProjectSubmitForm;
+		
+		if(confirm("프로젝트를 승인하시겠습니까?")) {
+			f.submit();
+		}
+		
+	}
+	
+	
+	function countCheckBox() {
+		var chkbox = document.adminProjectRejectForm.statusMemo;
+		var count = 0;
+		
+		for(i=0; i < chkbox.length; i++) {
+			if(chkbox[i].checked==true) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	
+	
+	function adminProjectReject() {
+		var form = document.adminProjectRejectForm;
+				
+		if(confirm("프로젝트를 반려하시겠습니까?")) {
+			if(countCheckBox()> 0) {
+				form.submit();
+			} else {
+				alert("반려사유를 하나 이상 선택해주십시오.");
+				return;
+			}
+		}
+	}
+</script>
+
+
 <article class="row">
   <div class="rowFull">
     <div class="projectTitle">
@@ -38,23 +126,38 @@
       </div>
       <div class="detailSide">
         <div class="stateBox">
-          <p class="stateText">13일 남음</p>
-          <p class="stateText"><strong>${project.projectAttainAmount}</strong>원 펀딩</p>
-          <p class="stateText"><strong>000</strong>명의 서포터</p>
+          <p class="stateText">프로젝트 정보</p>
+          <div class="progress">
+            <div class="progressBar"></div>
+          </div>
+          <p class="stateText">시작일 : <strong> ${project.projectStartDate}</strong></p>
+          <p class="stateText">종료일 : <strong> ${project.projectEndDate}</strong></p>
+          <p class="stateText">목표금액 : <strong> <fmt:formatNumber type="number" maxFractionDigits="3" value="${project.projectGoalAmount}"></fmt:formatNumber></strong></p>
         </div>
-        <a href="#" class="btnSubmit">펀딩하기</a>
-        <a href="#" class="btnRefuse">펀딩하기</a>
-        <ul class="detailSideController">
-          <li>
-            <button type="button" class="btnPlain" id="btnLike"><span class="icon heart ${project.myLikeCount==1?'on':''}"></span><span class="count">${project.likeCount}</span></button>
-          </li>
-          <li>
-            <button type="button" class="btnPlain"><span class="icon talk"></span>문의</button>
-          </li>
-          <li>
-            <button type="button" class="btnPlain"><span class="icon share"></span>공유</button>
-          </li>
-        </ul>
+        
+        <form name="adminProjectSubmitForm" method="post">
+	        <a onclick="adminProjectSubmit()" class="adminProjectBtn projectSubmitBtn">승인하기</a>
+	        <input type="hidden" name="statusNo" value="5">
+	        <input type="hidden" name="statusMemo" value="승인완료">
+        </form>
+        
+        <form name="adminProjectRejectForm" method="post">
+	        <a class="adminProjectBtn projectRejectBtn">반려하기</a>
+	        <input type="hidden" name="statusNo" value="3">
+	        <div class="projectRejectMemo">
+	        	<div class="projectMemoCheckBox">
+		        	<input type="checkbox" name="statusMemo" value="프로젝트 및 메이커의 신뢰성 부족">프로젝트 및 메이커의 신뢰성 부족 <br>
+		        	<input type="checkbox" name="statusMemo" value="카테고리에 부합하지 않음">카테고리에 부합하지 않음 <br>
+		        	<input type="checkbox" name="statusMemo" value="불명확한 자금 사용 계획">불명확한 자금 사용 계획 <br>
+		        	<input type="checkbox" name="statusMemo" value="리워드 제공 가능성 낮음">리워드 제공 가능성 낮음<br>
+		        	<input type="checkbox" name="statusMemo" value="타인에 대한 인신공격이나 비방">타인에 대한 인신공격이나 비방 <br>
+		        	<input type="checkbox" name="statusMemo" value="정치적, 종교적, 성적 편향성이 포함">정치적, 종교적, 성적 편향성이 포함 <br>
+		        	<input type="checkbox" name="statusMemo" value="불법적인 행위 조장">불법적인 행위 조장 <br>
+		        	
+		        	<button type="button" class="projectRejectSubmit" onclick="adminProjectReject();">확인</button>
+	        	</div>
+	        </div>
+        </form>
         <div class="brandInfoBox">
           <div class="brandName">
             <a href="#"><span class="image"></span><span class="name">${project.brandName}</span></a>
@@ -71,12 +174,9 @@
           </div>
         </div>
         <div class="rewards rowBox">
-          <h3>리워드 선택</h3>
-          <c:forEach var="item" items="${reward}">
-          <div class="rewardItem">
-            <div class="overlay">
-              <p class="text">이 리워드 펀딩하기</p>
-            </div>
+          <h3>리워드</h3>
+          <c:forEach var="item" items="${rewards}">
+          <div class="rewardItem" data-reward-no="${item.rewardNo}">
             <dl class="rewardInfo">
               <dt>${item.amount}원 펀딩</dt>
               <dd>
@@ -97,28 +197,10 @@
             <div class="rewardQuantity">
               <div class="quantityRow mint">
                 <span class="limitQuantity">제한수량 <strong>${item.limitQuantity}</strong>개</span>
-                <span class="remainingQuantity highlighting">
-                  현재 <strong>${item.remainQuantity}</strong>개 남음!
-                </span>
-              </div>
-              <div class="quantityRow">
-                <span class="soldQuantity">총 00개 펀딩완료</span>
               </div>
             </div>
           </div>
           </c:forEach>
-        </div>
-        <div class="reports rowBox border">
-          <div class="rowBoxInner">
-            <h4>신고하기란?</h4>
-            <p class="gray small">
-              해당 프로젝트에 허위내용 및 지적재산권을 침해한 내용이 있으면 제보해주시기
-              바랍니다.
-            </p>
-            <a href="#" id="reportProject" class="btnPlain gray semiRound"
-              >프로젝트 신고하기</a
-            >
-          </div>
         </div>
       </div>
     </div>

@@ -56,7 +56,7 @@ public class PartnerController {
 			) throws Exception {
 		
 		
-		int rows = 3;
+		int rows = 9;
 		int total_page = 0;
 		int dataCount = 0;
 		

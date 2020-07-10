@@ -2,9 +2,10 @@
 
  .awardsTitleImage {
     	height : 500px;
-    	background-image: url("../../images/awards/awardBackground.png");
+    	background-image: url("../../images/awards/awardsBackground.jpg");
 		background-repeat: no-repeat;
 		background-size: cover;
+		opacity: 93%;
     }
         
     .awardsTitle {
@@ -26,7 +27,8 @@
     }
     
     .awardsTitleSubText {
-    	font-size: 15px;
+    	font-size: 17px;
+    	color: snow;
     }
     
     .awardTitlePoint {
