@@ -86,6 +86,8 @@ public class MyPageController implements Constant, MemberConstant, MyPageConstan
 			}
 			member.setMemberNo(info.getMemberNo());
 			myPageService.updateMyInfo(member);
+			info.setMemberNickname(member.getMemberNickname());
+			info.setMemberEmail(member.getMemberEmail());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

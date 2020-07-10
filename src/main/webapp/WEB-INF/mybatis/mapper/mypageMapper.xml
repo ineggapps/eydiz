@@ -12,7 +12,7 @@
 			p.projectNo, p.brandNo, projectName, projectEndDate,
 			p.categoryNo, categoryName, totalAmount,
 			brandName,
-			boughtdate,
+			TO_CHAR(boughtDate, 'YYYY-MM-DD') boughtDate,
 				CASE 
 		            WHEN projectEndDate-SYSDATE > 0 THEN 5
 		            ELSE 6

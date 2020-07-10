@@ -2,13 +2,17 @@
 var page = 1;
 var pageCount = 1;
 function loadMyBoughtProjects(p) {
+  if (p == 0) {
+    return;
+  }
   const url = cp + "/mypage/history/" + p;
   ajaxJSON(url, "get", null)
     .then(function (data) {
       if (data.result == "ok") {
         pageCount = data.page_count;
-        if (pageCount == page - 1) {
+        if (pageCount == 0 || pageCount == page - 1) {
           $(".mypage.newsMore").remove();
+          page = 0;
         }
         renderItems(data.projects);
       }
