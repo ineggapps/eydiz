@@ -19,10 +19,13 @@ $(function () {
 $(function () {
   $("body").on("click", ".btnReply", function () {
     const $replyArea = $(this).closest(".commentArea").find(".commentReplyWrap");
+    const $replyInput = $(this).closest(".commentArea").find(".commentInput.reply");
     if ($replyArea.hasClass("hide")) {
       $replyArea.removeClass("hide");
+      $replyInput.removeClass("hide");
     } else {
       $replyArea.addClass("hide");
+      $replyInput.addClass("hide");
     }
   });
 });
@@ -35,7 +38,7 @@ function clearComments() {
 }
 // 댓글 불러오기
 function loadComment() {
-	clearComments();
+  clearComments();
   const url = cp + "/detail/" + projectNo + "/community/view";
   const method = "post";
   const query = "projectNo=" + projectNo;
@@ -87,11 +90,11 @@ function renderComment($element, jsonItem, prefix) {
   if (prefix == undefined) {
     prefix = "";
   }
-  if(jsonItem.memberImageUrl){
-	  $element
-		.find(prefix + ".commentAvatar")
-		.eq(0)
-		.css("background-image", "url(\""+jsonItem.memberImageUrl+"\")");
+  if (jsonItem.memberImageUrl) {
+    $element
+      .find(prefix + ".commentAvatar")
+      .eq(0)
+      .css("background-image", 'url("' + jsonItem.memberImageUrl + '")');
   }
   $element
     .find(prefix + ".author")
