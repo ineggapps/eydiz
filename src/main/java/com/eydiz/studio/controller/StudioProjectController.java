@@ -397,7 +397,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 	public String submitProject(@PathVariable Integer projectNo, HttpSession session) {
 		try {
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
-			service.updateProjectStatus(projectNo, bInfo.getBrandNo(), 5);
+			service.updateProjectStatus(projectNo, bInfo.getBrandNo(), 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
