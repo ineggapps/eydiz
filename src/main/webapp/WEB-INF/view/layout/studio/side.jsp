@@ -18,11 +18,11 @@
     <li>
       <div class="menuItem">
         <div class="menuName">
-          <a href="#">브랜드 관리</a>
+          <a href="#">프로젝트 개요</a>
           <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
         </div>
         <ul class="subMenu">
-          <li class="subMenuItem"><a href="<%=cp%>/studio/brand/info">브랜드 관리</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/studio/project/${projectNo}/dashboard">대시보드</a></li>
         </ul>
       </div>
     </li>

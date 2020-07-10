@@ -43,9 +43,11 @@
 			</li>
 		</ul>
 	</div>
+	<c:if test="${project.statusNo==0}">
 	<div class="projectButtons">
 		<button type="button" class="btnSubmit" onclick="updateStatusNo(${project.projectNo})" >제출하기</button>
 	</div>
+	</c:if>
   </div>
 	<script src="<%=cp%>/resource/js/studio/dashboard.js"></script>
 </article>
