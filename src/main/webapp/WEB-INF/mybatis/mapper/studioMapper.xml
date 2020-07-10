@@ -248,9 +248,29 @@
 			<if test="keyword!=null and keyword!='' ">
 				<include refid="where-list"/>
 			</if>
+		   		AND pn.projectNo=#{projectNo}
 		</where>
 		ORDER BY newsNo DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
+	
+	<select id="readProjectNews" parameterType="Integer" resultType="com.eydiz.studio.ProjectNews">
+	SELECT newsNo, pn.projectNo, createdDate, title, content FROM project_news pn
+		JOIN project p ON pn.projectNo = p.projectNo
+		WHERE newsNo = #{newsNo}
+	</select>
+	
+	<update id="updateProjectNews" parameterType="com.eydiz.studio.ProjectNews">
+	UPDATE project_news SET title = #{title}, content = #{content}
+	WHERE newsNo = #{newsNo}
+	</update>
+	
+	<delete id="deleteProjectNews" parameterType="Integer">
+	DELETE FROM project_news WHERE newsNo=#{newsNo}
+	</delete>
+	
+	<!-- 펀딩/후원 현황  -->
+	
+	
 	
 </mapper>

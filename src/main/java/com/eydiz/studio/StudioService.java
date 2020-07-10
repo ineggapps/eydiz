@@ -44,7 +44,8 @@ public interface StudioService {
 	public void insertProjectNews(ProjectNews dto) throws Exception;
 	public List<ProjectNews> listProjectNews(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
-	public ProjectNews readProjectNews(int newsNo, int projectNo);
+	public ProjectNews readProjectNews(int newsNo);
 	public void updateProjectNews(ProjectNews dto) throws Exception;
+	public void deleteProjectNews(int newsNo) throws Exception;
 	
 }

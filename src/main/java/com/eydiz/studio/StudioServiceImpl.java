@@ -347,14 +347,11 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	}
 
 	@Override
-	public ProjectNews readProjectNews(int newsNo, int projectNo) {
+	public ProjectNews readProjectNews(int newsNo) {
 		ProjectNews dto = null;
 		
 		try {
-			Map<Integer, Integer> map = new HashMap<>();
-			map.put(newsNo, newsNo);
-			map.put(projectNo, projectNo);
-			dto = dao.selectOne("studio.readProjectNews", map);
+			dto = dao.selectOne("studio.readProjectNews", newsNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -366,6 +363,17 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	public void updateProjectNews(ProjectNews dto) throws Exception {
 		try {
 			dao.updateData("studio.updateProjectNews", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public void deleteProjectNews(int newsNo) throws Exception {
+		try {
+			dao.deleteData("studio.deleteProjectNews", newsNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

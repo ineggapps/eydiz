@@ -11,26 +11,17 @@ function searchList() {
 	var f=document.searchForm;
 	f.submit();
 }
-
-function deleteProjectNews(newsNo) {
-	var q = "newsNo="+newsNo+"&${query}";
-	var url = "<%=cp%>/studio/project/${projectNo}/news/delete?"+q;
-	
-	if(confirm("이 게시물을 삭제 하시겠습니까 ? ")) {
-		location.href=url;
-}  
-}
 </script>
 
 <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
  <div class="studio_nlist_text">
            <div class="titleBar">
-             <div class="title"><h2>새소식 목록</h2></div>
-			     <form name="searchForm" action="<%=cp%>/studio/project/${projectNo}/news/list" method="post" >
+             <div class="title"><h2>결제/후원 현황</h2></div>
+			     <form name="searchForm" action="<%=cp%>/studio/project/${projectNo}/view/list" method="post" >
                		<div align="right">
 	                    <select name="condition" style="border:none;">
-	                      <option value="title" >제목</option>
-	                      <option value="createdDate" >작성일자</option>
+	                      <option value="memberId" >아이디</option>
+	                      <option value="buyNo" >구매번호</option>
 	                    </select>
                    		<input type="text" name="keyword"placeholder="검색" value="${keyword}"/>
                     	<button type="button" class="nl_searchButton" onclick="searchList()"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -42,19 +33,19 @@ function deleteProjectNews(newsNo) {
             <div class="studio_news_list" >
              <table class="studio_news_list_in">
              	<tr class="studio_news_list_oo">
-             		<td class="studio_list_bname">새소식 번호</td>
-             		<td class="studio_list_pname">새소식 제목</td> 
-					<td class="studio_list_bname">프로젝트 번호</td>
-					<td class="studio_list_cname">작성일자</td> 
+             		<td class="studio_list_bname">구매번호</td>
+             		<td class="studio_list_pname">아이디</td> 
+					<td class="studio_list_bname">총 결제금액</td>
+					<td class="studio_list_cname">결제일</td> 
 					<td></td>
 				</tr>
 				<c:forEach var="dto" items="${list}" varStatus="status">
 	             	<tr class="studio_news_list_o">
-	             		<td class="studio_list_bname"> <a href="${readUrl}&newsNo=${dto.newsNo}"> ${status.count} </a></td>
-						<td class="studio_list_pname">${dto.title}</td> 
-						<td class="studio_list_bname">${dto.projectNo}</td> 
-						<td class="studio_list_sname">${dto.createdDate}</td>
-						<td><button type="button" class="snewsbtn" onclick="deleteProjectNews('${dto.newsNo}');"><i class="far fa-trash-alt"></i></button></td>
+	             		<td class="studio_list_bname"> <a href="${readUrl}&newsNo=${dto.buyNo}">${dto.buyNo}</a></td>
+						<td class="studio_list_pname">${dto.memberId}</td> 
+						<td class="studio_list_bname">${dto.totalAmount}</td> 
+						<td class="studio_list_sname">${dto.boughtDate}</td>
+						
 					</tr>
 				</c:forEach>
 			 </table>
