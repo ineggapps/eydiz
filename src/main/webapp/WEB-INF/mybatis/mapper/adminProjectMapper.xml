@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminProject">
+
+<sql id="where-list">
+		<choose>
+			<when test="condition == 'projectName' ">
+			   INSTR(${condition}, #{keyword}) &gt; 0
+			</when>
+			<when test="condition == 'categoryName'">
+			    INSTR(${condition}, #{keyword}) &gt; 0
+			</when>
+			<when test="condition == 'brandName'">
+			    INSTR(${condition}, #{keyword}) &gt; 0
+			</when>
+			<when test="condition == 'created'">
+			    ( TO_CHAR(created, 'YYYYMMDD') = #{keyword}
+		          OR TO_CHAR(created, 'YYYY-MM-DD') = #{keyword} )
+			</when>
+		</choose>
+</sql>
+
+<!-- 프로젝트 리스트 -->
+<select id="adminProjectList" parameterType="map" resultType="com.eydiz.admin.project.AdminProject">
+	SELECT rowNum,p.projectNo, projectName, brandName, categoryName, 
+		   managerName, s.statusNo,  TO_CHAR(created, 'YYYY-MM-DD') created, statusMemo, parentCategoryNo
+	FROM project p
+	LEFT JOIN project_category c ON p.categoryNo = c.categoryNo
+	LEFT JOIN brand b ON p.brandNo = b.brandNo
+	LEFT JOIN project_status_list s ON p.projectNo = s.projectNo
+	WHERE s.statusNo = #{statusNo} AND c.parentCategoryNo = #{parentCategoryNo} AND (s.statusNo = p.statusNo)
+	<if test="keyword != null and keyword != ''">
+		AND <include refid="where-list"/>
+	</if>
+	ORDER BY created ASC
+	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+</select>
+
+
+<!-- 리스트 개수 -->
+<select id="dataCount" parameterType="map" resultType="Integer">
+	SELECT NVL(COUNT(*), 0)
+	FROM project p
+	LEFT JOIN project_category c ON p.categoryNo = c.categoryNo
+	LEFT JOIN brand b ON p.brandNo = b.brandNo
+	LEFT JOIN project_status_list s ON p.projectNo = s.projectNo
+	WHERE s.statusNo = #{statusNo} AND parentCategoryNo = #{parentCategoryNo} AND (s.statusNo = p.statusNo)
+	<if test="keyword != null and keyword != ''">
+		AND <include refid="where-list"/>
+	</if>
+</select>
+
+<!-- 프로젝트 상태 갱신 -->
+<update id="updateProject" parameterType="map">
+	UPDATE project SET statusNo = #{statusNo} 
+	WHERE projectNo = #{projectNo}
+</update>
+
+
+<!-- 상태변화 로그 찍기 -->
+<insert id="insertProjectStatusList" parameterType="com.eydiz.admin.project.AdminProject">
+	INSERT INTO project_status_list(projectNo, statusNo, statusMemo) VALUES(#{projectNo}, #{statusNo} ,#{statusMemo})
+</insert>
+
+<!-- 프로젝트 보기 -->
+<select id="readProject" parameterType="Integer" resultType="com.eydiz.studio.Project">
+	SELECT 
+		p.projectNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount,  
+		TO_CHAR(projectStartDate, 'YYYY-MM-DD') projectStartDate, TO_CHAR(projectEndDate,'YYYY-MM-DD') projectEndDate, 
+		projectSummary, projectStory, statusNo,
+		p.brandNo, brandName, managerName, managerEmail, managerPhone
+	FROM project p
+	JOIN brand b ON p.brandNo = b.brandNo
+	JOIN project_category pc ON p.categoryNo = pc.categoryNo
+	WHERE p.projectNo = #{projectNo}	
+</select>
+
+<!-- 리워드 정보 불러오기 -->
+<select id="listReward" parameterType="Integer" resultType="com.eydiz.studio.Reward">
+	SELECT rewardNo, r.projectNo, amount, rewardTitle, rewardContent, rewardOption, 
+			shipAmount, TO_CHAR(startShippingDate, 'YYYY-MM-DD') startShippingDate, limitQuantity
+	FROM reward r
+	JOIN project p ON r.projectNo = p.projectNo
+	WHERE r.projectNo = #{projectNo}
+	ORDER BY amount 
+</select>
+
+
+</mapper>

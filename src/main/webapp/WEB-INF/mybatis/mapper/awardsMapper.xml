@@ -3,9 +3,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="awards">
 
-<select id="">
-	
+<!-- WHERE p.statusNo=6 AND EXTRACT(YEAR FROM projectEndDate) = 2020 AND (projectAttainAmount/projectGoalAmount*100) &gt;= 100 -->
+
+
+<!-- 판매금액 가장 많은 top 5 -->
+<select id="bestSeller" resultType="com.eydiz.awards.Awards">
+	SELECT ROWNUM, x.* FROM (
+		SELECT p.brandNo,brandName, projectNo, projectName, NVL(projectAttainAmount,0) projectAttainAmount, projectImageUrl 
+		FROM project p
+		JOIN brand b ON p.brandNo = b.brandNo
+		ORDER BY projectAttainAmount DESC
+	)x
+	WHERE ROWNUM &lt;= 5
 </select>
 
+<!-- 달성률 가장 높은 top 5 -->
+<select id="highestPercentage" resultType="com.eydiz.awards.Awards">
+	SELECT ROWNUM, x.* FROM ( 
+        SELECT p.brandNo,brandName, projectNo, projectName, projectImageUrl ,
+        	   NVL(projectAttainAmount,0) projectAttainAmount, (projectAttainAmount/projectGoalAmount*100) percentage 
+        FROM project p
+        JOIN brand b ON p.brandNo = b.brandNo
+        ORDER BY percentage DESC
+	) x
+	WHERE ROWNUM &lt;= 5
+</select>
+
+
+<!-- 프로젝트를 가장 많이 보유한 브랜드 -->
+<select id="brandProjectRank" resultType="com.eydiz.awards.Awards">
+	SELECT ROWNUM, r.* FROM (
+		SELECT p.brandNo,brandName, COUNT(projectNo) projectAmount
+		FROM brand b
+		JOIN project p ON b.brandNo = p.brandNo
+		GROUP BY p.brandNo,brandName
+		ORDER BY projectAmount DESC
+	)r
+	WHERE ROWNUM &lt;= 5
+</select>
 
 </mapper>
