@@ -24,10 +24,11 @@
              <ul>
              <c:forEach var="item" items="${reward}">
                <li>
-                 <div class="rewardItemBox">
+                 <div class="rewardItemBox ${item.remainQuantity<=0?'disabled':''}">
                    <dl>
                      <dt>
                        <label class="checkbox">
+                         <c:if test="${item.remainQuantity>0}">
                          <input 
                          	type="checkbox" 
                          	name="rewardNo" 
@@ -35,11 +36,21 @@
                          	value="${item.rewardNo}"
                          	${item.rewardNo==rewardNo?"checked=\"checked\"":""}		
                          />
+                         </c:if>
+                         <c:if test="${item.remainQuantity<=0}">
+                         <input 
+                         	type="checkbox" 
+                         	name="rewardNo" 
+                         	class="rewardNo"
+                         	value="${item.rewardNo}"
+                         	disabled="disabled"
+                         />
+                         </c:if>
                          <span class="checkmark"></span>
                        </label>
                      </dt>
                      <dd>
-                       <h5>${item.amount}원을 펀딩합니다.</h5>
+                       <h5>${item.amount}원을 펀딩합니다. ${item.remainQuantity<=0?"<strong class=\"warning\">(마감)</strong>":""}</h5>
                        <p>${item.rewardTitle}</p>
                        <p class="rewardItemText">${item.rewardContent}</p>
                        <p class="rewardItemText">${item.rewardOption}</p>

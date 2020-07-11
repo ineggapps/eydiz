@@ -33,7 +33,7 @@
     	</c:if>
     	<c:if test="${not empty sessionScope.member}">
 		<li><a href="<%=cp%>/member/logout">로그아웃</a><li>
-		<li><a href="<%=cp%>/mypage" class="profilePic">
+		<li><a href="<%=cp%>/mypage/funding" class="profilePic">
 			<c:if test="${sessionScope.member.memberImageUrl!=null}">
 			<span class="displayAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">&nbsp;</span>
 			</c:if>

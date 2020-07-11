@@ -11,6 +11,7 @@
 }
 
 .projectList li {
+	cursor:pointer;
   padding-bottom: 30px;
 }
 

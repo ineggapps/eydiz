@@ -48,11 +48,13 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			map.put(MemberConstant.ATTRIBUTE_MEMBERNO, info.getMemberNo());
 			Project project = detailService.readProject(map);
+			if(project==null || project.getRemainDays()<0) {
+				return "redirect:" + API_MAIN;
+			}
 			List<Reward> rewards = detailService.listRewards(projectNo);
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
 			model.addAttribute(ATTRIBUTE_REWARD, rewards);
 			model.addAttribute(ATTRIBUTE_REWARDNO, rewardNo);
-
 		} catch (NullPointerException e) {
 			return "redirect:" + req.getContextPath();
 		} catch (Exception e) {
@@ -108,8 +110,14 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			Project project = detailService.readProject(map);
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
+			//리워드 수량체크 (0개인 경우)
+			SessionRewardInfo rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
+			if(rewardService.isValidQuantity(rInfo)) {
+				throw new Exception("수량이 0개인 거 어떻게 선택했지?");
+			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			return "redirect:" + API_MAIN;
 		}
 		return ".rewardLayout.step2";
 	}

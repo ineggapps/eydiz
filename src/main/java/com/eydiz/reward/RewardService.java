@@ -20,4 +20,7 @@ public interface RewardService {
 	public void insertRewardDetail(SessionRewardInfo rewardInfo, Map<Integer, Reward> rewards) throws Exception;
 	public void insertRewardShppingLocation(RewardShippingLocation rewardShippingLocation) throws Exception;
 	public void insertRewardBuyKakao(int buyNo, String tid) throws Exception;
+	
+	//리워드 0개 체크
+	public boolean isValidQuantity(SessionRewardInfo rewardInfo);
 }

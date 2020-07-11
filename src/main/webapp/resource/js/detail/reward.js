@@ -62,13 +62,20 @@ $(function () {
           e.preventDefault();
           return false;
         }
-        if ($optionAns.length>0 && !optionAnswer) {
+        if ($optionAns.length > 0 && !optionAnswer) {
           alert("선택하신 리워드는 옵션을 기입하셔야 합니다.");
           e.preventDefault();
           return false;
         }
+        
+        //#3. 체크한 리워드 수량이 0개인 경우
+        if($reqQuantity.val()<=0){
+        	alert("선택하신 리워드 수량은 최소 1개 이상이어야 합니다.");
+        	e.preventDefault();
+        	return false;
+        }
 
-        //#3. 체크한 리워드가 잔여 수량을 초과한 경우
+        //#4. 체크한 리워드가 잔여 수량을 초과한 경우
         const remainQuantity = $(this).closest(".rewardItemBox").find("input.remainQuantity").val();
         const requestQuantity = $reqQuantity.val();
         const after = remainQuantity - requestQuantity;
@@ -83,51 +90,3 @@ $(function () {
     });
   });
 });
-// $(function () {
-//   $(".btnSubmit.step1").click(function (e) {
-//     //step1 다음단계로
-//     var $inputs = $("input.optionAnswer");
-//     //#1. 체크한 리워드가 하나도 없을 경우
-//     const checkedCount = $("input.rewardNo:checked").length;
-//     if (checkedCount == 0) {
-//       alert("리워드를 최소 한 개 이상 선택하셔야 합니다.");
-//       e.preventDefault();
-//       return false;
-//     }
-//     $inputs.each(function (idx, item) {
-//       const chk = $(this).closest(".rewardItemBox").find("input.rewardNo").prop("checked");
-//       console.log(item, chk, "아이템");
-//       const $reqQuantity = $(this).closest(".rewardItemBox").find("input.requestQuantity");
-//       const v = $(this).val().trim();
-
-//       //#2. 체크한 리워드의 옵션을 기입하지 않은 경우
-//       if (chk) {
-//         if (!$reqQuantity.val()) {
-//           alert("선택하신 리워드의 구매 수량을 기입하시기 바랍니다.");
-//           $reqQuantity.focus();
-//           e.preventDefault();
-//           return false;
-//         }
-//         if (!v) {
-//           alert("선택하신 리워드는 옵션을 기입하셔야 합니다.");
-//           e.preventDefault();
-//           return false;
-//         }
-
-//         //#3. 체크한 리워드가 잔여 수량을 초과한 경우
-//         const remainQuantity = $(this).closest(".rewardItemBox").find("input.remainQuantity").val();
-//         const requestQuantity = $reqQuantity.val();
-//         const after = remainQuantity - requestQuantity;
-//         if (after < 0) {
-//           alert("선택하신 리워드는 " + remainQuantity + "개 까지만 가능합니다.");
-//           $reqQuantity.val("");
-//           $reqQuantity.focus();
-//           e.preventDefault();
-//           return false;
-//         }
-//       }
-//       console.log("prvd");
-//       e.preventDefault();
-//     });
-//   });
-// });

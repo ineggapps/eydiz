@@ -41,7 +41,7 @@ import com.eydiz.studio.StudioService;
 public class StudioProjectController implements Constant, StudioConstant, MemberConstant {
 
 	private Logger logger = LoggerFactory.getLogger(StudioProjectController.class);
-	private final static int ROWS = 10;
+	private final static int ROWS = 9;
 
 	@Autowired
 	StudioService service;
@@ -70,32 +70,42 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 	}
 
 	////////////////////////////////////////////// 프로젝트
-	@RequestMapping(value = { "/list/{categoryName}", "/list/{categoryName}/page/{page}", "/list",
-			"/list/page/{page}" })
-	public String list(@PathVariable(required = false) String categoryName,
-			@PathVariable(required = false) Integer page, Model model, HttpServletRequest req, HttpSession session) {
+	@RequestMapping(value = {"/list"})
+	public String list(Model model, HttpServletRequest req ) {
 		addModelURIAttribute(model, req, null);
-		int currentPage = 1;
-		if (page != null) {
-			currentPage = page;
-		}
-		BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
-		int brandNo = bInfo.getBrandNo();
-		// 페이징 정보 계산과 해당하는 페이지의 프로젝트 불러오기
-		int listProjectCount = service.listProjectCount(brandNo);
-		int pageCount = pager.pageCount(ROWS, listProjectCount);
-		int offset = pager.getOffset(currentPage, ROWS);
-		Map<String, Object> map = new HashMap<>();
-		map.put(ATTRIBUTE_ROWS, ROWS);
-		map.put(ATTRIBUTE_OFFSET, offset);
-		map.put(ATTRIBUTE_BRANDNO, brandNo);
-		List<Project> listProject = service.listProject(map);
-		// 페이징 정보 입력
-		model.addAttribute(ATTRIBUTE_CURRENT_PAGE, currentPage);
-		model.addAttribute(ATTRIBUTE_PAGE_COUNT, pageCount);
-		model.addAttribute(ATTRIBUTE_CATEGORY, categoryName);
-		model.addAttribute(ATTRIBUTE_PROJECT, listProject);
 		return VIEW_PROJECT_LIST;
+	}
+	
+	@RequestMapping(value= {"/ajax/list","/ajax/list/{page}"})
+	@ResponseBody
+	public Map<String, Object>ajaxList(@PathVariable(required = false) Integer page, HttpSession session) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			if(page==null) {
+				page = 1;
+			}
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			int brandNo = bInfo.getBrandNo();
+			int listProjectCount = service.listProjectCount(brandNo);
+			int pageCount = pager.pageCount(ROWS, listProjectCount);
+			int offset = pager.getOffset(page, ROWS);
+			// 페이징 정보 계산과 해당하는 페이지의 프로젝트 불러오기
+			Map<String, Object> param = new HashMap<>();
+			param.put(ATTRIBUTE_ROWS, ROWS);
+			param.put(ATTRIBUTE_OFFSET, offset);
+			param.put(ATTRIBUTE_BRANDNO, brandNo);
+			List<Project> listProject = service.listProject(param);
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+			// 페이징 정보 입력
+			map.put(ATTRIBUTE_CURRENT_PAGE, page);
+			map.put(ATTRIBUTE_PAGE_COUNT, pageCount);
+			map.put(ATTRIBUTE_PROJECT, listProject);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR, e.getMessage());
+		}
+		return map;
 	}
 
 	// 프로젝트 대시보드

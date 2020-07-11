@@ -81,7 +81,7 @@
 			projectNo, p.brandNo, brandName, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
 			projectCreatedDate, projectUpdatedDate, 
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
-			statusNo, projectSummary, projectStory
+			statusNo, projectSummary
 		FROM project p
 		JOIN brand b ON p.brandNo = b.brandNo
 		WHERE b.brandNo = #{brandNo}
