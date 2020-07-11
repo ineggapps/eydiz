@@ -85,19 +85,64 @@
 		ORDER BY amount 
 	</select>
 	
-	<!-- 인기 프로젝트: 일단 끝나는 날이 가장 미래인 순으로 정렬 -->
+	<!-- 인기 프로젝트: 
+			배점:totalAmount*0.2+supportCount*0.3+trunc(attainRate*100)*0.2+newsCount*0.1+communityCount*0.1+likeCount*0.1
+	-->
 	<select id="listPopularProject" resultType="com.eydiz.studio.Project">
 		SELECT 
-			projectNo, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			p.projectNo, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
 			projectCreatedDate, projectUpdatedDate, 
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
-			statusNo, projectSummary, projectStory,
-			p.brandNo, brandName, managerName, managerEmail, managerPhone
+			statusNo, projectSummary,
+			p.brandNo, brandName, managerName, managerEmail, managerPhone,
+			NVL(likeCount, 0) likeCount,
+			NVL(supportCount, 0) supportCount,
+			NVL(communityCount, 0) communityCount,
+			NVL(newsCount, 0) newsCount,
+			NVL(totalAmount, 0) totalAmount,
+			NVL(totalAmount,0)/projectGoalAmount attainRate
 		FROM project p
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
-		WHERE statusNo = 5
-		ORDER BY projectEndDate DESC
+		LEFT OUTER JOIN (
+			SELECT projectNo, COUNT(*) likeCount
+			FROM project_like
+			GROUP BY projectNo
+		) pl ON pl.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+			SELECT DISTINCT projectNo, count(DISTINCT memberNo) over(partition by projectNo) supportCount 
+			FROM reward_buy_overview ro
+            LEFT OUTER JOIN  reward_buy_cancel rc ON ro.buyNo = rc.buyNo
+			WHERE cancelNo IS NULL
+		) sc ON sc.projectNo = p.projectNo
+		LEFT OUTER JOIN (
+            SELECT projectNo, count(*) communityCount
+            FROM project_community
+            WHERE parentCommentNo IS NULL
+            GROUP BY projectNo
+        ) pc ON pc.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+        	SELECT projectNo, count(*) newsCount
+        	FROM project_news
+        	GROUP BY projectNo
+        ) pn ON pn.projectNo = p.projectNo
+        LEFT OUTER JOIN(
+            SELECT DISTINCT projectNo, SUM(totalAmount) OVER(PARTITION BY projectNo) totalAmount
+            FROM reward_buy_overview ro
+            LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+            WHERE rc.cancelNo IS NULL
+        ) ro ON ro.projectNo = p.projectNo
+		WHERE statusNo = 5 AND projectEndDate - SYSDATE >= 0
+		ORDER BY
+		(
+			totalAmount*0.2 +
+			supportCount*0.3 + 
+			attainRate*0.2 +
+			newsCount*0.1 +
+			communityCount*0.1 + 
+			likeCount*0.1
+		)
+		DESC, projectEndDate ASC
 		OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
 	</select>
 	
