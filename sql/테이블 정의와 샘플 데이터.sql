@@ -790,6 +790,7 @@ COMMIT;
 --구매내역 초기화 코드
 delete from reward_shipping_location;
 delete from reward_buy_detail;
+delete from reward_buy_kakao;
 delete from reward_buy_cancel;
 delete from reward_buy_overview;
 update reward set remainQuantity=limitQuantity;
@@ -928,3 +929,33 @@ BEGIN
 END;
 /
 
+
+--잡스케줄러로 프로젝트 마감기간 끝났는지 확인하기
+CREATE OR REPLACE PROCEDURE project_monitor_status
+IS
+BEGIN
+    UPDATE project SET statusNo = 6 WHERE projectEndDate - SYSDATE < 0;
+    COMMIT;
+END;
+/
+
+
+DECLARE
+X NUMBER;
+BEGIN
+SYS.DBMS_JOB.SUBMIT
+( job => X
+,what => 'PROJECT_MONITOR_STATUS'
+,next_date => to_date('11-07-2020 13:20:00','dd/mm/yyyy hh24:mi:ss')
+,interval => 'TRUNC(SYSDATE)+30/(60*60*24)'
+,no_parse => TRUE
+);
+END;
+/
+COMMIT; --커밋해야 dba_jobs 테이블에서 조회 가능
+
+--잡 스케줄러 지우기
+select job, what, failures, total_time, last_date, last_sec, next_date, next_sec, interval
+from dba_jobs order by next_date;
+--21 101 81 83 82 65
+EXECUTE dbms_ijob.remove(65);
