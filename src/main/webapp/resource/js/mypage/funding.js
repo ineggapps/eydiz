@@ -24,6 +24,10 @@ function loadMyBoughtProjects(p) {
 
 function renderItems(items) {
   $sample = $(".historyFundingList li.sample");
+  if(!items.length){
+	  $(".emptyMessage").removeClass("sample");
+	  return;
+  }
   $.each(items, function (idx, item) {
     $item = $sample.clone(true).removeClass("sample");
     $item.find(".historyCategory").text(item.categoryName);

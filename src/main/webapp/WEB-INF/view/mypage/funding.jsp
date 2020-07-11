@@ -7,9 +7,7 @@
 %>
 <article class="row">
     <h2>펀딩 내역 조회</h2>
-    <p class="description">
-      현재까지 진행된 펀딩 내역입니다.
-    </p>
+    <div class="emptyMessage sample">아직 구매한 펀딩내역이 없습니다.</div>
     <ul class="historyFundingList">
     	<li class="sample">
     	    <div class="historyItemWrap">

@@ -40,7 +40,7 @@
 </ul>
 <div class="brandInfoBox">
   <div class="brandName">
-    <a href="#">
+    <a href="<%=cp%>/brand/${project.brandNo}">
     <c:if test="${project.memberImageUrl==null}">
     <span class="image"></span>
     </c:if>
@@ -88,7 +88,7 @@
     </div>
   </div>
 </div>
-<c:if test="${item.remainDays>=0}">
+<c:if test="${project.remainDays>=0}">
 <div class="rewards rowBox">
   <h3>리워드 선택</h3>
   <c:forEach var="item" items="${reward}">

@@ -28,6 +28,15 @@ a {
 	display:none;
 }
 
+.emptyMessage{
+	width:100%;
+	min-height:200px;
+	line-height:200px;
+	text-align:center;
+	font-size:0.95rem;
+	user-select:none;
+}
+
 .hidden {
   display: inline-block;
   overflow: hidden;

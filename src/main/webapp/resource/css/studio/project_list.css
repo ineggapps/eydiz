@@ -124,6 +124,11 @@ i.projectStatus.expire {
   background-color: #90949c;
 }
 
+.categoryName{
+	color:#000;
+	font-size:0.85rem;
+}
+
 .projectList .projectItemController {
   background-color: #fff;
   border-top: 1px solid #dadce0;

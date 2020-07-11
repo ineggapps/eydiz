@@ -1,15 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8"%> <%@ page trimDirectiveWhitespaces="true"%> <%@
 taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <%@ taglib prefix="fmt"
 uri="http://java.sun.com/jsp/jstl/fmt"%> <% String cp = request.getContextPath(); %>
-<div class="emptyMessage sample">작성한 프로젝트가 없습니다. <a href="<%=cp %>/studio/project/register">새로 만들기</a></div>
+<div class="emptyMessage sample">아직 펀딩한 프로젝트가 없습니다.</div>
 <ul class="projectList"></ul>
 <ul class="projectList sample">
   <li class="sample" data-project-no="">
     <div class="projectItem">
-      <button type="button" class="btnDeleteProject"><span class="hidden">지우기</span></button>
       <div class="projectThumbnail">
         <div class="projectOverlay">
-          <span class="whiteSubtitle">대표이미지 등록 필요</span>
+          <span class="whiteSubtitle">이미지 준비 중입니다.</span>
         </div>
         <div class="projectBackground"></div>
       </div>
@@ -21,11 +20,7 @@ uri="http://java.sun.com/jsp/jstl/fmt"%> <% String cp = request.getContextPath()
         <div class="projectStatus">
           <p><i class="projectStatus"></i> <span>status...</span></p>
         </div>
-	    <p class="categoryName">카테고리명</p>
-      </div>
-      <div class="projectItemController">
-        <a href="#" class="btnManage">스튜디오 바로가기</a
-        >
+        <p class="categoryName">카테고리 이름</p>
       </div>
     </div>
   </li>
@@ -35,7 +30,15 @@ uri="http://java.sun.com/jsp/jstl/fmt"%> <% String cp = request.getContextPath()
 var page = 1;
 var pageCount = 1;
 function loadList(p) {
-  var url = cp + "/studio/project/ajax/list/" + p;
+  var url;
+  var location = window.location.href;
+  if(location.indexOf("/brand/funded")>0){
+	  url = cp + "/brand/ajax/funded/" + brandNo + "/page/" + p;
+  }
+  else{
+	  url = cp + "/brand/ajax/made/" + brandNo + "/page/" + p;
+  }
+  
   ajaxJSON(url, "get", {})
     .then(function (data) {
       pageCount = data.page_count;
@@ -102,9 +105,9 @@ function renderList(items) {
 $(function () {
   loadList(page++);
   
-  /*$("body").on("click", ".projectList li", function(e){
+  $("body").on("click", ".projectList li", function(e){
 	  goToLocation(this);
-  });*/
+  });
 });
 
 $(window).scroll(function () {
@@ -123,7 +126,7 @@ function isVisibleScrollBar() {
 
 function goToLocation(element) {
   const projectNo = $(element).attr("data-project-no");
-  location.href = cp + "/studio/project/" + projectNo + "/dashboard";
+  location.href = cp + "/detail/" + projectNo;
 }
 
 </script>

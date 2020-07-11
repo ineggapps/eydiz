@@ -20,9 +20,6 @@
       <li>
         <a href="<%=cp%>/guide/main"><span>이용 가이드</span></a>
       </li>
-      <li>
-        <a href="<%=cp%>/admin/"><span>관리자의 방</span></a>
-      </li>
     </ul>
   </div>
   <div class="footerInner">

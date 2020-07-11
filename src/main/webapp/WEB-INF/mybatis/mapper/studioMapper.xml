@@ -78,12 +78,13 @@
 	<!-- 자신의 브랜드 프로젝트 모두 불러오기 -->	
 	<select id="listProject" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT 
-			projectNo, p.brandNo, brandName, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
 			projectCreatedDate, projectUpdatedDate, 
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
 			statusNo, projectSummary
 		FROM project p
 		JOIN brand b ON p.brandNo = b.brandNo
+		JOIN project_category pc ON p.categoryNo = pc.categoryNo
 		WHERE b.brandNo = #{brandNo}
 		ORDER BY projectNo DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY

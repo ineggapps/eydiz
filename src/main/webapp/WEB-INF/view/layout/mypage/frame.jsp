@@ -77,7 +77,7 @@
               </ul>
             </div>
           </nav>
-          <article class="row">
+          <article class="row content">
             <div class="contentInner">
               <tiles:insertAttribute name="content"/>
             </div>

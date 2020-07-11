@@ -22,6 +22,7 @@
     <![endif]-->
     <script>
     const cp = "<%=cp%>";
+    const brandNo = parseInt("${brandNo!=null?brandNo:0}");
     </script>
     <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
 	<script src="<%=cp %>/resource/js/studio/brand_studio.js"></script>
@@ -56,18 +57,18 @@
           <article class="row bgWhite">
             <div class="rowFull">
               <div class="projectTitle">
-                <h2>브랜드 &centerdot; 프로젝트 관리</h2>
+                <h2>${brand.brandName}</h2>
               </div>
             </div>
           </article>
           <nav class="row">
             <div class="rowFull nav bgWhite">
               <ul class="detailNav">
-                <li ${uri=='/brand/info'?"class=\"on\"":""}>
-                  <a href="<%=cp%>/studio/brand/info"><span>브랜드</span></a>
+                <li ${category=='made'?"class=\"on\"":""}>
+                  <a href="<%=cp%>/brand/${brandNo}"><span>만든</span></a>
                 </li>
-                <li ${uri=='/project/list'?"class=\"on\"":""}>
-                  <a href="<%=cp%>/studio/project/list"><span>프로젝트 관리</span></a>
+                <li ${category=='funded'?"class=\"on\"":""}>
+                  <a href="<%=cp%>/brand/funded/${brandNo}"><span>펀딩한</span></a>
                 </li>
                 <%-- li ${categoryName=='funding'?"class=\"on\"":""}>
                   <a href="<%=cp%>/studio/project/list/funding"><span>펀딩</span></a>

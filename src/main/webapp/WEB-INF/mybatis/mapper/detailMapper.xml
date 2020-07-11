@@ -11,7 +11,7 @@
 			statusNo, projectSummary, projectStory, 
 			p.brandNo, brandName, managerName, managerEmail, managerPhone,
 			memberImageUrl,
-			FLOOR(projectEndDate - SYSDATE) remainDays,
+			TRUNC(projectEndDate - SYSDATE) remainDays,
 			NVL(likeCount,0) likeCount,
 			NVL(supportCount, 0) supportCount,
 			NVL(communityCount, 0) communityCount,
