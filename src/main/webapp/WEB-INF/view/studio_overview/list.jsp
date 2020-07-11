@@ -91,9 +91,9 @@ function renderList(items) {
 $(function () {
   loadList(page++);
   
-  $("body").on("click", ".projectList li", function(e){
+  /*$("body").on("click", ".projectList li", function(e){
 	  goToLocation(this);
-  });
+  });*/
 });
 
 $(window).scroll(function () {

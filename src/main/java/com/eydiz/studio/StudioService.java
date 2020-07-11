@@ -38,7 +38,8 @@ public interface StudioService {
 	public void updateStory(Project project) throws Exception;
 	
 	//제출
-	public void updateProjectStatus(int projectNo, int brandNo, int statusNo);
+	public void updateProjectStatus(int projectNo, int brandNo, int statusNo) throws Exception;
+	public void insertProjectStatusList(int projectNo, int brandNo, int statusNo, String memo) throws Exception;
 	
 	// 새소식 ----------------------------- 
 	public void insertProjectNews(ProjectNews dto) throws Exception;

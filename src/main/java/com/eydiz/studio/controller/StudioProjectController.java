@@ -402,12 +402,15 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		return map;
 	}
 
-	// 제출하기 버튼(임시 승인)
+	// 제출하기 버튼
 	@RequestMapping(value = "/{projectNo}/submit")
 	public String submitProject(@PathVariable Integer projectNo, HttpSession session) {
 		try {
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
-			service.updateProjectStatus(projectNo, bInfo.getBrandNo(), 1);
+			final int statusNo =1; //제출 완료 상태
+			final String memo = "제출 완료";
+			service.insertProjectStatusList(projectNo, bInfo.getBrandNo(), statusNo, memo);
+			service.updateProjectStatus(projectNo, bInfo.getBrandNo(), statusNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

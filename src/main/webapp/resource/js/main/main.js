@@ -109,7 +109,9 @@ function renderSnippet(items) {
   const $wrap = $("ul.gridContent");
   $.each(items, function (idx, item) {
     var $project = $element.clone(true).removeClass("sample");
-    $project.find(".thumbnail").css("background-image", "url('" + item.projectImageUrl + "')");
+    if(item.projectImageUrl){    	
+    	$project.find(".thumbnail").css("background-image", "url('" + item.projectImageUrl + "')");
+    }
     $project.find(".thumbnail").attr("data-project-no", item.projectNo);
     $project.find(".subject a").text(item.projectName);
     $project.find(".category").text(item.categoryName);

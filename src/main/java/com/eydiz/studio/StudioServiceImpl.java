@@ -294,7 +294,7 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	}
 
 	@Override
-	public void updateProjectStatus(int projectNo, int brandNo, int statusNo) {
+	public void updateProjectStatus(int projectNo, int brandNo, int statusNo) throws Exception {
 		try {
 			Map<String, Integer> map = new HashMap<>();
 			map.put(ATTRIBUTE_BRANDNO, brandNo);
@@ -303,13 +303,32 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			dao.updateData(MAPPER_NAMESPACE+"updateProjectStatus", map);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
+	
+	@Override
+	public void insertProjectStatusList(int projectNo, int brandNo, int statusNo, String memo) throws Exception{
+		try {
+			Map<String, Object> map = new HashMap<>();
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			map.put(ATTRIBUTE_BRANDNO, brandNo);
+			map.put(ATTRIBUTE_STATUSNO, statusNo);
+			map.put(ATTRIBUTE_STATUS_MEMO, memo);
+			dao.updateData(MAPPER_NAMESPACE+"insertProjectStatusList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+	
 
 	
 	// 새소식  -------------------------------------------
 	
 	
+
 	@Override
 	public void insertProjectNews(ProjectNews dto) throws Exception {
 		try {

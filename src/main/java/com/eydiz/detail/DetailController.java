@@ -74,6 +74,9 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 			}
 			param.put(ATTRIBUTE_PROJECTNO, projectNo);
 			project = service.readProject(param);
+			if(project==null) {
+				throw new Exception("프로젝트를 찾을 수 없음");
+			}
 			rewards = service.listRewards(projectNo);
 			popularProject = service.listPopularProject();
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
@@ -82,7 +85,7 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "redirect:/";
+			return "redirect:/" + API_MAIN;
 		}
 		return ".detailLayout";
 	}

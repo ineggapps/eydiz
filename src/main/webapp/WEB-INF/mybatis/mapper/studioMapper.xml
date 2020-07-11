@@ -211,6 +211,15 @@
 		UPDATE project SET statusNo=#{statusNo} WHERE <include refid="where-project-brand-no"/>
 	</update>
 	
+	<!-- 프로젝트 상태 로그 입력 -->
+	<update id="insertProjectStatusList" parameterType="map">
+		INSERT INTO project_status_list(projectNo, statusNo, statusMemo)
+		SELECT p.projectNo, #{statusNo}, #{statusMemo}
+		FROM project p
+		JOIN brand b ON b.brandNo = p.brandNo
+		WHERE p.projectNo = #{projectNo} AND b.brandNo = #{brandNo}
+	</update>
+	
 	
 	<!-- 새소식  -->
 	

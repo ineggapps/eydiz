@@ -62,7 +62,7 @@
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
 		JOIN member_detail md ON md.memberNo = b.memberNo
-		WHERE p.projectNo = #{projectNo}
+		WHERE p.projectNo = #{projectNo} AND (statusNo=5 OR statusNo=6)
 	</select>
 	
 	<!-- 프로젝트 목록에 해당하는 리워드 번호 불러오기 -->
