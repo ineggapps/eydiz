@@ -46,6 +46,7 @@ import com.eydiz.studio.Reward;
 public class KakaoPayService {
 	private static final String HOST = "https://kapi.kakao.com";
 	private static final String ADMIN_KEY = "⌛⌛⌛⌛⌛관리자키입력⌛⌛⌛⌛⌛";
+	private static final String CID = "TC0ONETIME";
 
 	private KakaoPayReady kakaoPayReady;
 	private KakaoPayApproval kakaoPayApproval;
@@ -67,11 +68,11 @@ public class KakaoPayService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "KakaoAK" + " " + ADMIN_KEY);
 		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
-		headers.add("Content-type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset=UTF-8");
+		headers.add("Content-type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
 
 		// 서버로 요청할 본문
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("cid", "TC0ONETIME");
+		params.add("cid", CID);
 		params.add("partner_order_id", rewardInfo.getBuyNo()+"");
 		params.add("partner_user_id", memberInfo.getMemberNo()+"");
 		params.add("item_name", projectName);
@@ -79,14 +80,51 @@ public class KakaoPayService {
 		params.add("total_amount", rewardInfo.getFinalAmount()+"");
 		params.add("tax_free_amount", "0");
 		params.add("approval_url", "http://localhost:9090/eydiz/reward/" + projectNo + "/pay/kakao/success");
-		params.add("cancel_url", "http://localhost:9090/eydiz/reward/" + projectNo + "/pay/kakao/cancel");
+		params.add("cancel_url", "http://localhost:9090/eydiz/reward/" + projectNo + "/pay/kakao/abort");
 		params.add("fail_url", "http://localhost:9090/eydiz/reward/" + projectNo + "/pay/kakao/fail");
 
 		HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<>(params, headers);
 		try {
 			kakaoPayReady = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReady.class);
 			return kakaoPayReady.getNext_redirect_pc_url();
-		} catch (RestClientException e) {
+		} catch (HttpClientErrorException e) {
+            System.out.println( "callToRestService Error :" + e.getResponseBodyAsString());
+            e.printStackTrace();
+        } catch (RestClientException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;// 오류난 경우
+	}
+
+	public KakaoPayCancel kakayPayCancel(int cancelAmount, int cancelTaxFreeAmount, String tid) {//결제 취소
+		////카카오페이 관련 처리
+		RestTemplate restTemplate = new RestTemplate();
+
+		// 서버로 요청할 헤더 정보
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "KakaoAK" + " " + ADMIN_KEY);
+		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
+		headers.add("Content-type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+
+		// 서버로 요청할 본문
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("cid", CID);
+		params.add("tid",  tid);
+		params.add("cancel_amount", cancelAmount+"");
+		params.add("cancel_tax_free_amount", cancelTaxFreeAmount+"");
+
+		HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<>(params, headers);
+		try {
+			kakaoPayCancel = restTemplate.postForObject(new URI(HOST + "/v1/payment/cancel"), body, KakaoPayCancel.class);
+			return kakaoPayCancel;
+		} catch (HttpClientErrorException e) {
+            System.out.println( "callToRestService Error :" + e.getResponseBodyAsString());
+            e.printStackTrace();
+        } catch (RestClientException e) {
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
@@ -108,7 +146,7 @@ public class KakaoPayService {
 		//서버로 요청할 본문
 //		System.out.println("★"+rewardInfo.getBuyNo() + "," + memberInfo.getMemberNo() + "," + pg_token +"," + rewardInfo.getFinalAmount());
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("cid", "TC0ONETIME");
+        params.add("cid", CID);
         params.add("tid", kakaoPayReady.getTid());
         params.add("partner_order_id", rewardInfo.getBuyNo()+"");
         params.add("partner_user_id", memberInfo.getMemberNo()+"");
