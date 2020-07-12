@@ -39,7 +39,7 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
       <header id="header">
         <div class="headerInner">
           <h3 class="btnMenu" id="btnGnbMenu"><span class="hidden">메뉴</span></h3>
-          <h1 class="logo"><a href="#">Brand studio</a></h1>
+          <h1 class="logo"><a href="<%=cp%>/admin/brand/list">Admin studio</a></h1>
           <div class="projectTitle"><h2>관리자 페이지</h2></div>
           <ul class="rightGnb">
             <li class="menuExit">

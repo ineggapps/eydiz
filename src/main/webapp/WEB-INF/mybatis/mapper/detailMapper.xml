@@ -192,10 +192,10 @@
             GROUP BY parentCommentNo
 		) parentCmt ON parentCmt.parentCommentNo = commentNo
         LEFT OUTER JOIN (
-            SELECT projectNo, COUNT(*) buyCount
+            SELECT projectNo, memberNo, COUNT(*) buyCount
             FROM reward_buy_overview ro
-            GROUP BY projectNo
-        ) rr ON rr.projectNo = #{projectNo}
+            GROUP BY projectNo, memberNo
+        ) rr ON rr.projectNo = #{projectNo} AND m.memberNo = rr.memberNo
         LEFT OUTER JOIN ( 
             SELECT projectNo, memberNo, COUNT(*) cancelCount
             FROM reward_buy_cancel rc
@@ -218,10 +218,10 @@
 		JOIN member_detail m ON m.memberId = pc.memberId
         JOIN project p ON p.projectNo = pc.projectNo
         LEFT OUTER JOIN (
-            SELECT projectNo, COUNT(*) buyCount
+            SELECT projectNo, memberNo, COUNT(*) buyCount
             FROM reward_buy_overview ro
-            GROUP BY projectNo
-        ) rr ON rr.projectNo = #{projectNo}
+            GROUP BY projectNo, memberNo
+        ) rr ON rr.projectNo = #{projectNo} AND m.memberNo = rr.memberNo
         LEFT OUTER JOIN ( 
             SELECT projectNo, memberNo, COUNT(*) cancelCount
             FROM reward_buy_cancel rc

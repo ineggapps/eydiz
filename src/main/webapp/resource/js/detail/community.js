@@ -141,10 +141,14 @@ function renderComment($element, jsonItem, prefix) {
   //브랜드 여부
   if(jsonItem.isBrand==1){
 	  $element.find(".labelBrand").removeClass("hide");
+  }else{
+	  $element.find(".labelBrand").addClass("hide");
   }
   //펀딩 참여 여부
   if(jsonItem.isBrand==0 && jsonItem.hasFunded==1){
 	  $element.find(".labelFunded").removeClass("hide");
+  }else{
+	  $element.find(".labelFunded").addClass("hide");
   }
 }
 $(function () {
