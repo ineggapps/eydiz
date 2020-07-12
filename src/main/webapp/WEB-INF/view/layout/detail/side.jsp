@@ -175,4 +175,23 @@ $(function(){
 		ellipsis: "...",
 	})
 })
+$(function () {
+  try {
+    var elements = ["cuAttainRate", "cuTotalAmount", "cuSupportCount", "cuRemainDays"];
+    for (var i = 0; i < elements.length; i++) {
+      var num = $("#" + elements[i]).text();
+      var counter = new CountUp(
+        elements[i],
+        0,
+        num,
+        isInt(num) ? 0 : 1,
+        (i - 1) * 1.4 + 2,
+        options
+      );
+      counter.start();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 </script>

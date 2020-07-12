@@ -533,6 +533,7 @@ p.small {
   }
   .detailContent {
     clear: both;
+    margin-top: 30px;
     padding: 20px;
     min-width: 100%;
   }

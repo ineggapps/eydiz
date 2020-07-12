@@ -24,6 +24,7 @@
     <script>
     const cp = "<%=cp%>";
     const projectNo = ${project.projectNo};
+    const memberId = "${sessionScope.member.memberId}";
     const memberNickname ="${sessionScope.member.memberNickname}";
     </script>
     <script src="<%=cp %>/resource/js/jquery-3.5.1.min.js"></script>
@@ -54,8 +55,8 @@
     			   	$clone.removeClass( 'sticky' );
     			}			
       		});
-    		$(window).scrollTop(0);
-    });
+    		$(window).scrollTop(10);
+    	});
         </script>
   </head>
   <body>

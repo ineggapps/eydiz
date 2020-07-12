@@ -194,6 +194,28 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 		}
 		return map;
 	}
+	
+	@RequestMapping(value="/{projectNo}/community/edit", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String ,Object> communityCommentEdit(@PathVariable Integer projectNo, ProjectCommunity dto, HttpSession session){
+		Map<String, Object> map = new HashMap<>();
+		try {
+			//댓글 수정하기
+			SessionInfo info = (SessionInfo)session.getAttribute(SESSION_MEMBER);
+			if(info==null) {
+				throw new Exception("Login required");
+			}
+			dto.setMemberId(info.getMemberId());
+			service.updateCommunityComment(dto);
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+			map.put(ATTRIBUTE_COMMUNITY_COMMENTS, dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
+		}
+		return map;
+	}
 
 	// 댓글 삭제
 	@RequestMapping(value = "/{projectNo}/community/delete", method = RequestMethod.POST)

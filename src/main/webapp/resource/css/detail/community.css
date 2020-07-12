@@ -96,6 +96,7 @@
 }
 
 .commentContext{
+	z-index:1200;
 	position:absolute;
 	right:0;
 	top:20px;
@@ -127,6 +128,11 @@
   font-size: 0.95rem;
 }
 
+.commentComponent .commentInputContent{
+	width:100%;
+	margin:20px 0;
+}
+
 .commentInputContent{
   background-color:#fff;
   box-sizing: border-box;
@@ -154,9 +160,10 @@
 	height:100%;
 }
 
-.commentInput form,
-.commentInput input,
-.commentInput textarea {
+.commentReplyWrap form,
+.commentReplyWrap input,
+.commentReplyWrap textarea,
+.commentInputContent textarea {
 	margin-top:1px;
   border:0;
   box-sizing:border-box;

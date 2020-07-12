@@ -16,6 +16,7 @@ public interface DetailService {
 	public List<ProjectCommunity> listCommunityComments(int projectNo);
 	public List<ProjectCommunity> listCommunityComments(int projectNo, Integer parentCommentNo);
 	public void insertCommunityComment(ProjectCommunity dto) throws Exception;
+	public void updateCommunityComment(ProjectCommunity dto) throws Exception;
 	public void deleteCommunityComment(ProjectCommunity dto) throws Exception;
 
 	public List<Project> listPopularProject();

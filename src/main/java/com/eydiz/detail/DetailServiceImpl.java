@@ -58,7 +58,7 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			map.put(ATTRIBUTE_PARENT_COMMENT_NO, parentCommentNo);
-			list = dao.selectList(MAPPER_NAMESPACE+"selectCommunityCommentReply", map);
+			list = dao.selectList(MAPPER_NAMESPACE + "selectCommunityCommentReply", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,6 +69,16 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 	public void insertCommunityComment(ProjectCommunity dto) throws Exception {
 		try {
 			dao.insertData(MAPPER_NAMESPACE + "insertCommunity", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void updateCommunityComment(ProjectCommunity dto) throws Exception {
+		try {
+			dao.updateData(MAPPER_NAMESPACE + "updateCommunity", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

@@ -24,14 +24,22 @@
         <span class="parent commentMenu"><span class="hidden">메뉴</span></span>
         <div class="parent commentContext hide">
         	<ul>
-        		<li>수정</li>
-        		<li>삭제</li>
+        		<li class="parent commentModify">수정</li>
+        		<li class="parent commentDelete">삭제</li>
         	</ul>
         </div>
       </div>
-      <div class="parent commentContent">
-        내용
-      </div>
+      <div class="commentComponent">
+	      <div class="parent commentContent">
+	        내용
+	      </div>
+	       <div class="parent commentInputContent edit hide">
+		        <textarea placeholder="수정할 댓글을 입력하세요" name="content" data-autoresize="true"></textarea>
+		      	<div class="commentInputContentController">
+		      		<button type="button" class="parent edit btnSubmit">수정</button>
+		      	</div>
+	    	</div>
+		</div>      
       <div class="commentButtonReply">
         <button
           type="button"
@@ -55,16 +63,25 @@
             <span class="reply author">답글 작성자</span>
             <span class="reply date">답글 작성 시각</span>
             <span class="parent commentMenu"><span class="hidden">메뉴</span></span>
-            <div class="parent commentContext hide">
+            <div class="parent commentContext edit hide">
 	        	<ul>
-	        		<li>수정</li>
-	        		<li>삭제</li>
+	        		<li class="reply commentModify">수정</li>
+	        		<li class="reply commentDelete">삭제</li>
 	        	</ul>
 	        </div>
           </div>
-          <div class="commentContent">
-            답글 내용
+          <div class="commentComponent">
+	          <div class="commentContent">
+	            답글 내용
+	          </div>
+	          <div class="reply commentInputContent edit hide">
+		          <textarea placeholder="수정할 답글을 입력하세요" name="content" data-autoresize="true"></textarea>
+		        	<div class="commentInputContentController">
+		        		<button type="button" class="reply edit btnSubmit">수정</button>
+		        	</div>
+		      </div>
           </div>
+          
         </div>
       </div>
       </div>
@@ -80,7 +97,7 @@
         <div class="commentInputContent">
 	          <textarea placeholder="답글을 입력하세요" name="content" data-autoresize="true"></textarea>
 	        	<div class="commentInputContentController">
-	        		<button type="button" class="reply btnSubmit">등록</button>
+	        		<button type="button" class="reply write btnSubmit">등록</button>
 	        	</div>
         </div>
       </div>
