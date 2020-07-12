@@ -90,7 +90,10 @@ function loadReplyComment(commentNo, $element) {
   const $target = $element.find(".reply.commentItem.hide");
   ajaxJSON(url, method, query)
     .then(function (data) {
-      const comments = data.comments;
+      var comments = data.comments;
+      if(comments.length<=0 || data.pageCount==0){
+    	  return;
+      }
       $.each(comments, function (idx, item) {
         $element = $target.clone(true).appendTo($wrap).removeClass("hide");
         $element.attr("data-comment-no", item.commentNo);
@@ -135,6 +138,14 @@ function renderComment($element, jsonItem, prefix) {
     $element.find(".commentContext").eq(0).remove();
     $element.find(".commentInputContent").eq(0).remove();
   }
+  //브랜드 여부
+  if(jsonItem.isBrand==1){
+	  $element.find(".labelBrand").removeClass("hide");
+  }
+  //펀딩 참여 여부
+  if(jsonItem.isBrand==0 && jsonItem.hasFunded==1){
+	  $element.find(".labelFunded").removeClass("hide");
+  }
 }
 $(function () {
   loadComment();
@@ -155,6 +166,7 @@ $(function () {
         if (data.result == "ok") {
           alert("댓글을 작성했습니다.");
           commentPage = 1;
+          commentPageCount = 1;
           clearComments();
           loadComment();
           closeModal();
@@ -277,8 +289,8 @@ $(function () {
 //댓글 수정 컴포넌트 띄우기/닫기
 function toggleCommentComponent($commentItem, isEditMode, isContextMenuClose) {
   console.log(isEditMode, isContextMenuClose, "ㅎㅎ");
-  $input = $commentItem.find(".commentInputContent");
-  $view = $commentItem.find(".commentContent");
+  $input = $commentItem.find(".commentInputContent").eq(0);
+  $view = $commentItem.find(".commentContent").eq(0);
   if ($input.hasClass("hide") || isEditMode == true) {
     //수정창 띄우기
     $input.removeClass("hide");
@@ -291,6 +303,8 @@ function toggleCommentComponent($commentItem, isEditMode, isContextMenuClose) {
   if (isContextMenuClose) {
     $commentItem.find(".commentContext").eq(0).addClass("hide");
   }
+  $input.find("textarea").click();
+  $input.find("textarea").focus();
 }
 
 jQuery.each(jQuery("textarea[data-autoresize]"), function () {
@@ -301,7 +315,7 @@ jQuery.each(jQuery("textarea[data-autoresize]"), function () {
       .css("height", el.scrollHeight + offset);
   };
   jQuery(this)
-    .on("keyup input", function () {
+    .on("click keyup input", function () {
       resizeTextarea(this);
     })
     .removeAttr("data-autoresize");

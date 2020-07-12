@@ -179,27 +179,57 @@
 	<!-- 커뮤니티 댓글 조회하기 -->
 	<select id="selectCommunityComment" parameterType="map" resultType="com.eydiz.studio.ProjectCommunity">
 		SELECT commentNo, pc.parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate, 
-					memberImageUrl, NVL(replyCount, 0) replyCount
+					memberImageUrl, NVL(replyCount, 0) replyCount,
+                    CASE WHEN NVL(buyCount,0) - NVL(cancelCount,0) > 0 THEN 1 ELSE 0 END hasFunded,
+                    CASE WHEN b.memberNo = m.memberNo THEN 1 ELSE 0 END isBrand,
+                    NVL(buyCount,0), NVL(cancelCount,0)
 		FROM project_community pc
 		JOIN member_detail m ON m.memberId = pc.memberId
+        JOIN project p ON p.projectNo = pc.projectNo
 		LEFT OUTER JOIN(
 			SELECT parentCommentNo, count(*) replyCount
 			FROM project_community
             GROUP BY parentCommentNo
 		) parentCmt ON parentCmt.parentCommentNo = commentNo
-		WHERE pc.projectNo= #{projectNo} AND pc.parentCommentNo IS NULL
+        LEFT OUTER JOIN (
+            SELECT projectNo, COUNT(*) buyCount
+            FROM reward_buy_overview ro
+            GROUP BY projectNo
+        ) rr ON rr.projectNo = #{projectNo}
+        LEFT OUTER JOIN ( 
+            SELECT projectNo, memberNo, COUNT(*) cancelCount
+            FROM reward_buy_cancel rc
+            JOIN reward_buy_overview ro ON rc.buyNo = ro.buyNo
+            GROUP BY projectNo, memberNo
+        ) rrr ON rrr.projectNo = #{projectNo}
+        LEFT OUTER JOIN brand b ON b.brandNo = p.brandNo AND m.memberNo = b.memberNo
+		WHERE pc.projectNo=#{projectNo} AND pc.parentCommentNo IS NULL
 		ORDER BY commentNo DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 	<!-- 커뮤니티 답글 조회하기 -->
 	<select id="selectCommunityCommentReply" parameterType="map" resultType="com.eydiz.studio.ProjectCommunity">
-		SELECT commentNo, parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate,
-					memberImageUrl
+ 		SELECT commentNo, parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate,
+					memberImageUrl,
+                    CASE WHEN NVL(buyCount,0) - NVL(cancelCount,0) > 0 THEN 1 ELSE 0 END hasFunded,
+                    CASE WHEN b.memberNo = m.memberNo THEN 1 ELSE 0 END isBrand
 		FROM project_community pc
 		JOIN member_detail m ON m.memberId = pc.memberId
-		WHERE pc.projectNo= #{projectNo}
-		AND parentCommentNo =#{parentCommentNo}
+        JOIN project p ON p.projectNo = pc.projectNo
+        LEFT OUTER JOIN (
+            SELECT projectNo, COUNT(*) buyCount
+            FROM reward_buy_overview ro
+            GROUP BY projectNo
+        ) rr ON rr.projectNo = #{projectNo}
+        LEFT OUTER JOIN ( 
+            SELECT projectNo, memberNo, COUNT(*) cancelCount
+            FROM reward_buy_cancel rc
+            JOIN reward_buy_overview ro ON rc.buyNo = ro.buyNo
+            GROUP BY projectNo, memberNo
+        ) rrr ON rrr.projectNo = #{projectNo}
+        LEFT OUTER JOIN brand b ON b.brandNo = p.brandNo AND m.memberNo = b.memberNo
+		WHERE pc.projectNo= #{projectNo} AND parentCommentNo = #{parentCommentNo}
 		ORDER BY commentNo
 	</select>
 	

@@ -13,6 +13,9 @@ public class ProjectCommunity {
 	private int replyCount; // 해당하는 답글 개수만 (parentCommentNo가 존재하는 경우만)
 	private String memberNickname;
 	private String memberImageUrl;
+	
+	private int hasFunded; //펀딩 참여여부 0: 아님, 1: 펀딩 참여
+	private int isBrand;//브랜드 여부: 0: 아님, 1:브랜드 주인
 
 	public int getCommentNo() {
 		return commentNo;
@@ -101,5 +104,23 @@ public class ProjectCommunity {
 	public void setMemberImageUrl(String memberImageUrl) {
 		this.memberImageUrl = memberImageUrl;
 	}
+
+	public int getHasFunded() {
+		return hasFunded;
+	}
+
+	public void setHasFunded(int hasFunded) {
+		this.hasFunded = hasFunded;
+	}
+
+	public int getIsBrand() {
+		return isBrand;
+	}
+
+	public void setIsBrand(int isBrand) {
+		this.isBrand = isBrand;
+	}
+	
+	
 
 }

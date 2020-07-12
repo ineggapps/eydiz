@@ -82,6 +82,23 @@
 	position:relative;
 }
 
+/*댓글 딱지*/
+.labelFunded,
+.labelBrand{
+	color:#fff;
+	font-weight:600;
+	font-size:0.8rem;
+	user-select:none;
+	padding:0 5px;
+	margin:0 5px;
+}
+.labelFunded{/*펀딩 참여자*/
+	background-color:#557cf2;
+}
+.labelBrand{/*브랜드*/
+	background-color:#00c4c4;
+}
+
 .commentMenu{
 	position:absolute;
 	right:0;

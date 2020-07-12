@@ -20,6 +20,8 @@
     <div class="commentArea">
       <div class="commentHeader">
         <span class="parent author">아이디</span>
+        <span class="mark labelFunded hide">펀딩 참여자</span>
+        <span class="mark labelBrand hide">브랜드</span>
         <span class="parent date">작성일자</span>
         <span class="parent commentMenu"><span class="hidden">메뉴</span></span>
         <div class="parent commentContext hide">
@@ -61,6 +63,8 @@
         <div class="commentArea">
           <div class="commentHeader">
             <span class="reply author">답글 작성자</span>
+            <span class="mark labelFunded hide">펀딩 참여자</span>
+            <span class="mark labelBrand hide">브랜드</span>
             <span class="reply date">답글 작성 시각</span>
             <span class="parent commentMenu"><span class="hidden">메뉴</span></span>
             <div class="parent commentContext edit hide">
