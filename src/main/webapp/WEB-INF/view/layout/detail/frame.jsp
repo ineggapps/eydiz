@@ -33,7 +33,7 @@
 	<script type="text/javascript" src="<%=cp %>/resource/js/lib/bluebird.js"></script>    
 	<![endif]-->
 	<script type="text/javascript" src="<%=cp %>/resource/js/countUp.js"></script>    
-	<script type="text/javascript" src="<%=cp %>/resource/js/dotdotdot.js"></script>    
+	<script type="text/javascript" src="<%=cp %>/resource/js/jquery.ellipsis.min.js"></script>    
 	<script type="text/javascript" src="<%=cp %>/resource/js/detail/detail.js"></script>    
 	<script type="text/javascript" src="<%=cp %>/resource/js/detail/reward.js"></script>    
 	<script>

@@ -18,12 +18,6 @@
       <li>
         <a href="<%=cp %>/partner/list" class="menu"><span>파트너</span></a>
       </li>
-      <li>
-        <a href="<%=cp %>/cast/news" class="menu"><span>캐스트</span></a>
-      </li>
-      <li>
-        <a href="<%=cp %>/story/story" class="menu"><span>스토리</span></a>
-      </li>
     </ul>
     <div class="headerInnerRight">
       <ul class="gnbAuth">
@@ -41,15 +35,31 @@
 			<c:if test="${sessionScope.member.memberImageUrl==null}">
 			<span class="displayAvatar">&nbsp;</span>
 			</c:if>
-			${sessionScope.member.memberNickname}님</a></li>
+			${sessionScope.member.memberNickname}님
+			</a></li>
     	</c:if>
     	</ul>
     </div>
   </div>
   <div class="headerInnerMobile">
-    <div class="headerMobile">
-      <h1 class="logo"><a href="#">eydiz</a></h1>
+  <div class="mobileNav">
+    <div class="mobileNavLeft">
+	    <h2>eydiz</h2>
     </div>
+    <div class="mobileNavRight">
+		<a href="<%=cp %>/mypage/myInfo">
+		<c:if test="${sessionScope.member.memberImageUrl!=null}">
+		<span class="displayAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">&nbsp;</span>
+		</c:if>
+		<c:if test="${sessionScope.member.memberImageUrl==null}">
+		<span class="displayAvatar">&nbsp;</span>
+		</c:if>
+		<c:if test="${sessionScope.member!=null}">
+			${sessionScope.member.memberNickname}님
+		</c:if>
+		</a>
+    </div>
+  </div>
   </div>
   <%--div class="headerInnerTab">
     <ul class="gnbSub">

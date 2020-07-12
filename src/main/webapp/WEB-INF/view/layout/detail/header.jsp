@@ -48,12 +48,12 @@
 <div class="headerInnerMobile">
   <div class="mobileNav">
     <h2 class="title">${project.projectName}</h2>
-    <button type="button" class="btnBack btnFlat btnMobileNav">
+    <button type="button" class="btnBack btnFlat btnMobileNav" onclick="javascript:history.back(1);">
       <span class="hidden">이전</span>
     </button>
-    <button type="button" class="btnHome btnFlat btnMobileNav">
+    <a href="<%=cp %>" class="btnHome btnFlat btnMobileNav">
       <span class="hidden">홈</span>
-    </button>
+    </a>
   </div>
 </div>
 <article class="row">
