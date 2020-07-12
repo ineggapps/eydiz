@@ -378,6 +378,5 @@
 		    ) ss ON ss.statusNo = rl.statusNo
 		WHERE r.projectNo = #{projectNo} AND ro.buyNo = #{buyNo} AND r.rewardNo = #{rewardNo}
 	</select>
->>>>>>> d62bcbb74c9c2da2da93b6b338b947b6c467681b
 	
 </mapper>
