@@ -49,4 +49,11 @@ public interface StudioService {
 	public void updateProjectNews(ProjectNews dto) throws Exception;
 	public void deleteProjectNews(int newsNo) throws Exception;
 	
+	// 배송관리
+	public List<Send> listSend(Map<String, Object> map);
+	public List<Send> listSendmanage(Map<String, Object> map);
+	public int sendDataCount(Map<String, Object> map);
+	public int manageDataCount(Map<String, Object> map);
+	public Send readSend(int buyNo, int rewardNo, int projectNo);
+	
 }
