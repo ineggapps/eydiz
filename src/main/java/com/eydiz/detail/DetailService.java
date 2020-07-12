@@ -13,7 +13,9 @@ public interface DetailService {
 	public Reward readReward(int rewardNo);
 	
 	//커뮤니티
-	public List<ProjectCommunity> listCommunityComments(int projectNo);
+	public int countCommunityComments(int projectNo);//최상위 댓글 개수 조회
+	public List<ProjectCommunity> listCommunityComments(int projectNo, int offset, int rows);
+	//답글 조회
 	public List<ProjectCommunity> listCommunityComments(int projectNo, Integer parentCommentNo);
 	public void insertCommunityComment(ProjectCommunity dto) throws Exception;
 	public void updateCommunityComment(ProjectCommunity dto) throws Exception;

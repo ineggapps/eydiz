@@ -18,6 +18,9 @@ public interface DetailConstant {
 	public final static String ATTRIBUTE_MEMBERNO = "memberNo";
 	public final static String ATTRIBUTE_URI = "uri";
 	
+	public final static String ATTRIBUTE_OFFSET = "offset";
+	public final static String ATTRIBUTE_ROWS = "rows";
+	
 	//JSON
 	public final static String JSON_PROJECT_LIKE_RESULT = "like_result";
 	public final static String JSON_PROJECT_LIKE_RESULT_MARKED = "true";

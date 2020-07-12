@@ -74,7 +74,7 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 			}
 			param.put(ATTRIBUTE_PROJECTNO, projectNo);
 			project = service.readProject(param);
-			if(project==null) {
+			if (project == null) {
 				throw new Exception("프로젝트를 찾을 수 없음");
 			}
 			rewards = service.listRewards(projectNo);
@@ -146,24 +146,33 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 	}
 
 	// 댓글 보기
-	@RequestMapping(value = "/{projectNo}/community/view")
+	@RequestMapping(value = { "/{projectNo}/community/view", "/{projectNo}/community/view/{page}" })
 	@ResponseBody
-	public Map<String, Object> communityCommentView(@PathVariable Integer projectNo, Integer parentCommentNo) {
+	public Map<String, Object> communityCommentView(@PathVariable Integer projectNo,
+			@PathVariable(required=false) Integer page, Integer parentCommentNo) {
 		// 로그인 필요없음
 		Map<String, Object> map = new HashMap<>();
 		List<ProjectCommunity> list = null;
+		if(page==null) {
+			page = 1;
+		}
 		try {
 			if (projectNo == null) {
 				throw new NullPointerException();
 			}
 			if (parentCommentNo == null) {// 댓글
-				list = service.listCommunityComments(projectNo);
+				final int rows = 10;//한 번에 보내 줄 댓글 개수
+				int dataCount = service.countCommunityComments(projectNo);
+				int offset = pager.getOffset(page, rows);
+				list = service.listCommunityComments(projectNo, offset, rows);
+				map.put(ATTRIBUTE_PAGE_COUNT, pager.pageCount(rows, dataCount));
 			} else {// 답글
 				list = service.listCommunityComments(projectNo, parentCommentNo);
 			}
 			map.put(JSON_RESULT, JSON_RESULT_OK);
 			map.put(ATTRIBUTE_COMMUNITY_COMMENTS, list);
 		} catch (Exception e) {
+			map.clear();
 			map.put(JSON_RESULT, JSON_RESULT_ERROR);
 			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());
 		}
@@ -194,15 +203,16 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 		}
 		return map;
 	}
-	
-	@RequestMapping(value="/{projectNo}/community/edit", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/{projectNo}/community/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String ,Object> communityCommentEdit(@PathVariable Integer projectNo, ProjectCommunity dto, HttpSession session){
+	public Map<String, Object> communityCommentEdit(@PathVariable Integer projectNo, ProjectCommunity dto,
+			HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 		try {
-			//댓글 수정하기
-			SessionInfo info = (SessionInfo)session.getAttribute(SESSION_MEMBER);
-			if(info==null) {
+			// 댓글 수정하기
+			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
+			if (info == null) {
 				throw new Exception("Login required");
 			}
 			dto.setMemberId(info.getMemberId());
@@ -278,8 +288,8 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 			final int rows = 1;
 			int offset = pager.getOffset(currentPage, rows);
 			param.put(ATTRIBUTE_PROJECTNO, projectNo);
-			param.put(ATTRIBUTE_OFFSET, offset);
-			param.put(ATTRIBUTE_ROWS, rows);
+			param.put(DetailConstant.ATTRIBUTE_OFFSET, offset);
+			param.put(DetailConstant.ATTRIBUTE_ROWS, rows);
 			int dataCount = studioService.dataCount(param);
 			System.out.println(dataCount);
 			int pageCount = pager.pageCount(rows, dataCount);

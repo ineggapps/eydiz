@@ -39,12 +39,29 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 		}
 		return list;
 	}
+	
+	
 
 	@Override
-	public List<ProjectCommunity> listCommunityComments(int projectNo) {
+	public int countCommunityComments(int projectNo) {
+		int count = 0;
+		try {
+			count = dao.selectOne(MAPPER_NAMESPACE + "countCommunityComment", projectNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	@Override
+	public List<ProjectCommunity> listCommunityComments(int projectNo, int offset, int rows) {
 		List<ProjectCommunity> list = null;
 		try {
-			list = dao.selectList(MAPPER_NAMESPACE + "selectCommunityComment", projectNo);
+			Map<String, Integer> map = new HashMap<>();
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			map.put(ATTRIBUTE_ROWS, rows);
+			map.put(ATTRIBUTE_OFFSET, offset);
+			list = dao.selectList(MAPPER_NAMESPACE + "selectCommunityComment", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

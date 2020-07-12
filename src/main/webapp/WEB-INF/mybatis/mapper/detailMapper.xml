@@ -169,8 +169,15 @@
 		where projectNo=#{projectNo} AND memberNo=#{memberNo}
 	</delete>
 	
+	
+	<!-- 커뮤니티 댓글 개수 -->
+	<select id="countCommunityComment" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM project_community
+		WHERE projectNo=#{projectNo} AND parentCommentNo IS NULL
+	</select>
+	
 	<!-- 커뮤니티 댓글 조회하기 -->
-	<select id="selectCommunityComment" parameterType="Integer" resultType="com.eydiz.studio.ProjectCommunity">
+	<select id="selectCommunityComment" parameterType="map" resultType="com.eydiz.studio.ProjectCommunity">
 		SELECT commentNo, pc.parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate, 
 					memberImageUrl, NVL(replyCount, 0) replyCount
 		FROM project_community pc
@@ -182,6 +189,7 @@
 		) parentCmt ON parentCmt.parentCommentNo = commentNo
 		WHERE pc.projectNo= #{projectNo} AND pc.parentCommentNo IS NULL
 		ORDER BY commentNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 	<!-- 커뮤니티 답글 조회하기 -->
