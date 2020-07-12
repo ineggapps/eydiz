@@ -118,6 +118,9 @@ ul.detailNav a span.badge {
 
 /*반응형*/
 @media (max-width: 1097px) {
+	.projectTitle{
+		padding-top:80px;
+	}
 }
 
 @media (max-width: 960px) {
@@ -126,7 +129,6 @@ ul.detailNav a span.badge {
   .contentInner {
     width: 100%;
   }
-
   .contentInner {
     padding-top: 80px;
     padding-left: 40px;

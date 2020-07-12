@@ -18,12 +18,6 @@
       <li>
         <a href="<%=cp %>/partner/list" class="menu"><span>파트너</span></a>
       </li>
-      <li>
-        <a href="<%=cp %>/cast/news" class="menu"><span>캐스트</span></a>
-      </li>
-      <li>
-        <a href="<%=cp %>/story/story" class="menu"><span>스토리</span></a>
-      </li>
     </ul>
     <div class="headerInnerRight">
       <ul class="gnbAuth">
@@ -49,10 +43,10 @@
   <div class="headerInnerMobile">
     <div class="mobileNav">
       <h2 class="title">이디즈 - 브랜드 &centerdot; 프로젝트 관리</h2>
-      <a href="#" class="btnBack btnFlat btnMobileNav">
+      <a href="#" class="btnBack btnFlat btnMobileNav" onclick="javascript:history.back(1);">
         <span class="hidden">이전</span>
       </a>
-      <a href="#" class="btnHome btnFlat btnMobileNav">
+      <a href="<%=cp %>" class="btnHome btnFlat btnMobileNav" >
         <span class="hidden">홈</span>
       </a>
     </div>

@@ -49,7 +49,7 @@
     			   	$clone.removeClass( 'sticky' );
     			}			
       		});
-    		$(window).scrollTop(0);
+    		$(window).scrollTop(10);
     });
         </script>
   </head>

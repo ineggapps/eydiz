@@ -205,6 +205,10 @@ hr.divider.deeper{
   width: 100%;
 }
 
+.detailStory > *{
+	width:100% !important;
+}
+
 .detailSide {
   padding-left: 30px;
   padding-right: 30px;
@@ -563,6 +567,9 @@ p.small {
   }
   .detailSide {
     min-width: 100%;
+  }
+  .brandInfoBox{
+    margin-top:20px;
   }
   .detailSideController {
     display: none;
