@@ -300,34 +300,30 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			map.put(ATTRIBUTE_BRANDNO, brandNo);
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			map.put(ATTRIBUTE_STATUSNO, statusNo);
-			dao.updateData(MAPPER_NAMESPACE+"updateProjectStatus", map);
+			dao.updateData(MAPPER_NAMESPACE + "updateProjectStatus", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
-	
+
 	@Override
-	public void insertProjectStatusList(int projectNo, int brandNo, int statusNo, String memo) throws Exception{
+	public void insertProjectStatusList(int projectNo, int brandNo, int statusNo, String memo) throws Exception {
 		try {
 			Map<String, Object> map = new HashMap<>();
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			map.put(ATTRIBUTE_BRANDNO, brandNo);
 			map.put(ATTRIBUTE_STATUSNO, statusNo);
 			map.put(ATTRIBUTE_STATUS_MEMO, memo);
-			dao.updateData(MAPPER_NAMESPACE+"insertProjectStatusList", map);
+			dao.updateData(MAPPER_NAMESPACE + "insertProjectStatusList", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
-	}
-	
 
-	
-	// 새소식  -------------------------------------------
-	
-	
+	}
+
+	// 새소식 -------------------------------------------
 
 	@Override
 	public void insertProjectNews(ProjectNews dto) throws Exception {
@@ -336,45 +332,45 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
 	public List<ProjectNews> listProjectNews(Map<String, Object> map) {
 		List<ProjectNews> list = null;
-		
+
 		try {
 			list = dao.selectList("studio.listProjectNews", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return list;
 	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
 		int result = 0;
-		
+
 		try {
 			result = dao.selectOne("studio.dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 
 	@Override
 	public ProjectNews readProjectNews(int newsNo) {
 		ProjectNews dto = null;
-		
+
 		try {
 			dto = dao.selectOne("studio.readProjectNews", newsNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return dto;
 	}
 
@@ -386,7 +382,7 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			e.printStackTrace();
 			throw e;
 		}
-		
+
 	}
 
 	@Override
@@ -397,8 +393,77 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			e.printStackTrace();
 			throw e;
 		}
-		
+
 	}
 
-	
+	// 배송 관리
+	@Override
+	public List<Send> listSend(Map<String, Object> map) {
+		List<Send> list = null;
+
+		try {
+			list = dao.selectList("studio.listSend", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	@Override
+	public List<Send> listSendmanage(Map<String, Object> map) {
+		List<Send> list = null;
+
+		try {
+			list = dao.selectList("studio.listSendmanage", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	@Override
+	public int sendDataCount(Map<String, Object> map) {
+		int result = 0;
+
+		try {
+			result = dao.selectOne("studio.sendDataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	@Override
+	public int manageDataCount(Map<String, Object> map) {
+		int result = 0;
+
+		try {
+			result = dao.selectOne("studio.manageDataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	@Override
+	public Send readSend(int buyNo, int rewardNo, int projectNo) {
+		Send dto = null;
+
+		try {
+			Map<String, Object> map = new HashMap<>();
+			map.put("buyNo", buyNo);
+			map.put("rewardNo", rewardNo);
+			map.put("projectNo", projectNo);
+
+			dto = dao.selectOne("studio.readSend", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
 }

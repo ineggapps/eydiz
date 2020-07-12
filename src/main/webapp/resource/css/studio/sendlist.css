@@ -32,21 +32,24 @@
 }
 
 .send_no {
-	width: 150px;
+	width: 100px;
 }
 
 .send_mNo {
-	width: 250px;
+	width: 100px;
 }
 
 .send_rsubject {
-	width: 250px;
 }
 
 .send_sendStatus {
-	
+	width: 200px;
 }
 
 .send_button {
-	
+	width: 150px;
+}
+
+.send_button_s {
+	width: 70px;
 }
