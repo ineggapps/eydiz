@@ -40,7 +40,8 @@ function searchlist() {
 	             	<tr class="send_view_t">
 	             		<td class="send_no">${dto.buyNo}</td>
 						<td class="send_mNo">${dto.memberNo}</td> 
-						<td class="send_rsubject"><a href="<%=cp%>/studio/sendContent/${dto.projectNo}?buyNo=${dto.buyNo}&rewardNo=${dto.rewardNo}&page=${page}">${dto.rewardTitle}</a></td> 
+						<%--${dto.projectNo가 아니라 projectNo를 넘겼어야지.. StudioProjectController.java  line 676: map.put("projectNo", projectNo); --%>
+						<td class="send_rsubject"><a href="<%=cp%>/studio/sendContent/${projectNo}?buyNo=${dto.buyNo}&rewardNo=${dto.rewardNo}&page=${page}">${dto.rewardTitle}</a></td> 
 						<td class="send_sendStatus">${dto.statusName}</td> 
 					</tr>
 				</c:forEach>
