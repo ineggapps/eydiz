@@ -8,15 +8,15 @@
 <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 <script type="text/javascript">
 function searchlist() {
-	var f = document.sendsearchForm;
+	var f = document.managesearchForm;
 	f.submit();
 }
 </script>
 
  <div class="studio_send_form">
            <div class="titleBar">
-             <div class="title"><h2>결제 완료</h2></div>
-			     <form name="sendsearchForm" action="" method="post" >
+             <div class="title"><h2>배송 중</h2></div>
+			     <form name="managesearchForm" action="" method="post" >
                		<div align="right" style="margin-bottom: 10px;">
 	                    <select name="condition">
 	                      <option value="buyNo" ${condition=="buyNo" ? "selected='selected'":""}>판매 번호</option>
@@ -35,15 +35,13 @@ function searchlist() {
 					<td class="send_mNo">멤버 번호</td> 
 					<td class="send_rsubject">리워드 제목</td> 
 					<td class="send_sendStatus">배송상태</td> 
-					<td class="send_button"> 배송 상태 변경 </td>
 				</tr>
-				<c:forEach var="dto" items="${sendlist}">
+				<c:forEach var="dto" items="${managelist}">
 	             	<tr class="send_view_t">
 	             		<td class="send_no">${dto.buyNo}</td>
 						<td class="send_mNo">${dto.memberNo}</td> 
 						<td class="send_rsubject"><a href="<%=cp%>/studio/sendContent/${dto.projectNo}?buyNo=${dto.buyNo}&rewardNo=${dto.rewardNo}&page=${page}">${dto.rewardTitle}</a></td> 
 						<td class="send_sendStatus">${dto.statusName}</td> 
-						<td> <button class="send_button_s" type="button" onclick="sendManage()">배송 중</button> </td>
 					</tr>
 				</c:forEach>
 			 </table>

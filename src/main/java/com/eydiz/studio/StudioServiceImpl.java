@@ -373,5 +373,76 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		
 	}
 
+	// 배송 관리
+	@Override
+	public List<Send> listSend(Map<String, Object> map) {
+		List<Send> list = null;
+		
+		try {
+			list = dao.selectList("studio.listSend", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<Send> listSendmanage(Map<String, Object> map) {
+		List<Send> list = null;
+		
+		try {
+			list = dao.selectList("studio.listSendmanage", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int sendDataCount(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("studio.sendDataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public int manageDataCount(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("studio.manageDataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public Send readSend(int buyNo, int rewardNo, int projectNo) {
+		Send dto = null;
+		
+		try {
+			Map<String, Object> map = new HashMap<>();
+			map.put("buyNo", buyNo);
+			map.put("rewardNo", rewardNo);
+			map.put("projectNo", projectNo);
+			
+			dto = dao.selectOne("studio.readSend", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+
 	
 }
