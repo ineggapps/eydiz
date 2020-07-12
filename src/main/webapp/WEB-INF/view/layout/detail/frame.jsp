@@ -26,6 +26,7 @@
     const projectNo = ${project.projectNo};
     const memberId = "${sessionScope.member.memberId}";
     const memberNickname ="${sessionScope.member.memberNickname}";
+    const memberImageUrl = "${sessionScope.member.memberImageUrl}";
     </script>
     <script src="<%=cp %>/resource/js/jquery-3.5.1.min.js"></script>
     <!--[if IE]> 

@@ -4,6 +4,7 @@ function openModal() {
   $overlay.addClass("show");
 }
 function closeModal() {
+  $(".modalContentArea textarea").val("");
   $overlay.removeClass("show");
 }
 $(function () {
@@ -146,12 +147,15 @@ function submitComment(query) {
 }
 $(function () {
   const $modalForm = $("form[name=modalForm]");
+  const $commentWrap = $(".commentWrap");
   $overlay.find(".comment.btnSubmit").click(function () {
     query = $modalForm.serialize();
     submitComment(query)
       .then(function (data) {
         if (data.result == "ok") {
           alert("댓글을 작성했습니다.");
+          commentPage = 1;
+          clearComments();
           loadComment();
           closeModal();
         }
@@ -220,7 +224,7 @@ $(function () {
     $content.val("");
     const parentCommentNo = $(this).closest(".parent.commentItem").data("comment-no");
     alert(parentCommentNo);
-    const q = { parentCommentNo: parentCommentNo, content: content };
+    const q = { parentCommentNo: parentCommentNo, content: content};
     submitComment(q)
       .then(function (data) {
         if (data.result == "ok") {
@@ -229,7 +233,7 @@ $(function () {
           const $element = $commentItem.clone(true).appendTo($wrap).removeClass("hide");
           renderComment($element, {
             memberNickname: memberNickname,
-            date: new Date(),
+            createdDate: new Date(),
             content: content,
           });
         }

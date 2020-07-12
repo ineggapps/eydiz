@@ -198,6 +198,11 @@ span.commentAvatar {
   background-size:100%;
 }
 
+/*더보기*/
+.community.newsMore{
+	margin-top:20px;
+}
+
 /*modal창*/
 .modalOverlay.show{
 	display:show;

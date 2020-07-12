@@ -105,7 +105,7 @@
     </div>
   </div>
 </div>
-<div class="newsMore">
+<div class="community newsMore">
 	<button type="button" class="btnNewsMore">더 보기<span class="bgMore">&nbsp;</span></button>
 </div>
 <!--커뮤니티 덧글 영역 끝-->
