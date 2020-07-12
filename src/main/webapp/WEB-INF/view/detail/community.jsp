@@ -19,11 +19,18 @@
     </div>
     <div class="commentArea">
       <div class="commentHeader">
-        <span class="parent author">${item.memberId}</span>
-        <span class="parent date">${item.createdDate}</span>
+        <span class="parent author">아이디</span>
+        <span class="parent date">작성일자</span>
+        <span class="parent commentMenu"><span class="hidden">메뉴</span></span>
+        <div class="parent commentContext hide">
+        	<ul>
+        		<li>수정</li>
+        		<li>삭제</li>
+        	</ul>
+        </div>
       </div>
       <div class="parent commentContent">
-        ${item.content}
+        내용
       </div>
       <div class="commentButtonReply">
         <button
@@ -36,17 +43,24 @@
       <div class="commentReplyWrap">
       <div class="commentItem reply hide">
         <div class="commentSide">
-			<c:if test="${sessionScope.member.memberImageUrl == null}">
+            <c:if test="${sessionScope.member.memberImageUrl == null}">
 		    <span class="reply commentAvatar">프로필사진</span>
-			</c:if>
-			<c:if test="${sessionScope.member.memberImageUrl != null}">
-          	<span class="reply commentAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">프로필사진</span>
-			</c:if>
+		    </c:if>
+		    <c:if test="${sessionScope.member.memberImageUrl != null}">
+              <span class="reply commentAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">프로필사진</span>
+            </c:if>
         </div>
         <div class="commentArea">
           <div class="commentHeader">
-            <span class="reply author">또치</span>
-            <span class="reply date">2020-09-00</span>
+            <span class="reply author">답글 작성자</span>
+            <span class="reply date">답글 작성 시각</span>
+            <span class="parent commentMenu"><span class="hidden">메뉴</span></span>
+            <div class="parent commentContext hide">
+	        	<ul>
+	        		<li>수정</li>
+	        		<li>삭제</li>
+	        	</ul>
+	        </div>
           </div>
           <div class="commentContent">
             답글 내용
@@ -59,11 +73,10 @@
         <div class="commentInputSide">
 			<c:if test="${sessionScope.member.memberImageUrl == null}">
 		    <span class="reply commentAvatar">프로필사진</span>
-			</c:if>
-			<c:if test="${sessionScope.member.memberImageUrl != null}">
-          	<span class="reply commentAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">프로필사진</span>
-			</c:if>
-        </div>
+		    </c:if>
+		    <c:if test="${sessionScope.member.memberImageUrl != null}">
+              <span class="reply commentAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">프로필사진</span>
+            </c:if>        </div>
         <div class="commentInputContent">
 	          <textarea placeholder="답글을 입력하세요" name="content" data-autoresize="true"></textarea>
 	        	<div class="commentInputContentController">

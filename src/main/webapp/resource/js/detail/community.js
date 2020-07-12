@@ -180,6 +180,18 @@ $(function () {
   });
 });
 
+//댓글 답글관리 (수정,삭제 팝업)
+$(function(){
+	$(".commentMenu").click(function(){
+		$context = $(this).closest(".commentHeader").find(".commentContext");
+		if($context.hasClass("hide")){
+			$context.removeClass("hide");
+		}else{
+			$context.addClass("hide");
+		}
+	});
+});
+
 jQuery.each(jQuery("textarea[data-autoresize]"), function () {
   var offset = this.offsetHeight - this.clientHeight;
   var resizeTextarea = function (el) {

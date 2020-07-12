@@ -78,6 +78,46 @@
   word-break: break-all;
 }
 
+.commentHeader{
+	position:relative;
+}
+
+.commentMenu{
+	position:absolute;
+	right:0;
+	top:0;
+	display:block;
+	width:15px;
+	height:15px;
+	background-image:url("../../images/detail/btn_icon_menu.png");
+	background-repeat:no-repeat;
+	background-size:100%;
+	cursor:pointer;
+}
+
+.commentContext{
+	position:absolute;
+	right:0;
+	top:20px;
+	background-color:#fff;
+	border:1px solid #d4d4d4;
+	box-shadow: 0 3px 4px rgba(0,0,0,.3);
+	width:60px;
+}
+
+.commentContext li{
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	transition:all linear 0.2s;
+	cursor:pointer;
+}
+
+.commentContext li:hover{
+	background-color:#efefef;
+	font-weight:600;
+}
+
 .commentHeader span.author {
   font-weight: 600;
 }
