@@ -513,75 +513,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 
 		return "redirect:/studio/project/" + projectNo + "/news/list";
 	}
-
-	// 발송 관리
-	@RequestMapping(value = "/shipping/send/{projectNo}")
-	public String sendList(@PathVariable Integer projectNo, @RequestParam(defaultValue = "1") int current_page,
-			@RequestParam(defaultValue = "buyNo") String condition, @RequestParam(defaultValue = "") String keyword,
-			HttpServletRequest req, Model model) throws Exception {
-		String cp = req.getContextPath();
-
-		int rows = 10;
-		int total_page = 0;
-		int dataCount = 0;
-
-		if (req.getMethod().equalsIgnoreCase("GET")) {
-			keyword = URLDecoder.decode(keyword, "utf-8");
-		}
-
-		Map<String, Object> map = new HashMap<>();
-		map.put("condition", condition);
-		map.put("keyword", keyword);
-		map.put("projectNo", projectNo);
-
-		dataCount = service.sendDataCount(map);
-
-		if (dataCount != 0) {
-			total_page = myUtil.pageCount(rows, dataCount);
-		}
-
-		if (total_page < current_page) {
-			current_page = total_page;
-		}
-
-		int offset = (current_page - 1) * rows;
-		if (offset < 0)
-			offset = 0;
-		map.put("offset", offset);
-		map.put("rows", rows);
-
-		List<Send> list = service.listSend(map);
-
-		int listNum = 0;
-		int num = 0;
-		for (Send dto : list) {
-			listNum = dataCount - (offset + num);
-			dto.setListNum(listNum);
-			num++;
-		}
-
-		String query = "";
-		String listUrl = cp + "/studio/project/shipping/send/{projectNo}";
-		String readUrl = cp + "/studio/project/shipping/send/{projectNo}?page=" + current_page;
-
-		if (keyword.length() != 0) {
-			listUrl = cp + "/studio/project/shipping/send/{projectNo}";
-			readUrl = cp + "/studio/project/shipping/send/{projectNo}?page=" + current_page + "&" + query;
-		}
-
-		String paging = myUtil.paging(current_page, total_page, listUrl);
-		model.addAttribute("sendlist", list);
-		model.addAttribute("dataCount", dataCount);
-		model.addAttribute("readUrl", readUrl);
-		model.addAttribute("page", current_page);
-		model.addAttribute("total_page", total_page);
-		model.addAttribute("condition", condition);
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("paging", paging);
-
-		return ".studioLayout.sendlist";
-	}
-
+	
 	@RequestMapping(value = "/{projectNo}/news/read")
 	public String newsRead(@PathVariable Integer projectNo, @RequestParam String page, Model map,
 			@RequestParam(defaultValue = "title") String condition, @RequestParam(defaultValue = "") String keyword,
@@ -655,6 +587,76 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		return "redirect:/studio/project/" + projectNo + "/news/list?" + query;
 	}
 
+	// 발송 관리
+	@RequestMapping(value = "/shipping/send/{projectNo}")
+	public String sendList(@PathVariable Integer projectNo, @RequestParam(defaultValue = "1") int current_page,
+			@RequestParam(defaultValue = "buyNo") String condition, @RequestParam(defaultValue = "") String keyword,
+			HttpServletRequest req, Model model) throws Exception {
+		String cp = req.getContextPath();
+
+		int rows = 10;
+		int total_page = 0;
+		int dataCount = 0;
+
+		if (req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "utf-8");
+		}
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("projectNo", projectNo);
+
+		dataCount = service.sendDataCount(map);
+
+		if (dataCount != 0) {
+			total_page = myUtil.pageCount(rows, dataCount);
+		}
+
+		if (total_page < current_page) {
+			current_page = total_page;
+		}
+
+		int offset = (current_page - 1) * rows;
+		if (offset < 0)
+			offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+
+		List<Send> list = service.listSend(map);
+
+		int listNum = 0;
+		int num = 0;
+		for (Send dto : list) {
+			listNum = dataCount - (offset + num);
+			dto.setListNum(listNum);
+			num++;
+		}
+
+		String query = "";
+		String listUrl = cp + "/studio/project/shipping/send/{projectNo}";
+		String readUrl = cp + "/studio/project/shipping/send/{projectNo}?page=" + current_page;
+
+		if (keyword.length() != 0) {
+			listUrl = cp + "/studio/project/shipping/send/{projectNo}";
+			readUrl = cp + "/studio/project/shipping/send/{projectNo}?page=" + current_page + "&" + query;
+		}
+
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+		model.addAttribute("sendlist", list);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("readUrl", readUrl);
+		model.addAttribute("page", current_page);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("paging", paging);
+
+		return ".studioLayout.sendlist";
+	}
+
+	
+
 	// 펀딩/후원 현황 ------------------------------------------
 	@RequestMapping(value = "/shipping/manage/{projectNo}")
 	public String listSendmanage(@PathVariable Integer projectNo, @RequestParam(defaultValue = "1") int current_page,
@@ -712,7 +714,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		model.addAttribute("managelist", list);
-		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("managedataCount", dataCount);
 		model.addAttribute("readUrl", readUrl);
 		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
@@ -739,8 +741,9 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			query = "condition=" +condition+ "&keyword=" +keyword+ URLEncoder.encode(keyword, "utf-8");
 		}
 		
-		ProjectSessionInfo pInfo = (ProjectSessionInfo) session.getAttribute(SESSION_BRAND);
-		Send dto = service.readSend(projectNo, pInfo.getBuyNo(), pInfo.getRewardNo());
+		ProjectSessionInfo pInfo = (ProjectSessionInfo) session.getAttribute("buyNo");
+		pInfo = (ProjectSessionInfo) session.getAttribute(SESSION_BRAND);
+		Send dto = service.readSend(projectNo, pInfo.getBuyNo());
 		
 		if(dto == null) {
 			return "redirect:/shipping/article/{projectNo}?"+query;
@@ -756,4 +759,5 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		
 		return "studioLayout.sendContent";
 	}
+	
 }

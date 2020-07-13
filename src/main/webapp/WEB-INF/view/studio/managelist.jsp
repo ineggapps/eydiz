@@ -7,7 +7,7 @@
 %>
 <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 <script type="text/javascript">
-function searchlist() {
+function managesearchlist() {
 	var f = document.managesearchForm;
 	f.submit();
 }
@@ -24,7 +24,7 @@ function searchlist() {
 	                    </select>
 	                    <input type="text" name="keyword"placeholder="검색" value="${keyword}"/>
 	                    <input type="hidden" name="rows" value="${rows}">
-	                    <button type="button" class="v_searchButton" onclick="searchlist()"><i class="fa fa-search" aria-hidden="true"></i></button>
+	                    <button type="button" class="v_searchButton" onclick="managesearchlist()"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
 				 </form>
               </div>
@@ -33,7 +33,7 @@ function searchlist() {
              	<tr class="send_view_o">
              		<td class="send_no">판매 번호</td>
 					<td class="send_mNo">멤버 번호</td> 
-					<td class="send_rsubject">리워드 제목</td> 
+					<td class="send_rsubject">구입 날짜</td> 
 					<td class="send_sendStatus">배송상태</td> 
 				</tr>
 				<c:forEach var="dto" items="${managelist}">
@@ -41,7 +41,7 @@ function searchlist() {
 	             		<td class="send_no">${dto.buyNo}</td>
 						<td class="send_mNo">${dto.memberNo}</td> 
 						<%--${dto.projectNo가 아니라 projectNo를 넘겼어야지.. StudioProjectController.java  line 676: map.put("projectNo", projectNo); --%>
-						<td class="send_rsubject"><a href="<%=cp%>/studio/sendContent/${projectNo}?buyNo=${dto.buyNo}&rewardNo=${dto.rewardNo}&page=${page}">${dto.rewardTitle}</a></td> 
+						<td class="send_rsubject"><a href="<%=cp%>/studio/sendContent/${projectNo}?buyNo=${dto.buyNo}&rewardNo=${dto.rewardNo}&page=${page}">${dto.boughtDate}</a></td> 
 						<td class="send_sendStatus">${dto.statusName}</td> 
 					</tr>
 				</c:forEach>
@@ -52,7 +52,7 @@ function searchlist() {
 	 		<table style="width: 1100px; border-spacing: 0px;">
 				<tr height="35">
 					<td align="center">
-						 ${dataCount==0?"데이터가 없습니다.":paging}
+						 ${managedataCount==0?"데이터가 없습니다.":paging}
 					</td>
 				</tr>
 			</table>

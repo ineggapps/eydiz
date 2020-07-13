@@ -30,7 +30,7 @@
    			<ul>
    				<li>
    				<form name="searchForm" method="post">
-					<select name="condition" id="condition">
+					<select name="condition" id="condition" style="margin-bottom: 40px;">
 						<option value="all" ${condition=="all"?"selected='selected'":""}>전체</option>
 						<option value="noticeSubject" ${condition=="noticeSubject"?"selected='selected'":""}>제목</option>
 						<option value="noticeContent" ${condition=="noticeContent"?"selected='selected'":""}>내용</option>
@@ -42,6 +42,8 @@
 				</li>
 			</ul>
 			<div align="right" style="width: 150px; margin: 0px auto; padding-left: 600px;">
-				<button class="cbutton" type="button" onclick="insertForm();">등록하기</button>
+				<c:if test="${sessionScope.member.memberNo==1 || sessionScope.member.memberNo==dto.memberNo}">
+					<button class="cbutton" type="button" onclick="insertForm();">등록하기</button>
+				</c:if>
 			</div>
 		</div>

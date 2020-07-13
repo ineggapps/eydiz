@@ -10,14 +10,26 @@
 	margin-bottom: 20px;
 }
 
-.guidesname {
-	float: left;
+.guideborder {
+	border-bottom: 1px solid silver;
+	padding-bottom: 9px;
 }
 
-.guideInput {
-	margin-left: 10px;
+.guidesname {
+	float: left;
+	width: 50px;
+	padding-right: 15px;
+}
+
+.guideInput input {
+	width: 80%;
+}
+
+.guideInput textarea {
+	width: 80%;
 }
 
 .guidebottombutton {
-	margin: 0px auto;
+	width: 100%;
+	text-align: center;
 }

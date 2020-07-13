@@ -54,6 +54,6 @@ public interface StudioService {
 	public List<Send> listSendmanage(Map<String, Object> map);
 	public int sendDataCount(Map<String, Object> map);
 	public int manageDataCount(Map<String, Object> map);
-	public Send readSend(int buyNo, int rewardNo, int projectNo);
+	public Send readSend(int buyNo, int projectNo);
 	
 }

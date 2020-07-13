@@ -11,6 +11,13 @@ function searchlist() {
 	var f = document.sendsearchForm;
 	f.submit();
 }
+
+function sendManage() {
+	
+	
+	s.submit();
+}
+
 </script>
 
  <div class="studio_send_form">
@@ -33,7 +40,7 @@ function searchlist() {
              	<tr class="send_view_o">
              		<td class="send_no">판매 번호</td>
 					<td class="send_mNo">멤버 번호</td> 
-					<td class="send_rsubject">리워드 제목</td> 
+					<td class="send_rsubject">구입 날짜</td> 
 					<td class="send_sendStatus">배송상태</td> 
 					<td class="send_button"> 배송 상태 변경 </td>
 				</tr>
@@ -41,9 +48,9 @@ function searchlist() {
 	             	<tr class="send_view_t">
 	             		<td class="send_no">${dto.buyNo}</td>
 						<td class="send_mNo">${dto.memberNo}</td> 
-						<td class="send_rsubject"><a href="<%=cp%>/studio/sendContent/${dto.projectNo}?buyNo=${dto.buyNo}&rewardNo=${dto.rewardNo}&page=${page}">${dto.rewardTitle}</a></td> 
+						<td class="send_rsubject"><a href="<%=cp%>/studio/sendContent/${projectNo}?buyNo=${dto.buyNo}&rewardNo=${dto.rewardNo}&page=${page}">${dto.boughtDate}</a></td> 
 						<td class="send_sendStatus">${dto.statusName}</td> 
-						<td> <button class="send_button_s" type="button" onclick="sendManage()">배송 중</button> </td>
+						<td> <button class="send_button_s" id="sendM" type="button" onclick="sendManage('${dto.statusNo}')">배송 중</button> </td>
 					</tr>
 				</c:forEach>
 			 </table>

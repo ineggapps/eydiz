@@ -450,13 +450,12 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	}
 
 	@Override
-	public Send readSend(int buyNo, int rewardNo, int projectNo) {
+	public Send readSend(int buyNo, int projectNo) {
 		Send dto = null;
 
 		try {
 			Map<String, Object> map = new HashMap<>();
 			map.put("buyNo", buyNo);
-			map.put("rewardNo", rewardNo);
 			map.put("projectNo", projectNo);
 
 			dto = dao.selectOne("studio.readSend", map);

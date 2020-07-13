@@ -32,21 +32,21 @@ function sendOk() {
 
 	<form name="guideForm" method="post" enctype="multipart/form-data">
 		<div class="guidecreate">
-	        	<ul>
+	        	<ul class="guideborder">
 	        		<li class="guidesname"> <p> 제목 : </p> </li>
 	        		<li class="guideInput"> <input type="text" name="faqSubject" value="${dto.faqSubject}"> </li>
 	        	</ul>
-	        	<ul>
+	        	<ul class="guideborder">
 	        		<li class="guidesname"> <p>내용 : </p> </li>
-	        		<li> <textarea name="faqContent">${dto.faqContent}</textarea> </li>
+	        		<li class="guideInput"> <textarea name="faqContent">${dto.faqContent}</textarea> </li>
 	        	</ul>
-	        	<ul>
+	        	<ul class="guideborder">
 	        		<li class="guidesname"> <p>파일 : </p> </li>
-	        		<li> <input type="file" name="upload"> </li>
+	        		<li class="guideInput"> <input type="file" name="upload"> </li>
 	        	</ul>
-	        	<ul>
+	        	<ul class="guideborder">
                  	<li class="guidesname"> <p>아이콘 : </p> </li>
-                    <li> <input type="text" name="faqIcon">${dto.faqIcon}</li>
+                    <li class="guideInput"> <input type="text" name="faqIcon">${dto.faqIcon}</li>
               	</ul>
 	        	
 	        	<br><br><br>

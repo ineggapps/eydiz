@@ -25,7 +25,7 @@
 	    <div class="cbutton" style="text-align: center;">
 			<button class="cbtn" type="button" onclick="sendOk();">${mode=='update' ? '수정완료' : '등록하기'}</button> 
 			<button class="cbtn" type="reset">다시입력</button>
-			<button class="cbtn" type="button" onclick="sendCancel('${pageNo}');">${mode=='update' ? '수정취소' : '등록취소'}</button>       
+			<button class="cbtn" type="button" onclick="sendCancel('${pageNo}');">${mode=='update' ? '수정취소' : '등록취소'}</button>      
 	    	<c:if test="${mode=='update'}">
 	    		<input type="hidden" name="noticeNo" value="${dto.noticeNo}">
 	    		<input type="hidden" name="imageFilename" value="${dto.imageFilename}">
