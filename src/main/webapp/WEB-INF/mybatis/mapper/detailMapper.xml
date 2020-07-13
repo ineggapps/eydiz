@@ -208,7 +208,7 @@
             FROM reward_buy_cancel rc
             JOIN reward_buy_overview ro ON rc.buyNo = ro.buyNo
             GROUP BY projectNo, memberNo
-        ) rrr ON rrr.projectNo = #{projectNo}
+        ) rrr ON rrr.projectNo = #{projectNo} AND rrr.memberNo = m.memberNo
         LEFT OUTER JOIN brand b ON b.brandNo = p.brandNo AND m.memberNo = b.memberNo
 		WHERE pc.projectNo=#{projectNo} AND pc.parentCommentNo IS NULL
 		ORDER BY commentNo DESC
@@ -234,7 +234,7 @@
             FROM reward_buy_cancel rc
             JOIN reward_buy_overview ro ON rc.buyNo = ro.buyNo
             GROUP BY projectNo, memberNo
-        ) rrr ON rrr.projectNo = #{projectNo}
+        ) rrr ON rrr.projectNo = #{projectNo} AND rrr.memberNo = m.memberNo
         LEFT OUTER JOIN brand b ON b.brandNo = p.brandNo AND m.memberNo = b.memberNo
 		WHERE pc.projectNo= #{projectNo} AND parentCommentNo = #{parentCommentNo}
 		ORDER BY commentNo

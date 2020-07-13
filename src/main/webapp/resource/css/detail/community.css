@@ -108,7 +108,7 @@
 	height:15px;
 	background-image:url("../../images/detail/btn_icon_menu.png");
 	background-repeat:no-repeat;
-	background-size:100%;
+	background-size:cover;
 	cursor:pointer;
 }
 
