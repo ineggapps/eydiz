@@ -1,5 +1,6 @@
 package com.eydiz.reward;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,9 +146,10 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 	}
 
 	@RequestMapping(value = "/{projectNo}/pay/kakao")
-	public String step2Submit(@PathVariable Integer projectNo, HttpSession session, Model model) {
+	public String step2Submit(@PathVariable Integer projectNo, HttpServletRequest req, HttpSession session, Model model) {
 		SessionRewardInfo rInfo = null;
 		SessionInfo memberInfo = null;
+		URL requestURL = null;
 		try {
 			rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
 			rInfo.setBuyNo(rewardService.nextBuyNo());
@@ -156,10 +158,11 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			if (projectNo == null || projectNo == 0 || rInfo == null || memberInfo == null) {
 				return "redirect:/";
 			}
+		    requestURL = new URL(req.getRequestURL().toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:" + kakaoPayService.kakaoPayReady(rInfo, memberInfo);
+		return "redirect:" + kakaoPayService.kakaoPayReady(rInfo, memberInfo, requestURL);
 	}
 
 	@RequestMapping(value = "/{projectNo}/pay/kakao/abort") // 결제 중단

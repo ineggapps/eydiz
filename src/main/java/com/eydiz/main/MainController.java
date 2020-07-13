@@ -63,7 +63,7 @@ public class MainController implements MainConstant, Constant {
 		List<Project> list = null;
 		try {
 			int offset = pager.getOffset(page, rows);
-			int dataCount = service.dataProjectCount(categoryNo);
+			int dataCount = service.dataProjectCount(categoryNo, options);
 			if (categoryNo == null) {
 				list = service.listProject(offset, rows, options);
 			} else {
@@ -73,6 +73,7 @@ public class MainController implements MainConstant, Constant {
 			map.put(ATTRIBUTE_PROJECT, list);
 			map.put(ATTRIBUTE_COUNT, list == null ? 0 : list.size());
 			map.put(ATTRIBUTE_PAGE_COUNT, pager.pageCount(rows, dataCount));
+			map.put(ATTRIBUTE_DATA_COUNT, dataCount);
 			//정렬 필터링
 			map.put(ATTRIBUTE_SORT, options.getSort());
 			map.put(ATTRIBUTE_STATUS, options.getSort());

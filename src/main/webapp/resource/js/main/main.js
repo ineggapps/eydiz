@@ -97,20 +97,18 @@ function getKeyword() {
 }
 
 function initializeProjectList() {
-  page = 1;
-  pageCount = 1;
   clearProjectSnippet();
-  loadProjectSnippet(categoryNo, page, getKeyword(), getStatus(), getSort());
+  loadProjectSnippet(categoryNo, page++, getKeyword(), getStatus(), getSort());
 }
 
 $(function () {
-  $("#status").on("change click", function () {
+  $("#status").on("change", function () {
     initializeProjectList();
   });
-  $("#sort").on("change click", function () {
+  $("#sort").on("change", function () {
     initializeProjectList();
   });
-  $("a.searchButton").on("change click", function () {
+  $("a.searchButton").on("change", function () {
     initializeProjectList();
   });
   $("#keyword").on("keypress", function (e) {
@@ -124,6 +122,8 @@ $(function () {
 function clearProjectSnippet() {
   const $wrap = $("ul.gridContent").eq(0);
   $wrap.empty();
+  page = 1;
+  pageCount = 1;
 }
 
 //ajax 프로젝트 불러오기

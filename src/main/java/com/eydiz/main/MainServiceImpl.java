@@ -52,16 +52,19 @@ public class MainServiceImpl implements Constant, MainService, MainConstant {
 	}
 
 	@Override
-	public int dataProjectCount() {
-		return dataProjectCount(null);
+	public int dataProjectCount(SnippetOption options) {
+		return dataProjectCount(null, options);
 	}
 
 	@Override
-	public int dataProjectCount(Integer categoryNo) {
+	public int dataProjectCount(Integer categoryNo,SnippetOption options) {
 		int count = 0;
 		try {
 			Map<String, Object> map = new HashMap<>();
 			map.put(ATTRIBUTE_CATEGORYNO, categoryNo);
+			map.put(ATTRIBUTE_SORT, options.getSort());
+			map.put(ATTRIBUTE_STATUS, options.getStatus());
+			map.put(ATTRIBUTE_KEYWORD, options.getKeyword());
 			count = dao.selectOne(MAPPER_NAMESPACE + "fundingDataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
