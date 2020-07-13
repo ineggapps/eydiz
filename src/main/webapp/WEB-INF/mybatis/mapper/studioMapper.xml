@@ -269,8 +269,39 @@
 	DELETE FROM project_news WHERE newsNo=#{newsNo}
 	</delete>
 	
-	<!-- 펀딩/후원 현황  -->
+	<!-- 펀딩 현황  -->
 	
+	<select id="fundingViewDataCount" parameterType="map" resultType="Integer">
+		SELECT count(*) 
+		FROM reward_buy_overview 
+		WHERE projectNo = #{projectNo}
+	</select>
+	
+	<select id="listFundingView" parameterType="map" resultType="com.eydiz.studio.Project">
+		SELECT DISTINCT ro.buyNo, ro.memberNo,
+			p.projectNo, p.brandNo, projectName, projectEndDate,
+			totalAmount,
+			TO_CHAR(boughtDate, 'YYYY-MM-DD') boughtDate,
+			CASE WHEN rc.cancelNo>0 THEN 1 ELSE 0 END AS isCanceled
+		FROM reward_buy_overview ro
+		JOIN project p ON p.projectNo = ro.projectNo
+		LEFT OUTER JOIN member_detail m ON ro.memberNo = m.memberNo
+		JOIN brand b ON b.brandNo = p.brandNo
+		LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+		WHERE p.projectNo = #{projectNo}
+		ORDER BY ro.buyNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="readFundingView" parameterType="Integer" resultType="com.eydiz.studio.Reward">
+		SELECT ro.buyNo, rewardTitle, rewardOption, optionAnswer, isShipping,
+		TO_CHAR(startShippingDate, 'YYYY-MM-DD') startShippingDate, amount, requestQuantity
+		FROM reward_buy_detail rd
+        JOIN reward r ON rd.rewardNo = r.rewardNo
+		JOIN reward_buy_overview ro ON rd.buyNo = ro.buyNo
+		JOIN project p ON p.projectNo = ro.projectNo
+		WHERE ro.buyNo=#{buyNo}
+	</select>
 	
 	
 </mapper>

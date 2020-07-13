@@ -48,4 +48,9 @@ public interface StudioService {
 	public void updateProjectNews(ProjectNews dto) throws Exception;
 	public void deleteProjectNews(int newsNo) throws Exception;
 	
+	
+	// 펀딩 현황 ---------------------------
+	public List<Project> listFundingView(Map<String, Object> map);
+	public List<Reward> readFundingView(int buyNo);
+	public int fundingViewDataCount(Map<String, Object> map);
 }

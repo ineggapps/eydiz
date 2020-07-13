@@ -381,5 +381,44 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		
 	}
 
+	@Override
+	public List<Project> listFundingView(Map<String, Object> map) {
+		List<Project> list = null;
+		
+		try {
+			list = dao.selectList("studio.listFundingView", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<Reward> readFundingView(int buyNo) {
+		List<Reward> list = null;
+		
+		try {
+			list = dao.selectList("studio.readFundingView", buyNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int fundingViewDataCount(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("studio.fundingViewDataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 	
 }

@@ -593,6 +593,77 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 	
 	
 	// 펀딩/후원 현황 ------------------------------------------
+	@RequestMapping(value="/{projectNo}/view/list")
+	public String viewList(@PathVariable Integer projectNo, HttpServletRequest req,
+			@RequestParam(value="page", defaultValue = "1") int current_page, Model model) throws Exception {
+		int rows = 10;
+		int total_page = 0;
+		int fundingViewDataCount = 0;
+		
+		String cp = req.getContextPath();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectNo", projectNo);		
+		fundingViewDataCount = service.fundingViewDataCount(map);
+		
+		if(fundingViewDataCount != 0) {
+			total_page = myUtil.pageCount(rows, fundingViewDataCount);
+		}
+		
+		if(total_page < current_page) {
+			current_page = total_page;
+		}
+		
+		int offset = (current_page -1) * rows;
+		if(offset < 0) offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+
+		
+		List<Project> list = service.listFundingView(map);
+		
+		int listNum = 0;
+		int num = 0;
+		for(Project dto : list) {
+			listNum = fundingViewDataCount-(offset+num);
+			dto.setListNum(listNum);
+			num++;
+		}
+		
+		String listUrl = cp+"/studio/project/"+projectNo+"/view/list";
+		String readUrl = cp+"/studio/project/"+projectNo+"/view/read?page=" + current_page;
+		
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("fundingViewDataCount", fundingViewDataCount);
+		model.addAttribute("readUrl", readUrl);
+		model.addAttribute("page", current_page);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		
+		
+		return ".studioLayout.viewList";
+	}
 	
+	@RequestMapping(value = "/{projectNo}/view/read")
+	public String readFundingView(@PathVariable Integer projectNo,
+			@RequestParam String page, Model map,
+			@RequestParam int buyNo
+			) throws Exception {
+		
+		List<Reward> list = service.readFundingView(buyNo);
+		
+		if(list == null || list.size()==0) {
+			return "redirect:/studio/project/"+projectNo+"/view/list?page="+page;
+		}
+		
+		map.addAttribute("rewards", list);
+		map.addAttribute("buyNo", buyNo);
+		map.addAttribute("projectNo", projectNo);
+		map.addAttribute("page", page);
+
+		return ".studioLayout.viewRead";
+	}
 	
 }

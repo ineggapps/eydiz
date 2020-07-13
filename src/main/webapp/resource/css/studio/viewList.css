@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+.studio_nview_text {
+	width: 1100px;
+}
+
+.studio_view_list {
+	margin-top:30px;
+	text-align: center;
+	width: 1100px;
+	height: 800px;
+}
+
+.studio_view_list_in {
+	text-align: center;
+	width: 100%;
+	height: 30px;
+	border: 1px solid #eeeeee;
+}
+
+
+.nl_searchButton{
+	background-color: white;
+	border: 0px solid white;
+}
+
+.studio_view_list_o {
+	line-height: 45px;
+	border-bottom: 1px solid #eeeeee;
+}
+
+.studio_view_list_oo {
+	line-height: 45px;
+	border: 2px solid #c0c0c0;
+}
+
+
+.studio_view_bname {
+	width: 180px;
+}
+
+.studio_view_cname {
+	width: 210px;
+}
+
+.studio_view_pname {
+	width: 155px;
+}
+
+.studio_view_ppname {
+	width: 380px;
+}
+
+.snewsbtn {
+	background-color: white;
+	border: none;
+}

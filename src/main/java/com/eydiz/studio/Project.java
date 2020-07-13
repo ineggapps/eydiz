@@ -48,6 +48,8 @@ public class Project {
 	private int buyNo;
 	private int shipAmount;// 최종 결제 시 배송비
 	private int finalAmount;// 최종 결제 시 배송비 포함 결제금액
+	
+	private int listNum;
 
 	public int getProjectNo() {
 		return projectNo;
@@ -359,6 +361,14 @@ public class Project {
 
 	public void setFinalAmount(int finalAmount) {
 		this.finalAmount = finalAmount;
+	}
+
+	public int getListNum() {
+		return listNum;
+	}
+
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
 
 }
