@@ -50,6 +50,7 @@
     			}			
       		});
     		$(window).scrollTop(10);
+    		$(window).scrollTop(0);
     });
         </script>
   </head>
