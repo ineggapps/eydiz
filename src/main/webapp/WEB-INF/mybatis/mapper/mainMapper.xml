@@ -82,13 +82,39 @@
         	SELECT projectNo, created approvalDate
             FROM project_status_list
             WHERE statusNo=5
+            FETCH FIRST 1 ROWS ONLY
         ) psl ON psl.projectNo = p.projectNo
-		WHERE
-			statusNo=5
-			AND FLOOR(projectEndDate - SYSDATE) >= 0
+		<where>
+			<choose>
+				<when test="status == 'ongoing'">
+					(statusNo = 5 AND FLOOR(projectEndDate - SYSDATE) &gt;= 0)
+				</when>
+				<when test="status == 'closed'">
+					(statusNo = 6 AND FLOOR(projectEndDate - SYSDATE) &lt; 0)
+				</when>
+				<otherwise>
+					(statusNo = 5 OR statusNo = 6)
+				</otherwise>
+			</choose>
 			<if test="categoryNo != null and categoryNo > 0">
 			AND p.categoryNo = #{categoryNo}
 			</if>
+			<if test="keyword != null and keyword != ''">
+			AND keyword = #{keyword}
+			</if>
+		</where>
+		<choose>
+			<when test="sort == 'recommend'"><include refid="sort-recommend"/></when>
+			<when test="sort == 'popular'"><include refid="sort-popular"/></when>
+			<when test="sort == 'amount'"><include refid="sort-amount"/></when>
+			<when test="sort == 'deadline'"><include refid="sort-deadline"/></when>
+			<when test="sort == 'latest'"><include refid="sort-latest"/></when>
+			<when test="sort == 'community'"><include refid="sort-community"/></when>
+		</choose>
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<sql id="sort-recommend">
 		ORDER BY 
 		approvalDate DESC
 		,(
@@ -100,8 +126,52 @@
 			likeCount*0.1
 		) DESC
 		, projectNo DESC
-		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
-	</select>
+	</sql>
 	
+	<sql id="sort-popular">
+		ORDER BY
+		(
+			totalAmount*0.2 +
+			supportCount*0.3 + 
+			attainRate*0.2 +
+			newsCount*0.1 +
+			communityCount*0.1 + 
+			likeCount*0.1
+		) DESC
+		,approvalDate DESC
+		, projectEndDate ASC
+	</sql>
+	
+	<sql id="sort-amount">
+		ORDER BY
+		totalAmount DESC
+		,approvalDate DESC
+		, projectEndDate ASC
+	</sql>
+	
+	<sql id="sort-deadline">
+		ORDER BY
+		(CASE WHEN projectEndDate - SYSDATE >= 0 THEN 1 ELSE 0 END) DESC
+		, projectEndDate - SYSDATE ASC
+		, approvalDate DESC
+		, projectEndDate ASC
+	</sql>
+	
+	<sql id="sort-latest">
+		ORDER BY
+		approvalDate DESC
+		, (CASE WHEN projectEndDate - SYSDATE >= 0 THEN 1 ELSE 0 END) DESC
+		, projectEndDate - SYSDATE ASC
+		, projectEndDate ASC
+	</sql>
+	
+	<sql id="sort-community">
+		ORDER BY
+		(CASE WHEN projectEndDate - SYSDATE >= 0 THEN 1 ELSE 0 END) DESC
+		, (communityCount * 0.5 + newsCount * 0.5) DESC
+		, approvalDate DESC
+		, projectEndDate - SYSDATE ASC
+		, projectEndDate ASC
+	</sql>
 	
 </mapper>

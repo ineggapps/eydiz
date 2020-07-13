@@ -12,6 +12,6 @@ public interface MainService {
 	public int dataProjectCount();
 	public int dataProjectCount(Integer categoryNo);
 	
-	public List<Project> listProject(int offset, int rows);
-	public List<Project> listProject(Integer categoryNo, int offset, int rows);
+	public List<Project> listProject(int offset, int rows, SnippetOption options);
+	public List<Project> listProject(Integer categoryNo, int offset, int rows, SnippetOption options);
 }

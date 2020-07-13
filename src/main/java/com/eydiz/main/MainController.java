@@ -57,21 +57,26 @@ public class MainController implements MainConstant, Constant {
 	@ResponseBody
 	public Map<String, Object> projectSnippet(Integer categoryNo,
 			@RequestParam(value = "page", defaultValue = "1") int page,
-			@RequestParam(value = "rows", defaultValue = "9") int rows) {
+			@RequestParam(value = "rows", defaultValue = "9") int rows,
+			SnippetOption options) {
 		Map<String, Object> map = new HashMap<>();
 		List<Project> list = null;
 		try {
 			int offset = pager.getOffset(page, rows);
 			int dataCount = service.dataProjectCount(categoryNo);
 			if (categoryNo == null) {
-				list = service.listProject(offset, rows);
+				list = service.listProject(offset, rows, options);
 			} else {
-				list = service.listProject(categoryNo, offset, rows);
+				list = service.listProject(categoryNo, offset, rows, options);
 			}
 			map.put(JSON_RESULT, JSON_RESULT_OK);
 			map.put(ATTRIBUTE_PROJECT, list);
 			map.put(ATTRIBUTE_COUNT, list == null ? 0 : list.size());
 			map.put(ATTRIBUTE_PAGE_COUNT, pager.pageCount(rows, dataCount));
+			//정렬 필터링
+			map.put(ATTRIBUTE_SORT, options.getSort());
+			map.put(ATTRIBUTE_STATUS, options.getSort());
+			map.put(ATTRIBUTE_KEYWORD, options.getKeyword());
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put(JSON_RESULT, JSON_RESULT_ERROR);

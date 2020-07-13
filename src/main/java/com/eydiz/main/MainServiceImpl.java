@@ -94,18 +94,21 @@ public class MainServiceImpl implements Constant, MainService, MainConstant {
 //	}
 
 	@Override
-	public List<Project> listProject(int offset, int rows) {
-		return listProject(null, offset, rows);
+	public List<Project> listProject(int offset, int rows, SnippetOption options) {
+		return listProject(null, offset, rows, options);
 	}
 
 	@Override
-	public List<Project> listProject(Integer categoryNo, int offset, int rows) {
+	public List<Project> listProject(Integer categoryNo, int offset, int rows, SnippetOption options) {
 		Map<String, Object> map = new HashMap<>();
 		List<Project> list = null;
 		try {
 			map.put(ATTRIBUTE_CATEGORYNO, categoryNo);
 			map.put(ATTRIBUTE_OFFSET, offset);
 			map.put(ATTRIBUTE_ROWS, rows);
+			map.put(ATTRIBUTE_SORT, options.getSort());
+			map.put(ATTRIBUTE_STATUS, options.getStatus());
+			map.put(ATTRIBUTE_KEYWORD, options.getKeyword());
 			list = dao.selectList(MAPPER_NAMESPACE + "listFunding", map);
 		} catch (Exception e) {
 			e.printStackTrace();
