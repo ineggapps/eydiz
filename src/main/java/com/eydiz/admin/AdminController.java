@@ -9,4 +9,5 @@ public class AdminController {
 	public String main() {
 		return "redirect:" + "/admin/brand/list";
 	}
+	
 }

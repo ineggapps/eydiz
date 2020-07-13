@@ -72,7 +72,10 @@
             <mvc:exclude-mapping path="/brand/made/**"/>
             <mvc:exclude-mapping path="/resource/**"/>
             <mvc:exclude-mapping path="/uploads/image/**"/>
+            <mvc:exclude-mapping path="/admin"/>
+            <mvc:exclude-mapping path="/admin/"/>
             <mvc:exclude-mapping path="/member/login"/>
+            <mvc:exclude-mapping path="/member/admin"/>
             <mvc:exclude-mapping path="/member/logout"/>
             <mvc:exclude-mapping path="/member/join"/>
             <mvc:exclude-mapping path="/member/join/**"/>

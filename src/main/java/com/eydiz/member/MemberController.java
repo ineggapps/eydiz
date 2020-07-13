@@ -23,6 +23,11 @@ public class MemberController implements MemberConstant {
 	public String loginForm() {
 		return ".memberLayout.login";
 	}
+	
+	@RequestMapping(value="/admin", method= RequestMethod.GET)
+	public String adminForm() {
+		return "/admin/admin_login";
+	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginSubmit(Member dto, final RedirectAttributes reAttr, HttpSession session) {

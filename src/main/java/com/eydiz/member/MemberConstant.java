@@ -12,6 +12,7 @@ public interface MemberConstant extends Constant {
 	// API
 	public final static String API_MAIN = "/main";
 	public final static String API_LOGIN = "/member/login";
+	public final static String API_ADMIN_LOGIN = "/member/admin";
 	public final static String API_CHECK_ID = "/member/checkId";
 	public final static String API_JOIN_INTRO = "/member/join";
 	public final static String API_JOIN_DETAIL = "/member/join?" + PARAM_STEP + "=2";

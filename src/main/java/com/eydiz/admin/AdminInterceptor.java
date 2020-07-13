@@ -28,7 +28,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter implements Membe
 			if(info == null || info.isAdmin() == false) {
 				//관리자 계정이 아니면...
 				result=false;
-				response.sendRedirect(cp+API_LOGIN);
+				response.sendRedirect(cp+API_ADMIN_LOGIN);
 			}
 		} catch (Exception e) {
 			logger.info("admin 인터셉터 pre: " + e.toString());
