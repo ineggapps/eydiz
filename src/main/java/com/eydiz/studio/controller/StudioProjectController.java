@@ -164,6 +164,9 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 			project.setProjectNo(projectNo);
 			project.setBrandNo(bInfo.getBrandNo());
+			if(project.getProjectGoalAmount()==0) {
+				project.setProjectGoalAmount(1000000); //기본 100만 원으로 설정
+			}
 			service.updateProjectBasic(project);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
