@@ -149,7 +149,7 @@
 			likeCount*0.1
 		) DESC
 		,approvalDate DESC
-		projectEndDate ASC
+		, projectEndDate ASC
 		OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
 	</select>
 	
