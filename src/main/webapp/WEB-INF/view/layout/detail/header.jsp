@@ -20,7 +20,9 @@
     </ul>
   <div class="headerInnerRight">
       <ul class="gnbAuth">
+      	<c:if test="${not empty sessionScope.member }">
         <li><a href="<%=cp %>/studio/project/list" class="btnSubmit bordering btnMakeProject">프로젝트 관리</a></li>
+      	</c:if>
     	<c:if test="${empty sessionScope.member}">
         <li><a href="<%=cp%>/member/join">회원가입</a></li>
         <li><a href="<%=cp%>/member/login">로그인</a></li>
