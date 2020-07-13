@@ -1,11 +1,12 @@
 @charset "UTF-8";
 
  .awardsTitleImage {
-    	height : 500px;
+    	height : 650px;
     	background-image: url("../../images/awards/awardsBackground.jpg");
 		background-repeat: no-repeat;
 		background-size: cover;
 		opacity: 93%;
+		background-position-y: -160px;
     }
         
     .awardsTitle {
@@ -18,12 +19,12 @@
     }
     
     .awardsTitleText {
-    	font-size: 45px;
-    	font-weight: bold;
-    	padding-bottom: 20px;
-    	color: #29baba;
-    	margin: 45px auto;
-    	text-shadow: -1px 0 #333333, 0 1px #333333, 1px 0 #333333, 0 -1px #333333;
+    	font-size: 55px;
+	    font-weight: bold;
+	    padding-bottom: 20px;
+	    color: #29baba;
+	    margin: 100px auto 50px;
+	    text-shadow: -1px 0 #333333, 0 1px #333333, 1px 0 #333333, 0 -1px #333333;
     }
     
     .awardsTitleSubText {
@@ -70,20 +71,22 @@
     }
     
     .awardCategory {
-    	line-height : 25px;
-    	height : 60px;
-    	font-size: 20px;
-    	color: #544231;
+    	line-height: 40px;
+	    height: 75px;
+	    font-size: 28px;
+	    color: #544231;
+	    margin-top: 100px;
     }
     
     .aCDetail {
-    	font-size: 12px;
+    	font-size: 15px;
     	padding-bottom: 10px;
     }
     
     
     .awardContentBody {
-    	padding: 60px auto;
+   		padding: 0px;
+    	width: 90%;
     }
     
     
@@ -109,8 +112,7 @@
     }
     
     
-    
-    /* tab css */
+
     
     .awardsTabBName {
     	text-align: center;
@@ -124,3 +126,118 @@
     	height: 90px;
     	line-height: 20px;
     }
+    
+    .awardsTop1 {
+    	background-image: url(../../images/awards/iconmonstr-crown-13-96.png);
+	    height: 70px;
+	    background-repeat: no-repeat;
+	    background-size: contain;
+	    margin: 0px 114px 13px;
+    }
+    
+    
+    
+    
+
+
+
+
+.awardsGridContent {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    display: -ms-flexbox;
+    float: left;
+    -ms-flex-wrap: wrap;
+    -ms-flex-direction: row;
+    -ms-flex-pack: justify;
+    width: 100%;
+}
+
+
+    
+    
+.awardsItem {
+    width: 300px;
+    margin-bottom: 50px;
+    margin: 20px;
+}
+
+.awardsItem .thumbnail {
+  cursor: pointer;
+  width: 100%;
+  height: 180px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 5px;
+  border: 1px solid #e5e5e5;
+}
+
+.awardsItem .subject {
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+  font-weight: 800;
+}
+
+.awardsItemInner {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.awardsNumberOne {
+		margin: 0px 521px;
+}
+
+.awardsProjectName {
+		display: inline-block;
+		height: 48px;
+}
+
+/*그리드 설정/해제 지점*/
+@media (min-width: 768px) {
+}
+
+@media (max-width: 768px) {
+  .awardsItem {
+    width: 100%;
+    clear: both;
+    margin-bottom: 20px;
+  }
+  .awardsGridContent {
+    display: block;
+    padding: 0 10px;
+    width: 100%;
+  }
+  
+  .awardsNumberOne {
+    display: block;
+    padding: 0px;
+    margin : 0px;
+    width: 100%;
+  }
+ 
+ .awardsItemInner .textWrap {
+    float: left;
+    width: 58%;
+}
+
+.awardsItemInner .thumbnail {
+    float: left;
+    width: 152px;
+    height: 100px;
+    margin-right: 10px;
+    display: inline-block;
+  }
+  
+.awardsTop1 {
+	margin: 0px 183px 13px; 	
+}
+ 
+}
+  
+    
+    
+    
+    
+    

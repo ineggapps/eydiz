@@ -5,38 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-<style>
-.projectRejectMemo{
-	width: 100%;
-	border: 1px solid #e6eaed;
-	margin-bottom: 20px;
-}
-
-.projectMemoCheckBox {
-	margin: 20px 20px;
-}
-
-
-.projectMemoCheckBox input {
-	margin: 10px 10px;
-}
-
-.projectRejectSubmit {
-	border: 1px solid #e6eaed;
-    width: 100%;
-    margin-top: 17px;
-    color: white;
-    background-color: #f55a2d;
-    border-radius: 5px;
-    font-weight: 500;
-}
-
-.projectRejectSubmit:hover {
-	background-color: #e73601e6;
-}
-
-</style>
-
 
 <script type="text/javascript">
 	$(function() {
@@ -90,8 +58,35 @@
 			}
 		}
 	}
-</script>
+	
+	$(document).ready(function(){
 
+		// 일단 버튼을 숨긴다
+		$("#back-top").hide();
+
+		// 스크롤이 되면 버튼이 나타난다. 
+		$(function () {
+		   $(window).scroll(function () {
+		        if ($(this).scrollTop() > 100) {
+		              $('#back-top').fadeIn();
+		         } else {
+		              $('#back-top').fadeOut();
+		         }
+		});
+
+		// 버튼 클릭하면, 맨 위로 이동!! 
+		$('#back-top a').click(function () {
+		        $('body,html').animate({
+		              scrollTop: 0
+		         }, 800);
+		         return false;
+		        });
+		});
+
+		});
+
+
+</script>
 
 <article class="row">
   <div class="rowFull">
@@ -134,7 +129,7 @@
           <p class="stateText">종료일 : <strong> ${project.projectEndDate}</strong></p>
           <p class="stateText">목표금액 : <strong> <fmt:formatNumber type="number" maxFractionDigits="3" value="${project.projectGoalAmount}"></fmt:formatNumber></strong></p>
         </div>
-        
+        <c:if test="${statusNo == 1}">
         <form name="adminProjectSubmitForm" method="post">
 	        <a onclick="adminProjectSubmit()" class="adminProjectBtn projectSubmitBtn">승인하기</a>
 	        <input type="hidden" name="statusNo" value="5">
@@ -143,7 +138,7 @@
         
         <form name="adminProjectRejectForm" method="post">
 	        <a class="adminProjectBtn projectRejectBtn">반려하기</a>
-	        <input type="hidden" name="statusNo" value="3">
+	        <input type="hidden" name="statusNo" value="2">
 	        <div class="projectRejectMemo">
 	        	<div class="projectMemoCheckBox">
 		        	<input type="checkbox" name="statusMemo" value="프로젝트 및 메이커의 신뢰성 부족">프로젝트 및 메이커의 신뢰성 부족 <br>
@@ -158,6 +153,7 @@
 	        	</div>
 	        </div>
         </form>
+        </c:if>
         <div class="brandInfoBox">
           <div class="brandName">
             <a href="#"><span class="image"></span><span class="name">${project.brandName}</span></a>
@@ -176,7 +172,7 @@
         <div class="rewards rowBox">
           <h3>리워드</h3>
           <c:forEach var="item" items="${rewards}">
-          <div class="rewardItem" data-reward-no="${item.rewardNo}">
+          <div class="adminRewardItem" data-reward-no="${item.rewardNo}">
             <dl class="rewardInfo">
               <dt>${item.amount}원 펀딩</dt>
               <dd>
@@ -204,5 +200,10 @@
         </div>
       </div>
     </div>
+        <div class = "back-topBox">
+	        <p id="back-top">
+			   <a href="#top">Back To Top</a>
+			</p>
+		</div>
   </div>
 </article>

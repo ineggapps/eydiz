@@ -11,6 +11,21 @@
 		var f = document.adminProjectSearchForm;
 		f.submit();
 	}
+	
+	$(function(){
+		$("#adminProjectTab-${statusNo}").addClass("on");
+		
+		$("ul.adminProjectTabs li").click(function(){
+			tab = $(this).attr("data-tab");
+			
+			$("ul.adminProjectTabs li").each(function(){
+				$(this).removeClass("on");
+			});
+			
+			$("#adminProjectTab-"+tab).addClass("on");
+		});
+	});
+	
 </script>
 
 <article class="row">
@@ -21,22 +36,22 @@
       		<option value="projectName" ${condition=="projectName"?"selected='selected'":""}>프로젝트명</option>
       		<option value="categoryName" ${condition=="categoryName"?"selected='selected'":""}>카테고리</option>
       		<option value="brandName" ${condition=="brandName"?"selected='selected'":""}>브랜드명</option>
-      		<option value="created" ${condition=="created"?"selected='selected'":""}>접수일</option>
+      		<option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
       	</select>
-    	<input type="text" name="keyword" class="adminProjectSearch" placeholder="&nbsp;키워드를 입력하세요." value="${keyword}"><button type="button" class="adminProjectSearchBtn">검색</button>
+    	<input type="text" name="keyword" class="adminProjectSearch" placeholder="&nbsp;키워드를 입력하세요." value="${keyword}"><button type="button" class="adminProjectSearchBtn" onclick="searchProject()">검색</button>
       </div>
     </form>
   <div class="infoItemWrap">
 	<nav class="row">
       <div class="rowFull adminProjectNav">
-         <ul class="detailNav">
-            <li class="on">
+         <ul class="detailNav adminProjectTabs">
+            <li id = "adminProjectTab-1" data-tab="1">
               <a href="<%=cp%>/admin/project/list?parentCategoryNo=${parentCategoryNo}&statusNo=1"><span>승인 대기</span></a>
-            </li>
-            <li>
+            </li >
+            <li id = "adminProjectTab-5" data-tab="5">
               <a href="<%=cp%>/admin/project/list?parentCategoryNo=${parentCategoryNo}&statusNo=5"><span>진행중</span></a>
             </li>
-            <li>
+            <li id = "adminProjectTab-6" data-tab="6">
               <a href="<%=cp%>/admin/project/list?parentCategoryNo=${parentCategoryNo}&statusNo=6"><span>종료</span></a>
             </li>
          </ul>
@@ -50,7 +65,7 @@
 	    		<td>프로젝트명</td>
 	    		<td>브랜드명</td>
 	    		<td>프로젝트 담당자</td>
-	    		<td>접수일</td>	    	
+	    		<td>등록일</td>	    	
 	    	</tr>
 	    <c:forEach var="dto" items="${list}">
 	    	<tr onclick="location.href='${articleUrl}&projectNo=${dto.projectNo}'"
