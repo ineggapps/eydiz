@@ -930,32 +930,89 @@ END;
 /
 
 
+--SYS계정에서 프로시저 및 잡 스케줄러 생성 권한 주기
+GRANT CREATE ANY JOB TO eydiz;
+
+
 --잡스케줄러로 프로젝트 마감기간 끝났는지 확인하기
-CREATE OR REPLACE PROCEDURE project_monitor_status
+CREATE OR REPLACE PROCEDURE PROJECT_MONITOR_STATUS
 IS
 BEGIN
-    UPDATE project SET statusNo = 6 WHERE projectEndDate - SYSDATE < 0;
+    UPDATE project SET statusNo = 6 WHERE projectEndDate - SYSDATE < 0 AND statusNo=5;
     COMMIT;
 END;
 /
 
-
-DECLARE
-X NUMBER;
 BEGIN
-SYS.DBMS_JOB.SUBMIT
-( job => X
-,what => 'PROJECT_MONITOR_STATUS'
-,next_date => to_date('11-07-2020 13:20:00','dd/mm/yyyy hh24:mi:ss')
-,interval => 'TRUNC(SYSDATE)+30/(60*60*24)'
-,no_parse => TRUE
-);
+    DBMS_SCHEDULER.CREATE_JOB
+    (
+    JOB_NAME => 'PROJECT_REFRESHER',
+    JOB_TYPE => 'STORED_PROCEDURE',
+    JOB_ACTION => 'PROJECT_MONITOR_STATUS',
+    REPEAT_INTERVAL => 'FREQ=MINUTELY; INTERVAL =60', --1시간에 1번
+    START_DATE => SYSTIMESTAMP,
+    COMMENTS => '날짜 갱신 테스트 (개발용 60분간)'
+    );
 END;
 /
-COMMIT; --커밋해야 dba_jobs 테이블에서 조회 가능
+COMMIT;
 
---잡 스케줄러 지우기
-select job, what, failures, total_time, last_date, last_sec, next_date, next_sec, interval
-from dba_jobs order by next_date;
---21 101 81 83 82 65
-EXECUTE dbms_ijob.remove(65);
+
+-- 잡 스케줄러 생성 확인
+SELECT 
+JOB_NAME, 
+JOB_TYPE, 
+JOB_ACTION, 
+REPEAT_INTERVAL, 
+ENABLED, 
+AUTO_DROP, 
+STATE, 
+COMMENTS 
+FROM 
+USER_SCHEDULER_JOBS;
+
+-- 잡 스케줄러 실행
+BEGIN
+    DBMS_SCHEDULER.ENABLE ('PROJECT_REFRESHER');
+END;
+
+-- 잡 실행객체 로그 확인
+SELECT * FROM USER_SCHEDULER_JOB_LOG;
+
+-- 참조
+-- https://miid.tistory.com/228
+-- https://goddaehee.tistory.com/51
+
+-- 잡 삭제
+
+BEGIN
+    DBMS_SCHEDULER.DROP_JOB
+    (
+        JOB_NAME => 'PROJECT_REFRESHER',
+        FORCE => FALSE
+    );
+END;
+
+
+
+
+
+-- DECLARE
+-- X NUMBER;
+-- BEGIN
+-- SYS.DBMS_JOB.SUBMIT
+-- ( job => X
+-- ,what => 'PROJECT_MONITOR_STATUS'
+-- ,next_date => to_date('13-07-2020 08:35:00','dd/mm/yyyy hh24:mi:ss')
+-- ,interval => 'TRUNC(SYSDATE)+30/(60*60*24)'
+-- ,no_parse => TRUE
+-- );
+-- END;
+-- /
+-- COMMIT; --커밋해야 dba_jobs 테이블에서 조회 가능
+
+-- --잡 스케줄러 지우기
+-- select job, what, failures, total_time, last_date, last_sec, next_date, next_sec, interval
+-- from dba_jobs order by next_date;
+-- --21 101 81 83 82 65
+-- EXECUTE dbms_ijob.remove(65);
