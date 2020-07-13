@@ -37,22 +37,22 @@
           </label>
         </div>
         <div class="inputRow loginOption">
-          <label>
+          <%--label>
             <input type="checkbox" title="아이디 저장" id="saveUserId" />
             <span class="text">아이디 저장</span>
           </label>
-          <p><a href="#" class="findAccount">아이디&centerdot;비밀번호 찾기</a></p>
+          <p><a href="#" class="findAccount">아이디&centerdot;비밀번호 찾기</a></p --%>
         </div>
         <div class="inputRow">
           <button type="button" id="btnLogin" class="btnSubmit">로그인</button>
           <input type="hidden" name="returnURL" />
         </div>
-        <div class="orRow"><span>또는</span></div>
+        <%--div class="orRow"><span>또는</span></div --%>
         <div class="socialLogin">
-          <ul class="inputRow flex">
+          <%--ul class="inputRow flex">
             <li><button type="button">카카오</button></li>
             <li><button type="button">구글</button></li>
-          </ul>
+          </ul --%>
           <div class="inputRow">
             <p class="text">
               <span>아직 계정이 없나요? </span><a href="<%=cp %>/member/join" class="register">회원가입</a>

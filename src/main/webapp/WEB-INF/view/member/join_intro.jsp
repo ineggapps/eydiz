@@ -12,12 +12,13 @@
       <p class="registerText">신규회원 가입하고<br />다양한 혜택을 받아보세요</p>
       <div class="loginForm"></div>
       <div class="socialLogin">
-        <ul class="inputRow flex">
+        <%--ul class="inputRow flex">
           <li><button type="button">카카오</button></li>
           <li><button type="button">구글</button></li>
-        </ul>
-        <div class="orRow"><span>또는</span></div>
-        <div class="inputRow">
+        </ul >
+        <div class="orRow"><span>또는</span></div--%>
+        <%-- 임시 style... --%>
+        <div class="inputRow" style="margin-top:50px;">
           <a href="?step=2" id="btnRegister" class="btnPlain">이메일로 가입</a>
           <input type="hidden" name="returnURL" />
         </div>
