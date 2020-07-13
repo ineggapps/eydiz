@@ -252,7 +252,7 @@
 	
 	<!-- 커뮤니티 댓글 1개 조회하기 작성 후 echo를 위함 (hasFunded, isBrand)-->
 	<select id="readCommunity" parameterType="Integer" resultType="com.eydiz.studio.ProjectCommunity">
-		SELECT commentNo, pc.parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate, 
+		SELECT DISTINCT commentNo, pc.parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate, 
 					memberImageUrl, NVL(replyCount, 0) replyCount,
                     CASE WHEN NVL(buyCount,0) - NVL(cancelCount,0) > 0 THEN 1 ELSE 0 END hasFunded,
                     CASE WHEN b.memberNo = m.memberNo THEN 1 ELSE 0 END isBrand

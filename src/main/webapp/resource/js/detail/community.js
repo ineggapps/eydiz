@@ -137,6 +137,7 @@ function renderComment($element, jsonItem, prefix) {
     $element.find(".commentMenu").eq(0).remove();
     $element.find(".commentContext").eq(0).remove();
     $element.find(".commentInputContent").eq(0).remove();
+  }else{
   }
   //브랜드 여부
   if(jsonItem.isBrand==1){

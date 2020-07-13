@@ -193,6 +193,7 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 			}
 			dto.setProjectNo(projectNo);
 			dto.setCommentNo(service.getNewCommentNo());
+			System.out.println(dto.getCommentNo()+"는???");
 			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
 			dto.setMemberId(info.getMemberId());
 			service.insertCommunityComment(dto);
