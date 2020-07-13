@@ -164,8 +164,8 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 			project.setProjectNo(projectNo);
 			project.setBrandNo(bInfo.getBrandNo());
-			if(project.getProjectGoalAmount()==0) {
-				project.setProjectGoalAmount(1000000); //기본 100만 원으로 설정
+			if (project.getProjectGoalAmount() == 0) {
+				project.setProjectGoalAmount(1000000); // 기본 100만 원으로 설정
 			}
 			service.updateProjectBasic(project);
 		} catch (Exception e) {
@@ -484,7 +484,8 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		}
 
 		String paging = myUtil.paging(current_page, total_page, listUrl);
-
+		BrandSessionInfo bInfo = (BrandSessionInfo) req.getSession().getAttribute(SESSION_BRAND);
+		model.addAttribute("project", service.readProject(projectNo, bInfo.getBrandNo()));
 		model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("readUrl", readUrl);
@@ -498,7 +499,9 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 	}
 
 	@RequestMapping(value = "/{projectNo}/news/write", method = RequestMethod.GET)
-	public String newsWriteForm(@PathVariable Integer projectNo, Model model) throws Exception {
+	public String newsWriteForm(@PathVariable Integer projectNo, Model model, HttpServletRequest req) throws Exception {
+		BrandSessionInfo bInfo = (BrandSessionInfo) req.getSession().getAttribute(SESSION_BRAND);
+		model.addAttribute("project", service.readProject(projectNo, bInfo.getBrandNo()));
 		model.addAttribute("projectNo", projectNo);
 		model.addAttribute("mode", "write");
 		return ".studioLayout.newsWrite";
@@ -726,37 +729,108 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		return ".studioLayout.managelist";
 	}
 
-	@RequestMapping(value="/shipping/article/{projectNo}")
-	public String sendArticle ( 
-			@PathVariable Integer projectNo,
-			@RequestParam String page,
-			@RequestParam(defaultValue="buyNo") String condition,
-			@RequestParam(defaultValue="") String keyword,
-			HttpSession session,
-			Model model
-			) throws Exception {
+	@RequestMapping(value = "/shipping/article/{projectNo}")
+	public String sendArticle(@PathVariable Integer projectNo, @RequestParam String page,
+			@RequestParam(defaultValue = "buyNo") String condition, @RequestParam(defaultValue = "") String keyword,
+			HttpSession session, Model model) throws Exception {
 		keyword = URLDecoder.decode(keyword, "utf-8");
 
-		String query = "page="+page;
-		if(keyword.length() != 0) {
-			query = "condition=" +condition+ "&keyword=" +keyword+ URLEncoder.encode(keyword, "utf-8");
+		String query = "page=" + page;
+		if (keyword.length() != 0) {
+			query = "condition=" + condition + "&keyword=" + keyword + URLEncoder.encode(keyword, "utf-8");
 		}
-		
+
 		ProjectSessionInfo pInfo = (ProjectSessionInfo) session.getAttribute(SESSION_BRAND);
 		Send dto = service.readSend(projectNo, pInfo.getBuyNo(), pInfo.getRewardNo());
-		
-		if(dto == null) {
-			return "redirect:/shipping/article/{projectNo}?"+query;
+
+		if (dto == null) {
+			return "redirect:/shipping/article/{projectNo}?" + query;
 		}
 
 		Map<String, Object> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
-
+		
+		BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+		model.addAttribute("project", service.readProject(projectNo, bInfo.getBrandNo()));
 		model.addAttribute("dto", dto);
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
-		
+
 		return "studioLayout.sendContent";
 	}
+
+	// 펀딩/후원 현황 ------------------------------------------
+	@RequestMapping(value = "/{projectNo}/view/list")
+	public String viewList(@PathVariable Integer projectNo, HttpServletRequest req,
+			@RequestParam(value = "page", defaultValue = "1") int current_page, Model model) throws Exception {
+		int rows = 10;
+		int total_page = 0;
+		int fundingViewDataCount = 0;
+
+		String cp = req.getContextPath();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectNo", projectNo);
+		fundingViewDataCount = service.fundingViewDataCount(map);
+
+		if (fundingViewDataCount != 0) {
+			total_page = myUtil.pageCount(rows, fundingViewDataCount);
+		}
+
+		if (total_page < current_page) {
+			current_page = total_page;
+		}
+
+		int offset = (current_page - 1) * rows;
+		if (offset < 0)
+			offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+
+		List<Project> list = service.listFundingView(map);
+
+		int listNum = 0;
+		int num = 0;
+		for (Project dto : list) {
+			listNum = fundingViewDataCount - (offset + num);
+			dto.setListNum(listNum);
+			num++;
+		}
+
+		String listUrl = cp + "/studio/project/" + projectNo + "/view/list";
+		String readUrl = cp + "/studio/project/" + projectNo + "/view/read?page=" + current_page;
+
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+		BrandSessionInfo bInfo = (BrandSessionInfo) req.getSession().getAttribute(SESSION_BRAND);
+		model.addAttribute("project", service.readProject(projectNo, bInfo.getBrandNo()));
+		model.addAttribute("list", list);
+		model.addAttribute("fundingViewDataCount", fundingViewDataCount);
+		model.addAttribute("readUrl", readUrl);
+		model.addAttribute("page", current_page);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+
+		return ".studioLayout.viewList";
+	}
+
+	@RequestMapping(value = "/{projectNo}/view/read")
+	public String readFundingView(@PathVariable Integer projectNo, @RequestParam String page, Model map,
+			HttpServletRequest req, @RequestParam int buyNo) throws Exception {
+
+		List<Reward> list = service.readFundingView(buyNo);
+
+		if (list == null || list.size() == 0) {
+			return "redirect:/studio/project/" + projectNo + "/view/list?page=" + page;
+		}
+		BrandSessionInfo bInfo = (BrandSessionInfo) req.getSession().getAttribute(SESSION_BRAND);
+		map.addAttribute("project", service.readProject(projectNo, bInfo.getBrandNo()));
+		map.addAttribute("rewards", list);
+		map.addAttribute("buyNo", buyNo);
+		map.addAttribute("projectNo", projectNo);
+		map.addAttribute("page", page);
+
+		return ".studioLayout.viewRead";
+	}
+
 }
