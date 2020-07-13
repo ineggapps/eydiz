@@ -100,7 +100,8 @@
 			NVL(communityCount, 0) communityCount,
 			NVL(newsCount, 0) newsCount,
 			NVL(totalAmount, 0) totalAmount,
-			NVL(totalAmount,0)/projectGoalAmount attainRate
+			NVL(totalAmount,0)/projectGoalAmount attainRate,
+			NVL(approvalDate, TO_DATE('1990-01-01')) approvalDate
 		FROM project p
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
@@ -132,6 +133,11 @@
             LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
             WHERE rc.cancelNo IS NULL
         ) ro ON ro.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+        	SELECT projectNo, created approvalDate
+            FROM project_status_list
+            WHERE statusNo=5
+        ) psl ON psl.projectNo = p.projectNo
 		WHERE statusNo = 5 AND projectEndDate - SYSDATE >= 0
 		ORDER BY
 		(
@@ -142,6 +148,7 @@
 			communityCount*0.1 + 
 			likeCount*0.1
 		)
+		,approvalDate DESC
 		DESC, projectEndDate ASC
 		OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
 	</select>
