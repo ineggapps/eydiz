@@ -36,7 +36,7 @@ public class AdminProjectController {
 	public String projectList(
 			@RequestParam(defaultValue="1") int parentCategoryNo,
 			@RequestParam(defaultValue="1") int statusNo,
-			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(required=false, value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="projectName") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			Model model,
@@ -75,8 +75,8 @@ public class AdminProjectController {
 		List<AdminProject> list = service.adminProjectList(map);
 		
 		String query = "";
-		String listUrl = cp+"/admin/project/list?parentCategoryNo="+parentCategoryNo+"&stausNo="+statusNo;
-		String articleUrl = cp+"/admin/project/article?parentCategoryNo="+parentCategoryNo+"&stausNo="+statusNo+"&page=" + current_page;
+		String listUrl = cp+"/admin/project/list?parentCategoryNo="+parentCategoryNo+"&statusNo="+statusNo;
+		String articleUrl = cp+"/admin/project/article?parentCategoryNo="+parentCategoryNo+"&statusNo="+statusNo+"&page=" + current_page;
 		
 		if(keyword.length() != 0) {
 			query = "condition="+condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
@@ -101,6 +101,7 @@ public class AdminProjectController {
 		model.addAttribute("keyword", keyword);
 		
 		model.addAttribute("parentCategoryNo",parentCategoryNo);
+		model.addAttribute("statusNo", statusNo);
 		
 		return ".adminLayout.project.list";
 	}
@@ -140,6 +141,7 @@ public class AdminProjectController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 		
+		model.addAttribute("statusNo", statusNo);
 		
 		return ".adminProjectLayout.article";
 	}

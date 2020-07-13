@@ -119,7 +119,7 @@ function reloadPartnerProject() {
 	          </div>
 	         <nav class="row">
 	            <div class="rowFull">
-	              <ul class="= detailNav">
+	              <ul class="= detailNav partnerArticleNav">
 	                <li>
 	                  <a id="partnerStatusNo-5" data-pStatusNo="5"><span>진행중</span></a>
 	                </li>

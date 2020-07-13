@@ -25,7 +25,7 @@
 				</ul>
 				<div class="status">
 					<div class="progress">
-						<div class="progressBar" style="width:${dto.percentage >= 100 ? '100' : 'dto.percentage'}%;"></div>
+						<div class="progressBar" style="width:${dto.percentage >= 100 ? '100' : dto.percentage }%;"></div>
 					</div>
 					<ul>
 						<li><span class="percent">${dto.percentage}%</span>&centerdot;<span

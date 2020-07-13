@@ -12,12 +12,21 @@
         <div class="headerInner">
           <h1 class="logo"><a href="<%=cp%>/">eydiz</a></h1>
           <ul class="gnbExtended">
-            <li> 
-              <a href="#" class="menu on"><span>펀딩하기</span></a>
-            </li>
-            <li>
-              <a href="#" class="menu"><span> 기부하기</span></a>
-            </li>
+              <li> 
+		        <a href="<%=cp %>/main" class="menu"><span>펀딩하기</span></a>
+		      </li>
+		      <li>
+		        <a href="<%=cp %>/awards/list" class="menu on"><span>어워즈</span></a>
+		      </li>
+		      <li>
+		        <a href="<%=cp %>/partner/list" class="menu"><span>파트너</span></a>
+		      </li>
+		      <li>
+		        <a href="<%=cp %>/cast/news" class="menu"><span>캐스트</span></a>
+		      </li>
+		      <li>
+		        <a href="<%=cp %>/story/story" class="menu"><span>스토리</span></a>
+		      </li>
           </ul>
           <div class="headerInnerRight">
             <ul class="gnbAuth">
@@ -60,16 +69,7 @@
             <div class="rowFull">
               <ul class="detailNav">
                 <li class="on">
-                  <a href="#"><span>#Eydiz Awards 15</span></a>
-                </li>
-                <li>
-                  <a href="#"><span>#판매왕</span></a>
-                </li>
-                <li>
-                  <a href="#"><span>#최대 당성률</span></a>
-                </li>
-                <li>
-                  <a href="#"><span>#프로젝트 부자</span></a>
+                  <a href="<%=cp%>/awards/list"><span>#Eydiz Awards 15</span></a>
                 </li>
               </ul>
             </div>
