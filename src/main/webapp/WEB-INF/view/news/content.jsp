@@ -39,8 +39,10 @@
       	<div class="contentbutton">
       		<ul style="clear: both;">
       			<li style="float: left; width: 50%;">
+      			<c:if test="${sessionScope.member.memberNo==1}">
       				<button type="button" onclick="updateForm('${dto.noticeNo}', '${pageNo}');">수정</button>
       				<button type="button" onclick="deleteNews('${dto.noticeNo}', '${pageNo}');">삭제</button>
+      			</c:if>
       			</li>
       			<li style="float: left; width: 50%; text-align: right;">
       				<button type="button" onclick="listPage('${pageNo}');">리스트</button>

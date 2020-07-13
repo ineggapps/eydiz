@@ -33,7 +33,7 @@ function sendOk() {
 <article class="row">
 	<form name="mateForm" method="post" enctype="multipart/form-data">
 		<div class="bcreate">
-			<h2 style="margin: 40px 0px 40px 500px; font-weight: bold; font-size: 24px;">| 등록하기</h2>
+			<h2 style="">| 등록하기</h2>
 			<p> 제목 : &nbsp;&nbsp;&nbsp;<input name="fmSubject" class="cinput" type="text" value="${dto.fmSubject}"> </p>
 			<p> 작성자 : &nbsp;&nbsp;&nbsp;${sessionScope.member.memberNickname}</p>
 			<p> 카테고리: <select name="fmcaNo">
