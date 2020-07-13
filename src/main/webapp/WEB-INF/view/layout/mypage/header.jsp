@@ -49,10 +49,10 @@
   <div class="headerInnerMobile">
     <div class="mobileNav">
       <h2 class="title">이디즈 마이 페이지</h2>
-      <a href="#" class="btnBack btnFlat btnMobileNav">
+      <a href="#" class="btnBack btnFlat btnMobileNav" onclick="javascript:history.back(1);">
         <span class="hidden">이전</span>
       </a>
-      <a href="#" class="btnHome btnFlat btnMobileNav">
+      <a href="<%=cp %>" class="btnHome btnFlat btnMobileNav" >
         <span class="hidden">홈</span>
       </a>
     </div>

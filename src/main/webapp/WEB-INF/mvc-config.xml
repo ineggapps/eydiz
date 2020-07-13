@@ -94,6 +94,13 @@
         	<!-- 제외: 없음.. -->
         	<bean class="com.eydiz.studio.StudioBrandInterceptor"/>
         </mvc:interceptor>
+
+        <!-- 관리자 페이지 인터셉터-->
+        <mvc:interceptor>
+        	<mvc:mapping path="/admin/**"/>
+        	<!-- 제외: 없음.. -->
+        	<bean class="com.eydiz.admin.AdminInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>	 
  
     <!-- 예외처리 -->

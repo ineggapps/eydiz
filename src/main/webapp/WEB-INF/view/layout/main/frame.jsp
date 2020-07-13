@@ -33,7 +33,7 @@
       <tiles:insertAttribute name="headerBanner" ignore="true"/>
       <tiles:insertAttribute name="header"/>
       <main id="content">
-        <div class="contentWrapper">
+        <div class="contentWrapper main">
           <tiles:insertAttribute name="content" />
         </div>
       </main>

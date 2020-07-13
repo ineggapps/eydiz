@@ -78,6 +78,64 @@
   word-break: break-all;
 }
 
+.commentHeader{
+	position:relative;
+}
+
+/*댓글 딱지*/
+.labelFunded,
+.labelBrand{
+	color:#fff;
+	font-weight:600;
+	font-size:0.8rem;
+	user-select:none;
+	padding:0 5px;
+	margin:0 5px;
+}
+.labelFunded{/*펀딩 참여자*/
+	background-color:#557cf2;
+}
+.labelBrand{/*브랜드*/
+	background-color:#00c4c4;
+}
+
+.commentMenu{
+	position:absolute;
+	right:0;
+	top:0;
+	display:block;
+	width:15px;
+	height:15px;
+	background-image:url("../../images/detail/btn_icon_menu.png");
+	background-repeat:no-repeat;
+	background-size:100%;
+	cursor:pointer;
+}
+
+.commentContext{
+	z-index:1200;
+	position:absolute;
+	right:0;
+	top:20px;
+	background-color:#fff;
+	border:1px solid #d4d4d4;
+	box-shadow: 0 3px 4px rgba(0,0,0,.3);
+	width:60px;
+}
+
+.commentContext li{
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	transition:all linear 0.2s;
+	cursor:pointer;
+}
+
+.commentContext li:hover{
+	background-color:#efefef;
+	font-weight:600;
+}
+
 .commentHeader span.author {
   font-weight: 600;
 }
@@ -85,6 +143,11 @@
 .commentHeader span.date {
   font-weight: 300;
   font-size: 0.95rem;
+}
+
+.commentComponent .commentInputContent{
+	width:100%;
+	margin:20px 0;
 }
 
 .commentInputContent{
@@ -114,9 +177,10 @@
 	height:100%;
 }
 
-.commentInput form,
-.commentInput input,
-.commentInput textarea {
+.commentReplyWrap form,
+.commentReplyWrap input,
+.commentReplyWrap textarea,
+.commentInputContent textarea {
 	margin-top:1px;
   border:0;
   box-sizing:border-box;
@@ -149,6 +213,11 @@ span.commentAvatar {
   /*background-color: #a0a0a0;*/
   background-image:url("../../images/detail/user-64.png");
   background-size:100%;
+}
+
+/*더보기*/
+.community.newsMore{
+	margin-top:20px;
 }
 
 /*modal창*/

@@ -32,10 +32,15 @@
 	<!-- 로그인 정보 확인 -->
 	<select id="confirmMember" parameterType="com.eydiz.member.Member" resultType="com.eydiz.member.Member">
 		SELECT 
-		    m.memberNo, memberId, memberNickname, memberPwd, memberEmail, memberSocial, available,
+		    m.memberNo, memberId, memberNickname, memberPwd, memberEmail, memberSocial, available, isAdmin,
 		    memberImageUrl
 		FROM member m
 		JOIN member_detail md ON m.memberNo = md.memberNo
+        LEFT OUTER JOIN (
+            SELECT memberNo, count(*) isAdmin 
+            FROM member_admin
+            GROUP BY memberNo
+        ) ma ON m.memberNo = ma.memberNo
 		WHERE memberId = #{memberId} AND memberPwd = #{memberPwd} AND available = 1
 	</select>
 	

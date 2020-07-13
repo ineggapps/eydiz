@@ -44,8 +44,10 @@
     				$clone.remove();
     			   	$clone.removeClass( 'sticky' );
     			}			
-      	});
-    });
+      		});
+    		$(window).scrollTop(10);
+    		$(window).scrollTop(0);
+    	});
         </script>
   </head>
   <body>

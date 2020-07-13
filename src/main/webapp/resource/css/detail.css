@@ -1,5 +1,26 @@
 @charset "utf-8";
 
+/*ellipsis*/
+.ellip {
+  display: block;
+  height: 100%;
+}
+
+.ellip-line {
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  max-width: 100%;
+}
+
+.ellip,
+.ellip-line {
+  position: relative;
+  overflow: hidden;
+}
+/*ellipsis end*/
+
 .detailWrap::after,
 .brandInfoBox::after,
 .brandStatus::after {
@@ -113,6 +134,7 @@ img.fullWidth{
 }
 
 .detailContent {
+  overflow: hidden;
   float: left;
   width: calc(100% - 364px);
 }
@@ -181,6 +203,10 @@ hr.divider.deeper{
 
 .detailContent > * {
   width: 100%;
+}
+
+.detailStory > *{
+	width:100% !important;
 }
 
 .detailSide {
@@ -514,12 +540,14 @@ p.small {
 }
 
 .rankList p{
+  width:90%;
   padding-left:30px;
   margin:10px 0;
 }
 
 .rankList li a {
   font-weight: 400;
+  width:100%;
 }
 
 /*반응형*/
@@ -533,11 +561,15 @@ p.small {
   }
   .detailContent {
     clear: both;
+    margin-top: 30px;
     padding: 20px;
     min-width: 100%;
   }
   .detailSide {
     min-width: 100%;
+  }
+  .brandInfoBox{
+    margin-top:20px;
   }
   .detailSideController {
     display: none;

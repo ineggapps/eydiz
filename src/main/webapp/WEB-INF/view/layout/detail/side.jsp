@@ -171,8 +171,30 @@
 </div>
 <script>
 $(function(){
-	$(".rankItem").dotdotdot({
-		ellipsis: "...",
-	})
-})
+	//ellipsis
+	$('.rankText').ellipsis({
+		  lines: 1,             // force ellipsis after a certain number of lines. Default is 'auto'
+		  ellipClass: 'ellip',  // class used for ellipsis wrapper and to namespace ellip line
+		  responsive: true      // set to true if you want ellipsis to update on window resize. Default is false
+	});
+});
+$(function () {
+  try {
+    var elements = ["cuAttainRate", "cuTotalAmount", "cuSupportCount", "cuRemainDays"];
+    for (var i = 0; i < elements.length; i++) {
+      var num = $("#" + elements[i]).text();
+      var counter = new CountUp(
+        elements[i],
+        0,
+        num,
+        isInt(num) ? 0 : 1,
+        (i - 1) * 1.4 + 2,
+        options
+      );
+      counter.start();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 </script>
