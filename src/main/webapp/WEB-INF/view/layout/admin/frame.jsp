@@ -64,5 +64,6 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
           </div>
         </div>
       </main>
+     </div>
   </body>
 </html>

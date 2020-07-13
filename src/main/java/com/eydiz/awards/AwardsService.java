@@ -1,5 +1,9 @@
 package com.eydiz.awards;
 
-public interface AwardsService {
+import java.util.List;
 
+public interface AwardsService {
+	public List<Awards> highestPercentage();
+	public List<Awards> bestSeller();
+	public List<Awards> brandProjectRank();
 }

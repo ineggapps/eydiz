@@ -69,10 +69,16 @@
 
 <!-- 프로젝트 리스트 -->
 <select id="listProject" parameterType="map" resultType="com.eydiz.partner.Partner">
-	SELECT p.projectNo, projectName, projectImageUrl, categoryName, parentcategoryNo, p.statusNo, p.brandNo, projectAttainAmount, (projectAttainAmount/projectGoalAmount*100) percentage
-	FROM project_category c
-	JOIN project p ON c.categoryNo = p.categoryNo
-	JOIN brand b ON p.brandNo = b.brandNo
+	SELECT p.brandNo,brandName, p.projectNo, projectName, categoryName ,projectImageUrl,  NVL(totalAmount,0) projectTotalAmount, NVL(TRUNC((totalAmount/projectGoalAmount*100),1),0) percentage 
+		FROM brand b
+		JOIN project p ON p.brandNo = b.brandNo
+        LEFT OUTER JOIN(
+            SELECT projectNo, sum(totalAmount) totalAmount
+            FROM reward_buy_overview
+            GROUP BY projectNo
+            ORDER BY totalAmount DESC
+        ) ro ON p.projectNo = ro.projectNo
+    JOIN project_category pc ON p.categoryNo = pc.categoryNo
 	WHERE b.brandNo = #{brandNo} AND p.statusNo = #{statusNo}
 	ORDER BY projectNo DESC
 	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
@@ -89,9 +95,19 @@
 
 <!-- 이디즈 프로젝트에 참여한 전체 인원수 -->
 <select id="totalBuyMemberCount" resultType="Integer">
-	SELECT NVL(COUNT(m.memberNo),0) totalBuyMemberCount
-	FROM member m
-	JOIN reward_shipping_location s ON m.memberNo = s.memberNo
+	SELECT NVL(COUNT(totalJoinMember),0) totalBuyMemberCount
+	FROM project p
+	JOIN  (		
+	    SELECT COUNT(memberNo) totalJoinMember, projectNo FROM (
+	        SELECT m.memberNo, p.projectNo, SUM(finalAmount) finalAmount
+	        FROM member m
+	        JOIN reward_buy_overview o ON o.memberNo = m.memberNo
+	        JOIN project p ON o.projectNo = p.projectNo
+	        GROUP BY m.memberNO, p.projectNo
+        )
+        GROUP BY projectNo
+    ) x ON p.projectNo = x.projectNo
+JOIN brand b ON p.brandNo = b.brandNo
 </select>
 
 <!-- 브랜드의 프로젝트 수 -->
@@ -114,12 +130,20 @@
 
 <!-- 브랜드 프로젝트에 참여한 인원수 -->
 <select id="brandTotalBuyMember" parameterType="Integer" resultType="Integer">
-	SELECT NVL(COUNT(o.memberNo),0) brandTotalBuyMember
-	FROM reward_buy_overview o 
-    JOIN project p ON o.projectNo = p.projectNo
+	SELECT NVL(COUNT(totalJoinMember),0) brandTotalBuyMember
+	FROM project p
+	JOIN  (		
+	    SELECT COUNT(memberNo) totalJoinMember, projectNo FROM (
+	        SELECT m.memberNo, p.projectNo, SUM(finalAmount) finalAmount
+	        FROM member m
+	        JOIN reward_buy_overview o ON o.memberNo = m.memberNo
+	        JOIN project p ON o.projectNo = p.projectNo
+	        GROUP BY m.memberNO, p.projectNo
+        )
+        GROUP BY projectNo
+    ) x ON p.projectNo = x.projectNo
 	JOIN brand b ON p.brandNo = b.brandNo
-	LEFT JOIN reward_shipping_location s ON o.buyNo = s.buyNo
-	WHERE b.brandNo = #{brandNo} AND s.statusNo = 4
+	WHERE b.brandNo = #{brandNo}
 </select>
 
 

@@ -23,17 +23,20 @@
 
 <!-- 프로젝트 리스트 -->
 <select id="adminProjectList" parameterType="map" resultType="com.eydiz.admin.project.AdminProject">
-	SELECT rowNum,p.projectNo, projectName, brandName, categoryName, 
-		   managerName, s.statusNo,  TO_CHAR(created, 'YYYY-MM-DD') created, statusMemo, parentCategoryNo
-	FROM project p
-	LEFT JOIN project_category c ON p.categoryNo = c.categoryNo
-	LEFT JOIN brand b ON p.brandNo = b.brandNo
-	LEFT JOIN project_status_list s ON p.projectNo = s.projectNo
-	WHERE s.statusNo = #{statusNo} AND c.parentCategoryNo = #{parentCategoryNo} AND (s.statusNo = p.statusNo)
-	<if test="keyword != null and keyword != ''">
-		AND <include refid="where-list"/>
-	</if>
-	ORDER BY created ASC
+	SELECT rowNum, x.* FROM (
+	    SELECT p.projectNo, projectName, brandName, categoryName, 
+			   managerName, s.statusNo,  TO_CHAR(created, 'YYYY-MM-DD') created, statusMemo, parentCategoryNo
+		FROM project p
+		LEFT JOIN project_category c ON p.categoryNo = c.categoryNo
+		LEFT JOIN brand b ON p.brandNo = b.brandNo
+		LEFT JOIN project_status_list s ON p.projectNo = s.projectNo
+		WHERE s.statusNo = #{statusNo} AND c.parentCategoryNo = #{parentCategoryNo} AND (s.statusNo = p.statusNo)
+		<if test="keyword != null and keyword != ''">
+			AND <include refid="where-list"/>
+		</if>
+	    ORDER BY created ASC
+    ) x 
+    ORDER By rowNum ASC
 	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 </select>
 
@@ -79,11 +82,11 @@
 <!-- 리워드 정보 불러오기 -->
 <select id="listReward" parameterType="Integer" resultType="com.eydiz.studio.Reward">
 	SELECT rewardNo, r.projectNo, amount, rewardTitle, rewardContent, rewardOption, 
-			shipAmount, TO_CHAR(startShippingDate, 'YYYY-MM-DD') startShippingDate, limitQuantity
-	FROM reward r
-	JOIN project p ON r.projectNo = p.projectNo
-	WHERE r.projectNo = #{projectNo}
-	ORDER BY amount 
+			isShipping, shipAmount, TO_CHAR(startShippingDate, 'YYYY-MM-DD') startShippingDate, limitQuantity
+		FROM reward r
+		JOIN project p ON r.projectNo = p.projectNo
+		WHERE r.projectNo = #{projectNo}
+		ORDER BY amount
 </select>
 
 

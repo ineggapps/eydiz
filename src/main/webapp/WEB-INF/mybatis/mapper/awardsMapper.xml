@@ -9,34 +9,50 @@
 <!-- 판매금액 가장 많은 top 5 -->
 <select id="bestSeller" resultType="com.eydiz.awards.Awards">
 	SELECT ROWNUM, x.* FROM (
-		SELECT p.brandNo,brandName, projectNo, projectName, NVL(projectAttainAmount,0) projectAttainAmount, projectImageUrl 
-		FROM project p
-		JOIN brand b ON p.brandNo = b.brandNo
-		ORDER BY projectAttainAmount DESC
-	)x
+		SELECT p.brandNo,brandName, p.projectNo, projectName, categoryName ,projectImageUrl,  NVL(totalAmount,0) totalAmount, NVL(TRUNC((totalAmount/projectGoalAmount*100),1),0) percentage 
+		FROM brand b
+		JOIN project p ON p.brandNo = b.brandNo
+        LEFT OUTER JOIN(
+            SELECT projectNo, sum(totalAmount) totalAmount
+            FROM reward_buy_overview
+            GROUP BY projectNo
+            ORDER BY totalAmount DESC
+        ) ro ON p.projectNo = ro.projectNo
+        JOIN project_category pc ON p.categoryNo = pc.categoryNo
+    ) x 
 	WHERE ROWNUM &lt;= 5
 </select>
 
 <!-- 달성률 가장 높은 top 5 -->
 <select id="highestPercentage" resultType="com.eydiz.awards.Awards">
-	SELECT ROWNUM, x.* FROM ( 
-        SELECT p.brandNo,brandName, projectNo, projectName, projectImageUrl ,
-        	   NVL(projectAttainAmount,0) projectAttainAmount, (projectAttainAmount/projectGoalAmount*100) percentage 
-        FROM project p
-        JOIN brand b ON p.brandNo = b.brandNo
+	SELECT ROWNUM, x.* FROM (
+		SELECT p.brandNo,brandName, p.projectNo, projectName, projectImageUrl, categoryName,  NVL(totalAmount,0) totalAmount , NVL(TRUNC((totalAmount/projectGoalAmount*100),1),0) percentage 
+		FROM brand b
+		JOIN project p ON p.brandNo = b.brandNo
+        LEFT OUTER JOIN(
+            SELECT projectNo, sum(totalAmount) totalAmount
+            FROM reward_buy_overview
+            GROUP BY projectNo
+        ) ro ON p.projectNo = ro.projectNo
+        JOIN project_category pc ON p.categoryNo = pc.categoryNo
         ORDER BY percentage DESC
-	) x
-	WHERE ROWNUM &lt;= 5
+    ) x 
+WHERE ROWNUM &lt;= 5
 </select>
 
 
 <!-- 프로젝트를 가장 많이 보유한 브랜드 -->
 <select id="brandProjectRank" resultType="com.eydiz.awards.Awards">
 	SELECT ROWNUM, r.* FROM (
-		SELECT p.brandNo,brandName, COUNT(projectNo) projectAmount
+		SELECT p.brandNo,brandName, COUNT(projectNo) projectAmount, memberImageUrl, managerName, managerEmail
 		FROM brand b
-		JOIN project p ON b.brandNo = p.brandNo
-		GROUP BY p.brandNo,brandName
+        LEFT JOIN (
+            SELECT memberImageUrl, memberNo
+            FROM member_detail
+        ) md ON b.memberNo = md.memberNo
+		JOIN project p ON b.brandNo = p.brandNo 
+        WHERE statusNo = 5 OR statusNo=6
+		GROUP BY p.brandNo,brandName, memberImageUrl, managerName, managerEmail
 		ORDER BY projectAmount DESC
 	)r
 	WHERE ROWNUM &lt;= 5
