@@ -106,10 +106,10 @@ function contentView(fmNo, page) {
 	      				<h2>펀딩메이트란?</h2>
 	      				<br><br><br><br><br><br><br>
 	      				<p>와디즈 펀딩 오픈에 대한 파트너를 서로 찾을 수 있게 도와 주는 서비스 입니다.</p>
-	      				<p>펀딩메이트를 통해 다양한 프로젝트를 진행 경험이 있는 파트너와 쉽고 간편하게 연결 될 수 있습니다.</p>
+	      				<p>펀딩메이트를 통해 다양한 프로젝트를 진행 <br>경험이 있는 파트너와 쉽고 간편하게 연결 될 수 있습니다.</p>
 	      			</div>
 	      			<div>
-	      				<button type="button" onclick="javascript:location.href='<%=cp%>/mate/created'">등록하기</button>
+	      				<button class="imgintoButton" type="button" onclick="javascript:location.href='<%=cp%>/mate/created'">등록하기</button>
 	      			</div>
       			</div>
 			</div>
@@ -119,10 +119,12 @@ function contentView(fmNo, page) {
 				<p>1. 원하는 서비스 분야를 선택하세요.</p>
 				<p>2. 다양한 펀딩메이트의 정보를 꼼꼼히 확인하세요.</p>
 				<p>3. 펀딩메이트를 확인 후 가입하세요.</p>
-				<br><br><br>
+			</div>
+			<br><br><br>
+			<div class="mateguidee">
 				<h2>유의사항</h2>
-				<p>이디즈는 메이커의 편의를 위하여 필요한 서비스를 단순 지원 합니다. 이디즈는 펀딩
-				메이트와 메이커 간 거래 관계에는 일체 관여하지 않으며, 서비스 품질 및 거래에 대한 책임은 각 펀딩 메이트에게 있습니다.</p>
+				<p>이디즈는 메이커의 편의를 위하여 필요한 서비스를 단순 지원 합니다. <br><br> 이디즈는 펀딩
+				메이트와 메이커 간 거래 관계에는 일체 관여하지 않으며, 서비스 품질 및 거래에 대한 책임은 <br><br> 각 펀딩 메이트에게 있습니다.</p>
 			</div>
 			<div class="matebtnLayout">
 				<ul>

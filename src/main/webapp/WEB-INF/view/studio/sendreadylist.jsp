@@ -36,7 +36,7 @@ function ajaxJSON(url, method, query, fn) {
 }
 
 $(function() {
-	$(".send_button_s").click(function() {
+	$(".send_button_r").click(function() {
 		if(! confirm("배송 상태를 변경 하시겠습니까 ?? ")) {
 			return false;			
 		}
@@ -53,7 +53,7 @@ $(function() {
 
  <div class="studio_send_form">
            <div class="titleBar">
-             <div class="title"><h2>결제 완료</h2></div>
+             <div class="title"><h2>배송 준비 중</h2></div>
 			     <form name="sendsearchForm" action="" method="post" >
                		<div align="right" style="margin-bottom: 10px;">
 	                    <select name="condition">
@@ -74,13 +74,13 @@ $(function() {
 					<td class="send_sendStatus">배송상태</td> 
 					<td class="send_button"> 배송 상태 변경 </td>
 				</tr>
-				<c:forEach var="dto" items="${sendlist}">
+				<c:forEach var="dto" items="${readylist}">
 	             	<tr class="send_view_t">
 	             		<td class="send_no">${dto.buyNo}</td>
 						<td class="send_mNo">${dto.memberNo}</td> 
 						<td class="send_rsubject"><a href="<%=cp%>/studio/project/shipping/article/${projectNo}?buyNo=${dto.buyNo}&page=${page}">${dto.boughtDate}</a></td> 
 						<td class="send_sendStatus">${dto.statusName}</td> 
-						<td> <a class="send_button_s" id="sendM" type="button" data-buyNo="${dto.buyNo}">배송 준비 중</a> </td>
+						<td> <a class="send_button_r" id="sendN" type="button" data-buyNo="${dto.buyNo}">배송 중</a> </td>
 					</tr>
 				</c:forEach>
 			 </table>
@@ -90,7 +90,7 @@ $(function() {
 	 		<table style="width: 1100px; border-spacing: 0px;">
 				<tr height="35">
 					<td align="center">
-						 ${dataCount==0?"데이터가 없습니다.":paging}
+						 ${readyCount==0?"데이터가 없습니다.":paging}
 					</td>
 				</tr>
 			</table>

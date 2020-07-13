@@ -98,8 +98,10 @@ $(function() {
 			<p>${dto.fmContent} </p>
 		</div>
 		<div class="matecontentbtn">
+		<c:if test="${sessionScope.member.memberNo==1 || sessionScope.member.memberNo==dto.memberNo}">
 			<p> <button class="mcb" type="button" onclick="updateMate();">수정</button> </p>
 			<p> <button class="mcb" type="button" onclick="deleteMate();">삭제</button> </p>
+		</c:if>
 			<p> <button class="mcb btnSendMateProject" type="button">참가하기</button> </p>
 			<p> <button class="mcb" type="button" onclick="javascript:location.href='<%=cp%>/mate/main'">리스트</button> </p>
 		</div>

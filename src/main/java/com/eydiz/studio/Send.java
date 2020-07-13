@@ -7,7 +7,7 @@ public class Send {
 	private int rewardNo;
 	private int buyNo;
 	private int memberNo;
-	private String rewardTitle;
+	private String boughtDate;
 	private int statusNo;
 	private String statusName;
 	
@@ -19,6 +19,7 @@ public class Send {
 	private String recipient;
 	private String message;
 	private String courierName;
+	private String startShippingDate;
 	
 	public int getBuyNo() {
 		return buyNo;
@@ -31,12 +32,6 @@ public class Send {
 	}
 	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;
-	}
-	public String getRewardTitle() {
-		return rewardTitle;
-	}
-	public void setRewardTitle(String rewardTitle) {
-		this.rewardTitle = rewardTitle;
 	}
 	public int getStatusNo() {
 		return statusNo;
@@ -92,12 +87,6 @@ public class Send {
 	public void setCourierName(String courierName) {
 		this.courierName = courierName;
 	}
-	public int getRewardNo() {
-		return rewardNo;
-	}
-	public void setRewardNo(int rewardNo) {
-		this.rewardNo = rewardNo;
-	}
 	public int getListNum() {
 		return listNum;
 	}
@@ -109,5 +98,23 @@ public class Send {
 	}
 	public void setProjectNo(int projectNo) {
 		this.projectNo = projectNo;
+	}
+	public String getBoughtDate() {
+		return boughtDate;
+	}
+	public void setBoughtDate(String boughtDate) {
+		this.boughtDate = boughtDate;
+	}
+	public int getRewardNo() {
+		return rewardNo;
+	}
+	public void setRewardNo(int rewardNo) {
+		this.rewardNo = rewardNo;
+	}
+	public String getStartShippingDate() {
+		return startShippingDate;
+	}
+	public void setStartShippingDate(String startShippingDate) {
+		this.startShippingDate = startShippingDate;
 	}
 }

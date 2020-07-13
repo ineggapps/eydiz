@@ -9,6 +9,6 @@
 	  	<div class="headerInner">
 		        <br><br>
 		        <h1 class="matesub"><a style="color: black;">펀딩 메이트</a></h1>
-		        <h1 class="logo"><a href="<%=cp%>/main" style="color: black; margin-left: 1150px;">eydiz</a><a href="<%=cp%>/eydiz/main" style="font-size: 16px; font-weight: normal;">&nbsp;&nbsp;바로가기</a></h1>
+		        <h1 class="logo"><a href="<%=cp%>/main" style="color: black; margin-left: 880px;">eydiz</a><a href="<%=cp%>/eydiz/main" style="font-size: 16px; font-weight: normal;">&nbsp;&nbsp;바로가기</a></h1>
      	</div>
       </header>
