@@ -217,3 +217,16 @@ function goToLocation(element) {
   const projectNo = $(element).attr("data-project-no");
   location.href = cp + "/detail/" + projectNo;
 }
+
+//ajax event
+//$.ajax({
+//  beforeSend: function () {
+//    // Handle the beforeSend event
+//    console.log("ajax");
+//  },
+//  complete: function () {
+//    // Handle the complete event
+//    console.log("ajax complete");
+//  },
+//  // ......
+//});
