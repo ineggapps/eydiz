@@ -52,8 +52,11 @@ public interface StudioService {
 	// 배송관리
 	public List<Send> listSend(Map<String, Object> map);
 	public List<Send> listSendmanage(Map<String, Object> map);
+	public List<Send> listSendready(Map<String, Object> map);
+	public int readyDataCount(Map<String, Object> map);
 	public int sendDataCount(Map<String, Object> map);
 	public int manageDataCount(Map<String, Object> map);
 	public Send readSend(int buyNo, int projectNo);
+	public void updateStatus(int statusNo) throws Exception;
 	
 }

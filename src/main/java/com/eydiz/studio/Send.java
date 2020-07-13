@@ -4,6 +4,7 @@ public class Send {
 	private int projectNo;
 	private int listNum;
 	// 리스트에 나타 낼 것
+	private int rewardNo;
 	private int buyNo;
 	private int memberNo;
 	private String boughtDate;
@@ -18,6 +19,7 @@ public class Send {
 	private String recipient;
 	private String message;
 	private String courierName;
+	private String startShippingDate;
 	
 	public int getBuyNo() {
 		return buyNo;
@@ -102,5 +104,17 @@ public class Send {
 	}
 	public void setBoughtDate(String boughtDate) {
 		this.boughtDate = boughtDate;
+	}
+	public int getRewardNo() {
+		return rewardNo;
+	}
+	public void setRewardNo(int rewardNo) {
+		this.rewardNo = rewardNo;
+	}
+	public String getStartShippingDate() {
+		return startShippingDate;
+	}
+	public void setStartShippingDate(String startShippingDate) {
+		this.startShippingDate = startShippingDate;
 	}
 }

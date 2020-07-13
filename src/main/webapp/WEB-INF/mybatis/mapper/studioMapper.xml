@@ -284,99 +284,147 @@
 	<!-- 배송관리 -->
 	<sql id="where-sendlist">
 		<if test="condition=='buyNo'">
-			( INSTR(ro.buyNo, #{keyword}) &gt; 0 )
+			INSTR(ro.buyNo, #{keyword}) &gt; 0
 				
 		</if>
 		<if test="condition=='rewardTitle'">
-			( INSTR(rewardTitle, #{keyword}) &gt; 0 )
+			INSTR(rewardTitle, #{keyword}) &gt; 0
 
 		</if>
 	</sql>
 	
 	<select id="listSend" parameterType="map" resultType="com.eydiz.studio.Send">
-		SELECT r.rewardNo, rewardTitle, isShipping, ro.buyNo, statusName, ro.memberNo, ss.statusNo, rd.buyno
+		SELECT ro.buyNo, ss.statusName, ro.memberNo, ss.statusNo, projectNo, ro.boughtDate
 		FROM reward_shipping_location rl
 		JOIN reward_buy_overview ro ON ro.buyNo = rl.buyNo
-		JOIN reward_buy_detail rd ON ro.buyNo = rd.buyNo
-		JOIN reward r ON rd.rewardNo = r.rewardNo
 		LEFT OUTER JOIN (
    			SELECT statusNo, statusName FROM shipping_status
 		) ss ON ss.statusNo = rl.statusNo
 		<where>
+			projectNo = #{projectNo} AND ss.statusNo = 0
 			<if test="keyword!=null and keyword!='' ">
-				<include refid="where-sendlist"/>
+				AND <include refid="where-sendlist"/>
 			</if>
 		</where>
-		ORDER BY rd.buyno DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 	<select id="listSendmanage" parameterType="map" resultType="com.eydiz.studio.Send">
-		SELECT r.rewardNo, rewardTitle, isShipping, ro.buyNo, statusName, ro.memberNo, ss.statusNo
+		SELECT DISTINCT ro.buyNo, ss.statusName, ro.memberNo, ss.statusNo, r.projectNo, ro.boughtDate, r.isShipping
 		FROM reward_shipping_location rl
 		JOIN reward_buy_overview ro ON ro.buyNo = rl.buyNo
-		JOIN reward_buy_detail rd ON ro.buyNo = rd.buyNo
-		JOIN reward r ON rd.rewardNo = r.rewardNo
+		JOIN reward_buy_detail rd ON rd.buyNo = ro.buyNo
+		JOIN reward r ON r.rewardNo = rd.rewardNo
 		LEFT OUTER JOIN (
     		SELECT statusNo, statusName FROM shipping_status
 		) ss ON ss.statusNo = rl.statusNo
 		<where>
-			isShipping = 1
+			r.projectNo = #{projectNo} AND r.isShipping = 1 AND ss.statusNo =2
 			<if test="keyword!=null and keyword!='' ">
-				<include refid="where-sendlist"/>
+				AND <include refid="where-sendlist"/>
 			</if>
 		</where>
-		ORDER BY rd.buyNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="listSendready" parameterType="map" resultType="com.eydiz.studio.Send">
+		SELECT DISTINCT ro.buyNo, ss.statusName, ro.memberNo, ss.statusNo, r.projectNo, ro.boughtDate, r.isShipping
+		FROM reward_shipping_location rl
+		JOIN reward_buy_overview ro ON ro.buyNo = rl.buyNo
+		JOIN reward_buy_detail rd ON rd.buyNo = ro.buyNo
+		JOIN reward r ON r.rewardNo = rd.rewardNo
+		LEFT OUTER JOIN (
+    		SELECT statusNo, statusName FROM shipping_status
+		) ss ON ss.statusNo = rl.statusNo
+		<where>
+			r.projectNo = #{projectNo} AND r.isShipping = 1 AND ss.statusNo =1
+			<if test="keyword!=null and keyword!='' ">
+				AND <include refid="where-sendlist"/>
+			</if>
+		</where>
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 	<select id="sendDataCount" parameterType="map" resultType="Integer">
-		SELECT COUNT(RNUM) CC  FROM(
-    		SELECT ROWNUM RNUM, r.rewardNo, r.rewardTitle, r.isShipping, ro.buyNo, ss.statusName, ro.memberNo
-        		FROM reward_shipping_location rl
-        		JOIN reward_buy_overview ro ON ro.buyNo = rl.buyNo
-        		JOIN reward_buy_detail rd ON ro.buyNo = rd.buyNo
-        		JOIN reward r ON rd.rewardNo = r.rewardNo
-        		LEFT OUTER JOIN (
-            		SELECT statusNo, statusName FROM shipping_status
-        		) ss ON ss.statusNo = rl.statusNo
-        	<where>
-				<if test="keyword!=null and keyword!='' ">
-					<include refid="where-sendlist"/>
-				</if>
-			</where>
-		)
+		SELECT count(rnum) FROM (
+            SELECT rownum rnum, ro.buyNo, rl.statusNo, shippingCount
+				FROM reward_buy_overview ro
+				JOIN reward_shipping_location rl ON ro.buyNo = rl.buyNo
+				LEFT OUTER JOIN (
+				    SELECT buyNo, projectNo, count(isShipping) shippingCount
+				    FROM reward_buy_detail rd
+				    JOIN reward r ON r.rewardNo = rd.rewardNo
+				    WHERE projectNo = 33
+				    GROUP BY buyNo, projectNo
+				) rr ON rr.buyNo = ro.buyNo
+    			<where>
+    				rr.projectNo = #{projectNo} AND rl.statusNo = 0
+					<if test="keyword!=null and keyword!='' ">
+						AND <include refid="where-sendlist"/>
+					</if>
+				</where>
+				)
 	</select>
 	
 	<select id="manageDataCount" parameterType="map" resultType="Integer">
-		SELECT COUNT(RNUM) CC  FROM(
-			SELECT ROWNUM RNUM, r.rewardNo, rewardTitle, isShipping, ro.buyNo, ss.statusName, ro.memberNo, ss.statusNo
-    			FROM reward_shipping_location rl
-    			JOIN reward_buy_overview ro ON ro.buyNo = rl.buyNo
-    			JOIN reward_buy_detail rd ON ro.buyNo = rd.buyNo
-    			JOIN reward r ON rd.rewardNo = r.rewardNo
-    			LEFT OUTER JOIN (
-     				SELECT statusNo, statusName FROM shipping_status
-    			) ss ON ss.statusNo = rl.statusNo
+		SELECT count(rnum) FROM (
+            SELECT rownum rnum, ro.buyNo, rl.statusNo, shippingCount,
+    		CASE WHEN NVL(shippingCount, 0) > 0 THEN 1 ELSE 0 END isShipping
+				FROM reward_buy_overview ro
+                JOIN reward_shipping_location rl ON rl.buyNo = ro.buyNo
+				LEFT OUTER JOIN (
+				    SELECT rd.buyNo, count(isShipping)shippingCount
+				    FROM reward_buy_detail rd
+				    JOIN reward r ON r.rewardNo = rd.rewardNo
+                    where projectNo= #{projectNo}
+            	    GROUP BY rd.buyNo
+				) rr ON rr.buyNo = ro.buyNo
     			<where>
-    				WHERE isShipping = 1
+    				NVL(shippingCount, 0) > 0 AND projectNo = #{projectNo} AND rl.statusNo = 2
 					<if test="keyword!=null and keyword!='' ">
-						<include refid="where-sendlist"/>
+						AND <include refid="where-sendlist"/>
 					</if>
 				</where>
-		)
+				)
 	</select>
 	
-	<select id="readSend" parameterType="Integer" resultType="com.eydiz.studio.Send">
-		SELECT r.rewardNo, rewardTitle, isShipping, ro.buyNo, statusName, zipCode, address1, address2, recipient, message, startShippingDate, r.projectNo
+	<select id="readyDataCount" parameterType="map" resultType="Integer">
+		SELECT count(rnum) FROM (
+            SELECT rownum rnum, ro.buyNo, rl.statusNo, shippingCount,
+    		CASE WHEN NVL(shippingCount, 0) > 0 THEN 1 ELSE 0 END isShipping
+				FROM reward_buy_overview ro
+                JOIN reward_shipping_location rl ON rl.buyNo = ro.buyNo
+				LEFT OUTER JOIN (
+				    SELECT rd.buyNo, count(isShipping)shippingCount
+				    FROM reward_buy_detail rd
+				    JOIN reward r ON r.rewardNo = rd.rewardNo
+                    where projectNo= #{projectNo}
+            	    GROUP BY rd.buyNo
+				) rr ON rr.buyNo = ro.buyNo
+    			<where>
+    				NVL(shippingCount, 0) > 0 AND projectNo = #{projectNo} AND rl.statusNo = 1
+					<if test="keyword!=null and keyword!='' ">
+						AND <include refid="where-sendlist"/>
+					</if>
+				</where>
+				)
+	</select>
+	
+	<select id="readSend" parameterType="map" resultType="com.eydiz.studio.Send">
+		SELECT isShipping, ro.buyNo, statusName, zipCode, address1, address2, recipient, message, startShippingDate, ro.projectNo
 		FROM reward_shipping_location rl
-		    JOIN reward_buy_overview ro ON ro.buyNo = rl.buyNo
-		    JOIN reward_buy_detail rd ON ro.buyNo = rd.buyNo
-		    JOIN reward r ON rd.rewardNo = r.rewardNo
-		    LEFT OUTER JOIN (
+		JOIN reward_buy_overview ro ON ro.buyNo = rl.buyNo
+        JOIN reward_buy_detail rd ON rd.buyNo = ro.buyNo
+		JOIN reward r ON r.rewardNo = rd.rewardNo
+		LEFT OUTER JOIN (
 		    	SELECT statusNo, statusName FROM shipping_status
 		    ) ss ON ss.statusNo = rl.statusNo
-		WHERE r.projectNo = #{projectNo} AND ro.buyNo = #{buyNo} AND r.rewardNo = #{rewardNo}
+		WHERE ro.projectNo = #{projectNo} AND ro.buyNo = #{buyNo}
 	</select>
+	
+	<update id="updateStatusNo" parameterType="Integer">
+		UPDATE reward_shipping_location SET statusNo = statusNo+1
+		WHERE buyNo = #{buyNo}
+	</update>
 	
 </mapper>

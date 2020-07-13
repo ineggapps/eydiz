@@ -450,19 +450,54 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	}
 
 	@Override
-	public Send readSend(int buyNo, int projectNo) {
+	public Send readSend(int projectNo , int buyNo) {
 		Send dto = null;
 
 		try {
 			Map<String, Object> map = new HashMap<>();
-			map.put("buyNo", buyNo);
 			map.put("projectNo", projectNo);
-
+			map.put("buyNo", buyNo);
+			
 			dto = dao.selectOne("studio.readSend", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return dto;
+	}
+
+	@Override
+	public void updateStatus(int buyNo) throws Exception {
+		try {
+			dao.updateData("studio.updateStatusNo", buyNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public List<Send> listSendready(Map<String, Object> map) {
+		List<Send> list = null;
+
+		try {
+			list = dao.selectList("studio.listSendready", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	@Override
+	public int readyDataCount(Map<String, Object> map) {
+		int result = 0;
+
+		try {
+			result = dao.selectOne("studio.readyDataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 }

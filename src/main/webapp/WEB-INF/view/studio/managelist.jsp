@@ -20,7 +20,6 @@ function managesearchlist() {
                		<div align="right" style="margin-bottom: 10px;">
 	                    <select name="condition">
 	                      <option value="buyNo" ${condition=="buyNo" ? "selected='selected'":""}>판매 번호</option>
-	                      <option value="rewardTitle" ${condition=="rewardTitle" ? "selected='selected'":""}>리워드 제목</option>
 	                    </select>
 	                    <input type="text" name="keyword"placeholder="검색" value="${keyword}"/>
 	                    <input type="hidden" name="rows" value="${rows}">
@@ -40,8 +39,7 @@ function managesearchlist() {
 	             	<tr class="send_view_t">
 	             		<td class="send_no">${dto.buyNo}</td>
 						<td class="send_mNo">${dto.memberNo}</td> 
-						<%--${dto.projectNo가 아니라 projectNo를 넘겼어야지.. StudioProjectController.java  line 676: map.put("projectNo", projectNo); --%>
-						<td class="send_rsubject"><a href="<%=cp%>/studio/sendContent/${projectNo}?buyNo=${dto.buyNo}&rewardNo=${dto.rewardNo}&page=${page}">${dto.boughtDate}</a></td> 
+						<td class="send_rsubject"><a href="<%=cp%>/studio/project/shipping/article/${projectNo}?buyNo=${dto.buyNo}&page=${page}">${dto.boughtDate}</a></td> 
 						<td class="send_sendStatus">${dto.statusName}</td> 
 					</tr>
 				</c:forEach>
