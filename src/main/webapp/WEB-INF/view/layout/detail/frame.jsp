@@ -24,14 +24,16 @@
     <script>
     const cp = "<%=cp%>";
     const projectNo = ${project.projectNo};
+    const memberId = "${sessionScope.member.memberId}";
     const memberNickname ="${sessionScope.member.memberNickname}";
+    const memberImageUrl = "${sessionScope.member.memberImageUrl}";
     </script>
     <script src="<%=cp %>/resource/js/jquery-3.5.1.min.js"></script>
     <!--[if IE]> 
 	<script type="text/javascript" src="<%=cp %>/resource/js/lib/bluebird.js"></script>    
 	<![endif]-->
 	<script type="text/javascript" src="<%=cp %>/resource/js/countUp.js"></script>    
-	<script type="text/javascript" src="<%=cp %>/resource/js/dotdotdot.js"></script>    
+	<script type="text/javascript" src="<%=cp %>/resource/js/jquery.ellipsis.min.js"></script>    
 	<script type="text/javascript" src="<%=cp %>/resource/js/detail/detail.js"></script>    
 	<script type="text/javascript" src="<%=cp %>/resource/js/detail/reward.js"></script>    
 	<script>
@@ -54,8 +56,9 @@
     			   	$clone.removeClass( 'sticky' );
     			}			
       		});
+    		$(window).scrollTop(10);
     		$(window).scrollTop(0);
-    });
+    	});
         </script>
   </head>
   <body>

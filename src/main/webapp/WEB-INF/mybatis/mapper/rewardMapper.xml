@@ -25,6 +25,11 @@
 		VALUES(#{buyNo}, #{phone}, #{zipCode}, #{address1}, #{address2}, #{recipient}, #{message})
 	</insert>
 	
+	<!-- 구매 카카오페이 정보 -->
+	<insert id="insertRewardBuyKakao" parameterType="map">
+		INSERT INTO reward_buy_kakao(buyNo, tid) VALUES(#{buyNo}, #{tid})
+	</insert>
+	
 	<!-- 구매취소 쿼리 삽입 -->	
 	<insert id="insertRewardBuyCancel" parameterType="com.eydiz.studio.RewardCancel">
 		INSERT INTO reward_buy_cancel(cancelNo, buyNo, canceledAmount, memo, canceledDate)

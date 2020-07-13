@@ -78,12 +78,13 @@
 	<!-- 자신의 브랜드 프로젝트 모두 불러오기 -->	
 	<select id="listProject" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT 
-			projectNo, p.brandNo, brandName, categoryNo, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
 			projectCreatedDate, projectUpdatedDate, 
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
-			statusNo, projectSummary, projectStory
+			statusNo, projectSummary
 		FROM project p
 		JOIN brand b ON p.brandNo = b.brandNo
+		JOIN project_category pc ON p.categoryNo = pc.categoryNo
 		WHERE b.brandNo = #{brandNo}
 		ORDER BY projectNo DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
@@ -211,6 +212,15 @@
 		UPDATE project SET statusNo=#{statusNo} WHERE <include refid="where-project-brand-no"/>
 	</update>
 	
+	<!-- 프로젝트 상태 로그 입력 -->
+	<update id="insertProjectStatusList" parameterType="map">
+		INSERT INTO project_status_list(projectNo, statusNo, statusMemo)
+		SELECT p.projectNo, #{statusNo}, #{statusMemo}
+		FROM project p
+		JOIN brand b ON b.brandNo = p.brandNo
+		WHERE p.projectNo = #{projectNo} AND b.brandNo = #{brandNo}
+	</update>
+	
 	
 	<!-- 새소식  -->
 	
@@ -248,9 +258,125 @@
 			<if test="keyword!=null and keyword!='' ">
 				<include refid="where-list"/>
 			</if>
+		   		AND pn.projectNo=#{projectNo}
 		</where>
 		ORDER BY newsNo DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="readProjectNews" parameterType="Integer" resultType="com.eydiz.studio.ProjectNews">
+	SELECT newsNo, pn.projectNo, createdDate, title, content FROM project_news pn
+		JOIN project p ON pn.projectNo = p.projectNo
+		WHERE newsNo = #{newsNo}
+	</select>
+	
+	<update id="updateProjectNews" parameterType="com.eydiz.studio.ProjectNews">
+	UPDATE project_news SET title = #{title}, content = #{content}
+	WHERE newsNo = #{newsNo}
+	</update>
+	
+	<delete id="deleteProjectNews" parameterType="Integer">
+	DELETE FROM project_news WHERE newsNo=#{newsNo}
+	</delete>
+	
+	<!-- 펀딩/후원 현황  -->
+	
+	<!-- 배송관리 -->
+	<sql id="where-sendlist">
+		<if test="condition=='buyNo'">
+			( INSTR(ro.buyNo, #{keyword}) &gt; 0 )
+				
+		</if>
+		<if test="condition=='rewardTitle'">
+			( INSTR(rewardTitle, #{keyword}) &gt; 0 )
+
+		</if>
+	</sql>
+	
+	<select id="listSend" parameterType="map" resultType="com.eydiz.studio.Send">
+		SELECT r.rewardNo, rewardTitle, isShipping, ro.buyNo, statusName, ro.memberNo, ss.statusNo, rd.buyno
+		FROM reward_shipping_location rl
+		JOIN reward_buy_overview ro ON ro.buyNo = rl.buyNo
+		JOIN reward_buy_detail rd ON ro.buyNo = rd.buyNo
+		JOIN reward r ON rd.rewardNo = r.rewardNo
+		LEFT OUTER JOIN (
+   			SELECT statusNo, statusName FROM shipping_status
+		) ss ON ss.statusNo = rl.statusNo
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-sendlist"/>
+			</if>
+		</where>
+		ORDER BY rd.buyno DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="listSendmanage" parameterType="map" resultType="com.eydiz.studio.Send">
+		SELECT r.rewardNo, rewardTitle, isShipping, ro.buyNo, statusName, ro.memberNo, ss.statusNo
+		FROM reward_shipping_location rl
+		JOIN reward_buy_overview ro ON ro.buyNo = rl.buyNo
+		JOIN reward_buy_detail rd ON ro.buyNo = rd.buyNo
+		JOIN reward r ON rd.rewardNo = r.rewardNo
+		LEFT OUTER JOIN (
+    		SELECT statusNo, statusName FROM shipping_status
+		) ss ON ss.statusNo = rl.statusNo
+		<where>
+			isShipping = 1
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-sendlist"/>
+			</if>
+		</where>
+		ORDER BY rd.buyNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="sendDataCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(RNUM) CC  FROM(
+    		SELECT ROWNUM RNUM, r.rewardNo, r.rewardTitle, r.isShipping, ro.buyNo, ss.statusName, ro.memberNo
+        		FROM reward_shipping_location rl
+        		JOIN reward_buy_overview ro ON ro.buyNo = rl.buyNo
+        		JOIN reward_buy_detail rd ON ro.buyNo = rd.buyNo
+        		JOIN reward r ON rd.rewardNo = r.rewardNo
+        		LEFT OUTER JOIN (
+            		SELECT statusNo, statusName FROM shipping_status
+        		) ss ON ss.statusNo = rl.statusNo
+        	<where>
+				<if test="keyword!=null and keyword!='' ">
+					<include refid="where-sendlist"/>
+				</if>
+			</where>
+		)
+	</select>
+	
+	<select id="manageDataCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(RNUM) CC  FROM(
+			SELECT ROWNUM RNUM, r.rewardNo, rewardTitle, isShipping, ro.buyNo, ss.statusName, ro.memberNo, ss.statusNo
+    			FROM reward_shipping_location rl
+    			JOIN reward_buy_overview ro ON ro.buyNo = rl.buyNo
+    			JOIN reward_buy_detail rd ON ro.buyNo = rd.buyNo
+    			JOIN reward r ON rd.rewardNo = r.rewardNo
+    			LEFT OUTER JOIN (
+     				SELECT statusNo, statusName FROM shipping_status
+    			) ss ON ss.statusNo = rl.statusNo
+    			<where>
+    				WHERE isShipping = 1
+					<if test="keyword!=null and keyword!='' ">
+						<include refid="where-sendlist"/>
+					</if>
+				</where>
+		)
+	</select>
+	
+	<select id="readSend" parameterType="Integer" resultType="com.eydiz.studio.Send">
+		SELECT r.rewardNo, rewardTitle, isShipping, ro.buyNo, statusName, zipCode, address1, address2, recipient, message, startShippingDate, r.projectNo
+		FROM reward_shipping_location rl
+		    JOIN reward_buy_overview ro ON ro.buyNo = rl.buyNo
+		    JOIN reward_buy_detail rd ON ro.buyNo = rd.buyNo
+		    JOIN reward r ON rd.rewardNo = r.rewardNo
+		    LEFT OUTER JOIN (
+		    	SELECT statusNo, statusName FROM shipping_status
+		    ) ss ON ss.statusNo = rl.statusNo
+		WHERE r.projectNo = #{projectNo} AND ro.buyNo = #{buyNo} AND r.rewardNo = #{rewardNo}
 	</select>
 	
 </mapper>

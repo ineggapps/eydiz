@@ -113,7 +113,7 @@ CREATE TABLE project(
     projectStatusMemo VARCHAR2(255)  NOT NULL, -- 프로젝트 진행상황 텍스트 작성
     projectImageUrl VARCHAR2(200), -- 프로젝트 이미지 경로
     projectGoalAmount NUMBER NOT NULL, -- 목표 금액
-    projectAttainAmount NUMBER DEFAULT 0 NOT NULL, -- 달성 금액 (0)
+    projectAttainAmount NUMBER DEFAULT 0 NOT NULL, -- 달성 금액 (0), 만들었으나 아직은 활용하지 않음.
     projectCreatedDate DATE DEFAULT SYSDATE NOT NULL, -- 프로젝트 생성일자
     projectUpdatedDate DATE DEFAULT SYSDATE NOT NULL, -- 프로젝트 수정일자
     projectStartDate DATE NOT NULL, -- 프로젝트 시작일자
@@ -240,7 +240,7 @@ CREATE TABLE project_community(
     content VARCHAR2(4000) NOT NULL,
     createdDate DATE DEFAULT SYSDATE NOT NULL,
     CONSTRAINT PK_PROJECT_COMMUNITY_COMMENTNO PRIMARY KEY(commentNo),
-    CONSTRAINT FK_PROJECT_COMMUNITY_PARENTCOMMENTNO FOREIGN KEY(parentCommentNo) REFERENCES project_community(commentNo),
+    CONSTRAINT FK_PROJECT_COMMUNITY_PARENTCOMMENTNO FOREIGN KEY(parentCommentNo) REFERENCES project_community(commentNo) ON DELETE CASCADE,
     CONSTRAINT FK_PROJECT_COMMUNITY_PROJECTNO FOREIGN KEY(projectNo) REFERENCES project(projectNo),
     CONSTRAINT FK_PROJECT_COMMUNITY_MEMBERID FOREIGN KEY(memberId) REFERENCES member_detail(memberId)
 );
@@ -389,6 +389,14 @@ CREATE SEQUENCE reward_buy_detail_seq
    NOMAXVALUE
    NOCYCLE
    NOCACHE;
+
+--카카오페이 관련 테이블
+CREATE TABLE reward_buy_kakao(
+    buyNo NUMBER NOT NULL,
+    tid VARCHAR2(50) NOT NULL,
+    CONSTRAINT PK_REWARD_BUY_KAKAO PRIMARY KEY(buyNo),
+    CONSTRAINT FK_REWARD_BUY_KAKAO_BUY_NO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo)
+);
 
 CREATE TABLE reward_buy_cancel(
     cancelNo NUMBER NOT NULL,
@@ -782,6 +790,7 @@ COMMIT;
 --구매내역 초기화 코드
 delete from reward_shipping_location;
 delete from reward_buy_detail;
+delete from reward_buy_kakao;
 delete from reward_buy_cancel;
 delete from reward_buy_overview;
 update reward set remainQuantity=limitQuantity;
@@ -920,3 +929,90 @@ BEGIN
 END;
 /
 
+
+--SYS계정에서 프로시저 및 잡 스케줄러 생성 권한 주기
+GRANT CREATE ANY JOB TO eydiz;
+
+
+--잡스케줄러로 프로젝트 마감기간 끝났는지 확인하기
+CREATE OR REPLACE PROCEDURE PROJECT_MONITOR_STATUS
+IS
+BEGIN
+    UPDATE project SET statusNo = 6 WHERE projectEndDate - SYSDATE < 0 AND statusNo=5;
+    COMMIT;
+END;
+/
+
+BEGIN
+    DBMS_SCHEDULER.CREATE_JOB
+    (
+    JOB_NAME => 'PROJECT_REFRESHER',
+    JOB_TYPE => 'STORED_PROCEDURE',
+    JOB_ACTION => 'PROJECT_MONITOR_STATUS',
+    REPEAT_INTERVAL => 'FREQ=MINUTELY; INTERVAL =60', --1시간에 1번
+    START_DATE => SYSTIMESTAMP,
+    COMMENTS => '날짜 갱신 테스트 (개발용 60분간)'
+    );
+END;
+/
+COMMIT;
+
+
+-- 잡 스케줄러 생성 확인
+SELECT 
+JOB_NAME, 
+JOB_TYPE, 
+JOB_ACTION, 
+REPEAT_INTERVAL, 
+ENABLED, 
+AUTO_DROP, 
+STATE, 
+COMMENTS 
+FROM 
+USER_SCHEDULER_JOBS;
+
+-- 잡 스케줄러 실행
+BEGIN
+    DBMS_SCHEDULER.ENABLE ('PROJECT_REFRESHER');
+END;
+
+-- 잡 실행객체 로그 확인
+SELECT * FROM USER_SCHEDULER_JOB_LOG;
+
+-- 참조
+-- https://miid.tistory.com/228
+-- https://goddaehee.tistory.com/51
+
+-- 잡 삭제
+
+BEGIN
+    DBMS_SCHEDULER.DROP_JOB
+    (
+        JOB_NAME => 'PROJECT_REFRESHER',
+        FORCE => FALSE
+    );
+END;
+
+
+
+
+
+-- DECLARE
+-- X NUMBER;
+-- BEGIN
+-- SYS.DBMS_JOB.SUBMIT
+-- ( job => X
+-- ,what => 'PROJECT_MONITOR_STATUS'
+-- ,next_date => to_date('13-07-2020 08:35:00','dd/mm/yyyy hh24:mi:ss')
+-- ,interval => 'TRUNC(SYSDATE)+30/(60*60*24)'
+-- ,no_parse => TRUE
+-- );
+-- END;
+-- /
+-- COMMIT; --커밋해야 dba_jobs 테이블에서 조회 가능
+
+-- --잡 스케줄러 지우기
+-- select job, what, failures, total_time, last_date, last_sec, next_date, next_sec, interval
+-- from dba_jobs order by next_date;
+-- --21 101 81 83 82 65
+-- EXECUTE dbms_ijob.remove(65);

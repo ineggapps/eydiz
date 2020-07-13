@@ -6,12 +6,12 @@
 	<select id="readProject" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT 
 			p.projectNo, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
-			projectCreatedDate, projectUpdatedDate, 
+			projectCreatedDate, projectUpdatedDate, b.memberNo,
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
 			statusNo, projectSummary, projectStory, 
 			p.brandNo, brandName, managerName, managerEmail, managerPhone,
 			memberImageUrl,
-			FLOOR(projectEndDate - SYSDATE) remainDays,
+			TRUNC(projectEndDate - SYSDATE) remainDays,
 			NVL(likeCount,0) likeCount,
 			NVL(supportCount, 0) supportCount,
 			NVL(communityCount, 0) communityCount,
@@ -36,15 +36,15 @@
 		) ml ON ml.projectNo = p.projectNo
 		</if>
 		LEFT OUTER JOIN (
-			SELECT projectNo, count(memberNo) supportCount 
-			FROM reward_buy_overview
-			WHERE projectNo=#{projectNo}
-			GROUP BY projectNo
+			SELECT DISTINCT projectNo, count(DISTINCT memberNo) over(partition by projectNo) supportCount 
+			FROM reward_buy_overview ro
+            LEFT OUTER JOIN  reward_buy_cancel rc ON ro.buyNo = rc.buyNo
+			WHERE cancelNo IS NULL AND projectNo=#{projectNo}
 		) sc ON sc.projectNo = p.projectNo
 		LEFT OUTER JOIN (
             SELECT projectNo, count(*) communityCount
             FROM project_community
-            WHERE projectNo = #{projectNo} and parentCommentNo IS NULL
+            WHERE projectNo = #{projectNo} AND parentCommentNo IS NULL
             GROUP BY projectNo
         ) pc ON pc.projectNo = p.projectNo
         LEFT OUTER JOIN (
@@ -54,15 +54,15 @@
         	GROUP BY projectNo
         ) pn ON pn.projectNo = p.projectNo
         LEFT OUTER JOIN(
-            SELECT projectNo, sum(totalAmount) totalAmount
-            FROM reward_buy_overview
-            WHERE projectNo = #{projectNo}
-            GROUP BY projectNo
+            SELECT DISTINCT projectNo, SUM(totalAmount) OVER(PARTITION BY projectNo) totalAmount
+            FROM reward_buy_overview ro
+            LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+            WHERE projectNo = #{projectNo} AND rc.cancelNo IS NULL
         ) ro ON ro.projectNo = p.projectNo
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
 		JOIN member_detail md ON md.memberNo = b.memberNo
-		WHERE p.projectNo = #{projectNo}
+		WHERE p.projectNo = #{projectNo} AND (statusNo=5 OR statusNo=6)
 	</select>
 	
 	<!-- 프로젝트 목록에 해당하는 리워드 번호 불러오기 -->
@@ -85,19 +85,71 @@
 		ORDER BY amount 
 	</select>
 	
-	<!-- 인기 프로젝트: 일단 끝나는 날이 가장 미래인 순으로 정렬 -->
+	<!-- 인기 프로젝트: 
+			배점:totalAmount*0.2+supportCount*0.3+trunc(attainRate*100)*0.2+newsCount*0.1+communityCount*0.1+likeCount*0.1
+	-->
 	<select id="listPopularProject" resultType="com.eydiz.studio.Project">
 		SELECT 
-			projectNo, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			p.projectNo, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
 			projectCreatedDate, projectUpdatedDate, 
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
-			statusNo, projectSummary, projectStory,
-			p.brandNo, brandName, managerName, managerEmail, managerPhone
+			statusNo, projectSummary,
+			p.brandNo, brandName, managerName, managerEmail, managerPhone,
+			NVL(likeCount, 0) likeCount,
+			NVL(supportCount, 0) supportCount,
+			NVL(communityCount, 0) communityCount,
+			NVL(newsCount, 0) newsCount,
+			NVL(totalAmount, 0) totalAmount,
+			NVL(totalAmount,0)/projectGoalAmount attainRate,
+			NVL(approvalDate, TO_DATE('1990-01-01')) approvalDate
 		FROM project p
 		JOIN brand b ON p.brandNo = b.brandNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
-		WHERE statusNo = 5
-		ORDER BY projectEndDate DESC
+		LEFT OUTER JOIN (
+			SELECT projectNo, COUNT(*) likeCount
+			FROM project_like
+			GROUP BY projectNo
+		) pl ON pl.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+			SELECT DISTINCT projectNo, count(DISTINCT memberNo) over(partition by projectNo) supportCount 
+			FROM reward_buy_overview ro
+            LEFT OUTER JOIN  reward_buy_cancel rc ON ro.buyNo = rc.buyNo
+			WHERE cancelNo IS NULL
+		) sc ON sc.projectNo = p.projectNo
+		LEFT OUTER JOIN (
+            SELECT projectNo, count(*) communityCount
+            FROM project_community
+            WHERE parentCommentNo IS NULL
+            GROUP BY projectNo
+        ) pc ON pc.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+        	SELECT projectNo, count(*) newsCount
+        	FROM project_news
+        	GROUP BY projectNo
+        ) pn ON pn.projectNo = p.projectNo
+        LEFT OUTER JOIN(
+            SELECT DISTINCT projectNo, SUM(totalAmount) OVER(PARTITION BY projectNo) totalAmount
+            FROM reward_buy_overview ro
+            LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+            WHERE rc.cancelNo IS NULL
+        ) ro ON ro.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+        	SELECT projectNo, created approvalDate
+            FROM project_status_list
+            WHERE statusNo=5
+        ) psl ON psl.projectNo = p.projectNo
+		WHERE statusNo = 5 AND projectEndDate - SYSDATE >= 0
+		ORDER BY
+		(
+			totalAmount*0.2 +
+			supportCount*0.3 + 
+			attainRate*0.2 +
+			newsCount*0.1 +
+			communityCount*0.1 + 
+			likeCount*0.1
+		) DESC
+		,approvalDate DESC
+		, projectEndDate ASC
 		OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
 	</select>
 	
@@ -124,37 +176,108 @@
 		where projectNo=#{projectNo} AND memberNo=#{memberNo}
 	</delete>
 	
+	
+	<!-- 커뮤니티 댓글 개수 -->
+	<select id="countCommunityComment" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM project_community
+		WHERE projectNo=#{projectNo} AND parentCommentNo IS NULL
+	</select>
+	
 	<!-- 커뮤니티 댓글 조회하기 -->
-	<select id="selectCommunityComment" parameterType="Integer" resultType="com.eydiz.studio.ProjectCommunity">
+	<select id="selectCommunityComment" parameterType="map" resultType="com.eydiz.studio.ProjectCommunity">
 		SELECT commentNo, pc.parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate, 
-					memberImageUrl, NVL(replyCount, 0) replyCount
+					memberImageUrl, NVL(replyCount, 0) replyCount,
+                    CASE WHEN NVL(buyCount,0) - NVL(cancelCount,0) > 0 THEN 1 ELSE 0 END hasFunded,
+                    CASE WHEN b.memberNo = m.memberNo THEN 1 ELSE 0 END isBrand,
+                    NVL(buyCount,0), NVL(cancelCount,0)
 		FROM project_community pc
 		JOIN member_detail m ON m.memberId = pc.memberId
+        JOIN project p ON p.projectNo = pc.projectNo
 		LEFT OUTER JOIN(
 			SELECT parentCommentNo, count(*) replyCount
 			FROM project_community
             GROUP BY parentCommentNo
 		) parentCmt ON parentCmt.parentCommentNo = commentNo
-		WHERE pc.projectNo= #{projectNo} AND pc.parentCommentNo IS NULL
+        LEFT OUTER JOIN (
+            SELECT projectNo, memberNo, COUNT(*) buyCount
+            FROM reward_buy_overview ro
+            GROUP BY projectNo, memberNo
+        ) rr ON rr.projectNo = #{projectNo} AND m.memberNo = rr.memberNo
+        LEFT OUTER JOIN ( 
+            SELECT projectNo, memberNo, COUNT(*) cancelCount
+            FROM reward_buy_cancel rc
+            JOIN reward_buy_overview ro ON rc.buyNo = ro.buyNo
+            GROUP BY projectNo, memberNo
+        ) rrr ON rrr.projectNo = #{projectNo}
+        LEFT OUTER JOIN brand b ON b.brandNo = p.brandNo AND m.memberNo = b.memberNo
+		WHERE pc.projectNo=#{projectNo} AND pc.parentCommentNo IS NULL
 		ORDER BY commentNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 	<!-- 커뮤니티 답글 조회하기 -->
 	<select id="selectCommunityCommentReply" parameterType="map" resultType="com.eydiz.studio.ProjectCommunity">
-		SELECT commentNo, parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate,
-					memberImageUrl
+ 		SELECT commentNo, parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate,
+					memberImageUrl,
+                    CASE WHEN NVL(buyCount,0) - NVL(cancelCount,0) > 0 THEN 1 ELSE 0 END hasFunded,
+                    CASE WHEN b.memberNo = m.memberNo THEN 1 ELSE 0 END isBrand
 		FROM project_community pc
 		JOIN member_detail m ON m.memberId = pc.memberId
-		WHERE pc.projectNo= #{projectNo}
-		AND parentCommentNo =#{parentCommentNo}
+        JOIN project p ON p.projectNo = pc.projectNo
+        LEFT OUTER JOIN (
+            SELECT projectNo, memberNo, COUNT(*) buyCount
+            FROM reward_buy_overview ro
+            GROUP BY projectNo, memberNo
+        ) rr ON rr.projectNo = #{projectNo} AND m.memberNo = rr.memberNo
+        LEFT OUTER JOIN ( 
+            SELECT projectNo, memberNo, COUNT(*) cancelCount
+            FROM reward_buy_cancel rc
+            JOIN reward_buy_overview ro ON rc.buyNo = ro.buyNo
+            GROUP BY projectNo, memberNo
+        ) rrr ON rrr.projectNo = #{projectNo}
+        LEFT OUTER JOIN brand b ON b.brandNo = p.brandNo AND m.memberNo = b.memberNo
+		WHERE pc.projectNo= #{projectNo} AND parentCommentNo = #{parentCommentNo}
 		ORDER BY commentNo
 	</select>
 	
 	<!-- 커뮤니티 댓글 작성하기 / 삭제하기 -->
+	<select id="getNewCommentNo" resultType="Integer">
+		SELECT project_community_seq.NEXTVAL from dual
+	</select>
+	
 	<insert id="insertCommunity" parameterType="com.eydiz.studio.ProjectCommunity">
 		INSERT INTO project_community(commentNo, parentCommentNo, projectNo, memberId, content, createdDate)
-		VALUES(project_community_seq.NEXTVAL, #{parentCommentNo, jdbcType=INTEGER}, #{projectNo}, #{memberId}, #{content}, SYSDATE)
+		VALUES(${commentNo}, #{parentCommentNo, jdbcType=INTEGER}, #{projectNo}, #{memberId}, #{content}, SYSDATE)
 	</insert>
+	
+	<!-- 커뮤니티 댓글 1개 조회하기 작성 후 echo를 위함 (hasFunded, isBrand)-->
+	<select id="readCommunity" parameterType="Integer" resultType="com.eydiz.studio.ProjectCommunity">
+		SELECT commentNo, pc.parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate, 
+					memberImageUrl, NVL(replyCount, 0) replyCount,
+                    CASE WHEN NVL(buyCount,0) - NVL(cancelCount,0) > 0 THEN 1 ELSE 0 END hasFunded,
+                    CASE WHEN b.memberNo = m.memberNo THEN 1 ELSE 0 END isBrand
+		FROM project_community pc
+		JOIN member_detail m ON m.memberId = pc.memberId
+        JOIN project p ON p.projectNo = pc.projectNo
+		LEFT OUTER JOIN(
+			SELECT parentCommentNo, count(*) replyCount
+			FROM project_community
+            GROUP BY parentCommentNo
+		) parentCmt ON parentCmt.parentCommentNo = commentNo
+        LEFT OUTER JOIN (
+            SELECT projectNo, memberNo, COUNT(*) buyCount
+            FROM reward_buy_overview ro
+            GROUP BY projectNo, memberNo
+        ) rr ON rr.projectNo = pc.projectNo AND m.memberNo = rr.memberNo
+        LEFT OUTER JOIN ( 
+            SELECT projectNo, memberNo, COUNT(*) cancelCount
+            FROM reward_buy_cancel rc
+            JOIN reward_buy_overview ro ON rc.buyNo = ro.buyNo
+            GROUP BY projectNo, memberNo
+        ) rrr ON rrr.projectNo = pc.projectNo
+        LEFT OUTER JOIN brand b ON b.brandNo = p.brandNo AND m.memberNo = b.memberNo
+		WHERE commentNo=#{commentNo}
+	</select>
 	
 	<!-- 커뮤니티 댓글 수정하기 -->
 	<update id="updateCommunity" parameterType="com.eydiz.studio.ProjectCommunity">
@@ -163,10 +286,16 @@
 		WHERE commentNo = #{commentNo} AND memberId=#{memberId}
 	</update>
 	
-	<!-- 커뮤니티 댓글 삭제하기 -->
+	<!-- 커뮤니티 댓글 삭제하기(답글 때문에 계층적 질의), 단, parentCommentNo의 제약조건이 ON DELETE CASCADE가 되어 있어야 함 -->
 	<delete id="deleteCommunity" parameterType="com.eydiz.studio.ProjectCommunity">
-		DELETE FROM project_community 
-		WHERE commentNo=#{commentNo} AND memberId=#{memberId}
+		DELETE FROM project_community
+		WHERE memberId=#{memberId} AND 
+		commentNo 
+		IN (
+		    SELECT commentNo from project_community
+		    START WITH commentNo=#{commentNo}
+		    CONNECT BY PRIOR commentNo = parentCommentNo
+		)
 	</delete>
 	
 </mapper>

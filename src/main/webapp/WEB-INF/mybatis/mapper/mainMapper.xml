@@ -22,40 +22,242 @@
 	
 	<!-- 나중에 WHERE조건까지 추가하기 -->
 	<select id="fundingDataCount" parameterType="map" resultType="Integer">
-		SELECT NVL(COUNT(*),0)
-		FROM project
-		WHERE statusNo=5
-					AND FLOOR(projectEndDate - SYSDATE) >= 0
-		<if test="categoryNo != null and categoryNo > 0">
+		SELECT count(rnum) FROM (
+		SELECT
+			rownum rnum,
+			p.projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, 
+			projectImageUrl, projectGoalAmount, projectAttainAmount, 
+			projectEndDate, statusNo,
+			FLOOR(projectEndDate - SYSDATE) remainDays,
+			NVL(likeCount, 0) likeCount,
+			NVL(supportCount, 0) supportCount,
+			NVL(communityCount, 0) communityCount,
+			NVL(newsCount, 0) newsCount,
+			NVL(totalAmount, 0) totalAmount,
+			NVL(totalAmount,0)/projectGoalAmount attainRate,
+			NVL(approvalDate, TO_DATE('1990-01-01')) approvalDate 
+		FROM
+			project p
+		JOIN brand b ON p.brandNo = b.brandNo
+		JOIN project_category pc ON p.categoryNo = pc.categoryNo
+		LEFT OUTER JOIN (
+			SELECT projectNo, COUNT(*) likeCount
+			FROM project_like
+			GROUP BY projectNo
+		) pl ON pl.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+			SELECT DISTINCT projectNo, count(DISTINCT memberNo) over(partition by projectNo) supportCount 
+			FROM reward_buy_overview ro
+            LEFT OUTER JOIN  reward_buy_cancel rc ON ro.buyNo = rc.buyNo
+			WHERE cancelNo IS NULL
+		) sc ON sc.projectNo = p.projectNo
+		LEFT OUTER JOIN (
+            SELECT projectNo, count(*) communityCount
+            FROM project_community
+            WHERE parentCommentNo IS NULL
+            GROUP BY projectNo
+        ) pc ON pc.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+        	SELECT projectNo, count(*) newsCount
+        	FROM project_news
+        	GROUP BY projectNo
+        ) pn ON pn.projectNo = p.projectNo
+        LEFT OUTER JOIN(
+            SELECT DISTINCT projectNo, SUM(totalAmount) OVER(PARTITION BY projectNo) totalAmount
+            FROM reward_buy_overview ro
+            LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+            WHERE rc.cancelNo IS NULL
+        ) ro ON ro.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+        	SELECT projectNo, created approvalDate
+            FROM project_status_list
+            WHERE statusNo=5
+            FETCH FIRST 1 ROWS ONLY
+        ) psl ON psl.projectNo = p.projectNo
+		<where>
+			<choose>
+				<when test="status == 'ongoing'">
+					(statusNo = 5 AND FLOOR(projectEndDate - SYSDATE) &gt;= 0)
+				</when>
+				<when test="status == 'closed'">
+					(statusNo = 6 AND FLOOR(projectEndDate - SYSDATE) &lt; 0)
+				</when>
+				<otherwise>
+					(statusNo = 5 OR statusNo = 6)
+				</otherwise>
+			</choose>
+			<if test="categoryNo != null and categoryNo > 0">
 			AND p.categoryNo = #{categoryNo}
-		</if>
+			</if>
+			<if test="keyword != null and keyword != ''">
+			AND (
+				INSTR(projectName, #{keyword}) > 0 OR
+				INSTR(projectSummary, #{keyword}) > 0 OR
+				DBMS_LOB.INSTR(projectStory, #{keyword}) > 0
+			)
+			</if>
+		</where>
+		<choose>
+			<when test="sort == 'recommend'"><include refid="sort-recommend"/></when>
+			<when test="sort == 'popular'"><include refid="sort-popular"/></when>
+			<when test="sort == 'amount'"><include refid="sort-amount"/></when>
+			<when test="sort == 'deadline'"><include refid="sort-deadline"/></when>
+			<when test="sort == 'latest'"><include refid="sort-latest"/></when>
+			<when test="sort == 'community'"><include refid="sort-community"/></when>
+			<otherwise>
+				<include refid="sort-recommend"/>
+			</otherwise>
+		</choose>)
 	</select>
+	
+	<!-- approvalDate를 구할 때는 JOIN을 하는 것이 맞지만, 이전에 승인없이 테스트하던 자료를 살려두기 위해서 
+	임의로 left outer join을 사용하여 null을 반환하여 1990-01-01로 날짜를 지정하도록 하였음.-->
 	<select id="listFunding" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT 
 			p.projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, 
 			projectImageUrl, projectGoalAmount, projectAttainAmount, 
 			projectEndDate, statusNo,
 			FLOOR(projectEndDate - SYSDATE) remainDays,
-			NVL(totalAmount,0) totalAmount,
-			NVL(totalAmount,0)/projectGoalAmount attainRate
+			NVL(likeCount, 0) likeCount,
+			NVL(supportCount, 0) supportCount,
+			NVL(communityCount, 0) communityCount,
+			NVL(newsCount, 0) newsCount,
+			NVL(totalAmount, 0) totalAmount,
+			NVL(totalAmount,0)/projectGoalAmount attainRate,
+			NVL(approvalDate, TO_DATE('1990-01-01')) approvalDate 
 		FROM
 			project p
-		LEFT OUTER JOIN(
-            SELECT projectNo, sum(totalAmount) totalAmount
-            FROM reward_buy_overview
-            GROUP BY projectNo
-        ) ro ON ro.projectNo = p.projectNo
 		JOIN brand b ON p.brandNo = b.brandNo
-		JOIN project_category pc on p.categoryNo = pc.categoryNo
-		WHERE
-			statusNo=5
-			AND FLOOR(projectEndDate - SYSDATE) >= 0
+		JOIN project_category pc ON p.categoryNo = pc.categoryNo
+		LEFT OUTER JOIN (
+			SELECT projectNo, COUNT(*) likeCount
+			FROM project_like
+			GROUP BY projectNo
+		) pl ON pl.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+			SELECT DISTINCT projectNo, count(DISTINCT memberNo) over(partition by projectNo) supportCount 
+			FROM reward_buy_overview ro
+            LEFT OUTER JOIN  reward_buy_cancel rc ON ro.buyNo = rc.buyNo
+			WHERE cancelNo IS NULL
+		) sc ON sc.projectNo = p.projectNo
+		LEFT OUTER JOIN (
+            SELECT projectNo, count(*) communityCount
+            FROM project_community
+            WHERE parentCommentNo IS NULL
+            GROUP BY projectNo
+        ) pc ON pc.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+        	SELECT projectNo, count(*) newsCount
+        	FROM project_news
+        	GROUP BY projectNo
+        ) pn ON pn.projectNo = p.projectNo
+        LEFT OUTER JOIN(
+            SELECT DISTINCT projectNo, SUM(totalAmount) OVER(PARTITION BY projectNo) totalAmount
+            FROM reward_buy_overview ro
+            LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+            WHERE rc.cancelNo IS NULL
+        ) ro ON ro.projectNo = p.projectNo
+        LEFT OUTER JOIN (
+        	SELECT projectNo, created approvalDate
+            FROM project_status_list
+            WHERE statusNo=5
+            FETCH FIRST 1 ROWS ONLY
+        ) psl ON psl.projectNo = p.projectNo
+		<where>
+			<choose>
+				<when test="status == 'ongoing'">
+					(statusNo = 5 AND FLOOR(projectEndDate - SYSDATE) &gt;= 0)
+				</when>
+				<when test="status == 'closed'">
+					(statusNo = 6 AND FLOOR(projectEndDate - SYSDATE) &lt; 0)
+				</when>
+				<otherwise>
+					(statusNo = 5 OR statusNo = 6)
+				</otherwise>
+			</choose>
 			<if test="categoryNo != null and categoryNo > 0">
 			AND p.categoryNo = #{categoryNo}
 			</if>
-		ORDER BY projectNo DESC
+			<if test="keyword != null and keyword != ''">
+			AND (
+				INSTR(projectName, #{keyword}) > 0 OR
+				INSTR(projectSummary, #{keyword}) > 0 OR
+				DBMS_LOB.INSTR(projectStory, #{keyword}) > 0
+			)
+			</if>
+		</where>
+		<choose>
+			<when test="sort == 'recommend'"><include refid="sort-recommend"/></when>
+			<when test="sort == 'popular'"><include refid="sort-popular"/></when>
+			<when test="sort == 'amount'"><include refid="sort-amount"/></when>
+			<when test="sort == 'deadline'"><include refid="sort-deadline"/></when>
+			<when test="sort == 'latest'"><include refid="sort-latest"/></when>
+			<when test="sort == 'community'"><include refid="sort-community"/></when>
+			<otherwise>
+				<include refid="sort-recommend"/>
+			</otherwise>
+		</choose>
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
+	<sql id="sort-recommend">
+		ORDER BY 
+		approvalDate DESC
+		,(
+			totalAmount*0.2 +
+			supportCount*0.3 + 
+			attainRate*0.2 +
+			newsCount*0.1 +
+			communityCount*0.1 + 
+			likeCount*0.1
+		) DESC
+		, projectNo DESC
+	</sql>
+	
+	<sql id="sort-popular">
+		ORDER BY
+		(
+			totalAmount*0.2 +
+			supportCount*0.3 + 
+			attainRate*0.2 +
+			newsCount*0.1 +
+			communityCount*0.1 + 
+			likeCount*0.1
+		) DESC
+		,approvalDate DESC
+		, projectEndDate ASC
+	</sql>
+	
+	<sql id="sort-amount">
+		ORDER BY
+		totalAmount DESC
+		,approvalDate DESC
+		, projectEndDate ASC
+	</sql>
+	
+	<sql id="sort-deadline">
+		ORDER BY
+		(CASE WHEN projectEndDate - SYSDATE >= 0 THEN 1 ELSE 0 END) DESC
+		, projectEndDate - SYSDATE ASC
+		, approvalDate DESC
+		, projectEndDate ASC
+	</sql>
+	
+	<sql id="sort-latest">
+		ORDER BY
+		approvalDate DESC
+		, (CASE WHEN projectEndDate - SYSDATE >= 0 THEN 1 ELSE 0 END) DESC
+		, projectEndDate - SYSDATE ASC
+		, projectEndDate ASC
+	</sql>
+	
+	<sql id="sort-community">
+		ORDER BY
+		(CASE WHEN projectEndDate - SYSDATE >= 0 THEN 1 ELSE 0 END) DESC
+		, (communityCount * 0.5 + newsCount * 0.5) DESC
+		, approvalDate DESC
+		, projectEndDate - SYSDATE ASC
+		, projectEndDate ASC
+	</sql>
 	
 </mapper>

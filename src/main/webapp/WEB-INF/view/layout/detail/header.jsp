@@ -7,7 +7,7 @@
 %>
 <div class="headerInner">
   <h1 class="logo"><a href="<%=cp%>/main">eydiz</a></h1>
-  <ul class="gnbExtended">
+    <ul class="gnbExtended">
       <li> 
         <a href="<%=cp %>/main" class="menu on"><span>펀딩하기</span></a>
       </li>
@@ -17,23 +17,19 @@
       <li>
         <a href="<%=cp %>/partner/list" class="menu"><span>파트너</span></a>
       </li>
-      <li>
-        <a href="<%=cp %>/cast/news" class="menu"><span>캐스트</span></a>
-      </li>
-      <li>
-        <a href="<%=cp %>/story/story" class="menu"><span>스토리</span></a>
-      </li>
-  </ul>
+    </ul>
   <div class="headerInnerRight">
       <ul class="gnbAuth">
+      	<c:if test="${not empty sessionScope.member }">
         <li><a href="<%=cp %>/studio/project/list" class="btnSubmit bordering btnMakeProject">프로젝트 관리</a></li>
+      	</c:if>
     	<c:if test="${empty sessionScope.member}">
         <li><a href="<%=cp%>/member/join">회원가입</a></li>
         <li><a href="<%=cp%>/member/login">로그인</a></li>
     	</c:if>
     	<c:if test="${not empty sessionScope.member}">
 		<li><a href="<%=cp%>/member/logout">로그아웃</a><li>
-		<li><a href="<%=cp%>/mypage" class="profilePic">
+		<li><a href="<%=cp%>/mypage/myInfo" class="profilePic">
 			<c:if test="${sessionScope.member.memberImageUrl!=null}">
 			<span class="displayAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">&nbsp;</span>
 			</c:if>
@@ -48,12 +44,12 @@
 <div class="headerInnerMobile">
   <div class="mobileNav">
     <h2 class="title">${project.projectName}</h2>
-    <button type="button" class="btnBack btnFlat btnMobileNav">
+    <button type="button" class="btnBack btnFlat btnMobileNav" onclick="javascript:history.back(1);">
       <span class="hidden">이전</span>
     </button>
-    <button type="button" class="btnHome btnFlat btnMobileNav">
+    <a href="<%=cp %>" class="btnHome btnFlat btnMobileNav">
       <span class="hidden">홈</span>
-    </button>
+    </a>
   </div>
 </div>
 <article class="row">

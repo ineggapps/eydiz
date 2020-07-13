@@ -38,13 +38,22 @@ public interface StudioService {
 	public void updateStory(Project project) throws Exception;
 	
 	//제출
-	public void updateProjectStatus(int projectNo, int brandNo, int statusNo);
+	public void updateProjectStatus(int projectNo, int brandNo, int statusNo) throws Exception;
+	public void insertProjectStatusList(int projectNo, int brandNo, int statusNo, String memo) throws Exception;
 	
 	// 새소식 ----------------------------- 
 	public void insertProjectNews(ProjectNews dto) throws Exception;
 	public List<ProjectNews> listProjectNews(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
-	public ProjectNews readProjectNews(int newsNo, int projectNo);
+	public ProjectNews readProjectNews(int newsNo);
 	public void updateProjectNews(ProjectNews dto) throws Exception;
+	public void deleteProjectNews(int newsNo) throws Exception;
+	
+	// 배송관리
+	public List<Send> listSend(Map<String, Object> map);
+	public List<Send> listSendmanage(Map<String, Object> map);
+	public int sendDataCount(Map<String, Object> map);
+	public int manageDataCount(Map<String, Object> map);
+	public Send readSend(int buyNo, int rewardNo, int projectNo);
 	
 }

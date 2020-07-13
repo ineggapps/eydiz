@@ -18,23 +18,19 @@
       <li>
         <a href="<%=cp %>/partner/list" class="menu"><span>파트너</span></a>
       </li>
-      <li>
-        <a href="<%=cp %>/cast/news" class="menu"><span>캐스트</span></a>
-      </li>
-      <li>
-        <a href="<%=cp %>/story/story" class="menu"><span>스토리</span></a>
-      </li>
     </ul>
     <div class="headerInnerRight">
       <ul class="gnbAuth">
-        <li><a href="<%=cp %>/studio/project/list" class="btnSubmit bordering btnMakeProject">프로젝트 관리</a></li>
+       	<c:if test="${not empty sessionScope.member }">
+        <li><a href="<%=cp %>/studio/project/register" class="btnSubmit bordering btnMakeProject">프로젝트 등록</a></li>
+      	</c:if>
     	<c:if test="${empty sessionScope.member}">
         <li><a href="<%=cp%>/member/join">회원가입</a></li>
         <li><a href="<%=cp%>/member/login">로그인</a></li>
     	</c:if>
     	<c:if test="${not empty sessionScope.member}">
 		<li><a href="<%=cp%>/member/logout">로그아웃</a><li>
-		<li><a href="<%=cp%>/mypage" class="profilePic">
+		<li><a href="<%=cp%>/mypage/myInfo" class="profilePic">
 			<c:if test="${sessionScope.member.memberImageUrl!=null}">
 			<span class="displayAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">&nbsp;</span>
 			</c:if>
@@ -49,10 +45,10 @@
   <div class="headerInnerMobile">
     <div class="mobileNav">
       <h2 class="title">이디즈 - 브랜드 &centerdot; 프로젝트 관리</h2>
-      <a href="#" class="btnBack btnFlat btnMobileNav">
+      <a href="#" class="btnBack btnFlat btnMobileNav" onclick="javascript:history.back(1);">
         <span class="hidden">이전</span>
       </a>
-      <a href="#" class="btnHome btnFlat btnMobileNav">
+      <a href="<%=cp %>" class="btnHome btnFlat btnMobileNav" >
         <span class="hidden">홈</span>
       </a>
     </div>

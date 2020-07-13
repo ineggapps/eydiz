@@ -24,7 +24,9 @@
   <p class="stateText"><strong id="cuTotalAmount"><fmt:formatNumber type = "number" pattern = "####" value = "${project.totalAmount}" /></strong>원 펀딩</p>
   <p class="stateText"><strong id="cuSupportCount"><fmt:formatNumber type = "number" pattern = "#,###" value = "${project.supportCount}" /></strong>명의 서포터</p>
 </div>
+<c:if test="${project.remainDays>=0}">
 <a href="<%=cp %>/reward/${projectNo}/step1" class="btnSubmit">펀딩하기</a>
+</c:if>
 <ul class="detailSideController">
   <li>
     <button type="button" class="btnPlain" id="btnLike"><span class="icon heart ${project.myLikeCount==1?'on':''}"></span><span class="count">${project.likeCount}</span></button>
@@ -38,7 +40,7 @@
 </ul>
 <div class="brandInfoBox">
   <div class="brandName">
-    <a href="#">
+    <a href="<%=cp%>/brand/${project.brandNo}">
     <c:if test="${project.memberImageUrl==null}">
     <span class="image"></span>
     </c:if>
@@ -86,13 +88,21 @@
     </div>
   </div>
 </div>
+<c:if test="${project.remainDays>=0}">
 <div class="rewards rowBox">
   <h3>리워드 선택</h3>
   <c:forEach var="item" items="${reward}">
   <div class="rewardItem" data-reward-no="${item.rewardNo}">
+    <c:if test="${item.remainQuantity>0}">
     <div class="overlay">
       <p class="text">이 리워드 펀딩하기</p>
     </div>
+    </c:if>
+    <c:if test="${item.remainQuantity<=0}">
+    <div class="overlay black">
+      <p class="text">제한 수량이<br/>모두 펀딩되었습니다.</p>
+    </div>
+    </c:if>
     <dl class="rewardInfo">
       <dt><fmt:formatNumber type = "number" pattern = "#,###" value = "${item.amount}" />원 펀딩</dt>
       <dd>
@@ -111,12 +121,19 @@
     </dl>
     </c:if>
     <div class="rewardQuantity">
+	  <c:if test="${item.remainQuantity>0}">
       <div class="quantityRow mint">
         <span class="limitQuantity">제한수량 <strong><fmt:formatNumber type = "number" pattern = "#,###" value = "${item.limitQuantity}" /></strong>개</span>
         <span class="remainingQuantity highlighting">
           현재 <strong><fmt:formatNumber type = "number" pattern = "#,###" value = "${item.remainQuantity}" /></strong>개 남음!
         </span>
       </div>
+	  </c:if>
+	  <c:if test="${item.remainQuantity<=0}">
+      <div class="quantityRow">
+      	<span class="highlighting red"><strong>제한수량이 모두 펀딩되었습니다.</strong></span>
+	  </div>			  
+	  </c:if>
       <div class="quantityRow">
         <span class="soldQuantity">총 <fmt:formatNumber type = "number" pattern = "#,###" value = "${item.limitQuantity - item.remainQuantity}" />개 펀딩완료</span>
       </div>
@@ -124,6 +141,7 @@
   </div>
   </c:forEach>
 </div>
+</c:if>
 <%--div class="reports rowBox border">
   <div class="rowBoxInner">
     <h4>신고하기란?</h4>
@@ -153,8 +171,30 @@
 </div>
 <script>
 $(function(){
-	$(".rankItem").dotdotdot({
-		ellipsis: "...",
-	})
-})
+	//ellipsis
+	$('.rankText').ellipsis({
+		  lines: 1,             // force ellipsis after a certain number of lines. Default is 'auto'
+		  ellipClass: 'ellip',  // class used for ellipsis wrapper and to namespace ellip line
+		  responsive: true      // set to true if you want ellipsis to update on window resize. Default is false
+	});
+});
+$(function () {
+  try {
+    var elements = ["cuAttainRate", "cuTotalAmount", "cuSupportCount", "cuRemainDays"];
+    for (var i = 0; i < elements.length; i++) {
+      var num = $("#" + elements[i]).text();
+      var counter = new CountUp(
+        elements[i],
+        0,
+        num,
+        isInt(num) ? 0 : 1,
+        (i - 1) * 1.4 + 2,
+        options
+      );
+      counter.start();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 </script>

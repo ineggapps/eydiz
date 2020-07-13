@@ -1,5 +1,6 @@
 package com.eydiz.reward;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import com.eydiz.detail.DetailConstant;
 import com.eydiz.detail.DetailService;
 import com.eydiz.member.MemberConstant;
 import com.eydiz.member.SessionInfo;
+import com.eydiz.reward.kakao.KakaoPayApproval;
 import com.eydiz.reward.kakao.KakaoPayService;
 import com.eydiz.studio.Project;
 import com.eydiz.studio.Reward;
@@ -47,11 +49,13 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			map.put(MemberConstant.ATTRIBUTE_MEMBERNO, info.getMemberNo());
 			Project project = detailService.readProject(map);
+			if(project==null || project.getRemainDays()<0) {
+				return "redirect:" + API_MAIN;
+			}
 			List<Reward> rewards = detailService.listRewards(projectNo);
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
 			model.addAttribute(ATTRIBUTE_REWARD, rewards);
 			model.addAttribute(ATTRIBUTE_REWARDNO, rewardNo);
-
 		} catch (NullPointerException e) {
 			return "redirect:" + req.getContextPath();
 		} catch (Exception e) {
@@ -107,8 +111,14 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			Project project = detailService.readProject(map);
 			model.addAttribute(ATTRIBUTE_PROJECT, project);
+			//리워드 수량체크 (0개인 경우)
+			SessionRewardInfo rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
+			if(rewardService.isValidQuantity(rInfo)) {
+				throw new Exception("수량이 0개인 거 어떻게 선택했지?");
+			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			return "redirect:" + API_MAIN;
 		}
 		return ".rewardLayout.step2";
 	}
@@ -136,9 +146,10 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 	}
 
 	@RequestMapping(value = "/{projectNo}/pay/kakao")
-	public String step2Submit(@PathVariable Integer projectNo, HttpSession session, Model model) {
+	public String step2Submit(@PathVariable Integer projectNo, HttpServletRequest req, HttpSession session, Model model) {
 		SessionRewardInfo rInfo = null;
 		SessionInfo memberInfo = null;
+		URL requestURL = null;
 		try {
 			rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
 			rInfo.setBuyNo(rewardService.nextBuyNo());
@@ -147,14 +158,15 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			if (projectNo == null || projectNo == 0 || rInfo == null || memberInfo == null) {
 				return "redirect:/";
 			}
+		    requestURL = new URL(req.getRequestURL().toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:" + kakaoPayService.kakaoPayReady(rInfo, memberInfo);
+		return "redirect:" + kakaoPayService.kakaoPayReady(rInfo, memberInfo, requestURL);
 	}
 
-	@RequestMapping(value = "/pay/kakao/abort") // 결제 중단
-	public String stepPayAbort(Model model, HttpSession session) {
+	@RequestMapping(value = "/{projectNo}/pay/kakao/abort") // 결제 중단
+	public String stepPayAbort(@PathVariable Integer projectNo,Model model, HttpSession session) {
 		return ".rewardLayout.payAbort";
 	}
 
@@ -166,7 +178,8 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 		try {
 			SessionRewardInfo rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
 			SessionInfo memberInfo = (SessionInfo) session.getAttribute(SESSION_MEMBER);
-			rInfo.setKakaoPayApproval(kakaoPayService.kakaoPayInfo(pg_token, rInfo, memberInfo));
+			KakaoPayApproval kakaoPayApproval = kakaoPayService.kakaoPayInfo(pg_token, rInfo, memberInfo);
+			rInfo.setKakaoPayApproval(kakaoPayApproval);
 			map.put(JSON_RESULT, JSON_RESULT_OK);
 			map.put(JSON_PG_TOKEN, pg_token);
 		} catch (Exception e) {
@@ -184,6 +197,9 @@ public class RewardController implements Constant, MemberConstant, RewardConstan
 			rInfo = (SessionRewardInfo) session.getAttribute(SESSION_REWARD);
 			memberInfo = (SessionInfo) session.getAttribute(SESSION_MEMBER);
 			rewardService.insertReward(rInfo, memberInfo);
+			if(rInfo.getKakaoPayApproval()!=null) {				
+				rewardService.insertRewardBuyKakao(rInfo.getBuyNo(), rInfo.getKakaoPayApproval().getTid());//카카오페이인 경우
+			}
 			model.addAttribute(ATTRIBUTE_PROJECTNO, rInfo.getProjectNo());
 			model.addAttribute("kakaoPay", rInfo.getKakaoPayApproval());
 		} catch (Exception e) {

@@ -15,9 +15,11 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/story.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/dashboard.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/newsList.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/newsRead.css" />
-    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/newsWrite.css" />
+    <%-- <link rel="stylesheet" href="<%=cp%>/resource/css/studio/newsRead.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/newsWrite.css" /> --%>
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/sendlist.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/studioNews.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/sendarticle.css" />
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js/html5shiv.min.js"></script>
     <![endif]-->
@@ -41,7 +43,7 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
       <header id="header">
         <div class="headerInner">
           <h3 class="btnMenu" id="btnGnbMenu"><span class="hidden">메뉴</span></h3>
-          <h1 class="logo"><a href="#">Brand studio</a></h1>
+          <h1 class="logo"><a href="<%=cp%>/studio/project/${projectNo}/dashboard">Brand studio</a></h1>
           <div class="projectTitle"><h2>${sessionScope.brand.brandName}</h2></div>
           <ul class="rightGnb">
             <li class="menuExit">

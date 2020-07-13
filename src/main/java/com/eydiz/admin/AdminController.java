@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 	@RequestMapping("/admin/")
 	public String main() {
-		return "redirect:" + "/admin/brand/main";
+		return "redirect:" + "/admin/brand/list";
 	}
 }

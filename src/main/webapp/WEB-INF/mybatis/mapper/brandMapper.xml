@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="brand">
+	<!-- 브랜드 정보 -->
+	<select id="readBrand" parameterType="Integer" resultType="com.eydiz.studio.Brand">
+		SELECT brandNo, brandName, managerName, managerEmail, managerPhone
+		FROM brand
+		WHERE brandNo = #{brandNo}
+	</select>	
+
+	<!-- 브랜드 프로젝트 -->
+	<select id="countMadeProject" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*),0) FROM project p
+		JOIN brand b ON p.brandNo = b.brandNo
+		WHERE b.brandNo = #{brandNo} AND (statusNo=5 OR statusNo=6)
+	</select>
+	
+	<!-- 브랜드 프로젝트 모두 불러오기 -->	
+	<select id="listMadeProject" parameterType="map" resultType="com.eydiz.studio.Project">
+		SELECT 
+			projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectCreatedDate, projectUpdatedDate, 
+			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
+			statusNo, projectSummary
+		FROM project p
+		JOIN brand b ON p.brandNo = b.brandNo
+		JOIN project_category pc ON p.categoryNo = pc.categoryNo
+		WHERE b.brandNo = #{brandNo} AND (statusNo=5 OR statusNo=6)
+		ORDER BY projectNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<!-- 브랜드 프로젝트 -->
+	<select id="countFundedProject" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM reward_buy_detail rd
+		JOIN reward_buy_overview ro ON rd.buyNo = ro.buyNo
+		JOIN reward r ON r.rewardNo = rd.rewardNo
+		JOIN project p ON r.projectNo = p.projectNo
+		LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+		WHERE p.brandNo=#{brandNo} AND ro.memberNo=#{memberNo} AND cancelNo IS NULL AND (p.statusNo=5 OR p.statusNo=6)
+	</select>
+	
+	<!-- 브랜드 프로젝트 모두 불러오기 -->	
+	<select id="listFundedProject" parameterType="map" resultType="com.eydiz.studio.Project">
+		SELECT DISTINCT p.projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+			projectCreatedDate, projectUpdatedDate, 
+			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
+			statusNo, projectSummary
+		FROM reward_buy_detail rd
+		JOIN reward_buy_overview ro ON rd.buyNo = ro.buyNo
+		JOIN reward r ON r.rewardNo = rd.rewardNo
+		JOIN project p ON r.projectNo = p.projectNo
+		JOIN brand b On p.brandNo = b.brandNo
+		JOIN project_category pc ON p.categoryNo = pc.categoryNo
+		LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+		WHERE p.brandNo=#{brandNo} AND ro.memberNo=#{memberNo} AND cancelNo IS NULL AND (p.statusNo=5 OR p.statusNo=6)
+		ORDER BY ro.buyNo DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+</mapper>

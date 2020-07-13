@@ -2,22 +2,25 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mypage">
+	<!-- 회원 리워드 구매내역 개수 -->
 	<select id="countMyBoughProjects" parameterType="map" resultType="Integer">
 		SELECT count(*) 
 		FROM reward_buy_overview 
 		WHERE memberNo = #{memberNo}
 	</select>
+	
+	<!-- 회원 리워드 구매내역 조회 -->
 	<select id="readMyBoughtProjects" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT DISTINCT ro.buyNo,
 			p.projectNo, p.brandNo, projectName, projectEndDate,
 			p.categoryNo, categoryName, totalAmount,
 			brandName,
 			TO_CHAR(boughtDate, 'YYYY-MM-DD') boughtDate,
-				CASE 
-		            WHEN projectEndDate-SYSDATE > 0 THEN 5
-		            ELSE 6
-	            END AS statusNo,
-	       NVL(rc.cancelNo, 0) isCanceled
+			CASE 
+	            WHEN projectEndDate-SYSDATE > 0 THEN 5
+	            ELSE 6
+           	END AS statusNo,
+			CASE WHEN rc.cancelNo>0 THEN 1 ELSE 0 END AS isCanceled
 		FROM reward_buy_overview ro
 		JOIN project p ON p.projectNo = ro.projectNo
 		JOIN project_category pc ON p.categoryNo = pc.categoryNo
@@ -27,4 +30,58 @@
 		ORDER BY ro.buyNo DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
+	
+	<!-- 회원 리워드 구매내역 상세 (구매 번호로 조회) -->
+	<select id="readMyBoughtProject" parameterType="map" resultType="com.eydiz.studio.Project">
+		SELECT ro.buyNo, ro.projectNo, projectName, 
+					p.categoryNo, categoryName, ro.shipAmount, ro.totalAmount, finalAmount,
+					b.brandNo, brandName, projectEndDate, (projectEndDate - SYSDATE) remainDays,
+					TO_CHAR(boughtDate, 'YYYY-MM-DD') boughtDate,
+					CASE WHEN rc.cancelNo>0 THEN 1 ELSE 0 END AS isCanceled,
+					CASE 
+			            WHEN projectEndDate-SYSDATE > 0 THEN 5
+			            ELSE 6
+		           	END AS statusNo
+		FROM reward_buy_overview ro
+        JOIN project p ON p.projectNo = ro.projectNo
+        JOIN project_category pc ON pc.categoryNo = p.categoryNo
+        JOIN brand b ON b.brandNo = p.brandNo
+		LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+		WHERE 
+					ro.memberNo = #{memberNo} 
+					AND 
+					ro.buyNo = #{buyNo}
+	</select>
+	
+	
+	<!-- 회원 리워드 구매내역 리워드 조회 (구매 번호 기반) -->
+	<select id="readMyBoughtRewards" parameterType="map" resultType="com.eydiz.studio.Reward">
+		SELECT ro.buyNo, rewardTitle, rewardOption, optionAnswer, isShipping,
+		TO_CHAR(startShippingDate, 'YYYY-MM-DD') startShippingDate, amount, requestQuantity
+		FROM reward_buy_detail rd
+        JOIN reward r ON rd.rewardNo = r.rewardNo
+		JOIN reward_buy_overview ro ON rd.buyNo = ro.buyNo
+		JOIN project p ON p.projectNo = ro.projectNo
+		WHERE ro.memberNo = #{memberNo} and ro.buyNo=#{buyNo}
+	</select>
+	
+	<!-- 회원 결제 취소 (펀딩 종료일 이후면 결제취소 못하도록 했음) -->
+	<update id="insertCancelReward" parameterType="map">
+		INSERT INTO reward_buy_cancel(cancelNo, buyNo, canceledAmount, memo, canceledDate)
+		SELECT reward_buy_cancel_seq.NEXTVAL, buyNo, finalAmount, #{memo}, SYSDATE
+		FROM reward_buy_overview ro
+		JOIN project p ON p.projectNo = ro.projectNo
+		WHERE 
+			memberNo=#{memberNo} 
+			AND buyNo=#{buyNo}
+			AND projectEndDate - SYSDATE >= 0
+	</update>
+	
+	<!-- 카카오 TID 읽어 반환하기 -->
+	<select id="readKakaoTid" parameterType="Integer" resultType="String">
+		SELECT tid
+		FROM reward_buy_kakao
+		WHERE buyNo=#{buyNo}
+	</select>
+	
 </mapper>

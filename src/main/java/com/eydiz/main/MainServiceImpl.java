@@ -52,16 +52,19 @@ public class MainServiceImpl implements Constant, MainService, MainConstant {
 	}
 
 	@Override
-	public int dataProjectCount() {
-		return dataProjectCount(null);
+	public int dataProjectCount(SnippetOption options) {
+		return dataProjectCount(null, options);
 	}
 
 	@Override
-	public int dataProjectCount(Integer categoryNo) {
+	public int dataProjectCount(Integer categoryNo,SnippetOption options) {
 		int count = 0;
 		try {
 			Map<String, Object> map = new HashMap<>();
 			map.put(ATTRIBUTE_CATEGORYNO, categoryNo);
+			map.put(ATTRIBUTE_SORT, options.getSort());
+			map.put(ATTRIBUTE_STATUS, options.getStatus());
+			map.put(ATTRIBUTE_KEYWORD, options.getKeyword());
 			count = dao.selectOne(MAPPER_NAMESPACE + "fundingDataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,18 +97,21 @@ public class MainServiceImpl implements Constant, MainService, MainConstant {
 //	}
 
 	@Override
-	public List<Project> listProject(int offset, int rows) {
-		return listProject(null, offset, rows);
+	public List<Project> listProject(int offset, int rows, SnippetOption options) {
+		return listProject(null, offset, rows, options);
 	}
 
 	@Override
-	public List<Project> listProject(Integer categoryNo, int offset, int rows) {
+	public List<Project> listProject(Integer categoryNo, int offset, int rows, SnippetOption options) {
 		Map<String, Object> map = new HashMap<>();
 		List<Project> list = null;
 		try {
 			map.put(ATTRIBUTE_CATEGORYNO, categoryNo);
 			map.put(ATTRIBUTE_OFFSET, offset);
 			map.put(ATTRIBUTE_ROWS, rows);
+			map.put(ATTRIBUTE_SORT, options.getSort());
+			map.put(ATTRIBUTE_STATUS, options.getStatus());
+			map.put(ATTRIBUTE_KEYWORD, options.getKeyword());
 			list = dao.selectList(MAPPER_NAMESPACE + "listFunding", map);
 		} catch (Exception e) {
 			e.printStackTrace();

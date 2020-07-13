@@ -110,4 +110,11 @@ public class SessionInfo {
 		this.memberImageUrl = memberImageUrl;
 	}
 
+	@Override
+	public String toString() {
+		return "SessionInfo [memberNo=" + memberNo + ", memberId=" + memberId + ", memberNickname=" + memberNickname
+				+ ", memberEmail=" + memberEmail + ", memberSocial=" + memberSocial + ", memberImageUrl="
+				+ memberImageUrl + ", isAvailable=" + isAvailable + ", isAdmin=" + isAdmin + "]";
+	}
+
 }

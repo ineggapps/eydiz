@@ -4,6 +4,7 @@ function openModal() {
   $overlay.addClass("show");
 }
 function closeModal() {
+  $(".modalContentArea textarea").val("");
   $overlay.removeClass("show");
 }
 $(function () {
@@ -19,10 +20,13 @@ $(function () {
 $(function () {
   $("body").on("click", ".btnReply", function () {
     const $replyArea = $(this).closest(".commentArea").find(".commentReplyWrap");
+    const $replyInput = $(this).closest(".commentArea").find(".commentInput.reply");
     if ($replyArea.hasClass("hide")) {
       $replyArea.removeClass("hide");
+      $replyInput.removeClass("hide");
     } else {
       $replyArea.addClass("hide");
+      $replyInput.addClass("hide");
     }
   });
 });
@@ -34,15 +38,23 @@ function clearComments() {
   $commentWrap.prepend($commentItem);
 }
 // 댓글 불러오기
+var commentPage = 1;
+var commentPageCount = 1;
 function loadComment() {
-	clearComments();
-  const url = cp + "/detail/" + projectNo + "/community/view";
+  if (commentPage > commentPageCount) {
+    return;
+  }
+  var url = cp + "/detail/" + projectNo + "/community/view/" + commentPage++;
   const method = "post";
   const query = "projectNo=" + projectNo;
   const $wrap = $(".commentWrap");
-  const $target = $(".parent.commentItem");
+  const $target = $(".parent.commentItem.hide");
   ajaxJSON(url, method, query)
     .then(function (data) {
+      commentPageCount = data.page_count;
+      if(commentPage>commentPageCount){
+    	  $(".newsMore").remove();
+      }
       var $element;
       const comments = data.comments;
       $.each(comments, function (idx, item) {
@@ -61,6 +73,14 @@ function loadComment() {
       console.log(e);
     });
 }
+
+//더보기
+$(function () {
+  $(".btnNewsMore").click(function () {
+    loadComment();
+  });
+});
+
 //답글 불러오기
 function loadReplyComment(commentNo, $element) {
   const url = cp + "/detail/" + projectNo + "/community/view";
@@ -70,7 +90,10 @@ function loadReplyComment(commentNo, $element) {
   const $target = $element.find(".reply.commentItem.hide");
   ajaxJSON(url, method, query)
     .then(function (data) {
-      const comments = data.comments;
+      var comments = data.comments;
+      if(comments.length<=0 || data.pageCount==0){
+    	  return;
+      }
       $.each(comments, function (idx, item) {
         $element = $target.clone(true).appendTo($wrap).removeClass("hide");
         $element.attr("data-comment-no", item.commentNo);
@@ -87,11 +110,11 @@ function renderComment($element, jsonItem, prefix) {
   if (prefix == undefined) {
     prefix = "";
   }
-  if(jsonItem.memberImageUrl){
-	  $element
-		.find(prefix + ".commentAvatar")
-		.eq(0)
-		.css("background-image", "url(\""+jsonItem.memberImageUrl+"\")");
+  if (jsonItem.memberImageUrl) {
+    $element
+      .find(prefix + ".commentAvatar")
+      .eq(0)
+      .css("background-image", 'url("' + jsonItem.memberImageUrl + '")');
   }
   $element
     .find(prefix + ".author")
@@ -105,6 +128,28 @@ function renderComment($element, jsonItem, prefix) {
     .find(prefix + ".commentContent")
     .eq(0)
     .text(jsonItem.content);
+  $element
+    .find(prefix + ".commentContent ~ .commentInputContent textarea")
+    .eq(0)
+    .val(jsonItem.content);
+  //console.log(memberId, jsonItem.memberId, memberId != jsonItem.memberId, "ㅋ?");
+  if (memberId != jsonItem.memberId) {
+    $element.find(".commentMenu").eq(0).remove();
+    $element.find(".commentContext").eq(0).remove();
+    $element.find(".commentInputContent").eq(0).remove();
+  }
+  //브랜드 여부
+  if(jsonItem.isBrand==1){
+	  $element.find(".labelBrand").removeClass("hide");
+  }else{
+	  $element.find(".labelBrand").addClass("hide");
+  }
+  //펀딩 참여 여부
+  if(jsonItem.isBrand==0 && jsonItem.hasFunded==1){
+	  $element.find(".labelFunded").removeClass("hide");
+  }else{
+	  $element.find(".labelFunded").addClass("hide");
+  }
 }
 $(function () {
   loadComment();
@@ -117,12 +162,16 @@ function submitComment(query) {
 }
 $(function () {
   const $modalForm = $("form[name=modalForm]");
+  const $commentWrap = $(".commentWrap");
   $overlay.find(".comment.btnSubmit").click(function () {
     query = $modalForm.serialize();
     submitComment(query)
       .then(function (data) {
         if (data.result == "ok") {
           alert("댓글을 작성했습니다.");
+          commentPage = 1;
+          commentPageCount = 1;
+          clearComments();
           loadComment();
           closeModal();
         }
@@ -132,6 +181,21 @@ $(function () {
       });
   });
 });
+
+//댓글 삭제
+function deleteComment(commentNo, $commentItem) {
+  const url = cp + "/detail/" + projectNo + "/community/delete";
+  ajaxJSON(url, "post", { commentNo: commentNo })
+    .then(function (data) {
+      //console.log(data);
+      if (data.result == "ok") {
+        $commentItem.remove();
+      }
+    })
+    .catch(function (e) {
+      console.log(e);
+    });
+}
 
 // 답글 쓰기
 $(function () {
@@ -149,26 +213,46 @@ $(function () {
       $(this).css("height", "32px");
     }
   });
+  //수정 버튼
+  $commentWrap.on("click", ".edit.btnSubmit", function () {
+    const $commentItem = $(this).closest(".commentItem");
+    const commentNo = $commentItem.data("comment-no");
+    const url = cp + "/detail/" + projectNo + "/community/edit";
+    const commentContent = $commentItem.find(".commentInputContent textarea").val().trim();
+    ajaxJSON(url, "post", { commentNo: commentNo, content: commentContent })
+      .then(function (data) {
+        //console.log(data, "ghgh");
+        if (data.result == "ok") {
+          $commentItem.find(".commentContent").text(commentContent);
+          toggleCommentComponent($commentItem, false, true);
+        }
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
+  });
   //등록버튼
-  $commentWrap.on("click", ".reply.btnSubmit", function () {
+  $commentWrap.on("click", ".reply.write.btnSubmit", function () {
     const $wrap = $(this).closest(".commentArea").find(".commentReplyWrap");
     const $commentItem = $(this).closest(".commentArea").find(".hide.commentItem");
     const $content = $(this).closest(".commentInputContent").find("textarea");
     const content = $(this).closest(".commentInputContent").find("textarea").val();
     $content.val("");
     const parentCommentNo = $(this).closest(".parent.commentItem").data("comment-no");
-    const q = { parentCommentNo: parentCommentNo, content: content };
+    alert(parentCommentNo);
+    const q = { parentCommentNo: parentCommentNo, content: content};
     submitComment(q)
       .then(function (data) {
         if (data.result == "ok") {
           alert("답글을 작성했습니다.");
           //fake comment
           const $element = $commentItem.clone(true).appendTo($wrap).removeClass("hide");
-          renderComment($element, {
-            memberNickname: memberNickname,
-            date: new Date(),
-            content: content,
-          });
+          renderComment($element, data.comment);
+//          renderComment($element, {
+//            memberNickname: memberNickname,
+//            createdDate: new Date(),
+//            content: content,
+//          });
         }
       })
       .catch(function (e) {
@@ -176,6 +260,57 @@ $(function () {
       });
   });
 });
+
+//댓글 답글 메뉴 관련
+$(function () {
+  //댓글 메뉴 클릭 시 수정,삭제 팝업 띄우기
+  $(".commentMenu").click(function () {
+    $context = $(this).closest(".commentHeader").find(".commentContext");
+    if ($context.hasClass("hide")) {
+      $context.removeClass("hide");
+    } else {
+      $context.addClass("hide");
+    }
+  });
+
+  $(".commentModify").click(function () {
+    //		$component = $(this).closest(".commentItem").find(".commentComponent").eq(0);
+    $commentItem = $(this).closest(".commentItem");
+    //수정 컴포넌트 띄우기
+    toggleCommentComponent($commentItem, false, true);
+  });
+
+  $(".commentDelete").click(function () {
+    if (!confirm("정말 댓글을 삭제하시겠습니까?")) {
+      return;
+    }
+    //댓글 삭제 호출
+    var $commentItem = $(this).closest(".commentItem");
+    var commentNo = $commentItem.data("comment-no");
+    deleteComment(commentNo, $commentItem);
+  });
+});
+
+//댓글 수정 컴포넌트 띄우기/닫기
+function toggleCommentComponent($commentItem, isEditMode, isContextMenuClose) {
+  console.log(isEditMode, isContextMenuClose, "ㅎㅎ");
+  $input = $commentItem.find(".commentInputContent").eq(0);
+  $view = $commentItem.find(".commentContent").eq(0);
+  if ($input.hasClass("hide") || isEditMode == true) {
+    //수정창 띄우기
+    $input.removeClass("hide");
+    $view.addClass("hide");
+  } else {
+    //보기 창 띄우기
+    $input.addClass("hide");
+    $view.removeClass("hide");
+  }
+  if (isContextMenuClose) {
+    $commentItem.find(".commentContext").eq(0).addClass("hide");
+  }
+  $input.find("textarea").click();
+  $input.find("textarea").focus();
+}
 
 jQuery.each(jQuery("textarea[data-autoresize]"), function () {
   var offset = this.offsetHeight - this.clientHeight;
@@ -185,7 +320,7 @@ jQuery.each(jQuery("textarea[data-autoresize]"), function () {
       .css("height", el.scrollHeight + offset);
   };
   jQuery(this)
-    .on("keyup input", function () {
+    .on("click keyup input", function () {
       resizeTextarea(this);
     })
     .removeAttr("data-autoresize");

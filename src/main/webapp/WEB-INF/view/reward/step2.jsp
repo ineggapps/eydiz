@@ -74,15 +74,15 @@
           <div class="rewardShippingInput">
             <div class="rewardShippingItem">
               <span class="inputLabel">받는이</span>
-              <input type="text" name="recipient" value="${sessionScope.reward.rewardShippingLocation.recipient}"/>
+              <input type="text" name="recipient" id="recipient" value="${sessionScope.reward.rewardShippingLocation.recipient}"/>
             </div>
             <div class="rewardShippingItem">
-              <span class="inputLabel">휴대폰 번호</span>
-              <input type="text" name="phone" value="${sessionScope.reward.rewardShippingLocation.phone}"/>
+              <span class="inputLabel">연락처</span>
+              <input type="text" name="phone" id="phone" value="${sessionScope.reward.rewardShippingLocation.phone}"/>
             </div>
             <div class="rewardShippingItem">
               <span class="inputLabel">배송 시 요청사항</span>
-              <input type="text" name="message" placeholder="배송 전 연락주세요..." value="${sessionScope.reward.rewardShippingLocation.message}"/>
+              <input type="text" name="message" id="message" placeholder="배송 전 연락주세요..." value="${sessionScope.reward.rewardShippingLocation.message}"/>
             </div>
             <div class="rewardShippingItem">
               <span class="inputLabel">주소</span>
@@ -127,6 +127,39 @@ $(function(){
 });
 $(function(){
   $(".btnSubmit.step2").click(function () {
+	  var $wrap = $(".rewardShippingWrapper");
+	    if ($wrap.length == 1) {
+		    var recipient = $("input#recipient").val().trim().length;
+		    var phone = $("input#phone").val().trim().length;
+		    var message = $("input#message").val().trim().length;
+		    var address1 = $("input#address1").val().trim().length;
+		    var address2 = $("input#address2").val().trim().length;
+	
+		    if (recipient == 0) {
+		      alert("받는이를 입력해 주세요.");
+		      e.preventDefault();
+		      return false;
+		    }
+	
+		    if (phone == 0) {
+		      alert("연락처를 입력해 주세요");
+		      e.preventDefault();
+		      return false;
+		    }
+	
+		    if (message == 0) {
+		      alert("배송 시 요청사항을 입력해 주세요");
+		      e.preventDefault();
+		      return false;
+		    }
+	
+		    if (address1 == 0 || address2 == 0) {
+		      alert("주소지를 입력하셔야 합니다.");
+		      e.preventDefault();
+		      return false;
+		    }	  
+	    }
+	//////////////////////////////////////////////////////////
     const map = $("#map").length;
     if(map){
 	  saveShippingLocation();
@@ -168,6 +201,10 @@ $(function(){
 				location.href= cp+"/reward/pay/success";
 			}else if(currentUrl.indexOf("/pay/kakao/abort")>0){
 				$overlay.removeClass("show");
+				this.contentWindow.location.href="about:blank";
+			}else if(currentUrl.indexOf("/pay/kakao/fail")>0){
+				alert("결제에 실패했습니다. 다시 시도해 주세요.");
+				location.reload();
 			}
 		} catch (e) {
 			console.log(e);

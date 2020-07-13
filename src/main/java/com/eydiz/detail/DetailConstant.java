@@ -10,6 +10,7 @@ public interface DetailConstant {
 	public final static String ATTRIBUTE_REWARD = "reward";
 	public final static String ATTRIBUTE_POPULAR_PROJECT = "popularProject";
 	public final static String ATTRIBUTE_REWARDNO = "rewardNo";
+	public final static String ATTRIBUTE_COMMUNITY_COMMENT = "comment";
 	public final static String ATTRIBUTE_COMMUNITY_COMMENTS = "comments";
 	public final static String ATTRIBUTE_COMMENT_NO = "commentNo";
 	public final static String ATTRIBUTE_PARENT_COMMENT_NO = "parentCommentNo";
@@ -17,6 +18,9 @@ public interface DetailConstant {
 	public final static String ATTRIBUTE_PROJECTNO = "projectNo";
 	public final static String ATTRIBUTE_MEMBERNO = "memberNo";
 	public final static String ATTRIBUTE_URI = "uri";
+	
+	public final static String ATTRIBUTE_OFFSET = "offset";
+	public final static String ATTRIBUTE_ROWS = "rows";
 	
 	//JSON
 	public final static String JSON_PROJECT_LIKE_RESULT = "like_result";

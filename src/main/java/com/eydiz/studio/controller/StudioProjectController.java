@@ -2,6 +2,7 @@ package com.eydiz.studio.controller;
 
 import java.io.File;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,9 @@ import com.eydiz.studio.ProjectCategory;
 import com.eydiz.studio.ProjectHashtag;
 import com.eydiz.studio.ProjectImage;
 import com.eydiz.studio.ProjectNews;
+import com.eydiz.studio.ProjectSessionInfo;
 import com.eydiz.studio.Reward;
+import com.eydiz.studio.Send;
 import com.eydiz.studio.StudioConstant;
 import com.eydiz.studio.StudioService;
 
@@ -40,7 +43,7 @@ import com.eydiz.studio.StudioService;
 public class StudioProjectController implements Constant, StudioConstant, MemberConstant {
 
 	private Logger logger = LoggerFactory.getLogger(StudioProjectController.class);
-	private final static int ROWS = 10;
+	private final static int ROWS = 9;
 
 	@Autowired
 	StudioService service;
@@ -69,32 +72,42 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 	}
 
 	////////////////////////////////////////////// 프로젝트
-	@RequestMapping(value = { "/list/{categoryName}", "/list/{categoryName}/page/{page}", "/list",
-			"/list/page/{page}" })
-	public String list(@PathVariable(required = false) String categoryName,
-			@PathVariable(required = false) Integer page, Model model, HttpServletRequest req, HttpSession session) {
+	@RequestMapping(value = { "/list" })
+	public String list(Model model, HttpServletRequest req) {
 		addModelURIAttribute(model, req, null);
-		int currentPage = 1;
-		if (page != null) {
-			currentPage = page;
-		}
-		BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
-		int brandNo = bInfo.getBrandNo();
-		// 페이징 정보 계산과 해당하는 페이지의 프로젝트 불러오기
-		int listProjectCount = service.listProjectCount(brandNo);
-		int pageCount = pager.pageCount(ROWS, listProjectCount);
-		int offset = pager.getOffset(currentPage, ROWS);
-		Map<String, Object> map = new HashMap<>();
-		map.put(ATTRIBUTE_ROWS, ROWS);
-		map.put(ATTRIBUTE_OFFSET, offset);
-		map.put(ATTRIBUTE_BRANDNO, brandNo);
-		List<Project> listProject = service.listProject(map);
-		// 페이징 정보 입력
-		model.addAttribute(ATTRIBUTE_CURRENT_PAGE, currentPage);
-		model.addAttribute(ATTRIBUTE_PAGE_COUNT, pageCount);
-		model.addAttribute(ATTRIBUTE_CATEGORY, categoryName);
-		model.addAttribute(ATTRIBUTE_PROJECT, listProject);
 		return VIEW_PROJECT_LIST;
+	}
+
+	@RequestMapping(value = { "/ajax/list", "/ajax/list/{page}" })
+	@ResponseBody
+	public Map<String, Object> ajaxList(@PathVariable(required = false) Integer page, HttpSession session) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			if (page == null) {
+				page = 1;
+			}
+			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
+			int brandNo = bInfo.getBrandNo();
+			int listProjectCount = service.listProjectCount(brandNo);
+			int pageCount = pager.pageCount(ROWS, listProjectCount);
+			int offset = pager.getOffset(page, ROWS);
+			// 페이징 정보 계산과 해당하는 페이지의 프로젝트 불러오기
+			Map<String, Object> param = new HashMap<>();
+			param.put(ATTRIBUTE_ROWS, ROWS);
+			param.put(ATTRIBUTE_OFFSET, offset);
+			param.put(ATTRIBUTE_BRANDNO, brandNo);
+			List<Project> listProject = service.listProject(param);
+			map.put(JSON_RESULT, JSON_RESULT_OK);
+			// 페이징 정보 입력
+			map.put(ATTRIBUTE_CURRENT_PAGE, page);
+			map.put(ATTRIBUTE_PAGE_COUNT, pageCount);
+			map.put(ATTRIBUTE_PROJECT, listProject);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put(JSON_RESULT, JSON_RESULT_ERROR);
+			map.put(JSON_RESULT_ERROR, e.getMessage());
+		}
+		return map;
 	}
 
 	// 프로젝트 대시보드
@@ -151,6 +164,9 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
 			project.setProjectNo(projectNo);
 			project.setBrandNo(bInfo.getBrandNo());
+			if(project.getProjectGoalAmount()==0) {
+				project.setProjectGoalAmount(1000000); //기본 100만 원으로 설정
+			}
 			service.updateProjectBasic(project);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -391,83 +407,84 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		return map;
 	}
 
-	// 제출하기 버튼(임시 승인)
+	// 제출하기 버튼
 	@RequestMapping(value = "/{projectNo}/submit")
 	public String submitProject(@PathVariable Integer projectNo, HttpSession session) {
 		try {
 			BrandSessionInfo bInfo = (BrandSessionInfo) session.getAttribute(SESSION_BRAND);
-			service.updateProjectStatus(projectNo, bInfo.getBrandNo(), 5);
+			final int statusNo = 1; // 제출 완료 상태
+			final String memo = "제출 완료";
+			service.insertProjectStatusList(projectNo, bInfo.getBrandNo(), statusNo, memo);
+			service.updateProjectStatus(projectNo, bInfo.getBrandNo(), statusNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "redirect:" + String.format(API_PROJECT_DASHBOARD, projectNo);
 	}
 
-	
 	// 새소식 ----------------------------------------------
-	
+
 	@Autowired
 	private MyUtil myUtil;
-	
+
 	@RequestMapping(value = "/{projectNo}/news/list")
-	public String newsList(
-			@PathVariable Integer projectNo,
-			@RequestParam(defaultValue = "1") int current_page,
-			@RequestParam(defaultValue="title") String condition,
-			@RequestParam(defaultValue="") String keyword, HttpServletRequest req, Model model
-			) throws Exception {
+	public String newsList(@PathVariable Integer projectNo,
+			@RequestParam(value = "page", defaultValue = "1") int current_page,
+			@RequestParam(defaultValue = "title") String condition, @RequestParam(defaultValue = "") String keyword,
+			HttpServletRequest req, Model model) throws Exception {
 		String cp = req.getContextPath();
-		
+
 		int rows = 10;
 		int total_page = 0;
 		int dataCount = 0;
-		
-		if(req.getMethod().equalsIgnoreCase("GET")) {
+
+		if (req.getMethod().equalsIgnoreCase("GET")) {
 			keyword = URLDecoder.decode(keyword, "utf-8");
 		}
-		
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		map.put("projectNo", projectNo);
-		
+
 		dataCount = service.dataCount(map);
-		
-		if(dataCount != 0) {
+
+		if (dataCount != 0) {
 			total_page = myUtil.pageCount(rows, dataCount);
 		}
-		
-		if(total_page < current_page) {
+
+		if (total_page < current_page) {
 			current_page = total_page;
 		}
-		
-		int offset = (current_page -1) * rows;
-		if(offset < 0) offset = 0;
+
+		int offset = (current_page - 1) * rows;
+		if (offset < 0)
+			offset = 0;
 		map.put("offset", offset);
 		map.put("rows", rows);
-		
+
 		List<ProjectNews> list = service.listProjectNews(map);
-		
+
 		int listNum = 0;
 		int num = 0;
-		for(ProjectNews dto : list) {
-			listNum = dataCount-(offset+num);
+		for (ProjectNews dto : list) {
+			listNum = dataCount - (offset + num);
 			dto.setListNum(listNum);
 			num++;
-			
+
 		}
-		
+
 		String query = "";
-		String listUrl = cp+"/studio/project/{projectNo}/news/list";
-		String readUrl = cp+"/studio/project/{projectNo}/news/read?page=" + current_page;
-		
-		if(keyword.length() != 0) {
-			listUrl = cp+"/studio/project/{projectNo}/news/list?query=" + query;
-			readUrl = cp+"/studio/project/{projectNo}/news/read?page=" + current_page + "&" + query;
+		String listUrl = cp + "/studio/project/" + projectNo + "/news/list";
+		String readUrl = cp + "/studio/project/" + projectNo + "/news/read?page=" + current_page;
+
+		if (keyword.length() != 0) {
+			listUrl += "?query=" + query;
+			readUrl += "&" + query;
 		}
-		
+
 		String paging = myUtil.paging(current_page, total_page, listUrl);
-		
+
 		model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("readUrl", readUrl);
@@ -476,41 +493,270 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("paging", paging);
-		
+
 		return ".studioLayout.newsList";
 	}
-	
-	@RequestMapping(value = "/{projectNo}/news/read")
-	public String newsRead(@PathVariable Integer projectNo) throws Exception {
-		
-		return ".studioLayout.newsRead";
-	}
-	
-	@RequestMapping(value = "/{projectNo}/news/write", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/{projectNo}/news/write", method = RequestMethod.GET)
 	public String newsWriteForm(@PathVariable Integer projectNo, Model model) throws Exception {
-		model.addAttribute("projectNo",projectNo);
+		model.addAttribute("projectNo", projectNo);
 		model.addAttribute("mode", "write");
 		return ".studioLayout.newsWrite";
 	}
-	
-	@RequestMapping(value = "/{projectNo}/news/write", method=RequestMethod.POST)
-	public String newsWriteSubmit(@PathVariable Integer projectNo, ProjectNews dto, HttpSession session) throws Exception {
+
+	@RequestMapping(value = "/{projectNo}/news/write", method = RequestMethod.POST)
+	public String newsWriteSubmit(@PathVariable Integer projectNo, ProjectNews dto, HttpSession session)
+			throws Exception {
 		try {
 			dto.setProjectNo(projectNo);
 			service.insertProjectNews(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return "redirect:/studio/project/"+projectNo+"/news/list";
+
+		return "redirect:/studio/project/" + projectNo + "/news/list";
 	}
-	
+
 	// 발송 관리
-	@RequestMapping(value="/shipping/{projectNo}")
-	public String sendList (
-			@PathVariable Integer projectNo
-			) throws Exception {
-		
+	@RequestMapping(value = "/shipping/send/{projectNo}")
+	public String sendList(@PathVariable Integer projectNo, @RequestParam(defaultValue = "1") int current_page,
+			@RequestParam(defaultValue = "buyNo") String condition, @RequestParam(defaultValue = "") String keyword,
+			HttpServletRequest req, Model model) throws Exception {
+		String cp = req.getContextPath();
+
+		int rows = 10;
+		int total_page = 0;
+		int dataCount = 0;
+
+		if (req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "utf-8");
+		}
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("projectNo", projectNo);
+
+		dataCount = service.sendDataCount(map);
+
+		if (dataCount != 0) {
+			total_page = myUtil.pageCount(rows, dataCount);
+		}
+
+		if (total_page < current_page) {
+			current_page = total_page;
+		}
+
+		int offset = (current_page - 1) * rows;
+		if (offset < 0)
+			offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+
+		List<Send> list = service.listSend(map);
+
+		int listNum = 0;
+		int num = 0;
+		for (Send dto : list) {
+			listNum = dataCount - (offset + num);
+			dto.setListNum(listNum);
+			num++;
+		}
+
+		String query = "";
+		String listUrl = cp + "/studio/project/shipping/send/{projectNo}";
+		String readUrl = cp + "/studio/project/shipping/send/{projectNo}?page=" + current_page;
+
+		if (keyword.length() != 0) {
+			listUrl = cp + "/studio/project/shipping/send/{projectNo}";
+			readUrl = cp + "/studio/project/shipping/send/{projectNo}?page=" + current_page + "&" + query;
+		}
+
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+		model.addAttribute("sendlist", list);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("readUrl", readUrl);
+		model.addAttribute("page", current_page);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("paging", paging);
+
 		return ".studioLayout.sendlist";
+	}
+
+	@RequestMapping(value = "/{projectNo}/news/read")
+	public String newsRead(@PathVariable Integer projectNo, @RequestParam String page, Model map,
+			@RequestParam(defaultValue = "title") String condition, @RequestParam(defaultValue = "") String keyword,
+			@RequestParam int newsNo) throws Exception {
+		keyword = URLDecoder.decode(keyword, "utf-8");
+
+		String query = "page=" + page;
+		if (keyword.length() != 0) {
+			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+		}
+
+		ProjectNews dto = service.readProjectNews(newsNo);
+
+		if (dto == null) {
+			return "redirect:/studio/project/" + projectNo + "/news/list?" + query;
+		}
+
+		map.addAttribute("keyword", keyword);
+		map.addAttribute("condition", condition);
+		map.addAttribute("query", query);
+		map.addAttribute("dto", dto);
+		map.addAttribute("newsNo", newsNo);
+		map.addAttribute("projectNo", projectNo);
+		map.addAttribute("page", page);
+
+		return ".studioLayout.newsRead";
+	}
+
+	@RequestMapping(value = "/{projectNo}/news/update", method = RequestMethod.GET)
+	public String newsUpdateForm(@PathVariable Integer projectNo, Model model, @RequestParam String page,
+			@RequestParam int newsNo) throws Exception {
+		ProjectNews dto = service.readProjectNews(newsNo);
+
+		if (dto == null) {
+			return "redirect:/studio/project/" + projectNo + "/news/list?page=" + page;
+		}
+
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("projectNo", projectNo);
+		model.addAttribute("mode", "update");
+		return ".studioLayout.newsWrite";
+	}
+
+	@RequestMapping(value = "/{projectNo}/news/update", method = RequestMethod.POST)
+	public String newsUpdateSubmit(@PathVariable Integer projectNo, ProjectNews dto, String page) throws Exception {
+		try {
+			dto.setProjectNo(projectNo);
+			service.updateProjectNews(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/studio/project/" + projectNo + "/news/list?page=" + page;
+	}
+
+	@RequestMapping(value = "/{projectNo}/news/delete")
+	public String delete(@PathVariable Integer projectNo, @RequestParam int newsNo,
+			@RequestParam(required = false, defaultValue = "1") String page,
+			@RequestParam(defaultValue = "title") String condition, @RequestParam(defaultValue = "") String keyword)
+			throws Exception {
+		keyword = URLDecoder.decode(keyword, "utf-8");
+
+		String query = "page=" + page;
+		if (keyword.length() != 0) {
+			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+		}
+
+		service.deleteProjectNews(newsNo);
+
+		return "redirect:/studio/project/" + projectNo + "/news/list?" + query;
+	}
+
+	// 펀딩/후원 현황 ------------------------------------------
+	@RequestMapping(value = "/shipping/manage/{projectNo}")
+	public String listSendmanage(@PathVariable Integer projectNo, @RequestParam(defaultValue = "1") int current_page,
+			@RequestParam(defaultValue = "buyNo") String condition, @RequestParam(defaultValue = "") String keyword,
+			HttpServletRequest req, Model model) throws Exception {
+		String cp = req.getContextPath();
+
+		int rows = 10;
+		int total_page = 0;
+		int dataCount = 0;
+
+		if (req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "utf-8");
+		}
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("projectNo", projectNo);
+
+		dataCount = service.manageDataCount(map);
+
+		if (dataCount != 0) {
+			total_page = myUtil.pageCount(rows, dataCount);
+		}
+
+		if (total_page < current_page) {
+			current_page = total_page;
+		}
+
+		int offset = (current_page - 1) * rows;
+		if (offset < 0)
+			offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+
+		List<Send> list = service.listSendmanage(map);
+
+		int listNum = 0;
+		int num = 0;
+		for (Send dto : list) {
+			listNum = dataCount - (offset + num);
+			dto.setListNum(listNum);
+			num++;
+		}
+
+		String query = "";
+		String listUrl = cp + "/studio/project/shipping/manage/{projectNo}";
+		String readUrl = cp + "/studio/project/shipping/manage/{projectNo}?page=" + current_page;
+
+		if (keyword.length() != 0) {
+			listUrl = cp + "/studio/project/shipping/manage/{projectNo}";
+			readUrl = cp + "/studio/project/shipping/manage/{projectNo}?page=" + current_page + "&" + query;
+		}
+
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+		model.addAttribute("managelist", list);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("readUrl", readUrl);
+		model.addAttribute("page", current_page);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("paging", paging);
+
+		return ".studioLayout.managelist";
+	}
+
+	@RequestMapping(value="/shipping/article/{projectNo}")
+	public String sendArticle ( 
+			@PathVariable Integer projectNo,
+			@RequestParam String page,
+			@RequestParam(defaultValue="buyNo") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			HttpSession session,
+			Model model
+			) throws Exception {
+		keyword = URLDecoder.decode(keyword, "utf-8");
+
+		String query = "page="+page;
+		if(keyword.length() != 0) {
+			query = "condition=" +condition+ "&keyword=" +keyword+ URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		ProjectSessionInfo pInfo = (ProjectSessionInfo) session.getAttribute(SESSION_BRAND);
+		Send dto = service.readSend(projectNo, pInfo.getBuyNo(), pInfo.getRewardNo());
+		
+		if(dto == null) {
+			return "redirect:/shipping/article/{projectNo}?"+query;
+		}
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		
+		return "studioLayout.sendContent";
 	}
 }

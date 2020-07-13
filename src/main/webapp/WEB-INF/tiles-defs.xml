@@ -36,6 +36,12 @@
 		<put-attribute name="content" value="/WEB-INF/view/mypage/{1}.jsp"/>
 	</definition>
 	
+	<definition name=".brandLayout" template="/WEB-INF/view/layout/brand/frame.jsp">
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/brand/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/view/brand/list.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/brand/footer.jsp" />
+	</definition>
+	
 	<definition name=".detailLayout" template="/WEB-INF/view/layout/detail/frame.jsp">
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/detail/header.jsp" />
 		<put-attribute name="content" value="/WEB-INF/view/detail/main.jsp" />

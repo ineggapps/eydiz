@@ -11,6 +11,7 @@
 }
 
 .projectList li {
+	cursor:pointer;
   padding-bottom: 30px;
 }
 
@@ -121,6 +122,11 @@ i.projectStatus.activate {
 }
 i.projectStatus.expire {
   background-color: #90949c;
+}
+
+.categoryName{
+	color:#000;
+	font-size:0.85rem;
 }
 
 .projectList .projectItemController {

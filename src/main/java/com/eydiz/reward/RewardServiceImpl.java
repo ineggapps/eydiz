@@ -1,5 +1,6 @@
 package com.eydiz.reward;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,5 +89,34 @@ public class RewardServiceImpl implements RewardService, RewardConstant {
 		}
 
 	}
+
+	@Override
+	public void insertRewardBuyKakao(int buyNo, String tid) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			map.put("buyNo", buyNo);
+			map.put("tid", tid);
+			dao.insertData(MAPPER_NAMESPACE+"insertRewardBuyKakao", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public boolean isValidQuantity(SessionRewardInfo rewardInfo) {
+		Map<Integer, Reward> rewards = rewardInfo.getRewards();
+		for(int key: rewards.keySet()) {
+			Reward r = rewards.get(key);
+			int remainQuantity = r.getRemainQuantity();
+			int requestQuantity = r.getRequestQuantity();
+			if(remainQuantity== 0 || requestQuantity == 0 || requestQuantity > remainQuantity) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 
 }

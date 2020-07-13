@@ -18,38 +18,50 @@
       <li>
         <a href="<%=cp %>/partner/list" class="menu"><span>파트너</span></a>
       </li>
-      <li>
-        <a href="<%=cp %>/cast/news" class="menu"><span>캐스트</span></a>
-      </li>
-      <li>
-        <a href="<%=cp %>/story/story" class="menu"><span>스토리</span></a>
-      </li>
     </ul>
     <div class="headerInnerRight">
       <ul class="gnbAuth">
+      	<c:if test="${not empty sessionScope.member }">
         <li><a href="<%=cp %>/studio/project/list" class="btnSubmit bordering btnMakeProject">프로젝트 관리</a></li>
+      	</c:if>
     	<c:if test="${empty sessionScope.member}">
         <li><a href="<%=cp%>/member/join">회원가입</a></li>
         <li><a href="<%=cp%>/member/login">로그인</a></li>
     	</c:if>
     	<c:if test="${not empty sessionScope.member}">
 		<li><a href="<%=cp%>/member/logout">로그아웃</a><li>
-		<li><a href="<%=cp%>/mypage" class="profilePic">
+		<li><a href="<%=cp%>/mypage/myInfo" class="profilePic">
 			<c:if test="${sessionScope.member.memberImageUrl!=null}">
 			<span class="displayAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">&nbsp;</span>
 			</c:if>
 			<c:if test="${sessionScope.member.memberImageUrl==null}">
 			<span class="displayAvatar">&nbsp;</span>
 			</c:if>
-			${sessionScope.member.memberNickname}님</a></li>
+			${sessionScope.member.memberNickname}님
+			</a></li>
     	</c:if>
     	</ul>
     </div>
   </div>
   <div class="headerInnerMobile">
-    <div class="headerMobile">
-      <h1 class="logo"><a href="#">eydiz</a></h1>
+  <div class="mobileNav">
+    <div class="mobileNavLeft">
+	    <h2>eydiz</h2>
     </div>
+    <div class="mobileNavRight">
+		<a href="<%=cp %>/mypage/myInfo">
+		<c:if test="${sessionScope.member.memberImageUrl!=null}">
+		<span class="displayAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">&nbsp;</span>
+		</c:if>
+		<c:if test="${sessionScope.member.memberImageUrl==null}">
+		<span class="displayAvatar">&nbsp;</span>
+		</c:if>
+		<c:if test="${sessionScope.member!=null}">
+			${sessionScope.member.memberNickname}님
+		</c:if>
+		</a>
+    </div>
+  </div>
   </div>
   <%--div class="headerInnerTab">
     <ul class="gnbSub">

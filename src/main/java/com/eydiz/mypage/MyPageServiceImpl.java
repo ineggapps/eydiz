@@ -12,14 +12,19 @@ import com.eydiz.common.FileManager;
 import com.eydiz.common.dao.CommonDAO;
 import com.eydiz.member.Member;
 import com.eydiz.member.MemberConstant;
+import com.eydiz.reward.kakao.KakaoPayService;
 import com.eydiz.studio.Project;
+import com.eydiz.studio.Reward;
 import com.eydiz.studio.StudioConstant;
 
 @Service("mypage.myPageService")
-public class MyPageServiceImpl implements MyPageService, MemberConstant, StudioConstant, MyPageConstant{
+public class MyPageServiceImpl implements MyPageService, MemberConstant, StudioConstant, MyPageConstant {
 
 	@Autowired
 	CommonDAO dao;
+
+	@Autowired
+	KakaoPayService kakaoPayService;
 
 	@Autowired
 	FileManager fileManager;
@@ -56,8 +61,6 @@ public class MyPageServiceImpl implements MyPageService, MemberConstant, StudioC
 		}
 		return uri;
 	}
-	
-	
 
 	@Override
 	public int countBoughtMyProjects(int memberNo) {
@@ -84,5 +87,59 @@ public class MyPageServiceImpl implements MyPageService, MemberConstant, StudioC
 		}
 		return list;
 	}
+
+	@Override
+	public Project readBoughtMyProject(int memberNo, int buyNo) {
+		Project project = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			map.put(ATTRIBUTE_MEMBERNO, memberNo);
+			map.put(ATTRIBUTE_BUY_NO, buyNo);
+			project = dao.selectOne(MyPageConstant.MAPPER_NAMESPACE + "readMyBoughtProject", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return project;
+	}
+
+	@Override
+	public List<Reward> readBoughtMyReward(int memberNo, int buyNo) {
+		List<Reward> rewards = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			map.put(ATTRIBUTE_MEMBERNO, memberNo);
+			map.put(ATTRIBUTE_BUY_NO, buyNo);
+			rewards = dao.selectList(MyPageConstant.MAPPER_NAMESPACE + "readMyBoughtRewards", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rewards;
+	}
+
+	@Override
+	public void insertCancel(int memberNo, int buyNo, String memo) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			map.put(ATTRIBUTE_MEMBERNO, memberNo);
+			map.put(ATTRIBUTE_BUY_NO, buyNo);
+			map.put(ATTRIBUTE_MEMO, memo);
+			dao.insertData(MyPageConstant.MAPPER_NAMESPACE + "insertCancelReward", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public String readKakaoTid(int buyNo) {
+		String tid = null;
+		try {
+			tid = dao.selectOne(MyPageConstant.MAPPER_NAMESPACE+"readKakaoTid", buyNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tid;
+	}
+	
+	
 
 }

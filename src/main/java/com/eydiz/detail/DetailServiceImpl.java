@@ -41,10 +41,25 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 	}
 
 	@Override
-	public List<ProjectCommunity> listCommunityComments(int projectNo) {
+	public int countCommunityComments(int projectNo) {
+		int count = 0;
+		try {
+			count = dao.selectOne(MAPPER_NAMESPACE + "countCommunityComment", projectNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	@Override
+	public List<ProjectCommunity> listCommunityComments(int projectNo, int offset, int rows) {
 		List<ProjectCommunity> list = null;
 		try {
-			list = dao.selectList(MAPPER_NAMESPACE + "selectCommunityComment", projectNo);
+			Map<String, Integer> map = new HashMap<>();
+			map.put(ATTRIBUTE_PROJECTNO, projectNo);
+			map.put(ATTRIBUTE_ROWS, rows);
+			map.put(ATTRIBUTE_OFFSET, offset);
+			list = dao.selectList(MAPPER_NAMESPACE + "selectCommunityComment", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,7 +73,7 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			map.put(ATTRIBUTE_PARENT_COMMENT_NO, parentCommentNo);
-			list = dao.selectList(MAPPER_NAMESPACE+"selectCommunityCommentReply", map);
+			list = dao.selectList(MAPPER_NAMESPACE + "selectCommunityCommentReply", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -66,9 +81,41 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 	}
 
 	@Override
+	public int getNewCommentNo() {
+		int commentNo = 0;
+		try {
+			commentNo = dao.selectOne(MAPPER_NAMESPACE + "getNewCommentNo");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return commentNo;
+	}
+	
+	@Override
+	public ProjectCommunity readCommunity(int commentNo) {
+		ProjectCommunity community = null;
+		try {
+			community = dao.selectOne(MAPPER_NAMESPACE+"readCommunity",commentNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return community;
+	}
+
+	@Override
 	public void insertCommunityComment(ProjectCommunity dto) throws Exception {
 		try {
 			dao.insertData(MAPPER_NAMESPACE + "insertCommunity", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void updateCommunityComment(ProjectCommunity dto) throws Exception {
+		try {
+			dao.updateData(MAPPER_NAMESPACE + "updateCommunity", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

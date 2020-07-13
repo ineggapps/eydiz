@@ -19,12 +19,29 @@
     </div>
     <div class="commentArea">
       <div class="commentHeader">
-        <span class="parent author">${item.memberId}</span>
-        <span class="parent date">${item.createdDate}</span>
+        <span class="parent author">아이디</span>
+        <span class="mark labelFunded hide">펀딩 참여자</span>
+        <span class="mark labelBrand hide">브랜드</span>
+        <span class="parent date">작성일자</span>
+        <span class="parent commentMenu"><span class="hidden">메뉴</span></span>
+        <div class="parent commentContext hide">
+        	<ul>
+        		<li class="parent commentModify">수정</li>
+        		<li class="parent commentDelete">삭제</li>
+        	</ul>
+        </div>
       </div>
-      <div class="parent commentContent">
-        ${item.content}
-      </div>
+      <div class="commentComponent">
+	      <div class="parent commentContent">
+	        내용
+	      </div>
+	       <div class="parent commentInputContent edit hide">
+		        <textarea placeholder="수정할 댓글을 입력하세요" name="content" data-autoresize="true"></textarea>
+		      	<div class="commentInputContentController">
+		      		<button type="button" class="parent edit btnSubmit">수정</button>
+		      	</div>
+	    	</div>
+		</div>      
       <div class="commentButtonReply">
         <button
           type="button"
@@ -36,21 +53,39 @@
       <div class="commentReplyWrap">
       <div class="commentItem reply hide">
         <div class="commentSide">
-			<c:if test="${sessionScope.member.memberImageUrl == null}">
+            <c:if test="${sessionScope.member.memberImageUrl == null}">
 		    <span class="reply commentAvatar">프로필사진</span>
-			</c:if>
-			<c:if test="${sessionScope.member.memberImageUrl != null}">
-          	<span class="reply commentAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">프로필사진</span>
-			</c:if>
+		    </c:if>
+		    <c:if test="${sessionScope.member.memberImageUrl != null}">
+              <span class="reply commentAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">프로필사진</span>
+            </c:if>
         </div>
         <div class="commentArea">
           <div class="commentHeader">
-            <span class="reply author">또치</span>
-            <span class="reply date">2020-09-00</span>
+            <span class="reply author">답글 작성자</span>
+            <span class="mark labelFunded hide">펀딩 참여자</span>
+            <span class="mark labelBrand hide">브랜드</span>
+            <span class="reply date">답글 작성 시각</span>
+            <span class="parent commentMenu"><span class="hidden">메뉴</span></span>
+            <div class="parent commentContext edit hide">
+	        	<ul>
+	        		<li class="reply commentModify">수정</li>
+	        		<li class="reply commentDelete">삭제</li>
+	        	</ul>
+	        </div>
           </div>
-          <div class="commentContent">
-            답글 내용
+          <div class="commentComponent">
+	          <div class="commentContent">
+	            답글 내용
+	          </div>
+	          <div class="reply commentInputContent edit hide">
+		          <textarea placeholder="수정할 답글을 입력하세요" name="content" data-autoresize="true"></textarea>
+		        	<div class="commentInputContentController">
+		        		<button type="button" class="reply edit btnSubmit">수정</button>
+		        	</div>
+		      </div>
           </div>
+          
         </div>
       </div>
       </div>
@@ -59,21 +94,23 @@
         <div class="commentInputSide">
 			<c:if test="${sessionScope.member.memberImageUrl == null}">
 		    <span class="reply commentAvatar">프로필사진</span>
-			</c:if>
-			<c:if test="${sessionScope.member.memberImageUrl != null}">
-          	<span class="reply commentAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">프로필사진</span>
-			</c:if>
-        </div>
+		    </c:if>
+		    <c:if test="${sessionScope.member.memberImageUrl != null}">
+              <span class="reply commentAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">프로필사진</span>
+            </c:if>        </div>
         <div class="commentInputContent">
 	          <textarea placeholder="답글을 입력하세요" name="content" data-autoresize="true"></textarea>
 	        	<div class="commentInputContentController">
-	        		<button type="button" class="reply btnSubmit">등록</button>
+	        		<button type="button" class="reply write btnSubmit">등록</button>
 	        	</div>
         </div>
       </div>
       </c:if>
     </div>
   </div>
+</div>
+<div class="community newsMore">
+	<button type="button" class="btnNewsMore">더 보기<span class="bgMore">&nbsp;</span></button>
 </div>
 <!--커뮤니티 덧글 영역 끝-->
 <div class="modalOverlay">

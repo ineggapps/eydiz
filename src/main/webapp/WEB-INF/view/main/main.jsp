@@ -42,22 +42,23 @@
           <input
             type="text"
             name="keyword"
+            id="keyword"
             class="keyword transparent"
             placeholder="검색"
           />
           <a href="#" class="searchButton"><span class="hidden">검색</span></a>
-          <select name="sort1">
-            <option value="1">전체</option>
-            <option value="2">진행 중</option>
-            <option value="3">종료된</option>
+          <select name="status" id="status">
+            <option value="all">전체</option>
+            <option value="ongoing">진행 중</option>
+            <option value="closed">종료된</option>
           </select>
-          <select name="sort2">
-            <option value="1">추천순</option>
-            <option value="2">인기순</option>
-            <option value="3">모금액순</option>
-            <option value="4">마감 임박순</option>
-            <option value="5">최신순</option>
-            <option value="6">응원 참여자순</option>
+          <select name="sort" id="sort">
+            <option value="recommend">추천순</option>
+            <option value="popular">인기순</option>
+            <option value="amount">모금액순</option>
+            <option value="deadline">마감 임박순</option>
+            <option value="latest">최신순</option>
+            <option value="community">응원 참여자순</option>
           </select>
         </form>
       </div>

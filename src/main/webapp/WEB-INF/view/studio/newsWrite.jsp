@@ -29,6 +29,10 @@
     </div>
 	
 	<button type="submit" class="btnSubmit" id="btnSave">${mode == 'update'?'수정하기':'저장하기'}</button>
+	<c:if test="${mode == 'update'}">
+       <input type="hidden" name="newsNo" value="${dto.newsNo}">
+       <input type="hidden" name="page" value="${page}">
+    </c:if>
   </form>
   </div>
 	<script type="text/javascript" src="<%=cp %>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>

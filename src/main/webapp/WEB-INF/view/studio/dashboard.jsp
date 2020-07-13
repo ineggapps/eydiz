@@ -43,9 +43,11 @@
 			</li>
 		</ul>
 	</div>
+	<c:if test="${project.statusNo==0 or project.statusNo==2}">
 	<div class="projectButtons">
-		<button type="button" class="btnSubmit" onclick="updateStatusNo(${project.projectNo})" >제출하기</button>
+		<button type="button" class="btnSubmit" onclick="updateStatusNo(${project.projectNo})" >${project.statusNo==0?"제출하기":"재심사 요청하기"}</button>
 	</div>
+	</c:if>
   </div>
 	<script src="<%=cp%>/resource/js/studio/dashboard.js"></script>
 </article>

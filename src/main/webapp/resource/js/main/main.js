@@ -83,15 +83,70 @@ function scrollCategory() {
   categoryScrollLeft = scrollTo;
 }
 
+//셀렉트 상자 이벤트
+function getSort() {
+  return $("#sort").val().trim();
+}
+
+function getStatus() {
+  return $("#status").val().trim();
+}
+
+function getKeyword() {
+  return $("#keyword").val().trim();
+}
+
+function initializeProjectList() {
+  clearProjectSnippet();
+  loadProjectSnippet(categoryNo, page++, getKeyword(), getStatus(), getSort());
+}
+
+$(function () {
+  $("#status").on("change", function () {
+    initializeProjectList();
+  });
+  $("#sort").on("change", function () {
+    initializeProjectList();
+  });
+  $("a.searchButton").on("change", function () {
+    initializeProjectList();
+  });
+  $("#keyword").on("keypress", function (e) {
+    if (e.keyCode == 13) {
+      initializeProjectList();
+      e.preventDefault();
+    }
+  });
+});
+
+function clearProjectSnippet() {
+  const $wrap = $("ul.gridContent").eq(0);
+  $wrap.empty();
+  page = 1;
+  pageCount = 1;
+}
+
 //ajax 프로젝트 불러오기
 var page = 1;
 var pageCount = 1;
-function loadProjectSnippet(categoryNo, page) {
+function loadProjectSnippet(categoryNo, page, keyword, status, sort) {
+  if (!keyword) {
+    keyword = "";
+  }
+  if (!status) {
+    status = "all";
+  }
+  if (!sort) {
+    sort = "recommend";
+  }
   const url = cp + "/main/project/snippet";
   const method = "get";
   const query = {
     categoryNo: categoryNo,
     page: page,
+    keyword: keyword,
+    status: status,
+    sort: sort,
     // rows: 9,
   };
   ajaxJSON(url, method, query)
@@ -109,9 +164,14 @@ function renderSnippet(items) {
   const $wrap = $("ul.gridContent");
   $.each(items, function (idx, item) {
     var $project = $element.clone(true).removeClass("sample");
-    $project.find(".thumbnail").css("background-image", "url('" + item.projectImageUrl + "')");
+    if (item.projectImageUrl) {
+      $project.find(".thumbnail").css("background-image", "url('" + item.projectImageUrl + "')");
+    }
     $project.find(".thumbnail").attr("data-project-no", item.projectNo);
-    $project.find(".subject a").text(item.projectName);
+    $project
+      .find(".subject a")
+      .text(item.projectName)
+      .attr("href", cp + "/detail/" + item.projectNo);
     $project.find(".category").text(item.categoryName);
     $project.find(".name").text(item.name);
     var rate = item.attainRate * 100 <= 100 ? item.attainRate * 100 : 100;
@@ -124,6 +184,8 @@ function renderSnippet(items) {
       s = item.remainDays + "일 남음";
     } else if (item.remainDays == 0) {
       s = "오늘 마감";
+    } else if (item.remainDays < 0) {
+      s = "마감";
     }
     $project.find(".remainDays").text(s);
     $project.appendTo($wrap);
@@ -132,17 +194,17 @@ function renderSnippet(items) {
 
 //프로젝트 불러오기 등..
 $(function () {
-  loadProjectSnippet(categoryNo, page++);
+  loadProjectSnippet(categoryNo, page++, null, null, null);
 
   //스크롤 이벤트
 });
 $(window).scroll(function () {
   var scrollTop = $(window).scrollTop();
   var height = $(document).height() - $(window).height() - 100; //- 여분
-  console.log(scrollTop, height, "...", page, pageCount);
+  //console.log(scrollTop, height, "...", page, pageCount);
   if (isVisibleScrollBar() && scrollTop >= height && page <= pageCount) {
-    console.log("... 다음 호출!!!");
-    loadProjectSnippet(categoryNo, page++);
+    //console.log("... 다음 호출!!!");
+    loadProjectSnippet(categoryNo, page++, getKeyword(), getStatus(), getSort());
   }
 });
 
@@ -155,3 +217,16 @@ function goToLocation(element) {
   const projectNo = $(element).attr("data-project-no");
   location.href = cp + "/detail/" + projectNo;
 }
+
+//ajax event
+//$.ajax({
+//  beforeSend: function () {
+//    // Handle the beforeSend event
+//    console.log("ajax");
+//  },
+//  complete: function () {
+//    // Handle the complete event
+//    console.log("ajax complete");
+//  },
+//  // ......
+//});

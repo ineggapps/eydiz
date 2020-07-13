@@ -24,7 +24,7 @@ function membersearchlist() {
                     </select>
                    <input type="text" name="keyword"placeholder="검색" value="${keyword}"/>
                    <input type="hidden" name="rows" value="${rows}">
-                    <button type="button" class="v_searchButton" onclick="searchlist()"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <button type="button" class="v_searchButton" onclick="membersearchlist()"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
 				 </form>
               </div>

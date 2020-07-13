@@ -36,5 +36,14 @@
 
 
 .studio_list_bname {
+	width: 180px;
+}
+
+.studio_list_cname {
 	width: 250px;
+}
+
+.snewsbtn {
+	background-color: white;
+	border: none;
 }

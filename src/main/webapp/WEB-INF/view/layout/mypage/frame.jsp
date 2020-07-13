@@ -49,6 +49,7 @@
     			   	$clone.removeClass( 'sticky' );
     			}			
       		});
+    		$(window).scrollTop(10);
     		$(window).scrollTop(0);
     });
         </script>
@@ -77,7 +78,7 @@
               </ul>
             </div>
           </nav>
-          <article class="row">
+          <article class="row content">
             <div class="contentInner">
               <tiles:insertAttribute name="content"/>
             </div>
