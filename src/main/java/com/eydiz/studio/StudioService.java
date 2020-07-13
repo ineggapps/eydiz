@@ -56,4 +56,8 @@ public interface StudioService {
 	public int manageDataCount(Map<String, Object> map);
 	public Send readSend(int buyNo, int rewardNo, int projectNo);
 	
+	// 펀딩 현황 ---------------------------
+	public List<Project> listFundingView(Map<String, Object> map);
+	public List<Reward> readFundingView(int buyNo);
+	public int fundingViewDataCount(Map<String, Object> map);
 }

@@ -20,6 +20,9 @@ uri="http://tiles.apache.org/tags-tiles" %> <% String cp=request.getContextPath(
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/sendlist.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/studioNews.css" />
     <link rel="stylesheet" href="<%=cp%>/resource/css/studio/sendarticle.css" />
+    <link rel="stylesheet" href="<%=cp%>/resource/css/studio/viewList.css" />
+	<!-- 구매내역 -->
+    <link rel="stylesheet" href="<%=cp%>/resource/css/myinfo/funding.css" />
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js/html5shiv.min.js"></script>
     <![endif]-->

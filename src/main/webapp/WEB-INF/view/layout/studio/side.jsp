@@ -58,7 +58,7 @@
           <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
         </div>
         <ul class="subMenu">
-          <li class="subMenuItem"><a href="#">결제/후원 현황</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/studio/project/${projectNo}/view/list">결제/후원 현황</a></li>
         </ul>
       </div>
     </li>
