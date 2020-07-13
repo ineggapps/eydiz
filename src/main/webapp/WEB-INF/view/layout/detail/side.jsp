@@ -32,12 +32,15 @@
     <button type="button" class="btnPlain" id="btnLike"><span class="icon heart ${project.myLikeCount==1?'on':''}"></span><span class="count">${project.likeCount}</span></button>
   </li>
   <li>
-    <button type="button" class="btnPlain"><span class="icon talk"></span>문의</button>
+    <button type="button" class="btnPlain" onclick="javascript:location.href='<%=cp%>/detail/${project.projectNo}/community'"><span class="icon talk"></span>문의</button>
   </li>
   <li>
     <button type="button" class="btnPlain"><span class="icon share"></span>공유</button>
   </li>
 </ul>
+<div class="clipboard hide">
+	<input type="text" id="clipboard" value="클립보드"/>
+</div>
 <div class="brandInfoBox">
   <div class="brandName">
     <a href="<%=cp%>/brand/${project.brandNo}">
@@ -72,8 +75,8 @@
   <div class="goToInquiry brandInfoBoxRow">
     <p>브랜드에게 문의하세요</p>
     <div class="btnComponent">
-      <button class="btnPlain semiRound">
-        <span class="icon talk"></span>브랜드에게 문의하기
+      <button class="btnPlain semiRound" onclick="javascript:location.href='<%=cp%>/detail/${project.projectNo}/community'">
+        <span class="icon talk"></span>댓글로 문의하기
       </button>
     </div>
   </div>
