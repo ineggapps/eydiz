@@ -113,7 +113,7 @@ CREATE TABLE project(
     projectStatusMemo VARCHAR2(255)  NOT NULL, -- 프로젝트 진행상황 텍스트 작성
     projectImageUrl VARCHAR2(200), -- 프로젝트 이미지 경로
     projectGoalAmount NUMBER NOT NULL, -- 목표 금액
-    projectAttainAmount NUMBER DEFAULT 0 NOT NULL, -- 달성 금액 (0)
+    projectAttainAmount NUMBER DEFAULT 0 NOT NULL, -- 달성 금액 (0), 만들었으나 아직은 활용하지 않음.
     projectCreatedDate DATE DEFAULT SYSDATE NOT NULL, -- 프로젝트 생성일자
     projectUpdatedDate DATE DEFAULT SYSDATE NOT NULL, -- 프로젝트 수정일자
     projectStartDate DATE NOT NULL, -- 프로젝트 시작일자
