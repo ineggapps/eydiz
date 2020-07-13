@@ -68,10 +68,9 @@
                   for="check_account"
                   >로그인 상태 유지</label
                 > --%>
-                <c:if test="${not empty error}">
+                <c:if test="${not empty sessionScope.loginError}">
                 <div id="errorMessage">
-                	<p class="message">등록되지 않은 아이디이거나, 아이디 또는 비밀번호가 회원정보와 일치하지
-              않습니다.</p>
+                	<p class="message">등록되지 않은 아이디이거나, 관리자 계정이 아닙니다.</p>
                 </div>
                 </c:if>
               </div>
