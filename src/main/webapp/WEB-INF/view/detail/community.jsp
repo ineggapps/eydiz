@@ -21,7 +21,7 @@
       <div class="commentHeader">
         <span class="parent author">아이디</span>
         <span class="mark labelFunded hide">펀딩 참여자</span>
-        <span class="mark labelBrand hide">브랜드</span>
+        <span class="mark labelBrand${sessionScope.member.memberNo!=project.memberNo?'hide':''}">브랜드</span>
         <span class="parent date">작성일자</span>
         <span class="parent commentMenu"><span class="hidden">메뉴</span></span>
         <div class="parent commentContext hide">

@@ -6,7 +6,7 @@
 	<select id="readProject" parameterType="map" resultType="com.eydiz.studio.Project">
 		SELECT 
 			p.projectNo, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
-			projectCreatedDate, projectUpdatedDate, 
+			projectCreatedDate, projectUpdatedDate, b.memberNo,
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
 			statusNo, projectSummary, projectStory, 
 			p.brandNo, brandName, managerName, managerEmail, managerPhone,
@@ -234,10 +234,43 @@
 	</select>
 	
 	<!-- 커뮤니티 댓글 작성하기 / 삭제하기 -->
+	<select id="getNewCommentNo" resultType="Integer">
+		SELECT project_community_seq.NEXTVAL from dual
+	</select>
+	
 	<insert id="insertCommunity" parameterType="com.eydiz.studio.ProjectCommunity">
 		INSERT INTO project_community(commentNo, parentCommentNo, projectNo, memberId, content, createdDate)
-		VALUES(project_community_seq.NEXTVAL, #{parentCommentNo, jdbcType=INTEGER}, #{projectNo}, #{memberId}, #{content}, SYSDATE)
+		VALUES(${commentNo}, #{parentCommentNo, jdbcType=INTEGER}, #{projectNo}, #{memberId}, #{content}, SYSDATE)
 	</insert>
+	
+	<!-- 커뮤니티 댓글 1개 조회하기 작성 후 echo를 위함 (hasFunded, isBrand)-->
+	<select id="readCommunity" parameterType="Integer" resultType="com.eydiz.studio.ProjectCommunity">
+		SELECT commentNo, pc.parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate, 
+					memberImageUrl, NVL(replyCount, 0) replyCount,
+                    CASE WHEN NVL(buyCount,0) - NVL(cancelCount,0) > 0 THEN 1 ELSE 0 END hasFunded,
+                    CASE WHEN b.memberNo = m.memberNo THEN 1 ELSE 0 END isBrand
+		FROM project_community pc
+		JOIN member_detail m ON m.memberId = pc.memberId
+        JOIN project p ON p.projectNo = pc.projectNo
+		LEFT OUTER JOIN(
+			SELECT parentCommentNo, count(*) replyCount
+			FROM project_community
+            GROUP BY parentCommentNo
+		) parentCmt ON parentCmt.parentCommentNo = commentNo
+        LEFT OUTER JOIN (
+            SELECT projectNo, memberNo, COUNT(*) buyCount
+            FROM reward_buy_overview ro
+            GROUP BY projectNo, memberNo
+        ) rr ON rr.projectNo = pc.projectNo AND m.memberNo = rr.memberNo
+        LEFT OUTER JOIN ( 
+            SELECT projectNo, memberNo, COUNT(*) cancelCount
+            FROM reward_buy_cancel rc
+            JOIN reward_buy_overview ro ON rc.buyNo = ro.buyNo
+            GROUP BY projectNo, memberNo
+        ) rrr ON rrr.projectNo = pc.projectNo
+        LEFT OUTER JOIN brand b ON b.brandNo = p.brandNo AND m.memberNo = b.memberNo
+		WHERE commentNo=#{commentNo}
+	</select>
 	
 	<!-- 커뮤니티 댓글 수정하기 -->
 	<update id="updateCommunity" parameterType="com.eydiz.studio.ProjectCommunity">

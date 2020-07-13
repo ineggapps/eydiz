@@ -160,7 +160,7 @@ public class MyPageController implements Constant, MemberConstant, MyPageConstan
 			SessionInfo info = (SessionInfo) req.getSession().getAttribute(SESSION_MEMBER);
 			Project project = myPageService.readBoughtMyProject(info.getMemberNo(), buyNo);
 			String tid = myPageService.readKakaoTid(buyNo);
-			kakaoPayService.kakayPayCancel(project.getFinalAmount(), 0, tid);
+			kakaoPayService.kakaoPayCancel(project.getFinalAmount(), 0, tid);
 			myPageService.insertCancel(info.getMemberNo(), buyNo, "전액 펀딩 취소");
 			map.put(JSON_RESULT, JSON_RESULT_OK);
 		} catch (Exception e) {

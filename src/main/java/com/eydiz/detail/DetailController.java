@@ -192,10 +192,13 @@ public class DetailController implements Constant, DetailConstant, MemberConstan
 				throw new NullPointerException();
 			}
 			dto.setProjectNo(projectNo);
+			dto.setCommentNo(service.getNewCommentNo());
 			SessionInfo info = (SessionInfo) session.getAttribute(SESSION_MEMBER);
 			dto.setMemberId(info.getMemberId());
 			service.insertCommunityComment(dto);
 			map.put(JSON_RESULT, JSON_RESULT_OK);
+			ProjectCommunity comment = service.readCommunity(dto.getCommentNo());
+			map.put(ATTRIBUTE_COMMUNITY_COMMENT, comment);
 		} catch (Exception e) {
 			map.put(JSON_RESULT, JSON_RESULT_ERROR);
 			map.put(JSON_RESULT_ERROR_MESSAGE, e.getMessage());

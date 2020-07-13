@@ -247,11 +247,12 @@ $(function () {
           alert("답글을 작성했습니다.");
           //fake comment
           const $element = $commentItem.clone(true).appendTo($wrap).removeClass("hide");
-          renderComment($element, {
-            memberNickname: memberNickname,
-            createdDate: new Date(),
-            content: content,
-          });
+          renderComment($element, data.comment);
+//          renderComment($element, {
+//            memberNickname: memberNickname,
+//            createdDate: new Date(),
+//            content: content,
+//          });
         }
       })
       .catch(function (e) {
