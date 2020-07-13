@@ -44,7 +44,7 @@
 	
 	<!-- 브랜드 프로젝트 모두 불러오기 -->	
 	<select id="listFundedProject" parameterType="map" resultType="com.eydiz.studio.Project">
-		SELECT p.projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
+		SELECT DISTINCT p.projectNo, p.brandNo, brandName, p.categoryNo, categoryName, projectName, projectStatusMemo, projectImageUrl, projectGoalAmount, 
 			projectCreatedDate, projectUpdatedDate, 
 			TO_CHAR(projectStartDate, 'YYYYMMDD') projectStartDate, TO_CHAR(projectEndDate,'YYYYMMDD') projectEndDate, 
 			statusNo, projectSummary
