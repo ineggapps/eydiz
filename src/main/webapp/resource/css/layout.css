@@ -278,7 +278,7 @@ h1.logo {
 /*content*/
 .contentWrapper {
   clear: both;
-  min-height: 500px;
+  min-height: 550px;
   letter-spacing: -0.04rem;
 }
 
