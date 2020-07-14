@@ -202,8 +202,9 @@
 	</select>
 	
 	<sql id="sort-recommend">
-		ORDER BY 
-		approvalDate DESC
+		ORDER BY
+		projectNo DESC
+		, approvalDate DESC
 		,(
 			totalAmount*0.2 +
 			supportCount*0.3 + 
@@ -212,7 +213,6 @@
 			communityCount*0.1 + 
 			likeCount*0.1
 		) DESC
-		, projectNo DESC
 	</sql>
 	
 	<sql id="sort-popular">
