@@ -69,7 +69,9 @@
           <a href="#" class="arrow"><span class="hidden">열기/닫기</span></a>
         </div>
         <ul class="subMenu">
-          <li class="subMenuItem"><a href="#">배송현황 조회</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/studio/project/shipping/send/${projectNo}">결제 완료 조회</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/studio/project/shipping/ready/${projectNo}">배송 준비 조회</a></li>
+          <li class="subMenuItem"><a href="<%=cp%>/studio/project/shipping/manage/${projectNo}">배송 중 조회</a></li>
         </ul>
       </div>
     </li>

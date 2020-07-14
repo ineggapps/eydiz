@@ -837,7 +837,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		} catch (Exception e) {
 		}
 		
-		return "redirect:/studio/project/shipping/send/"+projectNo+"?page="+page;
+		return "redirect:/studio/project/shipping/ready/"+projectNo+"?page="+page;
 	}
 	
 }
