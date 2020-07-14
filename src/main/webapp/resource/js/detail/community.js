@@ -127,7 +127,7 @@ function renderComment($element, jsonItem, prefix) {
   $element
     .find(prefix + ".commentContent")
     .eq(0)
-    .text(jsonItem.content);
+    .html(jsonItem.content.replace(/\n/g, "<br />"));
   $element
     .find(prefix + ".commentContent ~ .commentInputContent textarea")
     .eq(0)
