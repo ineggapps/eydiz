@@ -170,7 +170,7 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		return "redirect:" + API_PROJECT_LIST;
+		return "redirect:" + String.format(API_PROJECT_REGISTER, projectNo);
 	}
 
 	// 이미지 업로드
