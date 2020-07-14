@@ -24,7 +24,6 @@
 	
 	function adminProjectSubmit() {
 		var f = document.adminProjectSubmitForm;
-		
 		if(confirm("프로젝트를 승인하시겠습니까?")) {
 			f.submit();
 		}
@@ -129,16 +128,24 @@
           <p class="stateText">종료일 : <strong> ${project.projectEndDate}</strong></p>
           <p class="stateText">목표금액 : <strong> <fmt:formatNumber type="number" maxFractionDigits="3" value="${project.projectGoalAmount}"></fmt:formatNumber></strong></p>
         </div>
-        <c:if test="${statusNo == 1}">
-        <form name="adminProjectSubmitForm" method="post">
+        
+        <form name="adminProjectSubmitForm" method="post" action="<%=cp%>/admin/project/submit">
 	        <a onclick="adminProjectSubmit()" class="adminProjectBtn projectSubmitBtn">승인하기</a>
 	        <input type="hidden" name="statusNo" value="5">
 	        <input type="hidden" name="statusMemo" value="승인완료">
+	        <input type="hidden" name="projectNo" value="${projectNo}">
+	        <input type="hidden" name="page" value="${page}">
+	        <input type="hidden" name="status" value="${statusNo}">
+	        <input type="hidden" name="parentCategoryNo" value="${parentCategoryNo}">
         </form>
         
-        <form name="adminProjectRejectForm" method="post">
+        <form name="adminProjectRejectForm" method="post" action="<%=cp%>/admin/project/reject">
 	        <a class="adminProjectBtn projectRejectBtn">반려하기</a>
 	        <input type="hidden" name="statusNo" value="2">
+	        <input type="hidden" name="projectNo" value="${projectNo}">
+	        <input type="hidden" name="page" value="${page}">
+	        <input type="hidden" name="status" value="${statusNo}">
+	        <input type="hidden" name="parentCategoryNo" value="${parentCategoryNo}">
 	        <div class="projectRejectMemo">
 	        	<div class="projectMemoCheckBox">
 		        	<input type="checkbox" name="statusMemo" value="프로젝트 및 메이커의 신뢰성 부족">프로젝트 및 메이커의 신뢰성 부족 <br>
@@ -153,7 +160,7 @@
 	        	</div>
 	        </div>
         </form>
-        </c:if>
+
         <div class="brandInfoBox">
           <div class="brandName">
             <a href="#"><span class="image"></span><span class="name">${project.brandName}</span></a>
