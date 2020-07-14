@@ -1,4 +1,4 @@
-.categoryContent::after,
+.categoryContenta::after,
 .item::after,
 .item .desc::after,
 .status ul::after {
@@ -8,7 +8,7 @@
 }
 
 
-ul.categoryContent li {
+ul.categoryContenta li {
   width: 100%;
   margin: 20px 0;
   display: block;
@@ -18,11 +18,10 @@ ul.categoryContent li {
   display: inline-block;
 }
 
-ul.categoryContent a {
-  width:480px;
+ul.categoryContenta a {
+  width:520px;
   display: block;
   font-size: 33px;
-  padding-right:130px;
   margin: 120px 0;
   display: inline-block;
   color: white;
@@ -229,7 +228,8 @@ ul.detailNav a span.badge {
 }
 
 .www{
-	text-align: right;
+	text-align: center;
+    margin-left: 350px;
 }
 
 
@@ -258,6 +258,7 @@ ul.detailNav a span.badge {
 .s_titleBar {
     padding: 10px 0;
     text-align: left;
+    margin-left: 30px;
 }
 
 .title_s {
