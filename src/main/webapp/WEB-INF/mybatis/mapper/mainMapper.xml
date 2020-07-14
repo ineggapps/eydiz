@@ -158,9 +158,10 @@
             WHERE rc.cancelNo IS NULL
         ) ro ON ro.projectNo = p.projectNo
         LEFT OUTER JOIN (
-        	SELECT projectNo, created approvalDate
+        	SELECT DISTINCT projectNo, created approvalDate
             FROM project_status_list
             WHERE statusNo=5
+            ORDER BY approvalDate DESC
             FETCH FIRST 1 ROWS ONLY
         ) psl ON psl.projectNo = p.projectNo
 		<where>
