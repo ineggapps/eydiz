@@ -144,8 +144,8 @@ ul.detailNav a span.badge {
 .gridContent2 {
   margin: 20px 0;
   text-align: center;
-  margin-left: 90px;
-  border-bottom: 2px solid #eeeeee;
+  margin-left: 130px;
+ margin-bottom: 20px;
   
 }
 
@@ -183,6 +183,9 @@ ul.detailNav a span.badge {
   font-size: 1.1rem;
   line-height: 1.5rem;
   font-weight: 800;
+  border-top: 2px solid #eeeeee;
+    margin-top: 30px;
+    padding-top: 30px;
 }
 
 .s_desc li {
