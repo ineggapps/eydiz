@@ -84,7 +84,7 @@
 			statusNo, projectSummary
 		FROM project p
 		JOIN brand b ON p.brandNo = b.brandNo
-		JOIN project_category pc ON p.categoryNo = pc.categoryNo
+		LEFT OUTER JOIN project_category pc ON p.categoryNo = pc.categoryNo
 		WHERE b.brandNo = #{brandNo}
 		ORDER BY projectNo DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
@@ -153,7 +153,7 @@
             WHERE projectNo = #{projectNo} AND rc.cancelNo IS NULL
         ) ro ON ro.projectNo = p.projectNo
 		JOIN brand b ON p.brandNo = b.brandNo
-		JOIN project_category pc ON p.categoryNo = pc.categoryNo
+		LEFT OUTER JOIN project_category pc ON p.categoryNo = pc.categoryNo
 		JOIN member_detail md ON md.memberNo = b.memberNo
 		WHERE p.projectNo = #{projectNo} AND p.brandNo = #{brandNo}
 	</select>

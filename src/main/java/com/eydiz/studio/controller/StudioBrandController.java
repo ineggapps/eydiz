@@ -28,7 +28,7 @@ public class StudioBrandController implements StudioConstant, MemberConstant {
 
 	private String getRealURI(String requestURI, String contextPath) {
 		return requestURI.substring(contextPath.length() + REQUEST_MAPPING.length());
-	}
+	}	
 
 	private void addModelURIAttribute(Model model, HttpServletRequest req) {
 		StringBuilder uri = new StringBuilder(req.getRequestURI());
