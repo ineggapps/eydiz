@@ -140,26 +140,30 @@ public class AdminProjectController {
 		
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
-		
+		model.addAttribute("projectNo", projectNo);
+		model.addAttribute("parentCategoryNo", parentCategoryNo);
 		model.addAttribute("statusNo", statusNo);
-		
+				
 		return ".adminProjectLayout.article";
 	}
 	
-	// 프로젝트 승인-반려
-	@RequestMapping(value="article", method=RequestMethod.POST)
+	// 프로젝트 승인
+	@RequestMapping(value="submit", method=RequestMethod.POST)
 	public String projectSubmit(
 			@RequestParam int projectNo,
 			@RequestParam String page,
+			@RequestParam String status,
 			@RequestParam(defaultValue="1") int parentCategoryNo,
 			AdminProject dto
 			) throws Exception {
 		
+		System.out.println(dto.getStatusNo()+","+dto.getStatusMemo());
 		Map<String, Object> map = new HashMap<>();
 		map.put("projectNo", projectNo);
 		map.put("statusNo", dto.getStatusNo());
 		
 		dto.setProjectNo(projectNo);
+		
 		
 		try {
 			service.updateProject(map);				// 프로젝트 상태번호 업뎃
@@ -167,7 +171,35 @@ public class AdminProjectController {
 		} catch (Exception e) {
 		}
 		
-		return "redirect:/admin/project/list?parentCategoryNo="+parentCategoryNo+"&statusNo=1"+"&page="+page;
+		return "redirect:/admin/project/list?parentCategoryNo="+parentCategoryNo+"&statusNo="+status+"&page="+page;
+	}
+	
+	
+	// 반려
+	@RequestMapping(value="reject", method=RequestMethod.POST)
+	public String projectReject(
+			@RequestParam int projectNo,
+			@RequestParam String page,
+			@RequestParam String status,
+			@RequestParam(defaultValue="1") int parentCategoryNo,
+			AdminProject dto
+			) throws Exception {
+		
+		System.out.println(dto.getStatusNo()+","+dto.getStatusMemo());
+		Map<String, Object> map = new HashMap<>();
+		map.put("projectNo", projectNo);
+		map.put("statusNo", dto.getStatusNo());
+		
+		dto.setProjectNo(projectNo);
+		
+		
+		try {
+			service.updateProject(map);				// 프로젝트 상태번호 업뎃
+			service.insertProjectStatusList(dto);	// 로그찍는거
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/admin/project/list?parentCategoryNo="+parentCategoryNo+"&statusNo="+status+"&page="+page;
 	}
 	
 }
