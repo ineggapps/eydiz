@@ -114,7 +114,13 @@ function renderComment($element, jsonItem, prefix) {
     $element
       .find(prefix + ".commentAvatar")
       .eq(0)
-      .css("background-image", 'url("' + jsonItem.memberImageUrl + '")');
+      .css("background-image", "url(" + jsonItem.memberImageUrl + ")");
+  }
+  else{//프로필 사진이 없는 경우 css 제거
+	  $element
+      .find(prefix + ".commentAvatar")
+      .eq(0)
+      .css("background-image", "");
   }
   $element
     .find(prefix + ".author")
@@ -328,8 +334,10 @@ jQuery.each(jQuery("textarea[data-autoresize]"), function () {
 });
 
 
-$(function(){
+$(function(){//초기 댓글작성란 프로필 사진 설정
 	var $myAvatar = $(".commentInputSide .reply.commentAvatar");
 	const myAvatarUrl = $myAvatar.data("image-url");
-	$myAvatar.css("background-image", "url("+ myAvatarUrl +")");
-})
+	if(myAvatarUrl){
+		$myAvatar.css("background-image", "url("+ myAvatarUrl +")");
+	}
+});
