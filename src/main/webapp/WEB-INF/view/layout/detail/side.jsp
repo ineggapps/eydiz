@@ -1,9 +1,20 @@
+<%@page import="java.net.URL"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	String cp=request.getContextPath();
+	URL requestURL = new URL(request.getRequestURL().toString());
+	StringBuilder url = new StringBuilder(requestURL.getProtocol() + "://" + requestURL.getHost());
+	String port = requestURL.getPort() == -1 ? "" : ":" + requestURL.getPort();
+	if(
+			(requestURL.getProtocol().equalsIgnoreCase("http") && requestURL.getPort() != 80) ||
+			(requestURL.getProtocol().equalsIgnoreCase("https") && requestURL.getPort() != 443)
+	) {
+		url.append(port);
+	}
+	url.append(request.getContextPath()+"/detail");
 %>
 <div class="stateBox">
   <p class="stateText">
@@ -32,15 +43,12 @@
     <button type="button" class="btnPlain" id="btnLike"><span class="icon heart ${project.myLikeCount==1?'on':''}"></span><span class="count">${project.likeCount}</span></button>
   </li>
   <li>
-    <button type="button" class="btnPlain" onclick="javascript:location.href='<%=cp%>/detail/${project.projectNo}/community'"><span class="icon talk"></span>문의</button>
+    <button type="button" class="btnPlain" onclick="javascript:location.href='<%=cp%>/detail/${project.projectNo}/community'"><span class="icon talk"></span>댓글</button>
   </li>
   <li>
-    <button type="button" class="btnPlain"><span class="icon share"></span>공유</button>
+    <button type="button" class="btnPlain" onclick="copy('<%=url.toString()%>/${project.projectNo}')")"><span class="icon share"></span>공유</button>
   </li>
 </ul>
-<div class="clipboard hide">
-	<input type="text" id="clipboard" value="클립보드"/>
-</div>
 <div class="brandInfoBox">
   <div class="brandName">
     <a href="<%=cp%>/brand/${project.brandNo}">
@@ -200,4 +208,15 @@ $(function () {
     console.log(error);
   }
 });
+</script>
+<script>
+	function copy(val) {
+	  var dummy = document.createElement("textarea");
+	  document.body.appendChild(dummy);
+	  dummy.value = val;
+	  dummy.select();
+	  document.execCommand("copy");
+	  document.body.removeChild(dummy);
+	  alert("복사되었습니다.");
+	}
 </script>

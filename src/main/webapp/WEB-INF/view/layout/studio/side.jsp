@@ -75,7 +75,7 @@
         </ul>
       </div>
     </li>
-    <li>
+    <%--li>
       <div class="menuItem">
         <div class="menuName">
           <a href="#">문의사항 관리</a>
@@ -85,6 +85,6 @@
           <li class="subMenuItem"><a href="#">문의현황 조회</a></li>
         </ul>
       </div>
-    </li>
+    </li --%>
   </ul>
 </div>
