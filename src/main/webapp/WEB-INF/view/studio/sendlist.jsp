@@ -44,7 +44,7 @@ $(function() {
 		var url = "<%=cp%>/studio/project/updateState";
 		var buyNo = $(this).attr("data-buyNo");
 		var query = "buyNo="+buyNo+"&projectNo=${projectNo}&page=${page}";
-		alert(query);
+		
 		location.href = url+"?"+query;
 	});
 });
