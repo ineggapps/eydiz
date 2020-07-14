@@ -41,7 +41,7 @@ public class CastController {
 		
 		String cp = req.getContextPath();
 		
-		int rows = 5;
+		int rows = 4;
 		int total_page = 0;
 		int dataCount = 0;
 		
