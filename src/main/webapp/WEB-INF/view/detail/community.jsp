@@ -96,8 +96,9 @@
 		    <span class="reply commentAvatar">프로필사진</span>
 		    </c:if>
 		    <c:if test="${sessionScope.member.memberImageUrl != null}">
-              <span class="reply commentAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">프로필사진</span>
-            </c:if>        </div>
+              <span class="reply commentAvatar" data-image-url="background-image:url('${sessionScope.member.memberImageUrl}')">프로필사진</span>
+            </c:if>        
+            </div>
         <div class="commentInputContent">
 	          <textarea placeholder="답글을 입력하세요" name="content" data-autoresize="true"></textarea>
 	        	<div class="commentInputContentController">

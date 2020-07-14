@@ -240,7 +240,7 @@ $(function () {
     const content = $(this).closest(".commentInputContent").find("textarea").val();
     $content.val("");
     const parentCommentNo = $(this).closest(".parent.commentItem").data("comment-no");
-    alert(parentCommentNo);
+    //alert(parentCommentNo);
     const q = { parentCommentNo: parentCommentNo, content: content};
     submitComment(q)
       .then(function (data) {

@@ -218,7 +218,7 @@
 	<!-- 커뮤니티 답글 조회하기 -->
 	<select id="selectCommunityCommentReply" parameterType="map" resultType="com.eydiz.studio.ProjectCommunity">
  		SELECT commentNo, parentCommentNo, pc.projectNo, pc.memberId, memberNickname, content, createdDate,
-					memberImageUrl,
+					m.memberImageUrl,
                     CASE WHEN NVL(buyCount,0) - NVL(cancelCount,0) > 0 THEN 1 ELSE 0 END hasFunded,
                     CASE WHEN b.memberNo = m.memberNo THEN 1 ELSE 0 END isBrand
 		FROM project_community pc
