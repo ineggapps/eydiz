@@ -11,21 +11,18 @@
 
 ul.categoryContent2 li {
   width: 100%;
-  height : 280px;
   margin: 20px 0;
   display: block;
   width: 100%;
   font-size: 50px;
   text-align: center;
   display: inline-block;
-  background-size: cover;
 }
 
 ul.categoryContent2 a {
-  width: 100%;
+  width:480px;
   display: block;
-  font-size: 30px;
-  text-align: center;
+  font-size: 33px;
   margin: 120px 0;
   display: inline-block;
   color: white;
