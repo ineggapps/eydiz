@@ -326,3 +326,10 @@ jQuery.each(jQuery("textarea[data-autoresize]"), function () {
     })
     .removeAttr("data-autoresize");
 });
+
+
+$(function(){
+	var $myAvatar = $(".commentInputSide .reply.commentAvatar");
+	const myAvatarUrl = $myAvatar.data("image-url");
+	$myAvatar.css("background-image", "url("+ myAvatarUrl +")");
+})
