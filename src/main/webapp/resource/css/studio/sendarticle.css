@@ -1,2 +1,41 @@
 @charset "UTF-8";
 
+.smanagetitle {
+	margin-bottom: 20px;
+}
+
+.detaillist {
+	width: 100%;
+}
+
+.detaillist p {
+	padding: 10px;
+}
+
+.detaillist input {
+	padding: 7px;
+	width: 70%;
+}
+
+.detailaddr {
+	width: 100%;
+}
+
+.detailaddr p {
+	padding: 10px;
+}
+
+.detailaddr input {
+	padding: 7px;
+	width: 20%;
+}
+
+.detailaddr2 {
+	width: 100%;
+}
+
+.detailaddr2 input{
+	margin-top: 5px;
+	padding: 7px;
+	width: 34%;
+}

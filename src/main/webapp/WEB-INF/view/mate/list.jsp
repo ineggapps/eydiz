@@ -9,6 +9,7 @@
 		<div class="mateForm">
 			<div class="matecontent" >
 				<ul>
+					<li class="mimg"><img src="<%=cp%>/uploads/mate/${dto.fmFilename}"></li>
 					<li class="mcontents">${dto.fmSubject}</li>
 					<li class="mcontentc">${dto.fmContent}</li>
 					<li style="cursor: pointer;" class="mcontent"><a onclick="javascript:contentView('${dto.fmNo}', '${pageNo}')"> 더 보기 > </a></li>

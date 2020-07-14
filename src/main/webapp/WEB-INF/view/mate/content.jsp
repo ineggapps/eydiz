@@ -85,14 +85,11 @@ $(function() {
 	<div class="mateTitle">
 		<div class="matefirst">
 			<p> <img src="<%=cp%>/uploads/mate/${dto.fmFilename}"> </p>
-			<h2 style="margin-left: 100px;"> ${dto.memberNickname} </h2>
-			<p> <span id="mateProjectCount">정원 : ( ${dto.mateProjectCount} / ${dto.fmAllNumber} )</span> </p>		
-		</div>
-		<div class="mnamec">
-			<p> 기획부터 마케팅 까지 분야별 전문가들이 모여 기업에 딱 맞는 컨텐츠를 연구하고,<br> 꼭 필요한 종합 솔루션을 제공 합니다. </p>
+			<h2 style="margin-left: 100px;"> ${dto.fmSubject} </h2>
+			<p> <span id="mateProjectCount">정원 : ( ${dto.mateProjectCount} / ${dto.fmAllNumber} )</span> </p>
 		</div>
 		<div class="matename">
-			<p>${dto.fmSubject}</p>
+			<p> <button class="mcb btnSendMateProject" type="button" style="width: 150px;">참가하기</button> </p>		
 		</div>
 		<div class="matelistcontent">
 			<p>${dto.fmContent} </p>
@@ -102,7 +99,6 @@ $(function() {
 			<p> <button class="mcb" type="button" onclick="updateMate();">수정</button> </p>
 			<p> <button class="mcb" type="button" onclick="deleteMate();">삭제</button> </p>
 		</c:if>
-			<p> <button class="mcb btnSendMateProject" type="button">참가하기</button> </p>
 			<p> <button class="mcb" type="button" onclick="javascript:location.href='<%=cp%>/mate/main'">리스트</button> </p>
 		</div>
 	</div>

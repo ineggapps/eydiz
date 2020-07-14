@@ -114,7 +114,7 @@ $(function() {
 		</div>
 		<c:if test="${sessionScope.member.memberNo==1 || sessionScope.member.memberNo==dto.memberNo}">
 			<div class="contentbutton">
-					<p> <button class="mcb" type="button" onclick="updateSchool();">수정</button> </p>
+					<p> <button style="margin-right: 10px;" class="mcb" type="button" onclick="updateSchool();">수정</button> </p>
 					<p> <button class="mcb" type="button" onclick="deleteSchool();">삭제</button> </p>
 			</div>
 		</c:if>
