@@ -20,15 +20,24 @@
       <li>
         <a href="<%=cp%>/guide/main"><span>이용 가이드</span></a>
       </li>
+      <li>
+        <a href="<%=cp%>/story/story"><span>스토리</span></a>
+      </li>
+      <li>
+        <a href="<%=cp%>/cast/news"><span>캐스트</span></a>
+      </li>
+      <li>
+        <a href="<%=cp%>/admin/"><span>관리자의 방</span></a>
+      </li>
     </ul>
   </div>
   <div class="footerInner">
-    <div class="footerInfo">
+    <%--div class="footerInfo">
       <div class="info1">
         <p class="title">대표 고객센터</p>
         <p class="tel">1577-0000</p>
       </div>
-    </div>
+    </div --%>
   </div>
   <div class="footerWarning">
     <div class="footerWarningInner">

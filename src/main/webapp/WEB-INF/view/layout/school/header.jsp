@@ -10,19 +10,13 @@
     <h1 class="logo"><a href="<%=cp%>">eydiz</a></h1>
     <ul class="gnbExtended">
       <li> 
-        <a href="<%=cp %>/main" class="menu on"><span>펀딩하기</span></a>
+        <a href="<%=cp %>/main" class="menu"><span>펀딩하기</span></a>
       </li>
       <li>
         <a href="<%=cp %>/awards/list" class="menu"><span>어워즈</span></a>
       </li>
       <li>
         <a href="<%=cp %>/partner/list" class="menu"><span>파트너</span></a>
-      </li>
-      <li>
-        <a href="<%=cp %>/cast/news" class="menu"><span>캐스트</span></a>
-      </li>
-      <li>
-        <a href="<%=cp %>/story/story" class="menu"><span>스토리</span></a>
       </li>
     </ul>
     <div class="headerInnerRight">
@@ -39,4 +33,16 @@
     	</ul>
     </div>
   </div>
+  <div class="headerInnerMobile">
+  <div class="mobileNav">
+    <h2 class="title">eydiz 스쿨</h2>
+    <button type="button" class="btnBack btnFlat btnMobileNav" onclick="javascript:history.back(1);">
+      <span class="hidden">이전</span>
+    </button>
+    <a href="<%=cp %>" class="btnHome btnFlat btnMobileNav">
+      <span class="hidden">홈</span>
+    </a>
+  </div>
+</div>
+  
 </header>

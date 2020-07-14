@@ -8,23 +8,17 @@
       <header id="header">
         <div class="headerInner">
           <h1 class="logo"><a href="<%=cp%>">eydiz</a></h1>
-          <ul class="gnbExtended">
-              <li> 
-		        <a href="<%=cp %>/main" class="menu"><span>펀딩하기</span></a>
+		    <ul class="gnbExtended">
+		      <li> 
+		        <a href="<%=cp %>/main" class="menu on"><span>펀딩하기</span></a>
 		      </li>
 		      <li>
 		        <a href="<%=cp %>/awards/list" class="menu"><span>어워즈</span></a>
 		      </li>
 		      <li>
-		        <a href="<%=cp %>/partner/list" class="menu on"><span>파트너</span></a>
+		        <a href="<%=cp %>/partner/list" class="menu"><span>파트너</span></a>
 		      </li>
-		      <li>
-		        <a href="<%=cp %>/cast/news" class="menu"><span>캐스트</span></a>
-		      </li>
-		      <li>
-		        <a href="<%=cp %>/story/story" class="menu"><span>스토리</span></a>
-		      </li>
-          </ul>
+		    </ul>
           <div class="headerInnerRight">
             <ul class="gnbAuth">
               <li><a href="<%=cp %>/studio/project/register" class="btnSubmit bordering btnMakeProject">프로젝트 만들기</a></li>
