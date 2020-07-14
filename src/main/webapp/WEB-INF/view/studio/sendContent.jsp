@@ -9,31 +9,31 @@
 <div class="smanagetitle">
 	<h2>배송 정보 상세 내역</h2>
 </div>
-<div>
+<div class="detaillist">
 	<p>판매 번호</p>
 	<input type="text" value="${dto.buyNo}" readonly="readonly">
 </div>
-<div>
+<div class="detaillist">
 	<p>배송 상태</p>
 	<input type="text" value="${dto.statusName}" readonly="readonly">
 </div>
-<div>
+<div class="detaillist">
 	<p>수령인</p>
 	<input type="text" value="${dto.recipient}" readonly="readonly">
 </div>
-<div>
+<div class="detaillist">
 	<p>메시지</p>
 	<input type="text" value="${dto.message}" readonly="readonly">
 </div>
-<div>
+<div class="detaillist">
 	<p>배송 시작일</p>
 	<input type="text" value="${dto.startShippingDate}" readonly="readonly">
 </div>
-<div>
+<div class="detailaddr">
 	<p>주소</p>
 	<input id="zip" type="text" value="${dto.zipCode}" readonly="readonly">
 </div>
-<div>
+<div class="detailaddr2">
 	<input id="add1" type="text" value="${dto.address1}" readonly="readonly">
 	<input id="add2" type="text" value="${dto.address2}" readonly="readonly">
 </div>
