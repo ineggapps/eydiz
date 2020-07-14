@@ -179,4 +179,8 @@ i.projectStatus.expire {
     float: static;
     width: 100%;
   }
+  .projectList:nth-child(3n+2){
+    padding-left:0;
+    padding-right:0;
+    }
 }
