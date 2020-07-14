@@ -78,10 +78,10 @@ function deleteStory(storyNum, id) {
 </script>
 
 <article class="row">
- <div class="rowInner1">
-              <ul class="categoryContent">
+ <div class="rowInner">
+              <ul class="categoryContenta">
                 <li style="background-image: url('https://cdn.pixabay.com/photo/2020/06/07/13/21/toronto-5270413_960_720.jpg');">
-                  <a>e &nbsp; y &nbsp; d &nbsp; i &nbsp; z &nbsp; : &nbsp; s &nbsp; t &nbsp; o &nbsp; r &nbsp; y</a>
+                  <a>e &nbsp;&nbsp; y &nbsp;&nbsp; d &nbsp;&nbsp; i &nbsp;&nbsp; z &nbsp;&nbsp; : &nbsp;&nbsp; s &nbsp;&nbsp; t &nbsp;&nbsp; o &nbsp;&nbsp; r &nbsp;&nbsp; y</a>
                 </li>
                </ul>
             </div>
@@ -108,7 +108,7 @@ function deleteStory(storyNum, id) {
                 <div><span class="title_s">${storyCnum=="1"?"펀딩 후기":(storyCnum=="2"?"기부 후기":"프로젝트 후기")}</span></div>
        		  </div>
        		
-       		<form name="storyForm" method="post" action="<%=cp%>/story/insert" onsubmit="return submitContents(this);">
+       		<form name="storyForm" method="post" action="<%=cp%>/story/insert" onsubmit="return submitContents(this);" style="margin-left: 30px;">
     		<div class="write">
                  <div class="write2">
                          <span class="aaa">${storyCnum=="1"?"펀딩 후기":(storyCnum=="2"?"기부 후기":"프로젝트 후기")} 작성하기 </span>
@@ -197,7 +197,7 @@ function setDefaultFont() {
                       
                      <div align="right">
                       <ul class="s_desc">
-                        <li><span> ${sessionScope.member.memberId} </span></li>
+                        <li><span> ${dto.memberId} </span></li>
                         <li><span> ${dto.storyCreated} </span></li>
                         <li><span>${dto.storyLikeCount}</span></li>
                         <li>

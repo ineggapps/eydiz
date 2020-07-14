@@ -9,22 +9,19 @@
 
 
 ul.categoryContent1 li {
-  width: 100%;
-  height : 280px;
+   width: 100%;
   margin: 20px 0;
   display: block;
   width: 100%;
   font-size: 50px;
   text-align: center;
   display: inline-block;
-  background-size: cover;
 }
 
 ul.categoryContent1 a {
-  width: 100%;
+  width:480px;
   display: block;
-  font-size: 30px;
-  text-align: center;
+  font-size: 33px;
   margin: 120px 0;
   display: inline-block;
   color: white;
