@@ -11,7 +11,7 @@
 	      <p>세상을 만들어가는 당신,</p>
 	      <p>지금, 펀딩프로젝트를 신청하세요.</p>
 	      <p>당신의 아이디어를 세상에 소개하고, 자금을 모집하도록 도와드립니다.</p>
-	      <button class = "pjBtn" type="button" onclick="">프로젝트 오픈신청</button>
+	      <button class = "pjBtn" type="button" onclick="javascript:location.href='<%=cp%>/studio/project/list'">프로젝트 오픈신청</button>
 	  </div>
     <ul class="fnb">
       <li>

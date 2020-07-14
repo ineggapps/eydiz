@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
    String cp = request.getContextPath();
 %>
@@ -34,7 +35,7 @@
 	              	<c:choose>
 	              		<c:when test="${status.index==0 }">
 	              			<ul class="awardsGridContent awardsNumberOne">	              		
-		              			<li class="awardsItem">
+		              			<li class="awardsItem" data-project-no="${bestSeller.projectNo}">
 		              				<div class="awardsTop1"></div>
 									<div class="awardsItemInner">
 										<div class="thumbnail"
@@ -50,7 +51,7 @@
 													<span class="name">${bestSeller.categoryName}</span>
 												</li>
 												<li>
-													<span class="totalAmount">${bestSeller.totalAmount}원 달성</span>
+													<span class="totalAmount"><fmt:formatNumber type = "number" pattern = "#,###" value = "${bestSeller.totalAmount}" />원 달성</span>
 												</li>
 											</ul>
 										</div>
@@ -59,7 +60,7 @@
 							</ul>
 	              		</c:when>
 	              		<c:otherwise>
-		              		<li class="awardsItem">
+		              		<li class="awardsItem" data-project-no="${bestSeller.projectNo}">
 								<div class="awardsItemInner">
 									<div class="thumbnail"
 										style="background-image: url('${bestSeller.projectImageUrl}');">
@@ -74,7 +75,7 @@
 												<span class="name">${bestSeller.categoryName}</span>
 											</li>
 											<li>
-												<span class="totalAmount">${bestSeller.totalAmount}원 달성</span>
+												<span class="totalAmount"><fmt:formatNumber type = "number" pattern = "#,###" value = "${bestSeller.totalAmount}" />원 달성</span>
 											</li>
 										</ul>
 									</div>
@@ -95,7 +96,7 @@
 	              	<c:choose>
 	              		<c:when test="${status.index==0 }">
 	              			<ul class="awardsGridContent awardsNumberOne">	              		
-		              			<li class="awardsItem">
+		              			<li class="awardsItem" data-project-no="${highestList.projectNo}">
 		              				<div class="awardsTop1"></div>
 									<div class="awardsItemInner">
 										<div class="thumbnail"
@@ -111,7 +112,7 @@
 													<span class="name">${highestList.categoryName}</span>
 												</li>
 												<li>
-													<span class="totalAmount">${highestList.percentage}%</span>
+													<span class="totalAmount"><fmt:formatNumber type = "number" pattern = "###.#" value = "${highestList.percentage}" />%</span>
 												</li>
 											</ul>
 										</div>
@@ -120,7 +121,7 @@
 							</ul>
 	              		</c:when>
 	              		<c:otherwise>
-		              		<li class="awardsItem">
+		              		<li class="awardsItem" data-project-no="${highestList.projectNo}">
 								<div class="awardsItemInner">
 									<div class="thumbnail"
 										style="background-image: url('${highestList.projectImageUrl}');">
@@ -135,7 +136,7 @@
 												<span class="name">${highestList.categoryName}</span>
 											</li>
 											<li>
-												<span class="totalAmount">${highestList.percentage}%</span>
+												<span class="totalAmount"><fmt:formatNumber type = "number" pattern = "###.#" value = "${highestList.percentage}" />%</span>
 											</li>
 										</ul>
 									</div>
@@ -156,7 +157,7 @@
 	              	<c:choose>
 	              		<c:when test="${status.index==0 }">
 	              			<ul class="awardsGridContent awardsNumberOne">	              		
-		              			<li class="awardsItem">
+		              			<li class="awardsItem" data-brand-no="${brandRankList.brandNo}">
 		              				<div class="awardsTop1"></div>
 									<div class="awardsItemInner">
 										<div class="thumbnail"
@@ -181,7 +182,7 @@
 							</ul>
 	              		</c:when>
 	              		<c:otherwise>
-		              		<li class="awardsItem">
+		              		<li class="awardsItem"  data-brand-no="${brandRankList.brandNo}">
 								<div class="awardsItemInner">
 									<div class="thumbnail"
 										style="background-image: url('${brandRankList.memberImageUrl}');">

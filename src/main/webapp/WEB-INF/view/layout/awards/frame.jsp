@@ -20,11 +20,22 @@
     <link rel="stylesheet" href="<%=cp %>/resource/css/common.css" />
     <link rel="stylesheet" href="<%=cp %>/resource/css/awards/awards.css" />
     <!--[if lt IE 9]>
-      <script src="resource/js//html5shiv.min.js"></script>
+      <script src="<%=cp%>/resource/js//html5shiv.min.js"></script>
     <![endif]-->
-    <script src="resource/js/jquery-3.5.1.min.js"></script>
+    <script src="<%=cp %>/resource/js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript">
-    	
+    	$(function(){
+	    	$("body").on("click", ".awardsItem", function(e){
+	    		const projectNo = $(this).data("project-no");
+	    		const brandNo = $(this).data("brand-no");
+	    		console.log(projectNo, brandNo, "ddd");
+	    		if(projectNo){
+	    			location.href="<%=cp%>/detail/"+projectNo;
+	    		}else if(brandNo){
+	    			location.href="<%=cp%>/brand/"+brandNo;
+	    		}
+	    	});
+    	});
     </script>
   </head>
   <body>
