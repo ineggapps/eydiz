@@ -118,6 +118,7 @@
       <dt><fmt:formatNumber type = "number" pattern = "#,###" value = "${item.amount}" />원 펀딩</dt>
       <dd>
         <p>${item.rewardTitle}</p>
+      	<p>${item.rewardContent}</p>
         <c:if test="${not empty item.rewardOption}">
         <p>${item.rewardOption}</p>
         </c:if>
