@@ -404,7 +404,7 @@
 				    SELECT buyNo, projectNo, count(isShipping) shippingCount
 				    FROM reward_buy_detail rd
 				    JOIN reward r ON r.rewardNo = rd.rewardNo
-				    WHERE projectNo = 33
+				    WHERE projectNo = #{projectNo}
 				    GROUP BY buyNo, projectNo
 				) rr ON rr.buyNo = ro.buyNo
     			<where>

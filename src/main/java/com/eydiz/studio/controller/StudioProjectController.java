@@ -897,16 +897,19 @@ public class StudioProjectController implements Constant, StudioConstant, Member
 		return ".studioLayout.sendContent";
 	}
 
-	@RequestMapping(value = "updateState")
-	public String updateStatusNo(@RequestParam int buyNo, @RequestParam int projectNo, @RequestParam String page)
-			throws Exception {
+	@RequestMapping(value="updateState")
+	public String updateStatusNo (
+			@RequestParam int buyNo,
+			@RequestParam int projectNo,
+			@RequestParam String page
+			) throws Exception {
 
 		try {
 			service.updateStatus(buyNo);
 		} catch (Exception e) {
 		}
-
-		return "redirect:/studio/project/shipping/send/" + projectNo + "?page=" + page;
+		
+		return "redirect:/studio/project/shipping/ready/"+projectNo+"?page="+page;
 	}
 
 }
