@@ -82,7 +82,7 @@ $(function(){
                       <div class="subject1">
                         <a  href="${readUrl}&castNum=${dto.castNum}&castCnum=${dto.castCnum}"
                           ><span
-                            >&lt; 와디즈 넥스트 &gt; ${dto.castTitle}</span
+                            >&lt; 이디즈 넥스트 &gt; ${dto.castTitle}</span
                           ></a
                         >
                       </div>
