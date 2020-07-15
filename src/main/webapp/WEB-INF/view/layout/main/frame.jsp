@@ -19,9 +19,7 @@
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js//html5shiv.min.js"></script>
     <![endif]-->
-    <!--[if IE]> 
 	<script type="text/javascript" src="<%=cp %>/resource/js/lib/bluebird.js"></script>    
-	<![endif]-->
     <script>
     	const cp = "<%=cp%>";
     	const categoryNo = ${categoryNo==null?"null":categoryNo};

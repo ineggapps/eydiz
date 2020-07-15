@@ -20,6 +20,7 @@
     <!--[if lt IE 9]>
       <script src="<%=cp%>/resource/js//html5shiv.min.js"></script>
     <![endif]-->
+    <script type="text/javascript" src="<%=cp %>/resource/js/lib/bluebird.js"></script>    
     <script>
     const cp = "<%=cp%>";
     const brandNo = parseInt("${brandNo!=null?brandNo:0}");

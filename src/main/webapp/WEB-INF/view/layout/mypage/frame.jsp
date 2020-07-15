@@ -25,6 +25,7 @@
     <script>
     const cp = "<%=cp%>";
     </script>
+    <script type="text/javascript" src="<%=cp %>/resource/js/lib/bluebird.js"></script>    
     <script src="<%=cp%>/resource/js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="/eydiz/resource/jquery/js/jquery.form.js"></script>
 	<script src="<%=cp %>/resource/js/studio/brand_studio.js"></script>

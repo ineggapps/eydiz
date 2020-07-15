@@ -28,10 +28,18 @@
               <li><a href="<%=cp%>/member/join">회원가입</a></li>
               <li><a href="<%=cp%>/member/login">로그인</a></li>
           	</c:if>
-          	<c:if test="${not empty sessionScope.member}">
-				<li><a href="<%=cp%>/member/logout">로그아웃</a><li>
-				<li><a href="#" class="profilePic">${sessionScope.member.memberNickname}님</a></li>
-          	</c:if>
+	    	<c:if test="${not empty sessionScope.member}">
+			<li><a href="<%=cp%>/member/logout">로그아웃</a><li>
+			<li><a href="<%=cp%>/mypage/myInfo" class="profilePic">
+				<c:if test="${sessionScope.member.memberImageUrl!=null}">
+				<span class="displayAvatar" style="background-image:url('${sessionScope.member.memberImageUrl}')">&nbsp;</span>
+				</c:if>
+				<c:if test="${sessionScope.member.memberImageUrl==null}">
+				<span class="displayAvatar">&nbsp;</span>
+				</c:if>
+				${sessionScope.member.memberNickname}님
+				</a></li>
+	    	</c:if>
           	</ul>
           </div>
         </div>
