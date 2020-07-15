@@ -56,22 +56,22 @@ $(function() {
 			        	</a>
 			       	</div>
 			       	<div class="guideinfo">
-			       		<span class="faqwpahr"><i class="far fa-lightbulb"></i> &nbsp; ${dto.faqSubject}</span><br>
-			        	<span class="faqekqrmf">${dto.faqContent}</span><br>
-			        	<div>
-							<img alt="" src="<%=cp%>/uploads/guide/${dto.faqFilename}" width="180" height="90">
-						</div>
 						<c:if test="${sessionScope.member.memberNo==1}">
 							<div align="right">
 					        	<button type="button" onclick="updateGuide('${dto.faqNo}');" class="bbuuttoon">수정</button>
 					        	<button type="button" onclick="deleteGuide('${dto.faqNo}');" class="bbuuttoon">삭제</button>
 				        	</div>
 			        	</c:if>
+			       		<span class="faqwpahr"><i class="far fa-lightbulb"></i> &nbsp; ${dto.faqSubject}</span><br>
+			        	<span class="faqekqrmf">${dto.faqContent}</span><br>
+			        	<div>
+							<img alt="" src="<%=cp%>/uploads/guide/${dto.faqFilename}" width="180" height="90">
+						</div>
 			       	</div>
 		       	</c:forEach>
 		       	<c:if test="${sessionScope.member.memberNo==1}">
 			       	<div align="right">
-			       		<button type="button" onclick="javascript:location.href='<%=cp%>/guide/createguide'" class="bbuuttoon" style="margin-right: 85px;">등록하기</button>
+			       		<button type="button" onclick="javascript:location.href='<%=cp%>/guide/createguide'" class="bbuuttoon" style="margin-right: 88px; margin-top: 20px;">등록하기</button>
 			       	</div>
 		       	</c:if>
 	       	</div>

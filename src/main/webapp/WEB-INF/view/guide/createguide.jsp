@@ -48,7 +48,6 @@ function sendOk() {
                  	<li class="guidesname"> <p>아이콘 : </p> </li>
                     <li class="guideInput"> <input type="text" name="faqIcon">${dto.faqIcon}</li>
               	</ul>
-	        	
 	        	<br><br><br>
 	        	<ul>
 	        		<li class="guidebottombutton">
