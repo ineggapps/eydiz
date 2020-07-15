@@ -53,10 +53,16 @@
 
 <!-- 브랜드의 총 펀딩액 -->
 <select id="brandTotalAmount" parameterType="Integer" resultType="Double">
-	SELECT NVL(sum(totalAmount),0) brandTotalAmount
-	FROM reward_buy_overview r 
-	JOIN project p ON r.projectNo = p.projectNo
-	WHERE brandNo = #{brandNo} AND statusNo = 6
+	SELECT NVL(SUM(totalAmount),0) brandTotalAmount
+	FROM brand b 
+	JOIN project p ON b.brandNo = p.brandNo
+	JOIN (
+        SELECT projectNo, sum(totalAmount) totalAmount
+        FROM reward_buy_overview
+        GROUP BY projectNo
+	) ro ON p.projectNo = ro.projectNo
+	WHERE b.brandNo = #{brandNo} AND statusNo = 6
+    GROUP BY b.brandNo
 </select>
 
 <!-- 프로젝트 리스트 개수 구하기 -->
