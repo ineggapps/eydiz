@@ -8,36 +8,46 @@
 
 <!-- 판매금액 가장 많은 top 5 -->
 <select id="bestSeller" resultType="com.eydiz.awards.Awards">
-	SELECT ROWNUM, x.* FROM (
-		SELECT p.brandNo,brandName, p.projectNo, projectName, categoryName ,projectImageUrl,  NVL(totalAmount,0) totalAmount, NVL(TRUNC((totalAmount/projectGoalAmount*100),1),0) percentage 
-		FROM brand b
-		JOIN project p ON p.brandNo = b.brandNo
-        LEFT OUTER JOIN(
-            SELECT projectNo, sum(totalAmount) totalAmount
-            FROM reward_buy_overview
-            GROUP BY projectNo
-            ORDER BY totalAmount DESC
-        ) ro ON p.projectNo = ro.projectNo
-        JOIN project_category pc ON p.categoryNo = pc.categoryNo
-    ) x 
-	WHERE ROWNUM &lt;= 5
+	SELECT 
+        p.projectNo, b.brandNo, b.brandName, p.projectName, c.categoryName, p.projectImageUrl,
+        NVL(totalAmount,0) totalAmount,
+        NVL(TRUNC(totalAmount/p.projectGoalAmount*100,1),0) percentage
+    FROM project p
+    JOIN brand b ON b.brandNo = p.brandNo
+    JOIN project_category c ON c.categoryNo = p.categoryNo
+    LEFT OUTER JOIN (
+        SELECT DISTINCT 
+            projectNo, NVL(SUM(totalAmount) OVER(PARTITION BY projectNo), 0) - NVL(SUM(canceledAmount) OVER(PARTITION BY projectNo),0) totalAmount
+            ,NVL(SUM(totalAmount) OVER(PARTITION BY projectNo), 0) investedAmount, NVL(SUM(canceledAmount) OVER(PARTITION BY projectNo),0) canceledAmount
+        FROM reward_buy_overview ro
+        JOIN reward_buy_detail rd ON rd.buyNo = ro.buyNo
+        LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+    ) total ON total.projectNo = p.projectNo
+    WHERE p.statusNo in (5, 6)
+    ORDER BY totalAmount DESC
+    FETCH FIRST 5 ROWS ONLY
 </select>
 
 <!-- 달성률 가장 높은 top 5 -->
 <select id="highestPercentage" resultType="com.eydiz.awards.Awards">
-	SELECT ROWNUM, x.* FROM (
-		SELECT p.brandNo,brandName, p.projectNo, projectName, projectImageUrl, categoryName,  NVL(totalAmount,0) totalAmount , NVL(TRUNC((totalAmount/projectGoalAmount*100),1),0) percentage 
-		FROM brand b
-		JOIN project p ON p.brandNo = b.brandNo
-        LEFT OUTER JOIN(
-            SELECT projectNo, sum(totalAmount) totalAmount
-            FROM reward_buy_overview
-            GROUP BY projectNo
-        ) ro ON p.projectNo = ro.projectNo
-        JOIN project_category pc ON p.categoryNo = pc.categoryNo
-        ORDER BY percentage DESC
-    ) x 
-WHERE ROWNUM &lt;= 5
+	SELECT 
+        p.projectNo, b.brandNo, b.brandName, p.projectName, c.categoryName, p.projectImageUrl,
+        NVL(totalAmount,0) totalAmount,
+        NVL(TRUNC(totalAmount/p.projectGoalAmount*100,1),0) percentage
+    FROM project p
+    JOIN brand b ON b.brandNo = p.brandNo
+    JOIN project_category c ON c.categoryNo = p.categoryNo
+    LEFT OUTER JOIN (
+        SELECT DISTINCT 
+            projectNo, NVL(SUM(totalAmount) OVER(PARTITION BY projectNo), 0) - NVL(SUM(canceledAmount) OVER(PARTITION BY projectNo),0) totalAmount
+            ,NVL(SUM(totalAmount) OVER(PARTITION BY projectNo), 0) investedAmount, NVL(SUM(canceledAmount) OVER(PARTITION BY projectNo),0) canceledAmount
+        FROM reward_buy_overview ro
+        JOIN reward_buy_detail rd ON rd.buyNo = ro.buyNo
+        LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
+    ) total ON total.projectNo = p.projectNo
+    WHERE p.statusNo in (5, 6)
+    ORDER BY percentage DESC
+    FETCH FIRST 5 ROWS ONLY
 </select>
 
 
