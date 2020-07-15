@@ -203,7 +203,8 @@
 	
 	<sql id="sort-recommend">
 		ORDER BY
-		projectNo DESC
+		(CASE WHEN projectEndDate - SYSDATE >= 0 THEN 1 ELSE 0 END) DESC
+		,projectNo DESC
 		, approvalDate DESC
 		,(
 			totalAmount*0.2 +
