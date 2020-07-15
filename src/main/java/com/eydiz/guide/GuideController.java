@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.eydiz.common.MyUtil;
 import com.eydiz.member.SessionInfo;
 
 @Controller("guide.Controller")
@@ -25,9 +24,6 @@ import com.eydiz.member.SessionInfo;
 public class GuideController {
 	@Autowired
 	GuideSerivce service;
-	
-	@Autowired
-	private MyUtil myutil;
 	
 	@RequestMapping(value="main")
 	public String main(
@@ -54,7 +50,7 @@ public class GuideController {
 			listNum++;
 			dto.setListNum(listNum);
 			
-			dto.setFaqContent(myutil.htmlSymbols(dto.getFaqContent()));
+			// dto.setFaqContent(myutil.htmlSymbols(dto.getFaqContent()));
 		}
 		
 		
