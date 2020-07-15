@@ -69,6 +69,8 @@
             <mvc:exclude-mapping path="/main/**"/>
             <mvc:exclude-mapping path="/category/**"/>
             <mvc:exclude-mapping path="/detail/**"/>
+            <mvc:exclude-mapping path="/awards/**"/>
+            <mvc:exclude-mapping path="/partner/**"/>
             <mvc:exclude-mapping path="/brand/made/**"/>
             <mvc:exclude-mapping path="/resource/**"/>
             <mvc:exclude-mapping path="/uploads/image/**"/>
