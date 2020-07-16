@@ -40,7 +40,7 @@
             SELECT DISTINCT projectNo, SUM(totalAmount) OVER(PARTITION BY projectNo) totalAmount
             FROM reward_buy_overview ro
             LEFT OUTER JOIN reward_buy_cancel rc ON rc.buyNo = ro.buyNo
-            WHERE projectNo = 51 AND rc.cancelNo IS NULL
+            WHERE rc.cancelNo IS NULL
     ) total ON total.projectNo = p.projectNo
     WHERE p.statusNo in (5, 6)
     ORDER BY percentage DESC

@@ -313,6 +313,7 @@ span.icon.share {
   background-repeat: no-repeat;
   background-size: 100%;
   vertical-align: middle;
+  border-radius:100%;
 }
 .brandInfoBox span.name {
   font-size: 1.1rem;
