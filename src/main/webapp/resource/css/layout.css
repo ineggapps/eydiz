@@ -25,7 +25,7 @@ a {
 }
 
 .sample{/*ajax sample template*/
-	display:none;
+	display:none !important;
 }
 
 .emptyMessage{
