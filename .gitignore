@@ -28,3 +28,5 @@ target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
 target/m2e-wtp/web-resources/META-INF/
 src/main/java/com/eydiz/reward/kakao/KakaoPayService.java
 *.ucls
+src/main/webapp/WEB-INF/view/admin/admin_login.jsp
+src/main/webapp/WEB-INF/view/member/login.jsp
