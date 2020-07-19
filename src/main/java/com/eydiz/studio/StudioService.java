@@ -63,4 +63,8 @@ public interface StudioService {
 	public List<Project> listFundingView(Map<String, Object> map);
 	public List<Reward> readFundingView(int buyNo);
 	public int fundingViewDataCount(Map<String, Object> map);
+	
+	// 태그제거...
+	public void removeHashTagTags(ProjectHashtag hashTag);
+	public void removeProjectTags(Project project);
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eydiz.common.MyUtil;
 import com.eydiz.common.dao.CommonDAO;
 import com.eydiz.studio.Project;
 import com.eydiz.studio.ProjectCommunity;
@@ -17,6 +18,9 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 
 	@Autowired
 	CommonDAO dao;
+
+	@Autowired
+	MyUtil myUtil;
 
 	@Override
 	public Project readProject(Map<String, Object> map) {
@@ -34,6 +38,10 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 		List<Reward> list = null;
 		try {
 			list = dao.selectList(MAPPER_NAMESPACE + "listReward", projectNo);
+			// remove tags
+			for (Reward r : list) {
+				removeRewardTags(r);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,6 +68,9 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 			map.put(ATTRIBUTE_ROWS, rows);
 			map.put(ATTRIBUTE_OFFSET, offset);
 			list = dao.selectList(MAPPER_NAMESPACE + "selectCommunityComment", map);
+			for (ProjectCommunity community : list) {
+				removeProjectCommunityTags(community);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,12 +101,12 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 		}
 		return commentNo;
 	}
-	
+
 	@Override
 	public ProjectCommunity readCommunity(int commentNo) {
 		ProjectCommunity community = null;
 		try {
-			community = dao.selectOne(MAPPER_NAMESPACE+"readCommunity",commentNo);
+			community = dao.selectOne(MAPPER_NAMESPACE + "readCommunity", commentNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -105,6 +116,7 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 	@Override
 	public void insertCommunityComment(ProjectCommunity dto) throws Exception {
 		try {
+			removeProjectCommunityTags(dto);
 			dao.insertData(MAPPER_NAMESPACE + "insertCommunity", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -115,6 +127,7 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 	@Override
 	public void updateCommunityComment(ProjectCommunity dto) throws Exception {
 		try {
+			removeProjectCommunityTags(dto);
 			dao.updateData(MAPPER_NAMESPACE + "updateCommunity", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -137,6 +150,7 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 		Reward reward = null;
 		try {
 			reward = dao.selectOne(MAPPER_NAMESPACE + "readReward", rewardNo);
+			removeRewardTags(reward);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -172,6 +186,28 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
+		}
+	}
+
+	@Override
+	public void removeRewardTags(Reward reward) {
+		try {
+			reward.setRewardContent(myUtil.removeHtmlTag(reward.getRewardContent()));
+			reward.setRewardTitle(myUtil.removeHtmlTag(reward.getRewardTitle()));
+			reward.setRewardOption(myUtil.removeHtmlTag(reward.getRewardOption()));
+		} catch (NullPointerException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void removeProjectCommunityTags(ProjectCommunity community) {
+		try {
+			community.setContent(myUtil.htmlSymbols(community.getContent()));
+			community.setContent(myUtil.removeHtmlTag(community.getContent()));
+		} catch (NullPointerException e) {
+		} catch (Exception e) {
 		}
 	}
 

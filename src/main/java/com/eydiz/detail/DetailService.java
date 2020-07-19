@@ -26,4 +26,8 @@ public interface DetailService {
 	public List<Project> listPopularProject();
 	
 	public boolean toggleLike(Map<String, Object> map) throws Exception;//false: 좋아요 비활성화, true: 좋아요 활성화
+	
+	//내부연산
+	public void removeRewardTags(Reward reward);
+	public void removeProjectCommunityTags(ProjectCommunity community);
 }

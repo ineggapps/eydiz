@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eydiz.common.FileManager;
+import com.eydiz.common.MyUtil;
 import com.eydiz.common.dao.CommonDAO;
 
 @Service("studio.studioService")
@@ -24,6 +25,9 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 
 	@Autowired
 	CommonDAO dao;
+	
+	@Autowired
+	MyUtil myUtil;
 
 	@Override
 	public Brand readBrand(int memberNo) {
@@ -89,6 +93,9 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		List<Project> list = null;
 		try {
 			list = dao.selectList(MAPPER_NAMESPACE + "listProject", map);
+			for(Project project: list) {
+				removeProjectTags(project);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -116,6 +123,7 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			map.put(ATTRIBUTE_PROJECTNO, projectNo);
 			map.put(ATTRIBUTE_BRANDNO, brandNo);
 			project = dao.selectOne(MAPPER_NAMESPACE + "readProject", map);
+			removeProjectTags(project);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -138,6 +146,7 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	@Override
 	public void updateProjectBasic(Project project) throws Exception {
 		try {
+			removeProjectTags(project);
 			dao.updateData(MAPPER_NAMESPACE + "updateProjectBasic", project);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -215,6 +224,7 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	@Override
 	public void insertHashtag(ProjectHashtag hashtag) throws Exception {
 		try {
+			removeHashTagTags(hashtag);
 			dao.insertData(MAPPER_NAMESPACE + "insertHashtag", hashtag);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -450,14 +460,14 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 	}
 
 	@Override
-	public Send readSend(int projectNo , int buyNo) {
+	public Send readSend(int projectNo, int buyNo) {
 		Send dto = null;
 
 		try {
 			Map<String, Object> map = new HashMap<>();
 			map.put("projectNo", projectNo);
 			map.put("buyNo", buyNo);
-			
+
 			dto = dao.selectOne("studio.readSend", map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -471,22 +481,24 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 
 		try {
 			list = dao.selectList("studio.listFundingView", map);
+			for(Project project: list) {
+				removeProjectTags(project);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return list;
 	}
-	
 
 	@Override
 	public List<Reward> readFundingView(int buyNo) {
 		List<Reward> list = null;
-        try {
-            list = dao.selectList("studio.readFundingView", buyNo);
-        }catch(Exception e) {
-        	e.printStackTrace();
-        }
+		try {
+			list = dao.selectList("studio.readFundingView", buyNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return list;
 	}
 
@@ -514,7 +526,7 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 		int result = 0;
 		try {
 			result = dao.selectOne("studio.fundingViewDataCount", map);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
@@ -528,6 +540,27 @@ public class StudioServiceImpl implements StudioService, StudioConstant {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@Override
+	public void removeHashTagTags(ProjectHashtag hashTag) {
+		try {
+			hashTag.setKeyword(myUtil.htmlSymbols(hashTag.getKeyword()));
+			hashTag.setKeyword(myUtil.removeHtmlTag(hashTag.getKeyword()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void removeProjectTags(Project project) {
+		try {
+			project.setProjectName(myUtil.removeHtmlTag(project.getProjectName()));
+			project.setProjectSummary(myUtil.htmlSymbols(project.getProjectSummary()));
+			project.setProjectSummary(myUtil.removeHtmlTag(project.getProjectSummary()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
