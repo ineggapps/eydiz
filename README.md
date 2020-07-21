@@ -6,32 +6,25 @@
   <img src="./docs/assets/readme/logo.png" width="500px" />
 </div>
 
-===
-
 # 데모
 
 [Go to the Website](http://java.sannim.com/eydiz)
 
-![목업](./docs/assets/readme/mockup.png)
+![목업](./docs/assets/readme/mockups.png)
 
 [PC Browser Mockup - Designed by Grapheberry](https://www.graphberry.com/item/flat-browser-mockup/)
-[Mobile Mockup - Designed by Freepik](https://freepik.com)
 
-===
+[Mobile Mockup - Designed by Freepik](https://freepik.com)
 
 ## 참고 사이트
 
 [와디즈](https://www.wadiz.kr)
-
-===
 
 ## 목차
 
 1. 특징
 
 2. 사용 기술
-
-===
 
 ## 특징
 
