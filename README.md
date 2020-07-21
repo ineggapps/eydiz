@@ -1,170 +1,69 @@
-# eydiz
+# 🎁 이디즈
 
-이디즈 스프링
+## 국내 최대 크라우드 플랫폼 와디즈 클론하기!!!
 
-## 미리보기
+<div align="center">
+  <img src="./docs/assets/readme/logo.png" width="500px" />
+</div>
 
-![미리보기 이미지](https://raw.githubusercontent.com/ineggapps/eydiz/master/docs/eydis-studio-project.gif)
+===
 
-![미리보기 이미지](https://raw.githubusercontent.com/ineggapps/eydiz/master/docs/eydiz-detail-view.gif)
+# 데모
 
-## 세팅 방법
+[Go to the Website](http://java.sannim.com/eydiz)
 
-1. /src/main/webapp/WEB-INF/mybatis/jdbc.properties 파일 생성
+![목업](./docs/assets/readme/mockup.png)
 
-```
-jdbc.driverClass=net.sf.log4jdbc.DriverSpy
-jdbc.url=jdbc:log4jdbc:oracle:thin:@아이피:1521:xe
-jdbc.username=계정명
-jdbc.password=비밀번호
-```
+[PC Browser Mockup - Designed by Grapheberry](https://www.graphberry.com/item/flat-browser-mockup/)
+[Mobile Mockup - Designed by Freepik](https://freepik.com)
 
-3. /src/main/java/com/eydiz/reward/kakao/KakaoPayService.java 파일 생성
+===
 
-```java
-package com.eydiz.reward.kakao;
+## 참고 사이트
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Map;
+[와디즈](https://www.wadiz.kr)
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
+===
 
-import com.eydiz.member.Member;
-import com.eydiz.member.SessionInfo;
-import com.eydiz.reward.SessionRewardInfo;
-import com.eydiz.studio.Reward;
+## 목차
 
-@Service("detail.kakaoPay")
-public class KakaoPayService {
-	private static final String HOST = "https://kapi.kakao.com";
-	private static final String ADMIN_KEY = "⌛⌛⌛⌛⌛관리자키입력⌛⌛⌛⌛⌛";
-	private static final String CID = "TC0ONETIME";
+1. 특징
 
-	private KakaoPayReady kakaoPayReady;
-	private KakaoPayApproval kakaoPayApproval;
+2. 사용 기술
 
-	public String kakaoPayReady(SessionRewardInfo rewardInfo, SessionInfo memberInfo) {
+===
 
-		//세션 관련 처리
-		int projectNo = rewardInfo.getProjectNo();
-		String projectName = null;
-		Map<Integer, Reward> rewards = rewardInfo.getRewards();
-		for(Integer key: rewards.keySet()) {
-			projectName = rewards.get(key).getProjectName();
-			break;
-		}
-		////카카오페이 관련 처리
-		RestTemplate restTemplate = new RestTemplate();
+## 특징
 
-		// 서버로 요청할 헤더 정보
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "KakaoAK" + " " + ADMIN_KEY);
-		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
-		headers.add("Content-type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+- Java 코드에서 자주 사용되는 변수는 인터페이스에 상수로 선언하여 참조하였습니다.
+- Spring의 MVC2 패턴을 이용하여 AOP, 트랜잭션 처리, DI를 사용하였습니다.
+- Spring의 DI 패턴을 적용하여 의존관계를 최소화하였습니다.
+- Tiles 3의 템플릿 엔진을 이용하여 레이아웃이 반복적으로 사용되는 구간의 중복을 최소화하였습니다.
+- Ajax를 이용하여 비동기 통신으로 데이터 요청을 최소화하였고, Promise를 이용하여 코드의 가독성을 높였습니다.
+  (단, IE에서도 사용이 가능하도록 open source인 bluebird의 라이브러리를 함께 사용하였습니다.)
+- 웹 표준 마크업을 지향하고자 HTML5, CSS3를 이용하여 웹 문서를 작성하였습니다.
+- 카카오페이, 카카오 맵을 이용하여 Open API를 사용하였습니다.
+- Outer JOIN을 이용하여 펀딩금액(취소금액 및 결제 금액) 계산 등 복잡한 다중 조인 연산을 수행했습니다.
+  (결제여부와 취소여부를 알아야 하는 부분이 있으므로 해당하는 기능은 Outer Join을 사용하였습니다.)
 
-		// 서버로 요청할 본문
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("cid", CID);
-		params.add("partner_order_id", rewardInfo.getBuyNo()+"");
-		params.add("partner_user_id", memberInfo.getMemberNo()+"");
-		params.add("item_name", projectName);
-		params.add("quantity", "1");
-		params.add("total_amount", rewardInfo.getFinalAmount()+"");
-		params.add("tax_free_amount", "0");
-		params.add("approval_url", "http://localhost:9090/eydiz/reward/" + projectNo + "/pay/kakao/success");
-		params.add("cancel_url", "http://localhost:9090/eydiz/reward/" + projectNo + "/pay/kakao/abort");
-		params.add("fail_url", "http://localhost:9090/eydiz/reward/" + projectNo + "/pay/kakao/fail");
+## 사용기술
 
-		HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<>(params, headers);
-		try {
-			kakaoPayReady = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReady.class);
-			return kakaoPayReady.getNext_redirect_pc_url();
-		} catch (HttpClientErrorException e) {
-            System.out.println( "callToRestService Error :" + e.getResponseBodyAsString());
-            e.printStackTrace();
-        } catch (RestClientException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;// 오류난 경우
-	}
+### FE
 
-	public KakaoPayCancel kakayPayCancel(int cancelAmount, int cancelTaxFreeAmount, String tid) {//결제 취소
-		////카카오페이 관련 처리
-		RestTemplate restTemplate = new RestTemplate();
+1. HTML5, CSS3, JS Legacy (IE 호환)
+2. jQuery (DOM 관리, Ajax 작업 with Promise)
+3. Tiles 3
 
-		// 서버로 요청할 헤더 정보
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "KakaoAK" + " " + ADMIN_KEY);
-		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
-		headers.add("Content-type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+### BE
 
-		// 서버로 요청할 본문
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("cid", CID);
-		params.add("tid",  tid);
-		params.add("cancel_amount", cancelAmount+"");
-		params.add("cancel_tax_free_amount", cancelTaxFreeAmount+"");
+1. Spring 4.3.27
+2. Mybatis 3
+3. Oracle 18c
+4. Java
 
-		HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<>(params, headers);
-		try {
-			kakaoPayCancel = restTemplate.postForObject(new URI(HOST + "/v1/payment/cancel"), body, KakaoPayCancel.class);
-			return kakaoPayCancel;
-		} catch (HttpClientErrorException e) {
-            System.out.println( "callToRestService Error :" + e.getResponseBodyAsString());
-            e.printStackTrace();
-        } catch (RestClientException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;// 오류난 경우
-	}
+### Others
 
-	public KakaoPayApproval kakaoPayInfo(String pg_token, SessionRewardInfo rewardInfo, SessionInfo memberInfo) {
-		RestTemplate restTemplate = new RestTemplate();
-
-		//서버로 요청할 헤더 정보
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "KakaoAK" + " " + ADMIN_KEY);
-		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
-		headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset=UTF-8");
-
-		//서버로 요청할 본문
-//		System.out.println("★"+rewardInfo.getBuyNo() + "," + memberInfo.getMemberNo() + "," + pg_token +"," + rewardInfo.getFinalAmount());
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("cid", CID);
-        params.add("tid", kakaoPayReady.getTid());
-        params.add("partner_order_id", rewardInfo.getBuyNo()+"");
-        params.add("partner_user_id", memberInfo.getMemberNo()+"");
-        params.add("pg_token", pg_token);
-        params.add("total_amount", rewardInfo.getFinalAmount()+"");
-
-        HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<>(params, headers);
-        try {
-        	kakaoPayApproval = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApproval.class);
-        	return kakaoPayApproval;
-        } catch (RestClientException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        return null;
-	}
-}
-```
+1. Git & Github
+2. eXERD (DB 모델링)
+3. Sql Developer (powered by Oracle)
+4. STS 3.9
