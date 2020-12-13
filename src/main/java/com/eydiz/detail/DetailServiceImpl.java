@@ -204,8 +204,8 @@ public class DetailServiceImpl implements DetailService, DetailConstant {
 	@Override
 	public void removeProjectCommunityTags(ProjectCommunity community) {
 		try {
-			community.setContent(myUtil.htmlSymbols(community.getContent()));
 			community.setContent(myUtil.removeHtmlTag(community.getContent()));
+			community.setContent(myUtil.htmlSymbols(community.getContent()));
 		} catch (NullPointerException e) {
 		} catch (Exception e) {
 		}

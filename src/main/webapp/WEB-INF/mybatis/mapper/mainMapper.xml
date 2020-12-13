@@ -35,7 +35,7 @@
 			NVL(newsCount, 0) newsCount,
 			NVL(totalAmount, 0) totalAmount,
 			NVL(totalAmount,0)/projectGoalAmount attainRate,
-			NVL(approvalDate, TO_DATE('1990-01-01')) approvalDate 
+			NVL(approvalDate, TO_DATE('1990-01-01', 'YYYY-MM-DD')) approvalDate 
 		FROM
 			project p
 		JOIN brand b ON p.brandNo = b.brandNo
@@ -124,7 +124,7 @@
 			NVL(newsCount, 0) newsCount,
 			NVL(totalAmount, 0) totalAmount,
 			NVL(totalAmount,0)/projectGoalAmount attainRate,
-			NVL(approvalDate, TO_DATE('1990-01-01')) approvalDate 
+			NVL(approvalDate, TO_DATE('1990-01-01', 'YYYY-MM-DD')) approvalDate 
 		FROM
 			project p
 		JOIN brand b ON p.brandNo = b.brandNo
