@@ -124,7 +124,7 @@ CREATE TABLE project(
     CONSTRAINT PK_PROJECT_PROJECTNO PRIMARY KEY(projectNo),
     CONSTRAINT FK_PROJECT_BRANDNO FOREIGN KEY(brandNo) REFERENCES brand(brandNo),
     CONSTRAINT FK_PROJECT_CATEGORYNO FOREIGN KEY(categoryNo) REFERENCES project_category(categoryNo),
-    CONSTRAINT FK_PROJECT_STATUSNO FOREIGN KEY(statusNo) REFERENCES project_status_info(statusNo)
+    CONSTRAINT FK_PROJECT_STATUSNO FOREIGN KEY(statusNo) REFERENCES project_status(statusNo)
 );
 
 CREATE SEQUENCE project_seq
@@ -157,7 +157,7 @@ CREATE TABLE project_status_list( -- 식별 테이블
     statusMemo VARCHAR2(4000), -- 프로젝트 메모
     createdDate DATE default SYSDATE, -- 상태 생성 시각...
     CONSTRAINT FK_PROJECT_STATUS_LIST_PROJECT_NO FOREIGN KEY(projectNo) REFERENCES project(projectNo),
-    CONSTRAINT FK_PROJECT_STATUS_LIST_STATUS_NO FOREIGN KEY(statusNo) REFERENCES project_status_info(statusNo)
+    CONSTRAINT FK_PROJECT_STATUS_LIST_STATUS_NO FOREIGN KEY(statusNo) REFERENCES project_status(statusNo)
 );
 
 CREATE TABLE project_hashtag(
@@ -405,7 +405,7 @@ CREATE TABLE reward_buy_cancel(
     memo VARCHAR2(4000) NOT NULL,
     canceledDate DATE DEFAULT SYSDATE NOT NULL, -- canceled <<< 주의
     CONSTRAINT REWARD_BUY_CANCEL_CANCELNO PRIMARY KEY(cancelNo),
-    CONSTRAINT REWARD_BUY_CANCEL_BUYNO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo),
+    CONSTRAINT REWARD_BUY_CANCEL_BUYNO FOREIGN KEY(buyNo) REFERENCES reward_buy_overview(buyNo)
 );
 
 CREATE SEQUENCE reward_buy_cancel_seq
@@ -630,6 +630,12 @@ CREATE TABLE notice (
     FOREIGN key (nocaNo) REFERENCES notice_catagory (nocaNo)
 );
 
+CREATE TABLE funding_mate_catagory (
+    fmcaNo NUMBER PRIMARY key,
+    fmcaName VARCHAR2(10) NOT NULL
+);
+
+
 CREATE TABLE funding_mate (
     fmNo NUMBER PRIMARY KEY,
     memberNo NUMBER NOT NULL,
@@ -643,12 +649,6 @@ CREATE TABLE funding_mate (
     FOREIGN key (memberNo) REFERENCES member_detail (memberNo),
     FOREIGN key (fmcaNo) REFERENCES funding_mate_catagory (fmcaNo)
 );
-
-CREATE TABLE funding_mate_catagory (
-    fmcaNo NUMBER PRIMARY key,
-    fmcaName VARCHAR2(10) NOT NULL
-);
-
 
 CREATE SEQUENCE funding_mate_seq
     INCREMENT BY 1
